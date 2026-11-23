@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Information</title>
+    <!-- App Icons & PWA Manifest for Chrome Install & Bookmarks -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232563eb'/%3E%3Ctext x='50' y='65' font-family='Arial, sans-serif' font-size='46' font-weight='900' fill='%23ffffff' text-anchor='middle'%3EDI%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Data Information">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#2563eb">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- SheetJS for Excel Import / Export -->
@@ -428,9 +439,15 @@
             height: auto !important;
             line-height: 1.35 !important;
         }
-        #header-theme-toggle-btn, #global-search-toggle-btn, #firebase-sync-indicator {
+        #menu-toggle-btn, #header-theme-toggle-btn, #global-search-toggle-btn, #firebase-sync-indicator {
             min-width: 1.75rem;
             min-height: 1.75rem;
+            height: 1.75rem !important;
+            width: 1.75rem !important;
+        }
+        #dashboard-personnel-composition-chart .dept-title-bold,
+        #dashboard-personnel-composition-chart .dept-total-bold {
+            font-weight: 700 !important;
         }
         table td button {
             padding-top: 0.15rem !important;
@@ -618,22 +635,28 @@
             </div>
         </div>
     </div>
-    <!-- SLIDE NAVIGATION MENU (မီးခိုးဖျော့ရောင် Sidebar / Mobile Strip - Fixed & Always Expanded) -->
-    <aside class="w-full md:w-56 md:h-screen bg-slate-200 dark:bg-slate-800 border-b md:border-b-0 md:border-r border-slate-300 dark:border-slate-700 flex-shrink-0 flex flex-col z-30 transition-all duration-300 ease-in-out overflow-hidden">
-        <div class="md:overflow-y-auto md:overflow-x-hidden flex flex-col md:flex-1">
-            <!-- Brand Header -->
-            <div class="p-3 bg-slate-300/70 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-700 flex items-center justify-between gap-2">
-                <div class="flex items-center gap-2.5 min-w-0">
-                    <div class="w-8 h-8 rounded-xl bg-blue-600 text-white font-black text-xs flex items-center justify-center shadow flex-shrink-0">DI</div>
-                    <div class="truncate">
-                        <div class="font-bold text-slate-900 dark:text-white text-xs leading-tight truncate">Data Information</div>
-                        <div class="hidden invisible text-[10px] text-slate-600 dark:text-slate-400 font-semibold">Your Data, Your Knowledge.</div>
-                    </div>
+    <!-- SLIDE NAVIGATION BACKDROP OVERLAY -->
+    <div id="slide-menu-backdrop" onclick="toggleSlideMenu(false)" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+
+    <!-- SLIDE NAVIGATION MENU (Drawer) -->
+    <aside id="slide-menu" class="fixed top-0 bottom-0 left-0 w-64 max-w-[85vw] h-full bg-slate-100 dark:bg-slate-800 border-r border-slate-300 dark:border-slate-700 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col overflow-hidden">
+        <!-- Brand & Close Header -->
+        <div class="p-3 bg-slate-200/90 dark:bg-slate-900/80 border-b border-slate-300 dark:border-slate-700 flex items-center justify-between gap-2 flex-shrink-0">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-xl bg-blue-600 text-white font-black text-xs flex items-center justify-center shadow flex-shrink-0">DI</div>
+                <div class="truncate">
+                    <div class="font-black text-sm text-slate-900 dark:text-white leading-tight truncate tracking-wide">Data Information</div>
+                    <div class="text-[11px] text-slate-600 dark:text-slate-300 font-bold truncate">စာရင်း ၊ ဇယား ၊ မှတ်တမ်းများ</div>
                 </div>
             </div>
+            <button onclick="toggleSlideMenu(false)" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-300/60 dark:hover:bg-slate-700 transition" title="Close menu" aria-label="Close menu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
 
-            <!-- Navigation Links -->
-            <nav class="p-2 flex md:flex-col gap-1.5 overflow-x-auto md:overflow-x-hidden no-scrollbar">
+        <!-- Scrollable Navigation Links -->
+        <div class="flex-1 overflow-y-auto p-2.5 space-y-1.5">
+            <nav class="flex flex-col gap-1">
                 <button id="nav-dashboard" onclick="switchTab('dashboard')" title="Dashboard" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm whitespace-nowrap transition">
                     <span class="font-bold">Dashboard</span>
                 </button>
@@ -646,14 +669,12 @@
                 <button id="nav-staff" onclick="switchTab('staff')" title="အမြဲတမ်းဝန်ထမ်းစာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
                     <span class="font-bold">အမြဲတမ်းဝန်ထမ်းစာရင်း</span>
                 </button>
-                <div class="flex flex-col gap-1 flex-shrink-0">
-                    <button id="nav-civilian" onclick="switchTab('civilian')" title="အရပ်သားဝန်ထမ်းစာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
-                        <span class="font-bold">အရပ်သားဝန်ထမ်းစာရင်း</span>
-                    </button>
-                    <button id="nav-civilian-master" onclick="switchTab('civilian-master')" title="Name List Master" class="nav-btn flex items-center justify-start pl-7 pr-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
-                        <span class="font-bold">Name List Master</span>
-                    </button>
-                </div>
+                <button id="nav-civilian" onclick="switchTab('civilian')" title="အရပ်သားဝန်ထမ်းစာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
+                    <span class="font-bold">အရပ်သားဝန်ထမ်းစာရင်း</span>
+                </button>
+                <button id="nav-civilian-master" onclick="switchTab('civilian-master')" title="Name List Master" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
+                    <span class="font-bold">Name List Master</span>
+                </button>
                 <button id="nav-absent" onclick="switchTab('absent')" title="တန်းစီအင်အားစာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
                     <span class="font-bold">တန်းစီအင်အားစာရင်း</span>
                 </button>
@@ -670,24 +691,30 @@
                     <span class="font-bold">Announcement</span>
                 </button>
             </nav>
-            <nav class="p-2 md:mt-auto md:border-t md:border-slate-300 md:dark:border-slate-700 flex md:flex-col gap-1.5 overflow-x-auto md:overflow-x-hidden no-scrollbar">
-                <button id="nav-users" onclick="switchTab('users')" title="User Management" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
-                    <span class="font-bold">User Management</span>
-                </button>
-                <button id="nav-settings" onclick="switchTab('settings')" title="Setting" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
-                    <span class="font-bold">Setting</span>
-                </button>
-            </nav>
         </div>
 
+        <!-- Bottom Settings & User Nav -->
+        <div class="p-2.5 border-t border-slate-300 dark:border-slate-700 flex flex-col gap-1 flex-shrink-0 bg-slate-200/50 dark:bg-slate-900/50">
+            <button id="nav-users" onclick="switchTab('users')" title="User Management" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
+                <span class="font-bold">User Management</span>
+            </button>
+            <button id="nav-settings" onclick="switchTab('settings')" title="Setting" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
+                <span class="font-bold">Setting</span>
+            </button>
+        </div>
     </aside>
 
     <!-- MAIN CONTENT SHELL -->
     <div class="flex-1 flex flex-col min-w-0 min-h-0 h-full overflow-hidden">
         <!-- Top Modern Blue Header Bar (Fixed) -->
-        <header class="relative bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-800 text-white px-4 py-0 shadow-md flex flex-nowrap justify-between items-center gap-2 flex-shrink-0 z-20">
+        <header class="relative bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-800 text-white px-3 sm:px-4 py-1.5 shadow-md flex flex-nowrap justify-between items-center gap-2 flex-shrink-0 z-20">
             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                <h1 id="page-header-title" class="font-bold text-xs leading-tight tracking-wide truncate">Dashboard Summary</h1>
+                <button id="menu-toggle-btn" onclick="toggleSlideMenu()" class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-white/15 hover:bg-white/25 active:bg-white/35 text-white border border-white/20 shadow-sm transition cursor-pointer flex-shrink-0" title="မီနူးဖွင့်ရန်" aria-label="Toggle Navigation Menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 id="page-header-title" class="font-bold text-xs sm:text-sm leading-tight tracking-wide truncate">Dashboard Summary</h1>
             </div>
             <div class="flex items-center gap-2.5 text-xs flex-shrink-0">
                 <button onclick="toggleGlobalSearch()" id="global-search-toggle-btn" class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/20 shadow-sm transition" title="Search all records" aria-label="Search all records">
@@ -811,6 +838,7 @@
                             <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>အရာရှိ</span>
                             <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>စစ်သည်</span>
                             <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>အမြဲတမ်းဝန်ထမ်း</span>
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>အရပ်သားဝန်ထမ်း</span>
                         </div>
                     </div>
                     <div id="dashboard-personnel-composition-chart" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5"></div>
@@ -1053,18 +1081,42 @@
                 <div id="personnel-pagination-bar"></div>
             </section>
 
-            <section id="civilian-master-tab" class="tab-content hidden space-y-4">
+            <section id="civilian-master-tab" class="tab-content hidden space-y-3">
+                <!-- Dedicated Standalone Filter & Count Card (သီးသန့်ကတ်ပြား) -->
+                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300">အရေအတွက်</span>
+                        <div class="inline-flex items-center justify-center min-w-[36px] px-2.5 py-1 bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 rounded-lg text-xs whitespace-nowrap">
+                            <strong id="civilian-master-count" class="text-blue-800 dark:text-blue-200 font-bold">၀</strong>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ရာထူးအလိုက် -</span>
+                            <select id="civilian-filter-position" onchange="resetTablePage('civilianMaster'); onCivilianFilterPositionChange()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">အဆင့်အလိုက် -</span>
+                            <select id="civilian-filter-rank" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာနအလိုက် -</span>
+                            <select id="civilian-filter-dept" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Card (ဇယားကွက်) -->
                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
                     <div class="px-4 py-3 bg-slate-100 dark:bg-slate-700/70 border-b border-slate-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                         <h2 id="civilian-master-title" class="font-bold text-slate-900 dark:text-white">Name List Master</h2>
                         <div class="flex flex-wrap items-center justify-end gap-1.5 self-end sm:self-auto">
-                            <div class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-xs whitespace-nowrap">
-                                <span class="text-slate-600 dark:text-slate-300">အရေအတွက်</span>
-                                <strong id="civilian-master-count" class="text-blue-700 dark:text-blue-300">၀</strong>
-                            </div>
-                            <select id="civilian-master-filter" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="w-40 max-w-48 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1.5 text-xs font-normal">
-                                <option value="">အားလုံးပြရန်</option>
-                            </select>
                             <button id="civilian-master-import-btn" onclick="triggerExcelImport('civilian-master')" class="role-write-action px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
                             <button onclick="exportCivilianMasterExcel()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
                             <button onclick="printCivilianNameListMaster()" class="px-2.5 py-1.5 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Print</button>
@@ -1076,19 +1128,26 @@
                         <table class="w-full text-left text-xs whitespace-nowrap">
                             <thead class="bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-600">
                                 <tr>
+                                    <th class="px-3 py-2 text-center">စဉ်</th>
                                     <th class="px-3 py-2">ကိုယ်ပိုင်အမှတ်</th>
                                     <th class="px-3 py-2">အဆင့်</th>
                                     <th class="px-3 py-2">ဝန်ထမ်းအမည်</th>
                                     <th class="px-3 py-2">ဌာနအမည်</th>
                                     <th class="px-3 py-2">ရာထူး</th>
                                     <th class="px-3 py-2">ကျား/မ</th>
+                                    <th class="px-3 py-2">ဝန်ထမ်းအမျိုးအစား</th>
                                     <th class="px-3 py-2">လက်ရှိအခြေအနေ</th>
                                     <th class="px-3 py-2">ပျက်ကွက်အကြောင်းရင်း</th>
-                                    <th class="px-3 py-2">ဝန်ထမ်းအမျိုးအစား</th>
+                                    <th class="px-3 py-2">မွေးသက္ကရာဇ်</th>
+                                    <th class="px-3 py-2">နိုင်ငံသားစိစစ်ရေးကတ်အမှတ်</th>
+                                    <th class="px-3 py-2">အဘအမည်</th>
+                                    <th class="px-3 py-2">အမိအမည်</th>
                                     <th class="px-3 py-2">နေရပ်လိပ်စာ</th>
+                                    <th class="px-3 py-2">လူမျိုး</th>
+                                    <th class="px-3 py-2">ဘာသာ</th>
                                     <th class="px-3 py-2">ဖုန်းနံပါတ်</th>
                                     <th class="px-3 py-2">မှတ်ချက်</th>
-                                    <th class="px-3 py-2 text-center">အသေးစိတ်</th>
+                                    <th class="px-3 py-2 text-center"></th>
                                 </tr>
                             </thead>
                             <tbody id="civilian-master-list" class="divide-y divide-slate-200 dark:divide-slate-700 align-middle"></tbody>
@@ -1118,16 +1177,33 @@
 
             <!-- ABSENT STRENGTH & PARADE TAB (တန်းစီအင်အားစာရင်းနှင့် ပျက်ကွက်အမည်စာရင်း) -->
             <section id="absent-tab" class="tab-content hidden space-y-4">
-                <!-- Filter & Action Toolbar -->
-                <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-3">
-                    <div class="flex flex-wrap items-center gap-2">
-                        <label class="text-xs font-bold text-slate-700 dark:text-slate-200">ဝန်ထမ်းအမျိုးအစား စစ်ထုတ်ရန်:</label>
-                        <select id="absent-filter-stafftype" onchange="renderAbsentSummary()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 text-xs font-bold text-blue-800 dark:text-blue-300 outline-none">
-                            <option value="ALL">အားလုံး (All)</option>
-                            <option value="သန္ဓေ">သန္ဓေ</option>
-                            <option value="တွဲဖက်">တွဲဖက်</option>
-                            <option value="ယာယီတာဝန်">ယာယီတာဝန်</option>
-                        </select>
+                <!-- Dedicated Standalone Filter & Count Card (သီးသန့်ကတ်ပြား) -->
+                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300">အရေအတွက်</span>
+                        <div class="inline-flex items-center justify-center min-w-[36px] px-2.5 py-1 bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 rounded-lg text-xs whitespace-nowrap">
+                            <strong id="absent-master-count" class="text-blue-800 dark:text-blue-200 font-bold">၀</strong>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ရာထူးအလိုက် -</span>
+                            <select id="absent-filter-position" onchange="resetTablePage('absent'); onAbsentFilterPositionChange()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">အဆင့်အလိုက် -</span>
+                            <select id="absent-filter-rank" onchange="resetTablePage('absent'); renderAbsentSummary()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာနအလိုက် -</span>
+                            <select id="absent-filter-dept" onchange="resetTablePage('absent'); renderAbsentSummary()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -1191,8 +1267,6 @@
                         <div class="filter-action-bar">
                             <input type="text" id="absent-search" oninput="resetTablePage('absent'); renderAbsentSummary()" placeholder="ပျက်ကွက်အမည်စာရင်း ရှာဖွေရန်..." class="hidden bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs outline-none">
                             <div class="filter-action-controls">
-                                <select id="absent-filter-dept" onchange="resetTablePage('absent'); renderAbsentSummary()" class="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1.5 text-xs outline-none"></select>
-                                <select id="absent-filter-type" onchange="resetTablePage('absent'); renderAbsentSummary()" class="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1.5 text-xs outline-none"></select>
                                 <select id="absent-filter-reason" onchange="resetTablePage('absent'); renderAbsentSummary()" class="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1.5 text-xs outline-none"></select>
                             </div>
                             <div id="absent-table-actions" class="role-write-action flex gap-1.5">
@@ -1210,13 +1284,14 @@
                                     <th class="p-3 text-center">စဉ်</th>
                                     <th class="p-3 text-left">ကိုယ်ပိုင်အမှတ်</th>
                                     <th class="p-3 text-left">အဆင့်</th>
-                                    <th class="p-3 text-left">အမည်</th>
-                                    <th class="p-3 text-left">ဌာန</th>
+                                    <th class="p-3 text-left">ဝန်ထမ်းအမည်</th>
+                                    <th class="p-3 text-left">ဌာနအမည်</th>
+                                    <th class="p-3 text-left">ရာထူး</th>
                                     <th class="p-3 text-left">ဝန်ထမ်းအမျိုးအစား</th>
                                     <th class="p-3 text-left">လက်ရှိအခြေအနေ</th>
-                                    <th class="p-3 text-left">ပျက်ကွက်အကြောင်းအရင်း</th>
+                                    <th class="p-3 text-left">ပျက်ကွက်အကြောင်းရင်း</th>
                                     <th class="p-3 text-left">မှတ်ချက်</th>
-                                    <th class="p-3 text-center">Function</th>
+                                    <th class="p-3 text-center"></th>
                                 </tr>
                             </thead>
                             <tbody id="absent-personnel-detail-tbody" class="divide-y divide-slate-200 dark:divide-slate-700"></tbody>
@@ -1226,6 +1301,8 @@
                     <div id="absent-pagination-bar" class="px-3 pb-3"></div>
                 </div>
             </section>
+
+
 
             <!-- SECURITY DUTY TAB (လုံခြုံရေးတာဝန်အမည်စာရင်း) -->
             <section id="duty-tab" class="tab-content hidden space-y-4">
@@ -1277,15 +1354,19 @@
                                 <th class="p-3 text-center">စဉ်</th>
                                 <th class="p-3 text-left">ကိုယ်ပိုင်အမှတ်</th>
                                 <th class="p-3 text-left">အဆင့်</th>
+                                <th class="p-3 text-left">ဝန်ထမ်းအမည်</th>
+                                <th class="p-3 text-left">ဌာနအမည်</th>
+                                <th class="p-3 text-left">ရာထူး</th>
+                                <th class="p-3 text-left">ဝန်ထမ်းအမျိုးအစား</th>
+                                <th class="p-3 text-left">လက်ရှိအခြေအနေ</th>
+                                <th class="p-3 text-left">ပျက်ကွက်အကြောင်းရင်း</th>
+                                <th class="p-3 text-left">ကင်းစခန်းတည်နေရာ</th>
                                 <th class="p-3 text-left">အမည်</th>
-                                <th class="p-3 text-left">ဌာန</th>
-                                <th class="p-3 text-left">လက်နက်အမျိုးအစား</th>
-                                <th class="p-3 text-left">မော်ဒယ်</th>
-                                <th class="p-3 text-left">ကုတ်အမှတ်</th>
-                                <th class="p-3 text-left">လက်နက်နံပါတ်</th>
+                                <th class="p-3 text-center">အရေအတွက်</th>
                                 <th class="p-3 text-left">ခဲယမ်း</th>
                                 <th class="p-3 text-left">ရက်စွဲ</th>
-                                <th class="p-3 text-center">Function</th>
+                                <th class="p-3 text-left">မှတ်ချက်</th>
+                                <th class="p-3 text-center"></th>
                             </tr>
                         </thead>
                         <tbody id="duty-list-container" class="divide-y divide-slate-200 dark:divide-slate-700"></tbody>
@@ -1296,8 +1377,7 @@
                 <div id="duty-pagination-bar"></div>
             </section>
 
-            <!-- CONTROLLED / RESTRICTED INVENTORY TAB (ကြီးကြပ်/ကန့်သတ်စာရင်း) -->
-            <section id="armory-tab" class="tab-content hidden space-y-4">
+<section id="armory-tab" class="tab-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
                     <!-- 4 Summary Cards -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
@@ -1640,15 +1720,45 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                             <div><label for="d-in-id" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကိုယ်ပိုင်အမှတ်</label><input id="d-in-id" oninput="autoFillDutyById()" required class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
                             <div><label for="d-in-rank" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အဆင့်</label><select id="d-in-rank" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></select></div>
-                            <div><label for="d-in-name" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အမည်</label><input id="d-in-name" required class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
-                            <div><label for="d-in-dept" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဌာန</label><select id="d-in-dept" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></select></div>
+                            <div><label for="d-in-name" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဝန်ထမ်းအမည်</label><input id="d-in-name" required class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            <div><label for="d-in-dept" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဌာနအမည်</label><select id="d-in-dept" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></select></div>
+                            <div>
+                                <label for="d-in-position" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ရာထူး</label>
+                                <select id="d-in-position" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
+                                    <option value="အရာရှိ">အရာရှိ</option>
+                                    <option value="စစ်သည်">စစ်သည်</option>
+                                    <option value="အမြဲတမ်းဝန်ထမ်း">အမြဲတမ်းဝန်ထမ်း</option>
+                                    <option value="အရပ်သားဝန်ထမ်း">အရပ်သားဝန်ထမ်း</option>
+                                </select>
+                            </div>
                             <div><label for="d-in-type" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဝန်ထမ်းအမျိုးအစား</label><select id="d-in-type" onchange="syncInlineDutyRanks()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></select></div>
-                            <div><label for="d-in-duty-type" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လုံခြုံရေးအမျိုးအစား</label><select id="d-in-duty-type" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></select></div>
-                            <div><label for="d-in-location" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">တည်နေရာ</label><input id="d-in-location" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
-                            <div><label for="d-in-weapon" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်နက်အမျိုးအစား</label><select id="d-in-weapon" onchange="syncDutyWeaponDetailsFromArmory()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></select><input id="d-in-weapon-custom" placeholder="အခြားလက်နက်" class="hidden w-full mt-1 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            <div>
+                                <label for="d-in-status" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်ရှိအခြေအနေ</label>
+                                <select id="d-in-status" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
+                                    <option value="ပျက်ကွက်">ပျက်ကွက်</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="d-in-duty-type" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ပျက်ကွက်အကြောင်းရင်း</label>
+                                <select id="d-in-duty-type" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
+                                    <option value="တပ်တွင်းလခရ">တပ်တွင်းလခရ</option>
+                                    <option value="တပ်ပြင်လခရ">တပ်ပြင်လခရ</option>
+                                </select>
+                            </div>
+                            <div><label for="d-in-location" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကင်းစခန်းတည်နေရာ</label><input id="d-in-location" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            
+                            <div class="sm:col-span-2 md:col-span-3 bg-blue-50/70 dark:bg-slate-700/50 p-2.5 rounded-lg border border-blue-200 dark:border-slate-600">
+                                <label for="d-in-armory-select" class="block text-blue-900 dark:text-blue-300 font-bold mb-1">ကြီးကြပ်/ကန့်သတ်စာရင်းမှ ရွေးချယ်ရန် (Dropdown List)</label>
+                                <select id="d-in-armory-select" onchange="onArmoryDropdownSelect(this.value)" class="w-full bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
+                                    <option value="">-- ကြီးကြပ်/ကန့်သတ်စာရင်းမှ လက်နက်ရွေးချယ်ပါ --</option>
+                                </select>
+                            </div>
+
+                            <div><label for="d-in-weapon" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်နက်အမျိုးအစား (အမည်)</label><input id="d-in-weapon" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
                             <div><label for="d-in-weapon-model" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">မော်ဒယ်</label><input id="d-in-weapon-model" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
                             <div><label for="d-in-weapon-code" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကုတ်အမှတ်</label><input id="d-in-weapon-code" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
-                            <div><label for="d-in-weapon-serial" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်နက်နံပါတ်</label><input id="d-in-weapon-serial" list="d-weapon-serial-datalist" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"><datalist id="d-weapon-serial-datalist"></datalist></div>
+                            <div><label for="d-in-weapon-serial" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်နက်နံပါတ်</label><input id="d-in-weapon-serial" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            <div><label for="d-in-quantity" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အရေအတွက်</label><input id="d-in-quantity" type="number" min="1" value="1" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
                             <div><label for="d-in-ammo" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ခဲယမ်း</label><input id="d-in-ammo" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
                             <div><label for="d-in-date" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ရက်စွဲ</label><input id="d-in-date" type="date" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
                             <div class="sm:col-span-2 md:col-span-3"><label for="d-in-remarks" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">မှတ်ချက်</label><input id="d-in-remarks" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
@@ -3059,7 +3169,27 @@ var db = admin.firestore();</pre>
 
         let activePositionFilter = '';
 
+        function toggleSlideMenu(forceState) {
+            const slideMenu = document.getElementById('slide-menu');
+            const backdrop = document.getElementById('slide-menu-backdrop');
+            if (!slideMenu || !backdrop) return;
+
+            const isClosed = slideMenu.classList.contains('-translate-x-full');
+            const shouldOpen = typeof forceState === 'boolean' ? forceState : isClosed;
+
+            if (shouldOpen) {
+                slideMenu.classList.remove('-translate-x-full');
+                backdrop.classList.remove('opacity-0', 'pointer-events-none');
+                backdrop.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                slideMenu.classList.add('-translate-x-full');
+                backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+                backdrop.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
         function switchTab(tabName) {
+            toggleSlideMenu(false);
             const headerTitleEl = document.getElementById('page-header-title');
             const tabSectionMap = {
                 dashboard: { sectionId: 'dashboard-tab', title: 'Dashboard Summary', category: 'ALL', positionFilter: '' },
@@ -3120,11 +3250,24 @@ var db = admin.firestore();</pre>
                 renderDashboardView();
             } else if (['officer', 'soldier', 'staff', 'civilian', 'civilian-master'].includes(tabName)) {
                 tablePageState.civilianMaster = 1;
+                const posSelect = document.getElementById('civilian-filter-position');
+                if (posSelect) posSelect.value = activePositionFilter || '';
+                const rankSelect = document.getElementById('civilian-filter-rank');
+                if (rankSelect) rankSelect.value = '';
+                const deptSelect = document.getElementById('civilian-filter-dept');
+                if (deptSelect) deptSelect.value = '';
                 renderCivilianNameListMaster();
             } else if (tabName === 'personnel') {
                 initInlinePersonnelControls();
                 renderPersonnelDirectory();
             } else if (tabName === 'absent') {
+                tablePageState.absent = 1;
+                const posSelect = document.getElementById('absent-filter-position');
+                if (posSelect) posSelect.value = '';
+                const rankSelect = document.getElementById('absent-filter-rank');
+                if (rankSelect) rankSelect.value = '';
+                const deptSelect = document.getElementById('absent-filter-dept');
+                if (deptSelect) deptSelect.value = '';
                 renderAbsentSummary();
             } else if (tabName === 'duty') {
                 initInlineDutyControls();
@@ -3826,8 +3969,9 @@ var db = admin.firestore();</pre>
                             });
                             importedCount++;
                         });
-                        const masterFilter = document.getElementById('civilian-master-filter');
-                        if (masterFilter) masterFilter.value = '';
+                        const pF = document.getElementById('civilian-filter-position'); if (pF) pF.value = '';
+                        const rF = document.getElementById('civilian-filter-rank'); if (rF) rF.value = '';
+                        const dF = document.getElementById('civilian-filter-dept'); if (dF) dF.value = '';
                         tablePageState.civilianMaster = 1;
                         saveSystemState();
                         renderPersonnelDirectory();
@@ -5113,6 +5257,10 @@ var db = admin.firestore();</pre>
             if (nameEl) nameEl.value = matched.name || '';
             const deptSel = document.getElementById('d-in-dept');
             if (deptSel) deptSel.value = getDeptAbbr(matched.deptAbbr || matched.deptFull);
+            const posSel = document.getElementById('d-in-position');
+            if (posSel) posSel.value = matched.position || resolvePersonnelRoleGroup(matched) || 'စစ်သည်';
+            const statusSel = document.getElementById('d-in-status');
+            if (statusSel) statusSel.value = 'ပျက်ကွက်';
         }
 
         function selectDutyForInlineEdit(index) {
@@ -5155,6 +5303,12 @@ var db = admin.firestore();</pre>
             }
             if (dutyTypeSel) dutyTypeSel.value = mappedDutyType || securityDutyTypeList[0] || 'တပ်တွင်းလခရ';
             document.getElementById('d-in-location').value = d.location || '';
+            if (document.getElementById('d-in-position')) document.getElementById('d-in-position').value = d.position || 'စစ်သည်';
+            if (document.getElementById('d-in-status')) document.getElementById('d-in-status').value = d.status || 'ပျက်ကွက်';
+            if (document.getElementById('d-in-quantity')) document.getElementById('d-in-quantity').value = d.quantity || 1;
+            if (document.getElementById('d-in-weapon-model')) document.getElementById('d-in-weapon-model').value = d.weaponModel || '';
+            if (document.getElementById('d-in-weapon-code')) document.getElementById('d-in-weapon-code').value = d.weaponCode || '';
+            if (document.getElementById('d-in-weapon-serial')) document.getElementById('d-in-weapon-serial').value = d.weaponSerial || '';
 
             const weaponSel = document.getElementById('d-in-weapon');
             const customInput = document.getElementById('d-in-weapon-custom');
@@ -5187,28 +5341,55 @@ var db = admin.firestore();</pre>
             showToast(`"${d.name}" ၏ လုံခြုံရေးတာဝန် အချက်အလက်အား ပြင်ဆင်ရန် ရွေးချယ်ပြီးပါပြီ`, 'info');
         }
 
-        function readDutyFormPayload() {
-            const weaponSelVal = document.getElementById('d-in-weapon')?.value || '';
-            const customWeaponVal = (document.getElementById('d-in-weapon-custom')?.value || '').trim();
-            const weaponType = weaponSelVal === 'Custom' ? (customWeaponVal || '-') : (weaponSelVal || '-');
+        function populateDutyArmorySelect() {
+            const sel = document.getElementById('d-in-armory-select');
+            if (!sel) return;
+            sel.innerHTML = `<option value="">-- ကြီးကြပ်/ကန့်သတ်စာရင်းမှ လက်နက်ရွေးချယ်ပါ --</option>` +
+                armoryData.map((item, idx) => {
+                    const wName = item.weaponType || item.name || '-';
+                    const model = item.model ? ` [${item.model}]` : '';
+                    const serial = item.serial ? ` (နံပါတ်: ${item.serial})` : '';
+                    const code = item.code ? ` {${item.code}}` : '';
+                    return `<option value="${idx}">${wName}${model}${serial}${code}</option>`;
+                }).join('');
+        }
 
+        function onArmoryDropdownSelect(idxVal) {
+            if (idxVal === '' || idxVal === undefined) return;
+            const item = armoryData[parseInt(idxVal)];
+            if (!item) return;
+            if (document.getElementById('d-in-weapon')) document.getElementById('d-in-weapon').value = item.weaponType || '';
+            if (document.getElementById('d-in-weapon-model')) document.getElementById('d-in-weapon-model').value = item.model || '';
+            if (document.getElementById('d-in-weapon-code')) document.getElementById('d-in-weapon-code').value = item.code || '';
+            if (document.getElementById('d-in-weapon-serial')) document.getElementById('d-in-weapon-serial').value = item.serial || '';
+            if (document.getElementById('d-in-quantity')) document.getElementById('d-in-quantity').value = 1;
+            if (document.getElementById('d-in-ammo')) {
+                const cur = document.getElementById('d-in-ammo').value;
+                if (!cur) document.getElementById('d-in-ammo').value = 'ကျည် ၃၀ တောင့်';
+            }
+        }
+
+        function readDutyFormPayload() {
+            const dutyTypeVal = document.getElementById('d-in-duty-type')?.value || 'တပ်တွင်းလခရ';
             return {
-                id: document.getElementById('d-in-id').value.trim(),
-                rankAbbr: document.getElementById('d-in-rank').value,
-                name: document.getElementById('d-in-name').value.trim().replace(/^(ဦး|ဒေါ်)\s*/g, ''),
-                deptAbbr: document.getElementById('d-in-dept').value,
-                staffType: document.getElementById('d-in-type').value,
-                status: 'ပျက်ကွက်',
-                absentReason: 'လုံခြုံရေးတာဝန်',
-                dutyType: document.getElementById('d-in-duty-type').value,
-                location: document.getElementById('d-in-location').value.trim() || '-',
-                weaponType,
-                weaponModel: document.getElementById('d-in-weapon-model').value.trim() || '-',
-                weaponCode: document.getElementById('d-in-weapon-code').value.trim() || '-',
-                weaponSerial: document.getElementById('d-in-weapon-serial').value.trim() || '-',
-                ammoCount: document.getElementById('d-in-ammo').value.trim() || '-',
-                startDate: document.getElementById('d-in-date').value || new Date().toISOString().split('T')[0],
-                remarks: document.getElementById('d-in-remarks').value.trim()
+                id: (document.getElementById('d-in-id')?.value || '').trim(),
+                rankAbbr: document.getElementById('d-in-rank')?.value || '',
+                name: (document.getElementById('d-in-name')?.value || '').trim(),
+                deptAbbr: document.getElementById('d-in-dept')?.value || '',
+                position: document.getElementById('d-in-position')?.value || 'စစ်သည်',
+                staffType: document.getElementById('d-in-type')?.value || 'သန္ဓေ',
+                status: document.getElementById('d-in-status')?.value || 'ပျက်ကွက်',
+                dutyType: dutyTypeVal,
+                absentReason: dutyTypeVal,
+                location: (document.getElementById('d-in-location')?.value || '').trim(),
+                weaponType: (document.getElementById('d-in-weapon')?.value || '').trim(),
+                weaponModel: (document.getElementById('d-in-weapon-model')?.value || '').trim(),
+                weaponCode: (document.getElementById('d-in-weapon-code')?.value || '').trim(),
+                weaponSerial: (document.getElementById('d-in-weapon-serial')?.value || '').trim(),
+                quantity: parseInt(document.getElementById('d-in-quantity')?.value) || 1,
+                ammoCount: (document.getElementById('d-in-ammo')?.value || '').trim(),
+                startDate: document.getElementById('d-in-date')?.value || '',
+                remarks: (document.getElementById('d-in-remarks')?.value || '').trim()
             };
         }
 
@@ -5311,7 +5492,7 @@ var db = admin.firestore();</pre>
             const typeFilter = document.getElementById('duty-filter-type')?.value || 'ALL';
 
             const filtered = securityDutyData.filter(d => {
-                const normalizedDutyType = d.dutyType === 'တပ်တွင်း' ? 'တပ်တွင်းလခရ' : (d.dutyType === 'တပ်ပြင်' ? 'တပ်ပြင်လခရ' : d.dutyType);
+                const normalizedDutyType = d.absentReason || (d.dutyType === 'တပ်တွင်း' ? 'တပ်တွင်းလခရ' : (d.dutyType === 'တပ်ပြင်' ? 'တပ်ပြင်လခရ' : d.dutyType));
                 const matchesQuery = (d.id || '').toLowerCase().includes(query) ||
                                      (d.rankAbbr || '').toLowerCase().includes(query) ||
                                      (d.name || '').toLowerCase().includes(query) ||
@@ -5329,7 +5510,7 @@ var db = admin.firestore();</pre>
             updateDutySummaryBoxes(filtered);
 
             if (filtered.length === 0) {
-                container.innerHTML = `<tr><td colspan="12" class="text-center py-8 text-slate-400">လုံခြုံရေးတာဝန် စာရင်း မရှိသေးပါ</td></tr>`;
+                container.innerHTML = `<tr><td colspan="16" class="text-center py-8 text-slate-400">လုံခြုံရေးတာဝန် စာရင်း မရှိသေးပါ</td></tr>`;
                 if (mobileContainer) {
                     mobileContainer.innerHTML = `<div class="bg-white dark:bg-slate-800 rounded-xl p-6 text-center text-slate-400 border border-slate-200 dark:border-slate-700">လုံခြုံရေးတာဝန် စာရင်း မရှိသေးပါ</div>`;
                 }
@@ -5337,60 +5518,124 @@ var db = admin.firestore();</pre>
                 return;
             }
 
-            const dTotalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
-            if (tablePageState.duty > dTotalPages) tablePageState.duty = dTotalPages;
-            const dCurrentPage = tablePageState.duty || 1;
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (tablePageState.duty > totalPages) tablePageState.duty = totalPages;
+            const dCurrentPage = tablePageState.duty;
             const dStartIdx = (dCurrentPage - 1) * ITEMS_PER_PAGE;
             const paginatedDuty = filtered.slice(dStartIdx, dStartIdx + ITEMS_PER_PAGE);
 
-            container.innerHTML = paginatedDuty.map((d, idx) => {
-                const realIndex = securityDutyData.indexOf(d);
-                return `
-                    <tr onclick="openDutyDetailDrawer(${realIndex})" class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer">
-                        <td class="p-3 text-center font-bold text-slate-600 dark:text-slate-300">${toMyanmarNumerals(dStartIdx + idx + 1)}</td>
-                        <td class="p-3 font-semibold text-slate-900 dark:text-white">${d.id}</td>
-                        <td class="p-3 font-semibold text-blue-600 dark:text-blue-400">${getRankAbbr(d.rankAbbr)}</td>
-                        <td class="p-3 font-bold text-slate-900 dark:text-white">${d.name}</td>
-                        <td class="p-3 font-semibold">${getDeptAbbr(d.deptAbbr)}</td>
-                        <td class="p-3 font-semibold text-indigo-700 dark:text-indigo-300">${d.weaponType || '-'}</td>
-                        <td class="p-3">${d.weaponModel || '-'}</td>
-                        <td class="p-3 font-mono">${d.weaponCode || '-'}</td>
-                        <td class="p-3 font-semibold">${d.weaponSerial || '-'}</td>
-                        <td class="p-3">${d.ammoCount || '-'}</td>
-                        <td class="p-3">${d.startDate || '-'}</td>
-                        <td class="p-3 text-center space-x-1" onclick="event.stopPropagation()">
-                            <button onclick="selectDutyForInlineEdit(${realIndex})" class="role-write-action p-1.5 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg transition" title="ပြင်ဆင်မည်">✏️</button>
-                            <button onclick="confirmDeleteDuty(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg transition" title="ဖျက်မည်">🗑️</button>
+            // Grouping: "ပျက်ကွက်အကြောင်းရင်း" တူသူများနှင့် "ကင်းစခန်းတည်နေရာ" တူသူများကို အုပ်စုတစ်ခုဖွဲ့ပြီး တစ်အုပ်စုအနေဖြင့် ဖော်ပြပါ
+            const groups = [];
+            const groupMap = new Map();
+
+            paginatedDuty.forEach(d => {
+                const reason = d.absentReason || (d.dutyType === 'တပ်ပြင်' || d.dutyType === 'တပ်ပြင်လခရ' ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ');
+                const loc = (d.location || '-').trim() || '-';
+                const key = `${reason}____${loc}`;
+                if (!groupMap.has(key)) {
+                    const newGroup = { reason, location: loc, items: [] };
+                    groupMap.set(key, newGroup);
+                    groups.push(newGroup);
+                }
+                groupMap.get(key).items.push(d);
+            });
+
+            let runningIdx = dStartIdx + 1;
+            let rowsHtml = '';
+
+            groups.forEach(group => {
+                rowsHtml += `
+                    <tr class="bg-blue-50/90 dark:bg-slate-700/80 text-blue-950 dark:text-blue-100 font-bold border-t-2 border-b border-blue-200 dark:border-slate-600">
+                        <td colspan="16" class="px-3.5 py-2 text-xs">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="inline-flex items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10px] font-bold">အုပ်စု</span>
+                                    <span class="text-slate-600 dark:text-slate-300 font-medium">ပျက်ကွက်အကြောင်းရင်း:</span>
+                                    <span class="font-bold text-rose-700 dark:text-rose-300">${group.reason}</span>
+                                    <span class="text-slate-400">|</span>
+                                    <span class="text-slate-600 dark:text-slate-300 font-medium">ကင်းစခန်းတည်နေရာ:</span>
+                                    <span class="font-bold text-slate-800 dark:text-slate-200">${group.location}</span>
+                                </div>
+                                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-slate-600 text-blue-800 dark:text-blue-200 text-[10px] font-bold">
+                                    အင်အား: ${toMyanmarNumerals(group.items.length)} ဦး
+                                </span>
+                            </div>
                         </td>
                     </tr>
                 `;
-            }).join('');
+
+                group.items.forEach(d => {
+                    const realIndex = securityDutyData.indexOf(d);
+                    const matchedP = personnelData.find(p => (p.id || '').trim().toLowerCase() === (d.id || '').trim().toLowerCase());
+                    const rAbbr = getRankAbbr(d.rankAbbr || matchedP?.rankAbbr || matchedP?.rankFull);
+                    const deptAbbr = getDeptAbbr(d.deptAbbr || matchedP?.deptAbbr || matchedP?.deptFull);
+                    const pos = d.position || matchedP?.position || resolvePersonnelRoleGroup(matchedP || d) || '';
+                    const staffType = d.staffType || matchedP?.staffType || '';
+                    const status = d.status || matchedP?.status || 'ပျက်ကွက်';
+                    const qty = d.quantity || 1;
+
+                    rowsHtml += `
+                        <tr onclick="openDutyDetailDrawer(${realIndex})" class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer">
+                            <td class="p-3 text-center font-bold text-slate-600 dark:text-slate-300">${toMyanmarNumerals(runningIdx++)}</td>
+                            <td class="p-3 font-semibold text-slate-900 dark:text-white">${d.id || '-'}</td>
+                            <td class="p-3 font-semibold text-blue-600 dark:text-blue-400">${rAbbr}</td>
+                            <td class="p-3 font-bold text-slate-900 dark:text-white">${d.name || '-'}</td>
+                            <td class="p-3 font-semibold">${deptAbbr}</td>
+                            <td class="p-3">${pos}</td>
+                            <td class="p-3">${staffType}</td>
+                            <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300">${status}</span></td>
+                            <td class="p-3 font-semibold text-rose-700 dark:text-rose-400">${group.reason}</td>
+                            <td class="p-3">${d.location || '-'}</td>
+                            <td class="p-3 font-semibold text-indigo-700 dark:text-indigo-300">${d.weaponType || '-'}</td>
+                            <td class="p-3 text-center">${toMyanmarNumerals(qty)}</td>
+                            <td class="p-3">${d.ammoCount || '-'}</td>
+                            <td class="p-3">${d.startDate || '-'}</td>
+                            <td class="p-3 text-slate-500">${d.remarks || '-'}</td>
+                            <td class="p-3 text-center whitespace-nowrap" onclick="event.stopPropagation()">
+                                <div class="flex items-center justify-center gap-1">
+                                    <button type="button" onclick="event.stopPropagation(); selectDutyForInlineEdit(${realIndex})" class="role-write-action p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-slate-700 rounded-lg transition" title="ပြင်ဆင်မည်" aria-label="ပြင်ဆင်မည်">
+                                        <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                                    </button>
+                                    <button type="button" onclick="event.stopPropagation(); confirmDeleteDuty(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:text-rose-800 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg transition" title="ပယ်ဖျက်မည်" aria-label="ပယ်ဖျက်မည်">
+                                        <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+
+            container.innerHTML = rowsHtml;
 
             if (mobileContainer) {
-                mobileContainer.innerHTML = paginatedDuty.map((d) => {
+                mobileContainer.innerHTML = paginatedDuty.map((d, idx) => {
                     const realIndex = securityDutyData.indexOf(d);
-                    const badgeClass = d.dutyType === 'တပ်ပြင်'
-                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800'
-                        : 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800';
+                    const matchedP = personnelData.find(p => (p.id || '').trim().toLowerCase() === (d.id || '').trim().toLowerCase());
+                    const rAbbr = getRankAbbr(d.rankAbbr || matchedP?.rankAbbr || matchedP?.rankFull);
+                    const deptAbbr = getDeptAbbr(d.deptAbbr || matchedP?.deptAbbr || matchedP?.deptFull);
+                    const reason = d.absentReason || (d.dutyType === 'တပ်ပြင်' || d.dutyType === 'တပ်ပြင်လခရ' ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ');
                     return `
-                        <div onclick="openDutyDetailDrawer(${realIndex})" class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-2 cursor-pointer">
-                            <div class="flex justify-between items-start gap-2">
+                        <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+                            <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-blue-600 dark:text-blue-400">${getRankAbbr(d.rankAbbr)}</span>
-                                    <span class="font-bold text-slate-900 dark:text-white text-sm ml-1">${d.name}</span>
-                                    <div class="text-[11px] text-slate-500 dark:text-slate-400">${d.id} &bull; ဌာန: <strong>${getDeptAbbr(d.deptAbbr)}</strong> &bull; ${d.location || '-'}</div>
+                                    <span class="text-xs font-bold text-blue-600 dark:text-blue-400">${d.id}</span>
+                                    <h4 class="font-bold text-slate-900 dark:text-white text-sm">${rAbbr} ${d.name}</h4>
+                                    <p class="text-xs text-slate-500">${deptAbbr} | ${d.location || '-'}</p>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-md font-bold text-[11px] border ${badgeClass}">${d.dutyType || 'တပ်တွင်း'}</span>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300">${reason}</span>
                             </div>
-                            <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 p-2 rounded-lg">
-                                <div>လက်နက်: <strong>${d.weaponType || '-'}</strong></div>
-                                <div>နံပါတ်: <strong>${d.weaponSerial || '-'}</strong></div>
-                                <div>ခဲယမ်း: <strong>${d.ammoCount || '-'}</strong></div>
-                                <div>ရက်စွဲ: <strong>${d.startDate || '-'}</strong></div>
+                            <div class="text-xs space-y-1 text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-600">
+                                <div>လက်နက်အမည်: <strong class="text-indigo-600 dark:text-indigo-400">${d.weaponType || '-'}</strong> (${toMyanmarNumerals(d.quantity || 1)})</div>
+                                <div>ခဲယမ်း: <strong>${d.ammoCount || '-'}</strong> | ရက်စွဲ: <strong>${d.startDate || '-'}</strong></div>
                             </div>
-                            <div class="role-write-action flex justify-end gap-1.5 pt-1 border-t dark:border-slate-700" onclick="event.stopPropagation()">
-                                <button onclick="selectDutyForInlineEdit(${realIndex})" class="px-2.5 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold text-[11px]">✏️ Edit</button>
-                                <button onclick="confirmDeleteDuty(${realIndex})" class="px-2.5 py-1 bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 rounded-lg font-bold text-[11px]">🗑️ ဖျက်မည်</button>
+                            <div class="flex justify-end gap-1.5 pt-1">
+                                <button onclick="selectDutyForInlineEdit(${realIndex})" class="role-write-action p-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700 rounded-lg" title="ပြင်ဆင်မည်">
+                                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                                </button>
+                                <button onclick="confirmDeleteDuty(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg" title="ပယ်ဖျက်မည်">
+                                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                                </button>
                             </div>
                         </div>
                     `;
@@ -5578,8 +5823,9 @@ var db = admin.firestore();</pre>
             saveSystemState();
             inlineClearPersonnel(false);
             renderPersonnelDirectory();
-            const masterFilter = document.getElementById('civilian-master-filter');
-            if (masterFilter) masterFilter.value = '';
+            const pF = document.getElementById('civilian-filter-position'); if (pF) pF.value = '';
+            const rF = document.getElementById('civilian-filter-rank'); if (rF) rF.value = '';
+            const dF = document.getElementById('civilian-filter-dept'); if (dF) dF.value = '';
             tablePageState.civilianMaster = 1;
             renderCivilianNameListMaster();
             renderDashboardView();
@@ -5828,6 +6074,164 @@ var db = admin.firestore();</pre>
             if (input) input.value = '';
         }
 
+        function populateAbsentFilterRanks() {
+            const rankSelect = document.getElementById('absent-filter-rank');
+            if (!rankSelect) return;
+            const curRank = rankSelect.value;
+            rankSelect.replaceChildren();
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = '';
+            defaultOpt.textContent = 'အားလုံးပြရန်';
+            rankSelect.appendChild(defaultOpt);
+
+            const posVal = (document.getElementById('absent-filter-position')?.value || '').trim();
+            const posToRankKey = {
+                'အရာရှိ': 'officer',
+                'စစ်သည်': 'soldier',
+                'အမြဲတမ်းဝန်ထမ်း': 'staff',
+                'အရပ်သားဝန်ထမ်း': 'civilian'
+            };
+
+            const rankCategoryLabels = {
+                officer: 'အရာရှိ',
+                soldier: 'စစ်သည်',
+                staff: 'အမြဲတမ်းဝန်ထမ်း',
+                civilian: 'အရပ်သားဝန်ထမ်း'
+            };
+
+            const specificKey = posToRankKey[posVal];
+            if (specificKey && RANK_DEFINITIONS && Array.isArray(RANK_DEFINITIONS[specificKey])) {
+                const ranks = RANK_DEFINITIONS[specificKey] || [];
+                ranks.forEach(r => {
+                    const val = (r.abbr || r.full || '').trim();
+                    if (val) {
+                        const opt = document.createElement('option');
+                        opt.value = val;
+                        opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
+                        rankSelect.appendChild(opt);
+                    }
+                });
+            } else {
+                Object.entries(RANK_DEFINITIONS || {}).forEach(([catKey, ranks]) => {
+                    if (!Array.isArray(ranks) || !ranks.length) return;
+                    const group = document.createElement('optgroup');
+                    group.label = rankCategoryLabels[catKey] || catKey;
+                    ranks.forEach(r => {
+                        const val = (r.abbr || r.full || '').trim();
+                        if (val) {
+                            const opt = document.createElement('option');
+                            opt.value = val;
+                            opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
+                            group.appendChild(opt);
+                        }
+                    });
+                    if (group.children.length) rankSelect.appendChild(group);
+                });
+            }
+
+            if (curRank && Array.from(rankSelect.options).some(o => o.value === curRank)) {
+                rankSelect.value = curRank;
+            } else {
+                rankSelect.value = '';
+            }
+        }
+
+        function onAbsentFilterPositionChange() {
+            populateAbsentFilterRanks();
+            renderAbsentSummary();
+        }
+
+        function populateAbsentFilters() {
+            const posSelect = document.getElementById('absent-filter-position');
+            const deptSelect = document.getElementById('absent-filter-dept');
+
+            if (posSelect) {
+                const curPos = posSelect.value;
+                if (posSelect.options.length <= 1) {
+                    posSelect.replaceChildren();
+                    const defaultOpt = document.createElement('option');
+                    defaultOpt.value = '';
+                    defaultOpt.textContent = 'အားလုံးပြရန်';
+                    posSelect.appendChild(defaultOpt);
+
+                    (POSITION_DEFINITIONS || []).forEach(pos => {
+                        const p = String(pos || '').trim();
+                        if (p) {
+                            const opt = document.createElement('option');
+                            opt.value = p;
+                            opt.textContent = p;
+                            posSelect.appendChild(opt);
+                        }
+                    });
+                }
+
+                if (curPos !== null && curPos !== undefined && Array.from(posSelect.options).some(o => o.value === curPos)) {
+                    posSelect.value = curPos;
+                } else {
+                    posSelect.value = '';
+                }
+            }
+
+            populateAbsentFilterRanks();
+
+            if (deptSelect) {
+                const curDept = deptSelect.value;
+                if (deptSelect.options.length <= 1) {
+                    deptSelect.replaceChildren();
+                    const defaultOpt = document.createElement('option');
+                    defaultOpt.value = '';
+                    defaultOpt.textContent = 'အားလုံးပြရန်';
+                    deptSelect.appendChild(defaultOpt);
+
+                    const depts = ['ဌနခ', 'စမရ', 'ထလရ-၁', 'ထလရ-၂', 'စဆရ'];
+                    depts.forEach(d => {
+                        const opt = document.createElement('option');
+                        opt.value = d;
+                        opt.textContent = d;
+                        deptSelect.appendChild(opt);
+                    });
+                }
+
+                if (curDept !== null && curDept !== undefined && Array.from(deptSelect.options).some(o => o.value === curDept)) {
+                    deptSelect.value = curDept;
+                } else {
+                    deptSelect.value = '';
+                }
+            }
+        }
+
+        function getAbsentFilteredPersonnel() {
+            const posFilter = document.getElementById('absent-filter-position')?.value.trim() || '';
+            const rankFilter = document.getElementById('absent-filter-rank')?.value.trim() || '';
+            const deptFilter = document.getElementById('absent-filter-dept')?.value.trim() || '';
+
+            return personnelData.filter(p => {
+                if (posFilter) {
+                    const pos = (p.position || resolvePersonnelRoleGroup(p) || '').trim();
+                    if (pos !== posFilter) return false;
+                }
+
+                if (rankFilter) {
+                    const rAbbr = (p.rankAbbr || '').trim();
+                    const rFull = (p.rankFull || '').trim();
+                    if (rAbbr !== rankFilter && rFull !== rankFilter && getRankAbbr(rFull) !== rankFilter && getRankAbbr(rAbbr) !== rankFilter) {
+                        return false;
+                    }
+                }
+
+                if (deptFilter) {
+                    const colKey = resolveAbsentDeptColumnKey(p);
+                    const dAbbr = (p.deptAbbr || '').trim();
+                    const dFull = (p.deptFull || '').trim();
+                    if (colKey !== deptFilter && dAbbr !== deptFilter && dFull !== deptFilter && getDeptAbbr(dFull) !== deptFilter && getDeptAbbr(dAbbr) !== deptFilter) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+        }
+
         function renderAbsentSummary() {
             const strengthBody = document.getElementById('absent-strength-tbody');
             const reasonsBody = document.getElementById('absent-reasons-tbody');
@@ -5835,8 +6239,11 @@ var db = admin.firestore();</pre>
             const detailBody = document.getElementById('absent-personnel-detail-tbody');
             if (!strengthBody) return;
 
-            const staffTypeFilter = document.getElementById('absent-filter-stafftype')?.value || 'ALL';
-            const filteredPersonnel = personnelData.filter(p => staffTypeFilter === 'ALL' || p.staffType === staffTypeFilter);
+            populateAbsentFilters();
+            const filteredPersonnel = getAbsentFilteredPersonnel();
+
+            const countElement = document.getElementById('absent-master-count');
+            if (countElement) countElement.textContent = toMyanmarNumerals(filteredPersonnel.length);
 
             const depts = ['ဌနခ', 'စမရ', 'ထလရ-၁', 'ထလရ-၂', 'စဆရ'];
             const totalCounts = { 'ဌနခ': 0, 'စမရ': 0, 'ထလရ-၁': 0, 'ထလရ-၂': 0, 'စဆရ': 0 };
@@ -5907,15 +6314,7 @@ var db = admin.firestore();</pre>
             }
 
             // Populate detail filters
-            const fDept = document.getElementById('absent-filter-dept');
-            const fType = document.getElementById('absent-filter-type');
             const fReason = document.getElementById('absent-filter-reason');
-            if (fDept && fDept.options.length === 0) {
-                fDept.innerHTML = `<option value="ALL">ဌာနအားလုံး</option>` + depts.map(d => `<option value="${d}">${d}</option>`).join('');
-            }
-            if (fType && fType.options.length === 0) {
-                fType.innerHTML = `<option value="ALL">အမျိုးအစားအားလုံး</option>` + staffTypeList.map(t => `<option value="${t}">${t}</option>`).join('');
-            }
             if (fReason) {
                 const curR = fReason.value || 'ALL';
                 fReason.innerHTML = `<option value="ALL">အကြောင်းအရင်းအားလုံး</option>` + allReasons.map(r => `<option value="${r}">${r}</option>`).join('');
@@ -5923,17 +6322,13 @@ var db = admin.firestore();</pre>
             }
 
             const q = (document.getElementById('absent-search')?.value || '').trim().toLowerCase();
-            const dVal = fDept?.value || 'ALL';
-            const tVal = fType?.value || 'ALL';
             const rVal = fReason?.value || 'ALL';
 
             const absentPeople = filteredPersonnel.filter(p => {
                 if (p.status !== 'ပျက်ကွက်') return false;
-                const matchesQ = (p.id || '').toLowerCase().includes(q) || (p.name || '').toLowerCase().includes(q) || (p.absentReason || '').toLowerCase().includes(q);
-                const matchesD = dVal === 'ALL' || resolveAbsentDeptColumnKey(p) === dVal;
-                const matchesT = tVal === 'ALL' || p.staffType === tVal;
+                const matchesQ = !q || (p.id || '').toLowerCase().includes(q) || (p.name || '').toLowerCase().includes(q) || (p.absentReason || '').toLowerCase().includes(q);
                 const matchesR = rVal === 'ALL' || (p.absentReason || 'အခြား') === rVal;
-                return matchesQ && matchesD && matchesT && matchesR;
+                return matchesQ && matchesR;
             }).sort(compareByRankSeniority);
 
             const badge = document.getElementById('absent-detail-count-badge');
@@ -5947,21 +6342,34 @@ var db = admin.firestore();</pre>
 
             if (detailBody) {
                 if (absentPeople.length === 0) {
-                    detailBody.innerHTML = `<tr><td colspan="10" class="text-center py-6 text-slate-400">ပျက်ကွက်ဝန်ထမ်း စာရင်း မရှိပါ</td></tr>`;
+                    detailBody.innerHTML = `<tr><td colspan="11" class="text-center py-6 text-slate-400">ပျက်ကွက်ဝန်ထမ်း စာရင်း မရှိပါ</td></tr>`;
                 } else {
                     detailBody.innerHTML = paginatedAbsent.map((p, idx) => {
                         const realIndex = personnelData.indexOf(p);
                         const rAbbr = getRankAbbr(p.rankFull || p.rankAbbr);
+                        const deptAbbr = getDeptAbbr(p.deptFull || p.deptAbbr);
+                        const pos = p.position || resolvePersonnelRoleGroup(p) || '';
                         return `
-                            <tr onclick="openPersonnelDetail(${realIndex})" class="hover:bg-rose-50/50 dark:hover:bg-slate-700/50 cursor-pointer">
-                                <td class="p-3 text-center font-bold">${toMyanmarNumerals(abStart + idx + 1)}</td>
-                                <td class="p-3 font-semibold">${p.id}</td>
+                            <tr onclick="openPersonnelDetail(${realIndex})" class="hover:bg-rose-50/50 dark:hover:bg-slate-700/50 cursor-pointer text-slate-800 dark:text-slate-200">
+                                <td class="p-3 text-center font-bold text-slate-600 dark:text-slate-300">${toMyanmarNumerals(abStart + idx + 1)}</td>
+                                <td class="p-3 font-semibold">${p.id || '-'}</td>
                                 <td class="p-3 text-blue-600 dark:text-blue-400 font-semibold">${rAbbr}</td>
-                                <td class="p-3 text-slate-800 dark:text-slate-200">${p.status || 'ပျက်ကွက်'}</td>
-                                <td class="p-3 text-slate-800 dark:text-slate-200">${p.absentReason || '-'}</td>
+                                <td class="p-3 font-bold text-slate-900 dark:text-white">${p.name || '-'}</td>
+                                <td class="p-3">${deptAbbr}</td>
+                                <td class="p-3">${pos}</td>
+                                <td class="p-3">${p.staffType || '-'}</td>
+                                <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300">${p.status || 'ပျက်ကွက်'}</span></td>
+                                <td class="p-3 font-semibold text-rose-700 dark:text-rose-400">${p.absentReason || '-'}</td>
                                 <td class="p-3 text-slate-500">${p.remarks || '-'}</td>
-                                <td class="p-3 text-center" onclick="event.stopPropagation()">
-                                    <button onclick="openPersonnelForm(${realIndex})" class="role-write-action p-1 bg-amber-50 text-amber-700 rounded-lg font-bold" title="ပြင်ဆင်မည်">✏️</button>
+                                <td class="p-3 text-center whitespace-nowrap" onclick="event.stopPropagation()">
+                                    <div class="flex items-center justify-center gap-1">
+                                        <button type="button" onclick="event.stopPropagation(); openPersonnelForm(${realIndex})" class="role-write-action p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-slate-700 rounded-lg transition" title="ပြင်ဆင်မည်" aria-label="ပြင်ဆင်မည်">
+                                            <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                                        </button>
+                                        <button type="button" onclick="event.stopPropagation(); confirmDeletePersonnel(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:text-rose-800 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg transition" title="ပယ်ဖျက်မည်" aria-label="ပယ်ဖျက်မည်">
+                                            <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         `;
@@ -6071,33 +6479,85 @@ var db = admin.firestore();</pre>
                 const offCnt = deptPeople.filter(p => resolvePersonnelRoleGroup(p) === 'အရာရှိ').length;
                 const solCnt = deptPeople.filter(p => resolvePersonnelRoleGroup(p) === 'စစ်သည်').length;
                 const staffCnt = deptPeople.filter(p => resolvePersonnelRoleGroup(p) === 'အမြဲတမ်းဝန်ထမ်း').length;
+                const civCnt = deptPeople.filter(p => resolvePersonnelRoleGroup(p) === 'အရပ်သားဝန်ထမ်း').length;
                 const milBase = offCnt + solCnt;
-                const deptDuty = securityDutyData.filter(sd => getDeptAbbr(sd.deptAbbr) === d.abbr);
-                const inDutyCnt = deptDuty.filter(sd => sd.dutyType === 'တပ်တွင်း' || sd.dutyType === 'တပ်တွင်းလခရ').length;
-                const outDutyCnt = deptDuty.filter(sd => sd.dutyType === 'တပ်ပြင်' || sd.dutyType === 'တပ်ပြင်လခရ').length;
+                const deptDuty = securityDutyData.filter(sd => getDeptAbbr(sd.deptAbbr || sd.deptFull || sd.dept) === d.abbr);
+                const inDutyCnt = deptDuty.filter(sd => (sd.dutyType || '').includes('တပ်တွင်း') || (sd.absentReason || '').includes('တပ်တွင်း')).length;
+                const outDutyCnt = deptDuty.filter(sd => (sd.dutyType || '').includes('တပ်ပြင်') || (sd.absentReason || '').includes('တပ်ပြင်')).length;
                 const dutyRatioPct = milBase > 0 ? Math.round(((inDutyCnt + outDutyCnt) / milBase) * 100) : 0;
-                return { abbr: d.abbr, full: d.full, offCnt, solCnt, staffCnt, inDutyCnt, outDutyCnt, milBase, dutyRatioPct };
+                return { abbr: d.abbr, full: d.full, offCnt, solCnt, staffCnt, civCnt, inDutyCnt, outDutyCnt, milBase, dutyRatioPct, totalDept: deptPeople.length };
             });
 
             if (personnelCompositionChartEl) {
                 const groups = [
                     { label: 'အရာရှိ', key: 'offCnt', total: officers, color: 'bg-blue-600' },
                     { label: 'စစ်သည်', key: 'solCnt', total: soldiers, color: 'bg-amber-500' },
-                    { label: 'အမြဲတမ်းဝန်ထမ်း', key: 'staffCnt', total: staff, color: 'bg-emerald-500' }
+                    { label: 'အမြဲတမ်းဝန်ထမ်း', key: 'staffCnt', total: staff, color: 'bg-emerald-500' },
+                    { label: 'အရပ်သားဝန်ထမ်း', key: 'civCnt', total: civilians, color: 'bg-purple-600' }
                 ];
 
-                personnelCompositionChartEl.innerHTML = deptStats.map(dept => `
-                    <div class="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-xl border border-slate-200 dark:border-slate-600 space-y-2.5">
-                        <h4 class="font-bold text-slate-900 dark:text-white" title="${dept.full}">${dept.abbr}</h4>
+                // Specific font colors requested by user:
+                // ဌနခ: မူလအရောင်အတိုင်း
+                // စမရ: အပြာရောင် (#2563eb)
+                // ထလရ-၁: အနီရင့်ရောင် (#b91c1c)
+                // ထလရ-၂: ပန်းရောင် (#db2777)
+                // စဆရ: အစိမ်းရင့်ရင့်ရောင် (#15803d)
+                const deptColorTheme = {
+                    'ဌနခ': {
+                        textColor: '',
+                        titleClass: 'text-slate-900 dark:text-white',
+                        totalClass: 'text-slate-500 dark:text-slate-400',
+                        labelClass: 'text-slate-600 dark:text-slate-300',
+                        countClass: 'text-slate-800 dark:text-slate-200'
+                    },
+                    'စမရ': {
+                        textColor: '#2563eb',
+                        titleClass: 'text-blue-600 dark:text-blue-400',
+                        totalClass: 'text-blue-600 dark:text-blue-300',
+                        labelClass: 'text-blue-600 dark:text-blue-400',
+                        countClass: 'text-blue-700 dark:text-blue-300'
+                    },
+                    'ထလရ-၁': {
+                        textColor: '#b91c1c',
+                        titleClass: 'text-red-700 dark:text-red-400',
+                        totalClass: 'text-red-700 dark:text-red-300',
+                        labelClass: 'text-red-700 dark:text-red-400',
+                        countClass: 'text-red-800 dark:text-red-300'
+                    },
+                    'ထလရ-၂': {
+                        textColor: '#db2777',
+                        titleClass: 'text-pink-600 dark:text-pink-400',
+                        totalClass: 'text-pink-600 dark:text-pink-300',
+                        labelClass: 'text-pink-600 dark:text-pink-400',
+                        countClass: 'text-pink-700 dark:text-pink-300'
+                    },
+                    'စဆရ': {
+                        textColor: '#15803d',
+                        titleClass: 'text-emerald-800 dark:text-emerald-400',
+                        totalClass: 'text-emerald-800 dark:text-emerald-300',
+                        labelClass: 'text-emerald-800 dark:text-emerald-400',
+                        countClass: 'text-emerald-900 dark:text-emerald-300'
+                    }
+                };
+
+                personnelCompositionChartEl.innerHTML = deptStats.map(dept => {
+                    const theme = deptColorTheme[dept.abbr] || deptColorTheme['ဌနခ'];
+                    const styleAttr = theme.textColor ? `style="color: ${theme.textColor} !important;"` : '';
+                    return `
+                    <div class="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-xl border border-slate-200 dark:border-slate-600 space-y-2.5" ${styleAttr}>
+                        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-600 pb-1.5">
+                            <h4 class="dept-title-bold font-bold text-xs ${theme.titleClass}" style="font-weight: 700 !important; ${theme.textColor ? 'color: ' + theme.textColor + ' !important;' : ''}" title="${dept.full}">${dept.abbr}</h4>
+                            <span class="dept-total-bold text-[11px] font-bold ${theme.totalClass}" style="font-weight: 700 !important; ${theme.textColor ? 'color: ' + theme.textColor + ' !important;' : ''}">စုစုပေါင်း: ${toMyanmarNumerals(dept.totalDept)} ဦး</span>
+                        </div>
                         ${groups.map(group => {
-                            const count = dept[group.key];
+                            const count = dept[group.key] || 0;
                             const percentage = group.total > 0 ? (count / group.total) * 100 : 0;
                             const displayPercentage = Number(percentage.toFixed(1));
                             return `
                                 <div class="space-y-1">
                                     <div class="flex items-center justify-between gap-2">
-                                        <span class="text-slate-600 dark:text-slate-300">${group.label}</span>
-                                        <span class="font-semibold text-slate-800 dark:text-slate-200">${toMyanmarNumerals(count)} ဦး · ${toMyanmarNumerals(displayPercentage)}%</span>
+                                        <span class="${theme.labelClass} text-xs font-medium" ${styleAttr}>${group.label}</span>
+                                        <span class="font-semibold ${theme.countClass} text-xs" ${styleAttr}>${toMyanmarNumerals(count)} ဦး · ${toMyanmarNumerals(displayPercentage)}%</span>
                                     </div>
                                     <div class="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-600 overflow-hidden">
                                         <div class="${group.color} h-full rounded-full" style="width:${percentage}%" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${displayPercentage}" aria-label="${dept.abbr} - ${group.label}: ${count} ဦး၊ ${displayPercentage}%"></div>
@@ -6106,7 +6566,7 @@ var db = admin.firestore();</pre>
                             `;
                         }).join('')}
                     </div>
-                `).join('');
+                `;}).join('');
             }
 
             if (compChartEl) {
@@ -6380,9 +6840,7 @@ var db = admin.firestore();</pre>
 
         function exportAbsentExcel() {
             if (!ensureExcelLibrary()) return;
-            const filterSel = document.getElementById('absent-filter-stafftype');
-            const staffTypeFilter = filterSel?.value || 'ALL';
-            const filteredPersonnel = personnelData.filter(p => staffTypeFilter === 'ALL' || p.staffType === staffTypeFilter);
+            const filteredPersonnel = getAbsentFilteredPersonnel();
 
             const makeDeptCounter = () => ({ 'ဌနခ': 0, 'စမရ': 0, 'ထလရ-၁': 0, 'ထလရ-၂': 0, 'စဆရ': 0, total: 0 });
             const totalCounts = makeDeptCounter();
@@ -6478,18 +6936,14 @@ var db = admin.firestore();</pre>
 
             // Table 3: ပျက်ကွက်အမည်စာရင်း အသေးစိတ် (matching current table filters & columns)
             const q = (document.getElementById('absent-search')?.value || '').trim().toLowerCase();
-            const dVal = document.getElementById('absent-filter-dept')?.value || 'ALL';
-            const tVal = document.getElementById('absent-filter-type')?.value || 'ALL';
             const rVal = document.getElementById('absent-filter-reason')?.value || 'ALL';
 
             const absentDetailRows = filteredPersonnel
                 .filter(p => {
                     if (p.status !== 'ပျက်ကွက်') return false;
-                    const matchesQ = (p.id || '').toLowerCase().includes(q) || (p.name || '').toLowerCase().includes(q) || (p.absentReason || '').toLowerCase().includes(q);
-                    const matchesD = dVal === 'ALL' || resolveAbsentDeptColumnKey(p) === dVal;
-                    const matchesT = tVal === 'ALL' || p.staffType === tVal;
+                    const matchesQ = !q || (p.id || '').toLowerCase().includes(q) || (p.name || '').toLowerCase().includes(q) || (p.absentReason || '').toLowerCase().includes(q);
                     const matchesR = rVal === 'ALL' || (p.absentReason || 'အခြား') === rVal;
-                    return matchesQ && matchesD && matchesT && matchesR;
+                    return matchesQ && matchesR;
                 })
                 .sort(compareByRankSeniority)
                 .map((p, idx) => ({
@@ -6595,16 +7049,17 @@ var db = admin.firestore();</pre>
 
         function exportCivilianMasterExcel() {
             if (!ensureExcelLibrary()) return;
-            const records = getCivilianMasterRecords().map(person => ({
+            const records = getCivilianMasterRecords().map((person, idx) => ({
+                'စဉ်': idx + 1,
                 'ကိုယ်ပိုင်အမှတ်': person.id || '',
                 'အဆင့်': person.rankAbbr || person.rankFull || '',
                 'ဝန်ထမ်းအမည်': person.name || '',
                 'ဌာနအမည်': person.deptFull || person.deptAbbr || '',
-                'ရာထူး': person.position || '',
+                'ရာထူး': person.position || resolvePersonnelRoleGroup(person) || '',
                 'ကျား/မ': person.gender || '',
+                'ဝန်ထမ်းအမျိုးအစား': person.staffType || '',
                 'လက်ရှိအခြေအနေ': person.status || '',
                 'ပျက်ကွက်အကြောင်းရင်း': person.status === 'ပျက်ကွက်' ? (person.absentReason || '') : '',
-                'ဝန်ထမ်းအမျိုးအစား': person.staffType || '',
                 'မွေးသက္ကရာဇ်': person.dob || '',
                 'နိုင်ငံသားစိစစ်ရေးကတ်အမှတ်': person.nrc || '',
                 'အဘအမည်': person.fatherName || '',
@@ -6615,10 +7070,11 @@ var db = admin.firestore();</pre>
                 'ဖုန်းနံပါတ်': person.phone || '',
                 'မှတ်ချက်': person.remarks || ''
             }));
-            const ws = XLSX.utils.json_to_sheet(records.length ? records : [{ 'မှတ်ချက်': 'စာရင်း မရှိပါ' }]);
+            const ws = XLSX.utils.json_to_sheet(records);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Name_List_Master');
-            const fileName = `Name_List_Master_${new Date().toISOString().split('T')[0]}.xlsx`;
+            const filePrefix = activePositionFilter ? `${activePositionFilter}_Name_List` : 'Name_List_Master';
+            const fileName = `${filePrefix}_${new Date().toISOString().split('T')[0]}.xlsx`;
             saveWorkbookToLocal(wb, fileName, 'Name List Master Excel ဖိုင် သိမ်းဆည်းပြီးပါပြီ');
         }
 
@@ -6662,8 +7118,11 @@ var db = admin.firestore();</pre>
                 person.phone,
                 person.remarks
             ]);
-            const filterSelect = document.getElementById('civilian-master-filter');
-            const filterLabel = filterSelect?.selectedOptions[0]?.textContent || 'အားလုံးပြရန်';
+            const posVal = document.getElementById('civilian-filter-position')?.value || activePositionFilter || '';
+            const rankVal = document.getElementById('civilian-filter-rank')?.value || '';
+            const deptVal = document.getElementById('civilian-filter-dept')?.value || '';
+            const filterParts = [posVal, rankVal, deptVal].filter(Boolean);
+            const filterLabel = filterParts.length ? filterParts.join(' / ') : 'အားလုံး';
             const tableHeader = headers.map(header => `<th>${escapeHtml(header)}</th>`).join('');
             const tableRows = rows.length
                 ? rows.map(row => `<tr>${row.map(value => `<td>${escapeHtml(value === undefined || value === null || value === '' ? '-' : value)}</td>`).join('')}</tr>`).join('')
@@ -6709,6 +7168,7 @@ var db = admin.firestore();</pre>
             const typeFilter = document.getElementById('duty-filter-type')?.value || 'ALL';
 
             const filteredDuty = securityDutyData.filter(d => {
+                const normalizedDutyType = d.absentReason || (d.dutyType === 'တပ်တွင်း' ? 'တပ်တွင်းလခရ' : (d.dutyType === 'တပ်ပြင်' ? 'တပ်ပြင်လခရ' : d.dutyType));
                 const matchesQuery = !query ||
                                      (d.id || '').toLowerCase().includes(query) ||
                                      (d.rankAbbr || '').toLowerCase().includes(query) ||
@@ -6718,29 +7178,34 @@ var db = admin.firestore();</pre>
                                      (d.weaponType || '').toLowerCase().includes(query) ||
                                      (d.weaponSerial || '').toLowerCase().includes(query) ||
                                      (d.remarks || '').toLowerCase().includes(query);
-                const matchesDutyType = dutyTypeFilter === 'ALL' || d.dutyType === dutyTypeFilter;
+                const matchesDutyType = dutyTypeFilter === 'ALL' || d.dutyType === dutyTypeFilter || normalizedDutyType === dutyTypeFilter;
                 const matchesDept = deptFilter === 'ALL' || getDeptAbbr(d.deptAbbr) === deptFilter;
                 const matchesType = typeFilter === 'ALL' || d.staffType === typeFilter;
                 return matchesQuery && matchesDutyType && matchesDept && matchesType;
             });
 
-            const exportRows = [...filteredDuty].sort(compareByRankSeniority).map((d, idx) => ({
-                'စဉ်': idx + 1,
-                'ကိုယ်ပိုင်အမှတ်': d.id || '',
-                'အဆင့်': getRankAbbr(d.rankAbbr),
-                'အမည်': d.name || '',
-                'ဌာန': getDeptAbbr(d.deptAbbr),
-                'လုံခြုံရေးအမျိုးအစား': d.dutyType || '',
-                'လုံခြုံရေးတည်နေရာ': d.location || '',
-                'လက်နက်အမျိုးအစား': d.weaponType || '-',
-                'မော်ဒယ်': d.weaponModel || '-',
-                'ကုတ်အမှတ်': d.weaponCode || '-',
-                'လက်နက်နံပါတ်': d.weaponSerial || '-',
-                'ခဲယမ်း': d.ammoCount || '-',
-                'ရက်စွဲ': d.startDate || '-',
-                'မှတ်ချက်': d.remarks || ''
-            }));
-            const ws = XLSX.utils.json_to_sheet(exportRows.length ? exportRows : [{ 'မှတ်ချက်': 'စာရင်း မရှိပါ' }]);
+            const exportRows = [...filteredDuty].sort(compareByRankSeniority).map((d, idx) => {
+                const matchedP = personnelData.find(p => (p.id || '').trim().toLowerCase() === (d.id || '').trim().toLowerCase());
+                return {
+                    'စဉ်': idx + 1,
+                    'ကိုယ်ပိုင်အမှတ်': d.id || '',
+                    'အဆင့်': getRankAbbr(d.rankAbbr || matchedP?.rankAbbr),
+                    'ဝန်ထမ်းအမည်': d.name || '',
+                    'ဌာနအမည်': getDeptAbbr(d.deptAbbr || matchedP?.deptAbbr),
+                    'ရာထူး': d.position || matchedP?.position || resolvePersonnelRoleGroup(matchedP || d) || '',
+                    'ဝန်ထမ်းအမျိုးအစား': d.staffType || matchedP?.staffType || '',
+                    'လက်ရှိအခြေအနေ': d.status || matchedP?.status || 'ပျက်ကွက်',
+                    'ပျက်ကွက်အကြောင်းရင်း': d.absentReason || (d.dutyType === 'တပ်ပြင်' || d.dutyType === 'တပ်ပြင်လခရ' ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ'),
+                    'ကင်းစခန်းတည်နေရာ': d.location || '',
+                    'အမည်': d.weaponType || '-',
+                    'အရေအတွက်': d.quantity || 1,
+                    'ခဲယမ်း': d.ammoCount || '-',
+                    'ရက်စွဲ': d.startDate || '',
+                    'မှတ်ချက်': d.remarks || ''
+                };
+            });
+
+            const ws = XLSX.utils.json_to_sheet(exportRows);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Security_Duty');
             saveWorkbookToLocal(wb, `Security_Duty_Roster_${new Date().toISOString().split('T')[0]}.xlsx`, 'လုံခြုံရေးတာဝန် စာရင်း Local Excel ဖိုင် သိမ်းဆည်းပြီးပါပြီ');
@@ -6799,6 +7264,7 @@ var db = admin.firestore();</pre>
             if (statusEl) statusEl.value = 'ပျက်ကွက်';
 
             populateDutyWeaponDropdown();
+            populateDutyArmorySelect();
             syncInlineDutyRanks();
             updateDutySummaryBoxes(securityDutyData);
         }
@@ -7070,65 +7536,173 @@ var db = admin.firestore();</pre>
             }
         }
 
-        function populateCivilianMasterFilter() {
-            const select = document.getElementById('civilian-master-filter');
-            if (!select) return;
-            const selectedValue = select.value;
-            const rankOptions = Object.values(RANK_DEFINITIONS || {}).flatMap(ranks =>
-                (Array.isArray(ranks) ? ranks : []).map(rank => rank.abbr)
-            );
-            const groups = [
-                ['ဌာနအမည်', (DEPT_MAPPING || []).map(dept => dept.abbr)],
-                ['အဆင့်', rankOptions],
-                ['ဝန်ထမ်းအမျိုးအစား', staffTypeList],
-                ['လက်ရှိအခြေအနေ', statusList],
-                ['နေရပ်အမျိုးအစား', addressTypeList],
-                ['လုံခြုံရေးတာဝန်အမျိုးအစား', securityDutyTypeList],
-                ['ကြီးကြပ်/ကန့်သတ်အမျိုးအစား', armoryCategoryList],
-                ['ကြီးကြပ်/ကန့်သတ်အခြေအနေ', armoryStatusList],
-                ['လူမျိုး', raceList],
-                ['ဘာသာ', religionList]
-            ];
-            select.replaceChildren();
-            const allOption = document.createElement('option');
-            allOption.value = '';
-            allOption.textContent = 'အားလုံးပြရန်';
-            select.appendChild(allOption);
-            groups.forEach(([label, values]) => {
-                const group = document.createElement('optgroup');
-                group.label = label;
-                [...new Set(values.filter(value => value !== undefined && value !== null && String(value).trim()).map(String))].forEach(value => {
-                    const option = document.createElement('option');
-                    option.value = value;
-                    option.textContent = value;
-                    group.appendChild(option);
+        function onCivilianFilterPositionChange() {
+            const posVal = document.getElementById('civilian-filter-position')?.value;
+            activePositionFilter = (posVal !== undefined && posVal !== null) ? posVal.trim() : '';
+            populateCivilianFilterRanks();
+            renderCivilianNameListMaster();
+        }
+
+        function populateCivilianFilterRanks() {
+            const rankSelect = document.getElementById('civilian-filter-rank');
+            if (!rankSelect) return;
+            const curRank = rankSelect.value;
+            rankSelect.replaceChildren();
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = '';
+            defaultOpt.textContent = 'အားလုံးပြရန်';
+            rankSelect.appendChild(defaultOpt);
+
+            const posVal = (document.getElementById('civilian-filter-position')?.value ?? activePositionFilter ?? '').trim();
+            const posToRankKey = {
+                'အရာရှိ': 'officer',
+                'စစ်သည်': 'soldier',
+                'အမြဲတမ်းဝန်ထမ်း': 'staff',
+                'အရပ်သားဝန်ထမ်း': 'civilian'
+            };
+
+            const rankCategoryLabels = {
+                officer: 'အရာရှိ',
+                soldier: 'စစ်သည်',
+                staff: 'အမြဲတမ်းဝန်ထမ်း',
+                civilian: 'အရပ်သားဝန်ထမ်း'
+            };
+
+            const specificKey = posToRankKey[posVal];
+            if (specificKey && RANK_DEFINITIONS && Array.isArray(RANK_DEFINITIONS[specificKey])) {
+                const ranks = RANK_DEFINITIONS[specificKey] || [];
+                ranks.forEach(r => {
+                    const val = (r.abbr || r.full || '').trim();
+                    if (val) {
+                        const opt = document.createElement('option');
+                        opt.value = val;
+                        opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
+                        rankSelect.appendChild(opt);
+                    }
                 });
-                if (group.children.length) select.appendChild(group);
-            });
-            if (Array.from(select.options).some(option => option.value === selectedValue)) {
-                select.value = selectedValue;
             } else {
-                select.value = '';
+                Object.entries(RANK_DEFINITIONS || {}).forEach(([catKey, ranks]) => {
+                    if (!Array.isArray(ranks) || !ranks.length) return;
+                    const group = document.createElement('optgroup');
+                    group.label = rankCategoryLabels[catKey] || catKey;
+                    ranks.forEach(r => {
+                        const val = (r.abbr || r.full || '').trim();
+                        if (val) {
+                            const opt = document.createElement('option');
+                            opt.value = val;
+                            opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
+                            group.appendChild(opt);
+                        }
+                    });
+                    if (group.children.length) rankSelect.appendChild(group);
+                });
+            }
+
+            if (curRank && Array.from(rankSelect.options).some(o => o.value === curRank)) {
+                rankSelect.value = curRank;
+            } else {
+                rankSelect.value = '';
             }
         }
 
+        function populateCivilianMasterFilters() {
+            const posSelect = document.getElementById('civilian-filter-position');
+            const deptSelect = document.getElementById('civilian-filter-dept');
+
+            if (posSelect) {
+                const curPos = posSelect.value;
+                if (posSelect.options.length <= 1) {
+                    posSelect.replaceChildren();
+                    const defaultOpt = document.createElement('option');
+                    defaultOpt.value = '';
+                    defaultOpt.textContent = 'အားလုံးပြရန်';
+                    posSelect.appendChild(defaultOpt);
+
+                    (POSITION_DEFINITIONS || []).forEach(pos => {
+                        const p = String(pos || '').trim();
+                        if (p) {
+                            const opt = document.createElement('option');
+                            opt.value = p;
+                            opt.textContent = p;
+                            posSelect.appendChild(opt);
+                        }
+                    });
+                }
+
+                if (curPos !== null && curPos !== undefined && Array.from(posSelect.options).some(o => o.value === curPos)) {
+                    posSelect.value = curPos;
+                } else if (activePositionFilter && Array.from(posSelect.options).some(o => o.value === activePositionFilter)) {
+                    posSelect.value = activePositionFilter;
+                } else {
+                    posSelect.value = '';
+                }
+            }
+
+            populateCivilianFilterRanks();
+
+            if (deptSelect) {
+                const curDept = deptSelect.value;
+                if (deptSelect.options.length <= 1) {
+                    deptSelect.replaceChildren();
+                    const defaultOpt = document.createElement('option');
+                    defaultOpt.value = '';
+                    defaultOpt.textContent = 'အားလုံးပြရန်';
+                    deptSelect.appendChild(defaultOpt);
+
+                    (DEPT_MAPPING || []).forEach(dept => {
+                        const abbr = (dept.abbr || '').trim();
+                        const full = (dept.full || '').trim();
+                        const val = abbr || full;
+                        if (val) {
+                            const opt = document.createElement('option');
+                            opt.value = abbr || full;
+                            opt.textContent = abbr && full && abbr !== full ? `${abbr} - ${full}` : val;
+                            deptSelect.appendChild(opt);
+                        }
+                    });
+                }
+
+                if (curDept !== null && curDept !== undefined && Array.from(deptSelect.options).some(o => o.value === curDept)) {
+                    deptSelect.value = curDept;
+                } else {
+                    deptSelect.value = '';
+                }
+            }
+        }
+
+        function populateCivilianMasterFilter() {
+            populateCivilianMasterFilters();
+        }
+
         function getCivilianMasterRecords() {
-            const filterValue = document.getElementById('civilian-master-filter')?.value.trim().toLocaleLowerCase() || '';
+            const posSelect = document.getElementById('civilian-filter-position');
+            const posFilter = (posSelect ? posSelect.value : (activePositionFilter ?? '')).trim();
+            const rankFilter = document.getElementById('civilian-filter-rank')?.value.trim() || '';
+            const deptFilter = document.getElementById('civilian-filter-dept')?.value.trim() || '';
+
+            const targetPos = posFilter;
+
             return personnelData
                 .filter(person => {
                     const pos = (person.position || resolvePersonnelRoleGroup(person) || '').trim();
-                    if (activePositionFilter && pos !== activePositionFilter) {
+                    if (targetPos && pos !== targetPos) {
                         return false;
                     }
-                    if (!filterValue) return true;
-                    const searchableValues = [
-                        person.id, person.rankAbbr, person.rankFull, person.name,
-                        person.deptFull, person.deptAbbr, pos, person.gender,
-                        person.status, person.absentReason, person.staffType, person.dob,
-                        person.nrc, person.fatherName, person.motherName, person.address,
-                        person.addressType, person.race, person.religion, person.phone, person.remarks
-                    ];
-                    return searchableValues.some(value => String(value || '').toLocaleLowerCase().includes(filterValue));
+                    if (rankFilter) {
+                        const rAbbr = (person.rankAbbr || '').trim();
+                        const rFull = (person.rankFull || '').trim();
+                        if (rAbbr !== rankFilter && rFull !== rankFilter && getRankAbbr(rFull) !== rankFilter && getRankAbbr(rAbbr) !== rankFilter) {
+                            return false;
+                        }
+                    }
+                    if (deptFilter) {
+                        const dAbbr = (person.deptAbbr || '').trim();
+                        const dFull = (person.deptFull || '').trim();
+                        if (dAbbr !== deptFilter && dFull !== deptFilter && getDeptAbbr(dFull) !== deptFilter && getDeptAbbr(dAbbr) !== deptFilter) {
+                            return false;
+                        }
+                    }
+                    return true;
                 })
                 .sort(compareByRankSeniority);
         }
@@ -7141,10 +7715,16 @@ var db = admin.firestore();</pre>
                 getDeptAbbr(person.deptAbbr || person.deptFull),
                 person.position || resolvePersonnelRoleGroup(person) || '',
                 person.gender,
-                person.status,
-                person.status === 'ပျက်ကွက်' ? person.absentReason : '',
                 person.staffType,
+                person.status,
+                person.status === 'ပျက်ကွက်' ? (person.absentReason || '') : '',
+                person.dob,
+                person.nrc,
+                person.fatherName,
+                person.motherName,
                 person.address,
+                person.race,
+                person.religion,
                 person.phone,
                 person.remarks
             ];
@@ -7168,9 +7748,10 @@ var db = admin.firestore();</pre>
             if (!personnelRecords.length) {
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
-                cell.colSpan = 13;
+                cell.colSpan = 20;
                 cell.className = 'px-3 py-8 text-center text-slate-400';
-                cell.textContent = document.getElementById('civilian-master-filter')?.value
+                const hasFilter = !!(document.getElementById('civilian-filter-position')?.value || document.getElementById('civilian-filter-rank')?.value || document.getElementById('civilian-filter-dept')?.value || activePositionFilter);
+                cell.textContent = hasFilter
                     ? 'စစ်ထုတ်မှုနှင့် ကိုက်ညီသော အချက်အလက် မရှိပါ'
                     : 'ဝန်ထမ်းအမည်စာရင်း မရှိသေးပါ';
                 row.appendChild(cell);
@@ -7179,7 +7760,7 @@ var db = admin.firestore();</pre>
                 return;
             }
 
-            paginatedPersonnel.forEach(person => {
+            paginatedPersonnel.forEach((person, index) => {
                 const values = getCivilianMasterDisplayValues(person);
                 const row = document.createElement('tr');
                 row.className = 'text-slate-800 dark:text-slate-200 cursor-pointer hover:bg-blue-50/60 dark:hover:bg-slate-700/50';
@@ -7187,6 +7768,14 @@ var db = admin.firestore();</pre>
                 row.setAttribute('role', 'button');
                 row.setAttribute('aria-haspopup', 'dialog');
                 row.title = 'အသေးစိတ်ကြည့်ရန်';
+
+                // 1. စဉ် (Index)
+                const numCell = document.createElement('td');
+                numCell.className = 'px-3 py-2 text-center font-bold text-slate-600 dark:text-slate-300';
+                numCell.textContent = toMyanmarNumerals(startIndex + index + 1);
+                row.appendChild(numCell);
+
+                // 2-19. Values
                 values.forEach(value => {
                     const cell = document.createElement('td');
                     cell.className = 'px-3 py-2';
@@ -7194,20 +7783,22 @@ var db = admin.firestore();</pre>
                     row.appendChild(cell);
                 });
 
-                const detailButtonCell = document.createElement('td');
-                detailButtonCell.className = 'px-3 py-2 text-center';
-                const detailButton = document.createElement('button');
-                detailButton.type = 'button';
-                detailButton.className = 'inline-flex items-center justify-center w-7 h-7 rounded-full text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-slate-600 font-bold text-lg leading-none';
-                detailButton.textContent = '>';
-                detailButton.setAttribute('aria-label', `${person.name || person.id || 'ဝန်ထမ်း'} ၏ အသေးစိတ်ကြည့်ရန်`);
-                detailButton.title = 'အသေးစိတ်ကြည့်ရန်';
-                detailButton.addEventListener('click', event => {
-                    event.stopPropagation();
-                    openCivilianMasterDetailModal(person, values);
-                });
-                detailButtonCell.appendChild(detailButton);
-                row.appendChild(detailButtonCell);
+                // 20. Action Buttons (Edit, Delete icon-only)
+                const realIndex = personnelData.indexOf(person);
+                const actionCell = document.createElement('td');
+                actionCell.className = 'px-3 py-2 text-center whitespace-nowrap';
+                actionCell.onclick = e => e.stopPropagation();
+                actionCell.innerHTML = `
+                    <div class="flex items-center justify-center gap-1">
+                        <button type="button" onclick="event.stopPropagation(); openPersonnelForm(${realIndex}, true)" class="role-write-action p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-slate-700 rounded-lg transition" title="ပြင်ဆင်မည်" aria-label="ပြင်ဆင်မည်">
+                            <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                        </button>
+                        <button type="button" onclick="event.stopPropagation(); confirmDeletePersonnel(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:text-rose-800 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg transition" title="ပယ်ဖျက်မည်" aria-label="ပယ်ဖျက်မည်">
+                            <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                        </button>
+                    </div>
+                `;
+                row.appendChild(actionCell);
 
                 row.addEventListener('click', () => openCivilianMasterDetailModal(person, values));
                 row.addEventListener('keydown', event => {
@@ -7234,7 +7825,7 @@ var db = admin.firestore();</pre>
             title.textContent = `${person.name || person.id || 'ဝန်ထမ်း'} - အချက်အလက်အသေးစိတ်`;
             const headers = Array.from(document.querySelectorAll('#civilian-master-tab thead th'))
                 .map(header => header.textContent.trim())
-                .slice(0, values.length);
+                .slice(1, 1 + values.length);
             fields.replaceChildren();
 
             headers.forEach((label, index) => {
@@ -7364,8 +7955,9 @@ var db = admin.firestore();</pre>
             if (!returnToCivilianMasterDetails) closePersonnelModal();
             renderPersonnelDirectory();
             if (index < 0) {
-                const masterFilter = document.getElementById('civilian-master-filter');
-                if (masterFilter) masterFilter.value = '';
+                const pF = document.getElementById('civilian-filter-position'); if (pF) pF.value = '';
+                const rF = document.getElementById('civilian-filter-rank'); if (rF) rF.value = '';
+                const dF = document.getElementById('civilian-filter-dept'); if (dF) dF.value = '';
                 tablePageState.civilianMaster = 1;
             }
             renderCivilianNameListMaster();
@@ -8352,8 +8944,8 @@ var db = admin.firestore();</pre>
                     <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
                         <span class="font-semibold text-slate-800 dark:text-slate-200">${race}</span>
                         <div class="flex gap-1.5">
-                            <button onclick="editRaceItem(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteRaceItem(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editRaceItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteRaceItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8421,8 +9013,8 @@ var db = admin.firestore();</pre>
                     <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
                         <span class="font-semibold text-slate-800 dark:text-slate-200">${rel}</span>
                         <div class="flex gap-1.5">
-                            <button onclick="editReligionItem(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteReligionItem(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editReligionItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteReligionItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8490,8 +9082,8 @@ var db = admin.firestore();</pre>
                     <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
                         <span class="font-semibold text-slate-800 dark:text-slate-200">${addr}</span>
                         <div class="flex gap-1.5">
-                            <button onclick="editAddressTypeItem(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteAddressTypeItem(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editAddressTypeItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteAddressTypeItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8559,8 +9151,8 @@ var db = admin.firestore();</pre>
                     <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
                         <span class="font-semibold text-slate-800 dark:text-slate-200">${cat}</span>
                         <div class="flex gap-1.5">
-                            <button onclick="editArmoryCategoryItem(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteArmoryCategoryItem(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editArmoryCategoryItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteArmoryCategoryItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8630,8 +9222,8 @@ var db = admin.firestore();</pre>
                     <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
                         <span class="font-semibold text-slate-800 dark:text-slate-200">${dt}</span>
                         <div class="flex gap-1.5">
-                            <button onclick="editSecurityDutyTypeItem(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteSecurityDutyTypeItem(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editSecurityDutyTypeItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteSecurityDutyTypeItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8701,8 +9293,8 @@ var db = admin.firestore();</pre>
                     <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
                         <span class="font-semibold text-slate-800 dark:text-slate-200">${st}</span>
                         <div class="flex gap-1.5">
-                            <button onclick="editArmoryStatusItem(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteArmoryStatusItem(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editArmoryStatusItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteArmoryStatusItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8772,8 +9364,8 @@ var db = admin.firestore();</pre>
                     <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
                         <span class="font-semibold text-slate-800 dark:text-slate-200">${st}</span>
                         <div class="flex gap-1.5">
-                            <button onclick="editStatusItem(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteStatusItem(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editStatusItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteStatusItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8837,8 +9429,8 @@ var db = admin.firestore();</pre>
                     <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
                         <span class="font-semibold text-slate-800 dark:text-slate-200">${type}</span>
                         <div class="flex gap-1.5">
-                            <button onclick="editStaffType(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteStaffType(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editStaffType(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteStaffType(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8906,8 +9498,8 @@ var db = admin.firestore();</pre>
                             <span class="font-bold text-blue-700 dark:text-blue-400 ml-1">(${d.abbr})</span>
                         </div>
                         <div class="flex gap-1.5 flex-shrink-0">
-                            <button onclick="editDepartment(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteDepartment(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editDepartment(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteDepartment(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -8992,8 +9584,8 @@ var db = admin.firestore();</pre>
                             <span class="font-bold text-indigo-700 dark:text-indigo-300 ml-1">(${r.abbr})</span>
                         </div>
                         <div class="flex gap-1.5 flex-shrink-0">
-                            <button onclick="editRankItem(${idx})" title="Edit" class="p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteRankItem(${idx})" title="Delete" class="p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
+                            <button onclick="editRankItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
+                            <button onclick="deleteRankItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
                         </div>
                     </div>
                 `;
@@ -9085,13 +9677,13 @@ var db = admin.firestore();</pre>
                     const editButton = document.createElement('button');
                     editButton.type = 'button';
                     editButton.title = 'Edit';
-                    editButton.className = 'p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center';
+                    editButton.className = 'p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center';
                     editButton.innerHTML = SETTING_EDIT_ICON_SVG;
                     editButton.addEventListener('click', () => editPositionItem(index));
                     const deleteButton = document.createElement('button');
                     deleteButton.type = 'button';
                     deleteButton.title = 'Delete';
-                    deleteButton.className = 'p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center';
+                    deleteButton.className = 'p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center';
                     deleteButton.innerHTML = SETTING_DELETE_ICON_SVG;
                     deleteButton.addEventListener('click', () => deletePositionItem(index));
                     actions.append(editButton, deleteButton);
@@ -9203,595 +9795,3 @@ var db = admin.firestore();</pre>
             recalcProdFormTotals();
         }
 
-        function recalcProdFormTotals() {
-            const debt = parseFloat(document.getElementById('pr-in-debt')?.value) || 0;
-            const plan = parseFloat(document.getElementById('pr-in-plan')?.value) || 0;
-            const totalPlan = debt + plan;
-            const totalPlanEl = document.getElementById('pr-in-totalplan');
-            if (totalPlanEl) totalPlanEl.value = totalPlan;
-
-            let monthlySum = 0;
-            const activeChips = [];
-            PROD_MONTH_KEYS.forEach(m => {
-                const val = parseFloat(currentProdFormMonths[m]) || 0;
-                monthlySum += val;
-                if (val > 0) {
-                    const label = m.charAt(0).toUpperCase() + m.slice(1);
-                    activeChips.push(`${label}: ${formatProdNum(val)}`);
-                }
-            });
-            const totalEl = document.getElementById('pr-in-total');
-            if (totalEl) totalEl.value = monthlySum;
-
-            const summaryEl = document.getElementById('pr-entered-months-summary');
-            if (summaryEl) {
-                summaryEl.textContent = activeChips.length > 0 ? `(${activeChips.join(', ')})` : '';
-            }
-
-            const balance = totalPlan - monthlySum;
-            const hintEl = document.getElementById('pr-in-balance-hint');
-            if (hintEl) {
-                hintEl.textContent = `လက်ကျန် (Balance): ${formatProdNum(balance)}`;
-            }
-        }
-
-        function initInlineProdControls() {
-            const fyFilterSel = document.getElementById('prod-filter-fy');
-            const descFilterSel = document.getElementById('prod-filter-desc');
-            const nomFilterSel = document.getElementById('prod-filter-nom');
-
-            if (fyFilterSel) {
-                const curFy = fyFilterSel.value || 'ALL';
-                const uniqueFys = [...new Set(['2025-2026', '2026-2027', '2027-2028', ...prodStatementData.map(p => p.financialYears).filter(Boolean)])];
-                fyFilterSel.innerHTML = `<option value="ALL">By Financial_Years</option>` + uniqueFys.map(fy => `<option value="${fy}">${fy}</option>`).join('');
-                fyFilterSel.value = curFy;
-            }
-
-            if (descFilterSel) {
-                const curDesc = descFilterSel.value || 'ALL';
-                const uniqueDescs = [...new Set([...PROD_DESC_PRESETS, ...prodStatementData.map(p => p.description).filter(Boolean)])];
-                descFilterSel.innerHTML = `<option value="ALL">By Description</option>` + uniqueDescs.map(d => `<option value="${d}">${d}</option>`).join('');
-                descFilterSel.value = curDesc;
-            }
-
-            if (nomFilterSel) {
-                const curNom = nomFilterSel.value || 'ALL';
-                const uniqueNoms = [...new Set(prodStatementData.map(p => p.nomenclature).filter(Boolean))];
-                nomFilterSel.innerHTML = `<option value="ALL">By Nomenclature</option>` + uniqueNoms.map(n => `<option value="${n}">${n}</option>`).join('');
-                nomFilterSel.value = curNom;
-            }
-
-            updateProdYearLabels();
-            onProdMonthSelectorChange();
-            recalcProdFormTotals();
-        }
-
-        function updateProdSummaryBoxes(list = prodStatementData) {
-            const totalItems = list.length;
-            const sumDebt = list.reduce((acc, item) => acc + (Number(item.debt2526) || 0), 0);
-            const sumPlan = list.reduce((acc, item) => acc + (Number(item.plan2627) || 0), 0);
-            const sumTotalPlan = list.reduce((acc, item) => acc + (Number(item.totalPlan) || 0), 0);
-            const sumTotal = list.reduce((acc, item) => acc + (Number(item.total) || 0), 0);
-
-            const elItems = document.getElementById('pr-sub-items');
-            const elDebt = document.getElementById('pr-sub-debt');
-            const elPlan = document.getElementById('pr-sub-plan');
-            const elTotPlan = document.getElementById('pr-sub-totalplan');
-            const elAch = document.getElementById('pr-sub-achieved');
-
-            if (elItems) elItems.textContent = String(totalItems);
-            if (elDebt) elDebt.textContent = formatProdNum(sumDebt);
-            if (elPlan) elPlan.textContent = formatProdNum(sumPlan);
-            if (elTotPlan) elTotPlan.textContent = formatProdNum(sumTotalPlan);
-            if (elAch) elAch.textContent = formatProdNum(sumTotal);
-        }
-
-        function readProdFormPayload() {
-            const nomenclature = document.getElementById('pr-in-nomenclature').value.trim();
-            const au = document.getElementById('pr-in-au').value.trim() || 'Nos';
-            const debtYear = document.getElementById('pr-in-debt-year')?.value.trim() || '';
-            const debt2526 = parseFloat(document.getElementById('pr-in-debt').value) || 0;
-            const planYear = document.getElementById('pr-in-plan-year')?.value.trim() || '';
-            const plan2627 = parseFloat(document.getElementById('pr-in-plan').value) || 0;
-            const totalPlan = debt2526 + plan2627;
-
-            const descSelVal = document.getElementById('pr-in-desc').value;
-            const descCustomVal = document.getElementById('pr-in-desc-custom').value.trim();
-            const description = descSelVal === 'Custom' ? (descCustomVal || 'Custom') : descSelVal;
-
-            const financialYears = document.getElementById('pr-in-fy').value.trim() || '2026-2027';
-            const remark = document.getElementById('pr-in-remark').value.trim();
-
-            const monthsObj = {};
-            let total = 0;
-            PROD_MONTH_KEYS.forEach(m => {
-                const val = parseFloat(currentProdFormMonths[m]) || 0;
-                monthsObj[m] = val;
-                total += val;
-            });
-
-            return {
-                nomenclature,
-                au,
-                debtYear,
-                debt2526,
-                planYear,
-                plan2627,
-                totalPlan,
-                description,
-                ...monthsObj,
-                total,
-                remark,
-                financialYears
-            };
-        }
-
-        function toggleProdFormPanel(forceOpen) {
-            const body = document.getElementById('pr-collapsible-form-body');
-            if (!body) return;
-            const willOpen = typeof forceOpen === 'boolean' ? forceOpen : body.classList.contains('hidden');
-            body.classList.toggle('hidden', !willOpen);
-        }
-
-        function openProdForm(index = -1) {
-            if (!guardWritePermission()) return;
-            initInlineProdControls();
-            if (index >= 0) {
-                selectProdForInlineEdit(index);
-                return;
-            }
-            inlineClearProd(false);
-            document.getElementById('pr-inline-index').value = -1;
-            const title = document.getElementById('pr-form-title');
-            if (title) title.textContent = 'Prod; Statement အသစ်ထည့်ရန်';
-            toggleProdFormPanel(true);
-        }
-
-        function closeProdFormModal() {
-            toggleProdFormPanel(false);
-        }
-
-        function saveProdForm() {
-            const index = Number.parseInt(document.getElementById('pr-inline-index').value, 10);
-            const saved = index >= 0 ? inlineSaveProd() : inlineAddProd();
-            if (saved) closeProdFormModal();
-        }
-
-        function selectProdForInlineEdit(index) {
-            const item = prodStatementData[index];
-            if (!item) return;
-            initInlineProdControls();
-            toggleProdFormPanel(true);
-            const title = document.getElementById('pr-form-title');
-            if (title) title.textContent = 'Prod; Statement ပြင်ဆင်ရန်';
-            document.getElementById('pr-inline-index').value = index;
-            document.getElementById('pr-in-nomenclature').value = item.nomenclature || '';
-            document.getElementById('pr-in-au').value = item.au || 'Nos';
-            const debtYrEl = document.getElementById('pr-in-debt-year');
-            const planYrEl = document.getElementById('pr-in-plan-year');
-            if (debtYrEl) debtYrEl.value = item.debtYear || '';
-            if (planYrEl) planYrEl.value = item.planYear || '';
-            document.getElementById('pr-in-debt').value = item.debt2526 ?? 0;
-            document.getElementById('pr-in-plan').value = item.plan2627 ?? 0;
-
-            const descSel = document.getElementById('pr-in-desc');
-            const customInput = document.getElementById('pr-in-desc-custom');
-            if (PROD_DESC_PRESETS.includes(item.description)) {
-                descSel.value = item.description;
-                customInput.value = '';
-                customInput.classList.add('hidden');
-            } else {
-                descSel.value = 'Custom';
-                customInput.value = item.description || '';
-                customInput.classList.remove('hidden');
-            }
-
-            document.getElementById('pr-in-fy').value = item.financialYears || '2026-2027';
-            document.getElementById('pr-in-remark').value = item.remark || '';
-
-            PROD_MONTH_KEYS.forEach(m => {
-                currentProdFormMonths[m] = Number(item[m]) || 0;
-            });
-
-            updateProdYearLabels();
-            onProdMonthSelectorChange();
-            recalcProdFormTotals();
-            document.getElementById('main-workspace')?.scrollTo({ top: 0, behavior: 'smooth' });
-            showToast(`"${item.nomenclature}" အား ပြင်ဆင်ရန် ရွေးချယ်ပြီးပါပြီ`, 'info');
-        }
-
-        function inlineAddProd() {
-            if (!guardWritePermission()) return false;
-            const payload = readProdFormPayload();
-            if (!payload.nomenclature) {
-                showToast('Nomenclature (ပစ္စည်းအမျိုးအမည်) ဖြည့်သွင်းပေးပါ', 'error');
-                return false;
-            }
-            payload._isLatestAdded = true;
-            prodStatementData.forEach(item => { delete item._isLatestAdded; });
-            prodStatementData.unshift(payload);
-            saveSystemState();
-            inlineClearProd(false);
-            initInlineProdControls();
-            renderProdStatement();
-            showToast('Prod; Statement စာရင်းသစ် ထည့်သွင်းပြီးပါပြီ', 'success');
-            return true;
-        }
-
-        function inlineSaveProd() {
-            if (!guardWritePermission()) return false;
-            const idx = parseInt(document.getElementById('pr-inline-index').value);
-            if (idx < 0 || !prodStatementData[idx]) {
-                showToast('ပြင်ဆင်လိုသော စာရင်းအား ဇယားကွက်အတွင်းမှ Edit ခလုတ်နှိပ်၍ အရင်ရွေးချယ်ပါ', 'error');
-                return false;
-            }
-            const payload = readProdFormPayload();
-            if (!payload.nomenclature) {
-                showToast('Nomenclature (ပစ္စည်းအမျိုးအမည်) ဖြည့်သွင်းပေးပါ', 'error');
-                return false;
-            }
-            prodStatementData[idx] = payload;
-            saveSystemState();
-            inlineClearProd(false);
-            initInlineProdControls();
-            renderProdStatement();
-            showToast('Prod; Statement စာရင်းအား သိမ်းဆည်း (Save) ပြီးပါပြီ', 'success');
-            return true;
-        }
-
-        function inlineDeleteProd() {
-            const idx = parseInt(document.getElementById('pr-inline-index').value);
-            if (idx < 0 || !prodStatementData[idx]) {
-                showToast('ဖျက်လိုသော စာရင်းအား စာရင်းမှ အရင်ရွေးချယ်ပါ', 'error');
-                return;
-            }
-            confirmDeleteProd(idx, true);
-        }
-
-        function confirmDeleteProd(index, clearInline = false) {
-            if (!guardWritePermission()) return;
-            const item = prodStatementData[index];
-            if (!item) return;
-            openConfirmModal(`"${item.nomenclature}" (${item.financialYears}) စာရင်းကို ဖျက်မည်။ သေချာပါသလား?`, () => {
-                prodStatementData.splice(index, 1);
-                saveSystemState();
-                if (clearInline) inlineClearProd(false);
-                initInlineProdControls();
-                renderProdStatement();
-                showToast('Prod; Statement စာရင်းအား ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            });
-        }
-
-        function inlineClearProd(notify = true) {
-            document.getElementById('pr-inline-index').value = -1;
-            document.getElementById('pr-in-nomenclature').value = '';
-            document.getElementById('pr-in-au').value = '';
-            const debtYrEl = document.getElementById('pr-in-debt-year');
-            const planYrEl = document.getElementById('pr-in-plan-year');
-            if (debtYrEl) debtYrEl.value = '';
-            if (planYrEl) planYrEl.value = '';
-            document.getElementById('pr-in-debt').value = '';
-            document.getElementById('pr-in-plan').value = '';
-            document.getElementById('pr-in-totalplan').value = '';
-            document.getElementById('pr-in-desc').value = 'GSD';
-            const customInput = document.getElementById('pr-in-desc-custom');
-            if (customInput) {
-                customInput.value = '';
-                customInput.classList.add('hidden');
-            }
-            document.getElementById('pr-in-fy').value = '';
-            document.getElementById('pr-in-remark').value = '';
-            const quickInput = document.getElementById('pr-month-quick-val');
-            if (quickInput) quickInput.value = '';
-            PROD_MONTH_KEYS.forEach(m => {
-                currentProdFormMonths[m] = 0;
-            });
-            document.getElementById('pr-in-total').value = '';
-            updateProdYearLabels();
-            onProdMonthSelectorChange();
-            recalcProdFormTotals();
-            if (notify) showToast('အကွက်များအား ရှင်းလင်းပြီးပါပြီ', 'info');
-        }
-
-        function exportProdExcel() {
-            if (!ensureExcelLibrary()) return;
-            const query = (document.getElementById('prod-search')?.value || '').trim().toLowerCase();
-            const fyFilter = document.getElementById('prod-filter-fy')?.value || 'ALL';
-            const descFilter = document.getElementById('prod-filter-desc')?.value || 'ALL';
-            const nomFilter = document.getElementById('prod-filter-nom')?.value || 'ALL';
-
-            const filteredProd = prodStatementData.filter(item => {
-                const matchesQuery = !query ||
-                                     (item.nomenclature || '').toLowerCase().includes(query) ||
-                                     (item.description || '').toLowerCase().includes(query) ||
-                                     (item.remark || '').toLowerCase().includes(query) ||
-                                     (item.debtYear || '').toLowerCase().includes(query) ||
-                                     (item.planYear || '').toLowerCase().includes(query) ||
-                                     (item.financialYears || '').toLowerCase().includes(query);
-                const matchesFy = fyFilter === 'ALL' || item.financialYears === fyFilter;
-                const matchesDesc = descFilter === 'ALL' || item.description === descFilter;
-                const matchesNom = nomFilter === 'ALL' || item.nomenclature === nomFilter;
-                return matchesQuery && matchesFy && matchesDesc && matchesNom;
-            });
-
-            const exportRows = filteredProd.map((item, i) => ({
-                'Sr': i + 1,
-                'Nomenclature': item.nomenclature,
-                'A/U': item.au,
-                'Debt Yr': item.debtYear || '',
-                'Debt': item.debt2526,
-                'Plan Yr': item.planYear || '',
-                'Plan': item.plan2627,
-                'Total Plan': item.totalPlan,
-                'Description': item.description,
-                'Apr': item.apr,
-                'May': item.may,
-                'Jun': item.jun,
-                'Jul': item.jul,
-                'Aug': item.aug,
-                'Sep': item.sep,
-                'Oct': item.oct,
-                'Nov': item.nov,
-                'Dec': item.dec,
-                'Jan': item.jan,
-                'Feb': item.feb,
-                'Mar': item.mar,
-                'Total': item.total,
-                'Remark': item.remark || '',
-                'Financial_Years': item.financialYears
-            }));
-            const ws = XLSX.utils.json_to_sheet(exportRows.length ? exportRows : [{ 'Remark': 'No records found' }]);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Prod_Statement');
-            saveWorkbookToLocal(wb, `Prod_Statement_${new Date().toISOString().split('T')[0]}.xlsx`, 'Prod; Statement Local Excel ဖိုင် သိမ်းဆည်းပြီးပါပြီ');
-        }
-
-        function renderProdStatement() {
-            const container = document.getElementById('prod-list-container');
-            const footer = document.getElementById('prod-table-footer');
-            const mobileContainer = document.getElementById('prod-mobile-cards');
-            if (!container) return;
-
-            updateProdYearLabels();
-
-            const query = (document.getElementById('prod-search')?.value || '').trim().toLowerCase();
-            const fyFilter = document.getElementById('prod-filter-fy')?.value || 'ALL';
-            const descFilter = document.getElementById('prod-filter-desc')?.value || 'ALL';
-            const nomFilter = document.getElementById('prod-filter-nom')?.value || 'ALL';
-
-            const filtered = prodStatementData.filter(item => {
-                const matchesQuery = (item.nomenclature || '').toLowerCase().includes(query) ||
-                                     (item.description || '').toLowerCase().includes(query) ||
-                                     (item.remark || '').toLowerCase().includes(query) ||
-                                     (item.debtYear || '').toLowerCase().includes(query) ||
-                                     (item.planYear || '').toLowerCase().includes(query) ||
-                                     (item.financialYears || '').toLowerCase().includes(query);
-                const matchesFy = fyFilter === 'ALL' || item.financialYears === fyFilter;
-                const matchesDesc = descFilter === 'ALL' || item.description === descFilter;
-                const matchesNom = nomFilter === 'ALL' || item.nomenclature === nomFilter;
-                return matchesQuery && matchesFy && matchesDesc && matchesNom;
-            });
-
-            updateProdSummaryBoxes(filtered);
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<tr><td colspan="26" class="text-center py-8 text-slate-400">Prod; Statement စာရင်း မရှိသေးပါ</td></tr>`;
-                if (footer) footer.innerHTML = '';
-                if (mobileContainer) {
-                    mobileContainer.innerHTML = `<div class="col-span-full bg-white dark:bg-slate-800 rounded-xl p-6 text-center text-slate-400 border border-slate-200 dark:border-slate-700">Prod; Statement စာရင်း မရှိသေးပါ</div>`;
-                }
-                renderPaginationControls('prod-pagination-bar', 'prod', 1, 0, 'မျိုး');
-                return;
-            }
-
-            // Grand Totals across all filtered records
-            const totals = {
-                debt2526: 0, plan2627: 0, totalPlan: 0,
-                apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0,
-                oct: 0, nov: 0, dec: 0, jan: 0, feb: 0, mar: 0,
-                total: 0
-            };
-            filtered.forEach(item => {
-                totals.debt2526 += Number(item.debt2526) || 0;
-                totals.plan2627 += Number(item.plan2627) || 0;
-                totals.totalPlan += Number(item.totalPlan) || 0;
-                PROD_MONTH_KEYS.forEach(m => { totals[m] += Number(item[m]) || 0; });
-                totals.total += Number(item.total) || 0;
-            });
-
-            const prTotalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
-            if (tablePageState.prod > prTotalPages) tablePageState.prod = prTotalPages;
-            const prCurrentPage = tablePageState.prod || 1;
-            const prStartIdx = (prCurrentPage - 1) * ITEMS_PER_PAGE;
-            const paginatedProd = filtered.slice(prStartIdx, prStartIdx + ITEMS_PER_PAGE);
-
-            // Desktop Rows
-            container.innerHTML = paginatedProd.map((item, idx) => {
-                const realIndex = prodStatementData.indexOf(item);
-                const pct = item.totalPlan > 0 ? Math.min(100, Math.round((item.total / item.totalPlan) * 100)) : 0;
-                const isLatest = Boolean(item._isLatestAdded);
-                const rowHighlightClass = isLatest
-                    ? 'bg-emerald-50/80 dark:bg-emerald-900/25 ring-1 ring-inset ring-emerald-400/60'
-                    : 'hover:bg-blue-50/70 dark:hover:bg-slate-700/60';
-                const stickyBgClass = isLatest
-                    ? 'bg-emerald-50 dark:bg-slate-800'
-                    : 'bg-white dark:bg-slate-800';
-                return `
-                    <tr onclick="openProdDetailDrawer(${realIndex})" class="${rowHighlightClass} transition text-slate-800 dark:text-slate-200 cursor-pointer">
-                        <td class="p-2.5 text-center font-bold sticky left-0 ${stickyBgClass} z-10">${prStartIdx + idx + 1}</td>
-                        <td class="p-2.5 font-bold text-slate-900 dark:text-white sticky left-12 ${stickyBgClass} z-10 pr-nom-cell">${item.nomenclature}${isLatest ? ' <span class="ml-1 px-1.5 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">New</span>' : ''}</td>
-                        <td class="p-2.5 text-center font-semibold text-slate-600 dark:text-slate-300">${item.au}</td>
-                        <td class="p-2.5 text-center font-mono text-amber-700 dark:text-amber-300">${item.debtYear || '-'}</td>
-                        <td class="p-2.5 text-right font-semibold text-amber-700 dark:text-amber-300">${formatProdNum(item.debt2526)}</td>
-                        <td class="p-2.5 text-center font-mono text-blue-700 dark:text-blue-300">${item.planYear || '-'}</td>
-                        <td class="p-2.5 text-right font-semibold text-blue-700 dark:text-blue-300">${formatProdNum(item.plan2627)}</td>
-                        <td class="p-2.5 text-right font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/40 dark:bg-indigo-900/10">${formatProdNum(item.totalPlan)}</td>
-                        <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 font-semibold text-[11px]">${item.description}</span></td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.apr)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.may)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.jun)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.jul)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.aug)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.sep)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.oct)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.nov)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.dec)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.jan)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.feb)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(item.mar)}</td>
-                        <td class="p-2.5 text-right font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50/40 dark:bg-emerald-900/10" title="ပြီးစီးမှု ${pct}%">${formatProdNum(item.total)}</td>
-                        <td class="p-2.5 text-slate-600 dark:text-slate-400">${item.remark || '-'}</td>
-                        <td class="p-2.5 text-center font-mono font-semibold text-blue-800 dark:text-blue-300">${item.financialYears}</td>
-                        <td class="p-2.5 text-center space-x-1" onclick="event.stopPropagation()">
-                            <button onclick="selectProdForInlineEdit(${realIndex})" class="role-write-action p-1.5 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold transition" title="ပြင်ဆင်မည်">✏️</button>
-                            <button onclick="confirmDeleteProd(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg transition" title="ဖျက်မည်">🗑️</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-
-            // Adjust sticky left offset of Nomenclature column dynamically after Sr No auto-fits
-            requestAnimationFrame(() => {
-                const srTh = document.getElementById('pr-th-sr');
-                const nomTh = document.getElementById('pr-th-nom');
-                if (srTh && nomTh) {
-                    const srWidth = srTh.offsetWidth;
-                    nomTh.style.left = `${srWidth}px`;
-                    document.querySelectorAll('.pr-nom-cell').forEach(cell => {
-                        cell.style.left = `${srWidth}px`;
-                    });
-                }
-            });
-
-            // Table Footer Summary Row
-            if (footer) {
-                footer.innerHTML = `
-                    <tr>
-                        <td class="p-2.5"></td>
-                        <td colspan="3" class="p-2.5 text-right sticky left-0 bg-slate-100 dark:bg-slate-700 z-10">စုစုပေါင်း (Grand Total):</td>
-                        <td class="p-2.5 text-right text-amber-700 dark:text-amber-300">${formatProdNum(totals.debt2526)}</td>
-                        <td class="p-2.5"></td>
-                        <td class="p-2.5 text-right text-blue-700 dark:text-blue-300">${formatProdNum(totals.plan2627)}</td>
-                        <td class="p-2.5 text-right text-indigo-700 dark:text-indigo-300">${formatProdNum(totals.totalPlan)}</td>
-                        <td class="p-2.5"></td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.apr)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.may)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.jun)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.jul)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.aug)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.sep)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.oct)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.nov)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.dec)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.jan)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.feb)}</td>
-                        <td class="p-2.5 text-right">${formatProdNum(totals.mar)}</td>
-                        <td class="p-2.5 text-right text-emerald-700 dark:text-emerald-300">${formatProdNum(totals.total)}</td>
-                        <td colspan="3" class="p-2.5"></td>
-                    </tr>
-                `;
-            }
-
-            // Mobile Cards
-            if (mobileContainer) {
-                mobileContainer.innerHTML = paginatedProd.map((item, idx) => {
-                    const realIndex = prodStatementData.indexOf(item);
-                    const pct = item.totalPlan > 0 ? Math.min(100, Math.round((item.total / item.totalPlan) * 100)) : 0;
-                    const debtYr = item.debtYear || '';
-                    const planYr = item.planYear || '';
-                    return `
-                        <div onclick="openProdDetailDrawer(${realIndex})" class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-2.5 cursor-pointer">
-                            <div class="flex justify-between items-start gap-2">
-                                <div>
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">${prStartIdx + idx + 1} &bull; ${item.financialYears}</span>
-                                    <div class="font-bold text-slate-900 dark:text-white text-sm mt-1">${item.nomenclature} <span class="text-slate-400 font-normal text-xs">(${item.au})</span></div>
-                                </div>
-                                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 font-bold text-[11px]">${item.description}</span>
-                            </div>
-                            <div class="grid grid-cols-3 gap-1.5 text-[11px] bg-slate-50 dark:bg-slate-700/50 p-2 rounded-lg text-center">
-                                <div>
-                                    <span class="block text-slate-400 text-[10px]">${debtYr ? debtYr + ' Debt' : 'Debt'}</span>
-                                    <strong class="text-amber-700 dark:text-amber-300">${formatProdNum(item.debt2526)}</strong>
-                                </div>
-                                <div>
-                                    <span class="block text-slate-400 text-[10px]">${planYr ? planYr + ' Plan' : 'Plan'}</span>
-                                    <strong class="text-blue-700 dark:text-blue-300">${formatProdNum(item.plan2627)}</strong>
-                                </div>
-                                <div>
-                                    <span class="block text-slate-400 text-[10px]">Total Plan</span>
-                                    <strong class="text-indigo-700 dark:text-indigo-300">${formatProdNum(item.totalPlan)}</strong>
-                                </div>
-                            </div>
-                            <div class="space-y-1">
-                                <div class="flex justify-between text-[11px]">
-                                    <span class="text-slate-500 dark:text-slate-400">Total (Apr-Mar): <strong class="text-emerald-700 dark:text-emerald-300">${formatProdNum(item.total)}</strong></span>
-                                    <span class="font-bold text-emerald-600 dark:text-emerald-400">${pct}%</span>
-                                </div>
-                                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-emerald-600 h-full rounded-full" style="width: ${pct}%"></div>
-                                </div>
-                            </div>
-                            ${item.remark ? `<div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Remark: ${item.remark}</div>` : ''}
-                            <div class="role-write-action flex justify-end gap-1.5 pt-1 border-t dark:border-slate-700" onclick="event.stopPropagation()">
-                                <button onclick="selectProdForInlineEdit(${realIndex})" class="px-2.5 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold text-[11px]">✏️ Edit</button>
-                                <button onclick="confirmDeleteProd(${realIndex})" class="px-2.5 py-1 bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 rounded-lg font-bold text-[11px]">🗑️ ဖျက်မည်</button>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            renderPaginationControls('prod-pagination-bar', 'prod', prCurrentPage, filtered.length, 'မျိုး');
-        }
-
-        // Initialization
-        window.addEventListener('DOMContentLoaded', () => {
-            // Default to Light Mode unless user explicitly chose Dark or System Mode
-            const savedThemeMode = localStorage.getItem('DI_THEME_MODE') || 'light';
-            applyThemeMode(savedThemeMode, false);
-
-            if (window.matchMedia) {
-                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                    if ((localStorage.getItem('DI_THEME_MODE') || 'light') === 'system') {
-                        applyThemeMode('system', false);
-                    }
-                });
-            }
-            loadSystemState();
-            initFirebaseFirestore();
-
-            // Restore active session if user previously logged in, otherwise show Auth Gateway
-            loadRememberedLoginCredentials();
-            const savedSessionRaw = localStorage.getItem(ACTIVE_AUTH_SESSION_KEY);
-            if (savedSessionRaw) {
-                try {
-                    const parsedSession = JSON.parse(savedSessionRaw);
-                    const freshRecord = userData.find(u => u.username.toLowerCase() === (parsedSession.username || '').toLowerCase()) || parsedSession;
-                    if (freshRecord && freshRecord.status !== 'Suspended') {
-                        applyUserSession(freshRecord, false);
-                    }
-                } catch (e) {
-                    localStorage.removeItem(ACTIVE_AUTH_SESSION_KEY);
-                }
-            }
-
-            document.addEventListener('click', event => {
-                if (!event.target.closest('#global-search-popover, #global-search-toggle-btn')) {
-                    toggleGlobalSearch(false);
-                }
-            });
-            document.addEventListener('keydown', event => {
-                if (event.key === 'Escape') {
-                    toggleGlobalSearch(false);
-                    if (document.getElementById('personnel-form-modal')?.classList.contains('hidden')) {
-                        closeCivilianMasterDetailModal();
-                    }
-                }
-            });
-
-            renderDashboardView();
-            updateHeaderBadge();
-        });
-    </script>
-</body>
-</html>
