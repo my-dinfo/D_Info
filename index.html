@@ -1056,7 +1056,7 @@
             <section id="civilian-master-tab" class="tab-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
                     <div class="px-4 py-3 bg-slate-100 dark:bg-slate-700/70 border-b border-slate-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                        <h2 class="font-bold text-slate-900 dark:text-white">Name List Master</h2>
+                        <h2 id="civilian-master-title" class="font-bold text-slate-900 dark:text-white">Name List Master</h2>
                         <div class="flex flex-wrap items-center justify-end gap-1.5 self-end sm:self-auto">
                             <div class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-xs whitespace-nowrap">
                                 <span class="text-slate-600 dark:text-slate-300">အရေအတွက်</span>
@@ -1065,7 +1065,7 @@
                             <select id="civilian-master-filter" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="w-40 max-w-48 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1.5 text-xs font-normal">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
-                            <button onclick="triggerExcelImport('civilian-master')" class="role-write-action px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
+                            <button id="civilian-master-import-btn" onclick="triggerExcelImport('civilian-master')" class="role-write-action px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
                             <button onclick="exportCivilianMasterExcel()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
                             <button onclick="printCivilianNameListMaster()" class="px-2.5 py-1.5 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Print</button>
                             <input type="file" id="civilian-master-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'civilian-master')">
@@ -2069,7 +2069,7 @@ var db = admin.firestore();</pre>
     <div id="personnel-form-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden">
         <div class="bg-white dark:bg-slate-800 rounded-xl max-w-2xl w-full shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden max-h-[92vh] flex flex-col modal-animate">
             <div class="bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-800 text-white p-4 flex justify-between items-center flex-shrink-0">
-                <h3 id="personnel-form-title" class="font-bold text-xs text-white">ဝန်ထမ်းအချက်အလက် သတ်မှတ်ရန်</h3>
+                <h3 id="personnel-form-title" class="font-bold text-xs text-white">ဝန်ထမ်းအချက်အလက် ပြင်ဆင်ရန်</h3>
                 <button type="button" onclick="closePersonnelFormModal()" class="text-white/80 hover:text-white text-xl font-bold p-1" title="ပိတ်မည်">&times;</button>
             </div>
             <form id="personnel-form" onsubmit="handleSavePersonnel(event)" class="p-4 sm:p-5 space-y-3 text-xs overflow-y-auto">
@@ -2098,7 +2098,7 @@ var db = admin.firestore();</pre>
                         <input type="text" id="p-form-rank-custom" class="w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none hidden">
                     </div>
                     <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အမည်</label>
+                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဝန်ထမ်းအမည်</label>
                         <input type="text" id="p-form-name" required class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
                     </div>
                     <div>
@@ -2107,11 +2107,34 @@ var db = admin.firestore();</pre>
                         <input type="text" id="p-form-dept-custom" class="w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none hidden">
                     </div>
                     <div>
+                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ရာထူး</label>
+                        <select id="p-form-position" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
+                            <option value="အရာရှိ">အရာရှိ</option>
+                            <option value="စစ်သည်">စစ်သည်</option>
+                            <option value="အမြဲတမ်းဝန်ထမ်း">အမြဲတမ်းဝန်ထမ်း</option>
+                            <option value="အရပ်သားဝန်ထမ်း">အရပ်သားဝန်ထမ်း</option>
+                        </select>
+                    </div>
+                    <div>
                         <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကျား/မ</label>
                         <select id="p-form-gender" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
                             <option value="ကျား">ကျား</option>
                             <option value="မ">မ</option>
                         </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်ရှိအခြေအနေ</label>
+                        <select id="p-form-status" onchange="handleStatusChange()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500"></select>
+                        <input type="text" id="p-form-status-custom" class="w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none hidden">
+                    </div>
+                    <div id="p-form-absent-container">
+                        <label class="block text-rose-600 dark:text-rose-400 font-semibold mb-1">ပျက်ကွက်အကြောင်းရင်း</label>
+                        <input type="text" id="p-form-absent-reason" class="w-full bg-rose-50/50 dark:bg-slate-700 border border-rose-300 dark:border-rose-600 rounded-lg px-2.5 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဝန်ထမ်းအမျိုးအစား</label>
+                        <select id="p-form-type" onchange="handleStaffTypeChange()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500"></select>
+                        <input type="text" id="p-form-type-custom" class="w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none hidden">
                     </div>
                     <div>
                         <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">မွေးသက္ကရာဇ်</label>
@@ -2130,21 +2153,8 @@ var db = admin.firestore();</pre>
                         <input type="text" id="p-form-mother" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
                     </div>
                     <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အလုပ်ကိုင်</label>
-                        <input type="text" id="p-form-occupation" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အလုပ်အကိုင်အမျိုးအစား</label>
-                        <input type="text" id="p-form-occ-type" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ရာထူး</label>
-                        <input type="text" id="p-form-position" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဝန်ထမ်းအမျိုးအစား</label>
-                        <select id="p-form-type" onchange="handleStaffTypeChange()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500"></select>
-                        <input type="text" id="p-form-type-custom" class="w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none hidden">
+                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">နေရပ်လိပ်စာ</label>
+                        <select id="p-form-address" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500"></select>
                     </div>
                     <div>
                         <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လူမျိုး</label>
@@ -2155,38 +2165,13 @@ var db = admin.firestore();</pre>
                         <input type="text" id="p-form-religion" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
                     </div>
                     <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ပျို/အို</label>
-                        <select id="p-form-marital" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
-                            <option value="ပျို">ပျို</option>
-                            <option value="အို">အို</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်ရှိအခြေအနေ</label>
-                        <select id="p-form-status" onchange="handleStatusChange()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500"></select>
-                        <input type="text" id="p-form-status-custom" class="w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none hidden">
-                    </div>
-                    <div id="p-form-absent-container">
-                        <label class="block text-rose-600 dark:text-rose-400 font-semibold mb-1">ပျက်ကွက်အကြောင်းရင်း</label>
-                        <input type="text" id="p-form-absent-reason" class="w-full bg-rose-50/50 dark:bg-slate-700 border border-rose-300 dark:border-rose-600 rounded-lg px-2.5 py-2 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">တည်နေရာ</label>
-                        <input type="text" id="p-form-location" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
-                    </div>
-                    <div>
                         <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဖုန်းနံပါတ်</label>
                         <input type="text" id="p-form-phone" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
                     </div>
-                    <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">နေရပ်လိပ်စာ</label>
-                        <select id="p-form-address" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500"></select>
+                    <div class="sm:col-span-2 md:col-span-3">
+                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">မှတ်ချက်</label>
+                        <input type="text" id="p-form-remarks" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
                     </div>
-                </div>
-
-                <div>
-                    <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">မှတ်ချက်</label>
-                    <input type="text" id="p-form-remarks" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
                 </div>
 
                 <div class="pt-2 flex justify-end items-center gap-2 border-t dark:border-slate-700">
@@ -2472,47 +2457,47 @@ var db = admin.firestore();</pre>
         let announcementData = [];
         let personnelData = [
             // ၁။ အရာရှိအမည်စာရင်း (၁၀ ဦး)
-            { id: 'ကြည်း-၃၁၀၀၁', rankFull: 'ဗိုလ်မှူးကြီး', rankAbbr: 'ဗိုလ်မှူးကြီး', name: 'သီဟအောင်', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1976-05-14', nrc: '၁၂/ဗဟန(နိုင်)၀၄၅၁၂၃', fatherName: 'ဦးအောင်မြင့်', motherName: 'ဒေါ်ခင်စန်း', occupation: 'စက်ရုံမှူး', occupationType: 'စီမံခန့်ခွဲမှု', position: 'စက်ရုံမှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၇၉၁၀၀၁၀၀၁', address: 'ရန်ကုန်မြို့', remarks: 'စက်ရုံမှူး', photo: '' },
-            { id: 'ကြည်း-၃၂၀၀၂', rankFull: 'ဒုတိယဗိုလ်မှူးကြီး', rankAbbr: 'ဒုဗိုလ်မှူးကြီး', name: 'ကျော်စွာဝင်း', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1979-08-22', nrc: '၉/မဟမ(နိုင်)၀၈၈၂၃၄', fatherName: 'ဦးဝင်းမောင်', motherName: 'ဒေါ်ကြည်ကြည်', occupation: 'ဒုတိယစက်ရုံမှူး', occupationType: 'စီမံခန့်ခွဲမှု', position: 'ဒုတိယစက်ရုံမှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၇၉၁၀၀၁၀၀၂', address: 'ရန်ကုန်မြို့', remarks: 'ဒုတိယစက်ရုံမှူး', photo: '' },
-            { id: 'ကြည်း-၃၄၀၀၃', rankFull: 'ဗိုလ်မှူး', rankAbbr: 'ဗိုလ်မှူး', name: 'အောင်ကျော်မိုး', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'ကျား', dob: '1983-02-10', nrc: '၉/အမရ(နိုင်)၁၁၂၃၄၅', fatherName: 'ဦးကျော်မြင့်', motherName: 'ဒေါ်အေးသန်း', occupation: 'စီမံရေးအရာရှိ', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'ဌာနမှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၇၉၁၀၀၁၀၀၃', address: 'မန္တလေးမြို့', remarks: 'စီမံရေးဌာနမှူး', photo: '' },
-            { id: 'ကြည်း-၃၅၀၀၄', rankFull: 'ဗိုလ်မှူး', rankAbbr: 'ဗိုလ်မှူး', name: 'မင်းသိန်းထွန်း', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1984-11-05', nrc: '၉/ပမန(နိုင်)၁၃၄၅၆၇', fatherName: 'ဦးသိန်းထွန်း', motherName: 'ဒေါ်မြင့်မြင့်', occupation: 'ထုတ်လုပ်ရေးအရာရှိ', occupationType: 'စက်မှုထုတ်လုပ်ရေး', position: 'ဌာနမှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'တာဝန်ခရီး', location: 'နေပြည်တော်', phone: '၀၉-၇၉၁၀၀၁၀၀၄', address: 'နေပြည်တော်', remarks: 'ရုံးချုပ်အစည်းအဝေး', photo: '' },
-            { id: 'ကြည်း-၃၆၀၀၅', rankFull: 'ဗိုလ်မှူး', rankAbbr: 'ဗိုလ်မှူး', name: 'ဇော်မင်းဦး', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1985-04-18', nrc: '၇/ပခန(နိုင်)၁၄၅၆၇၈', fatherName: 'ဦးမင်းဦး', motherName: 'ဒေါ်နွဲ့နွဲ့', occupation: 'ထုတ်လုပ်ရေးအရာရှိ', occupationType: 'စက်မှုထုတ်လုပ်ရေး', position: 'ဌာနမှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၂', phone: '၀၉-၇၉၁၀၀၁၀၀၅', address: 'ပဲခူးမြို့', remarks: 'ထလရ-၂ ဌာနမှူး', photo: '' },
-            { id: 'ကြည်း-၃၇၀၀၆', rankFull: 'ဗိုလ်ကြီး', rankAbbr: 'ဗိုလ်ကြီး', name: 'ရဲရင့်နိုင်', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'ကျား', dob: '1989-07-12', nrc: '၁၂/မဂဒ(နိုင်)၁၅၆၇၈၉', fatherName: 'ဦးနိုင်ဝင်း', motherName: 'ဒေါ်စန်းစန်း', occupation: 'စစ်ဆေးရေးအရာရှိ', occupationType: 'အရည်အသွေးစစ်ဆေးရေး', position: 'ဌာနခွဲမှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စစ်ဆေးရေးဌာန', phone: '၀၉-၇၉၁၀၀၁၀၀၆', address: 'ရန်ကုန်မြို့', remarks: 'အရည်အသွေးစစ်ဆေးရေး', photo: '' },
-            { id: 'ကြည်း-၃၈၀၀၇', rankFull: 'ဗိုလ်ကြီး', rankAbbr: 'ဗိုလ်ကြီး', name: 'ထက်အောင်လင်း', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'ကျား', dob: '1990-09-25', nrc: '၉/ပဥလ(နိုင်)၁၆၇၈၉၀', fatherName: 'ဦးအောင်လင်း', motherName: 'ဒေါ်သီတာ', occupation: 'အုပ်ချုပ်ရေးအရာရှိ', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'ဦးစီးအရာရှိ', staffType: 'တွဲဖက်', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'သင်တန်း', location: 'ပြင်ဦးလွင်', phone: '၀၉-၇၉၁၀၀၁၀၀၇', address: 'ပြင်ဦးလွင်', remarks: 'မွမ်းမံသင်တန်း', photo: '' },
-            { id: 'ကြည်း-၃၉၀၀၈', rankFull: 'ဗိုလ်ကြီး', rankAbbr: 'ဗိုလ်ကြီး', name: 'စိုးမိုးအောင်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1991-01-30', nrc: '၁၃/တကန(နိုင်)၁၇၈၉၀၁', fatherName: 'ဦးမိုးအောင်', motherName: 'ဒေါ်ခင်မာ', occupation: 'အလုပ်ရုံအရာရှိ', occupationType: 'စက်မှုအင်ဂျင်နီယာ', position: 'အလုပ်ရုံမှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ရှမ်း', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'အလုပ်ရုံ (၁)', phone: '၀၉-၇၉၁၀၀၁၀၀၈', address: 'တောင်ကြီးမြို့', remarks: 'အလုပ်ရုံမှူး', photo: '' },
-            { id: 'ကြည်း-၄၁၀၀၉', rankFull: 'ဗိုလ်', rankAbbr: 'ဗိုလ်', name: 'ဖြိုးဝေကျော်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1995-06-15', nrc: '၁၀/မလမ(နိုင်)၁၈၉၀၁၂', fatherName: 'ဦးဝေကျော်', motherName: 'ဒေါ်လှလှ', occupation: 'လုံခြုံရေးအရာရှိ', occupationType: 'လုံခြုံရေး', position: 'တပ်စုမှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'မွန်', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'လုံခြုံရေးတာဝန်', location: 'ဂိတ် (၁)', phone: '၀၉-၇၉၁၀၀၁၀၀၉', address: 'မော်လမြိုင်မြို့', remarks: 'တပ်တွင်းလုံခြုံရေးမှူး', photo: '' },
-            { id: 'ကြည်း-၄၂၀၁၀', rankFull: 'ဒုတိယဗိုလ်', rankAbbr: 'ဒုဗိုလ်', name: 'ကောင်းမြတ်သူ', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'ကျား', dob: '1998-12-03', nrc: '၁၄/ပသန(နိုင်)၁၉၀၁၂၃', fatherName: 'ဦးမြတ်သူ', motherName: 'ဒေါ်ဝင်းဝင်း', occupation: 'စစ်ဆေးရေးအရာရှိ', occupationType: 'အရည်အသွေးစစ်ဆေးရေး', position: 'လက်ထောက်စစ်ဆေးရေးမှူး', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စစ်ဆေးရေးဌာန', phone: '၀၉-၇၉၁၀၀၁၀၁၀', address: 'ပုသိမ်မြို့', remarks: 'လက်ထောက်စစ်ဆေးရေးမှူး', photo: '' },
+            { id: 'ကြည်း-၃၁၀၀၁', rankFull: 'ဗိုလ်မှူးကြီး', rankAbbr: 'ဗိုလ်မှူးကြီး', name: 'သီဟအောင်', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1976-05-14', nrc: '၁၂/ဗဟန(နိုင်)၀၄၅၁၂၃', fatherName: 'ဦးအောင်မြင့်', motherName: 'ဒေါ်ခင်စန်း', occupation: 'စက်ရုံမှူး', occupationType: 'စီမံခန့်ခွဲမှု', position: 'အရာရှိ', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၇၉၁၀၀၁၀၀၁', address: 'ရန်ကုန်မြို့', remarks: 'စက်ရုံမှူး', photo: '' },
+            { id: 'ကြည်း-၃၂၀၀၂', rankFull: 'ဒုတိယဗိုလ်မှူးကြီး', rankAbbr: 'ဒုဗိုလ်မှူးကြီး', name: 'ကျော်စွာဝင်း', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1979-08-22', nrc: '၉/မဟမ(နိုင်)၀၈၈၂၃၄', fatherName: 'ဦးဝင်းမောင်', motherName: 'ဒေါ်ကြည်ကြည်', occupation: 'ဒုတိယစက်ရုံမှူး', occupationType: 'စီမံခန့်ခွဲမှု', position: 'အရာရှိ', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၇၉၁၀၀၁၀၀၂', address: 'ရန်ကုန်မြို့', remarks: 'ဒုတိယစက်ရုံမှူး', photo: '' },
+            { id: 'ကြည်း-၃၄၀၀၃', rankFull: 'ဗိုလ်မှူး', rankAbbr: 'ဗိုလ်မှူး', name: 'အောင်ကျော်မိုး', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'ကျား', dob: '1983-02-10', nrc: '၉/အမရ(နိုင်)၁၁၂၃၄၅', fatherName: 'ဦးကျော်မြင့်', motherName: 'ဒေါ်အေးသန်း', occupation: 'စီမံရေးအရာရှိ', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'အရာရှိ', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၇၉၁၀၀၁၀၀၃', address: 'မန္တလေးမြို့', remarks: 'စီမံရေးဌာနမှူး', photo: '' },
+            { id: 'ကြည်း-၃၅၀၀၄', rankFull: 'ဗိုလ်မှူး', rankAbbr: 'ဗိုလ်မှူး', name: 'မင်းသိန်းထွန်း', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1984-11-05', nrc: '၉/ပမန(နိုင်)၁၃၄၅၆၇', fatherName: 'ဦးသိန်းထွန်း', motherName: 'ဒေါ်မြင့်မြင့်', occupation: 'ထုတ်လုပ်ရေးအရာရှိ', occupationType: 'စက်မှုထုတ်လုပ်ရေး', position: 'အရာရှိ', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'တာဝန်ခရီး', location: 'နေပြည်တော်', phone: '၀၉-၇၉၁၀၀၁၀၀၄', address: 'နေပြည်တော်', remarks: 'ရုံးချုပ်အစည်းအဝေး', photo: '' },
+            { id: 'ကြည်း-၃၆၀၀၅', rankFull: 'ဗိုလ်မှူး', rankAbbr: 'ဗိုလ်မှူး', name: 'ဇော်မင်းဦး', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1985-04-18', nrc: '၇/ပခန(နိုင်)၁၄၅၆၇၈', fatherName: 'ဦးမင်းဦး', motherName: 'ဒေါ်နွဲ့နွဲ့', occupation: 'ထုတ်လုပ်ရေးအရာရှိ', occupationType: 'စက်မှုထုတ်လုပ်ရေး', position: 'အရာရှိ', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၂', phone: '၀၉-၇၉၁၀၀၁၀၀၅', address: 'ပဲခူးမြို့', remarks: 'ထလရ-၂ ဌာနမှူး', photo: '' },
+            { id: 'ကြည်း-၃၇၀၀၆', rankFull: 'ဗိုလ်ကြီး', rankAbbr: 'ဗိုလ်ကြီး', name: 'ရဲရင့်နိုင်', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'ကျား', dob: '1989-07-12', nrc: '၁၂/မဂဒ(နိုင်)၁၅၆၇၈၉', fatherName: 'ဦးနိုင်ဝင်း', motherName: 'ဒေါ်စန်းစန်း', occupation: 'စစ်ဆေးရေးအရာရှိ', occupationType: 'အရည်အသွေးစစ်ဆေးရေး', position: 'အရာရှိ', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စစ်ဆေးရေးဌာန', phone: '၀၉-၇၉၁၀၀၁၀၀၆', address: 'ရန်ကုန်မြို့', remarks: 'အရည်အသွေးစစ်ဆေးရေး', photo: '' },
+            { id: 'ကြည်း-၃၈၀၀၇', rankFull: 'ဗိုလ်ကြီး', rankAbbr: 'ဗိုလ်ကြီး', name: 'ထက်အောင်လင်း', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'ကျား', dob: '1990-09-25', nrc: '၉/ပဥလ(နိုင်)၁၆၇၈၉၀', fatherName: 'ဦးအောင်လင်း', motherName: 'ဒေါ်သီတာ', occupation: 'အုပ်ချုပ်ရေးအရာရှိ', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'အရာရှိ', staffType: 'တွဲဖက်', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'သင်တန်း', location: 'ပြင်ဦးလွင်', phone: '၀၉-၇၉၁၀၀၁၀၀၇', address: 'ပြင်ဦးလွင်', remarks: 'မွမ်းမံသင်တန်း', photo: '' },
+            { id: 'ကြည်း-၃၉၀၀၈', rankFull: 'ဗိုလ်ကြီး', rankAbbr: 'ဗိုလ်ကြီး', name: 'စိုးမိုးအောင်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1991-01-30', nrc: '၁၃/တကန(နိုင်)၁၇၈၉၀၁', fatherName: 'ဦးမိုးအောင်', motherName: 'ဒေါ်ခင်မာ', occupation: 'အလုပ်ရုံအရာရှိ', occupationType: 'စက်မှုအင်ဂျင်နီယာ', position: 'အရာရှိ', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ရှမ်း', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'အလုပ်ရုံ (၁)', phone: '၀၉-၇၉၁၀၀၁၀၀၈', address: 'တောင်ကြီးမြို့', remarks: 'အလုပ်ရုံမှူး', photo: '' },
+            { id: 'ကြည်း-၄၁၀၀၉', rankFull: 'ဗိုလ်', rankAbbr: 'ဗိုလ်', name: 'ဖြိုးဝေကျော်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1995-06-15', nrc: '၁၀/မလမ(နိုင်)၁၈၉၀၁၂', fatherName: 'ဦးဝေကျော်', motherName: 'ဒေါ်လှလှ', occupation: 'လုံခြုံရေးအရာရှိ', occupationType: 'လုံခြုံရေး', position: 'အရာရှိ', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'မွန်', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'လုံခြုံရေးတာဝန်', location: 'ဂိတ် (၁)', phone: '၀၉-၇၉၁၀၀၁၀၀၉', address: 'မော်လမြိုင်မြို့', remarks: 'တပ်တွင်းလုံခြုံရေးမှူး', photo: '' },
+            { id: 'ကြည်း-၄၂၀၁၀', rankFull: 'ဒုတိယဗိုလ်', rankAbbr: 'ဒုဗိုလ်', name: 'ကောင်းမြတ်သူ', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'ကျား', dob: '1998-12-03', nrc: '၁၄/ပသန(နိုင်)၁၉၀၁၂၃', fatherName: 'ဦးမြတ်သူ', motherName: 'ဒေါ်ဝင်းဝင်း', occupation: 'စစ်ဆေးရေးအရာရှိ', occupationType: 'အရည်အသွေးစစ်ဆေးရေး', position: 'အရာရှိ', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စစ်ဆေးရေးဌာန', phone: '၀၉-၇၉၁၀၀၁၀၁၀', address: 'ပုသိမ်မြို့', remarks: 'လက်ထောက်စစ်ဆေးရေးမှူး', photo: '' },
 
             // ၂။ စစ်သည်အမည်စာရင်း (၁၀ ဦး)
-            { id: 'တ-၅၁၀၀၀၁', rankFull: 'အရာခံဗိုလ်', rankAbbr: 'အရခဗ', name: 'ဦးမြင့်သိန်း', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1978-03-11', nrc: '၁၂/အစန(နိုင်)၂၀၁၂၃၄', fatherName: 'ဦးသိန်းမောင်', motherName: 'ဒေါ်တင်တင်', occupation: 'ရုံးအုပ်', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'ရုံးအုပ်ကြီး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၄၂၁၀၀၂၀၀၁', address: 'ရန်ကုန်မြို့', remarks: 'ရုံးအုပ်ကြီး', photo: '' },
-            { id: 'တ-၅၁၀၀၀၂', rankFull: 'ဒုတိယအရာခံဗိုလ်', rankAbbr: 'ဒုအရခဗ', name: 'တင်မောင်ဝင်း', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'ကျား', dob: '1981-09-19', nrc: '၇/ပခန(နိုင်)၂၁၂၃၄၅', fatherName: 'ဦးမောင်ဝင်း', motherName: 'ဒေါ်အေးကြည်', occupation: 'စာရင်းကိုင်', occupationType: 'ငွေစာရင်း/စတို', position: 'စာရင်းကိုင်ကြီး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၄၂၁၀၀၂၀၀၂', address: 'ပဲခူးမြို့', remarks: 'စာရင်းကိုင်', photo: '' },
-            { id: 'တ-၅၁၀၀၀၃', rankFull: 'တပ်ခွဲတပ်ကြပ်ကြီး', rankAbbr: 'ခွဲတကက', name: 'လှမျိုးအောင်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1984-06-27', nrc: '၈/မကန(နိုင်)၂၂၃၄၅၆', fatherName: 'ဦးမျိုးအောင်', motherName: 'ဒေါ်စိန်စိန်', occupation: 'တပ်ခွဲစာရေး', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'တပ်ခွဲတပ်ကြပ်ကြီး', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'ခွင့်', location: 'မကွေးမြို့', phone: '၀၉-၄၂၁၀၀၂၀၀၃', address: 'မကွေးမြို့', remarks: 'လုပ်သက်ခွင့်', photo: '' },
-            { id: 'တ-၅၁၀၀၀၄', rankFull: 'တပ်ကြပ်ကြီး', rankAbbr: 'တကက', name: 'ကျော်ဇင်လတ်', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'ကျား', dob: '1986-11-14', nrc: '၉/မဟမ(နိုင်)၂၃၄၅၆၇', fatherName: 'ဦးဇင်လတ်', motherName: 'ဒေါ်ခင်ထွေး', occupation: 'စတိုထိန်း', occupationType: 'ငွေစာရင်း/စတို', position: 'စတိုတာဝန်ခံ', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'ဆေးရုံတက်', location: 'တပ်မတော်ဆေးရုံ', phone: '၀၉-၄၂၁၀၀၂၀၀၄', address: 'မန္တလေးမြို့', remarks: 'တပ်မတော်ဆေးရုံ', photo: '' },
-            { id: 'တ-၅၁၀၀၀၅', rankFull: 'တပ်ကြပ်ကြီး', rankAbbr: 'တကက', name: 'ဝင်းနိုင်ဦး', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1987-05-08', nrc: '၅/စကန(နိုင်)၂၄၅၆၇၈', fatherName: 'ဦးနိုင်ဦး', motherName: 'ဒေါ်မြမြ', occupation: 'စက်ကိုင်', occupationType: 'စက်မှုထုတ်လုပ်ရေး', position: 'စက်ကိုင်ကြီးကြပ်', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၂', phone: '၀၉-၄၂၁၀၀၂၀၀၅', address: 'စစ်ကိုင်းမြို့', remarks: 'စက်ကိုင်ကြီးကြပ်', photo: '' },
-            { id: 'တ-၅၁၀၀၀၆', rankFull: 'တပ်ကြပ်', rankAbbr: 'တက', name: 'မင်းမင်းစိုး', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1991-08-21', nrc: '၁၂/မဂဒ(နိုင်)၂၅၆၇၈၉', fatherName: 'ဦးမင်းစိုး', motherName: 'ဒေါ်နုနု', occupation: 'လုံခြုံရေး', occupationType: 'လုံခြုံရေး', position: 'ဂိတ်တာဝန်မှူး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'လုံခြုံရေးတာဝန်', location: 'ဂိတ် (၁)', phone: '၀၉-၄၂၁၀၀၂၀၀၆', address: 'ရန်ကုန်မြို့', remarks: 'ဂိတ် (၁) တာဝန်ကျ', photo: '' },
-            { id: 'တ-၅၁၀၀၀၇', rankFull: 'တပ်ကြပ်', rankAbbr: 'တက', name: 'သန်းထိုက်အောင်', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'ကျား', dob: '1992-01-16', nrc: '၅/မရန(နိုင်)၂၆၇၈၉၀', fatherName: 'ဦးထိုက်အောင်', motherName: 'ဒေါ်သန်းသန်း', occupation: 'စစ်ဆေးရေး', occupationType: 'အရည်အသွေးစစ်ဆေးရေး', position: 'စစ်ဆေးရေးတပ်ကြပ်', staffType: 'တွဲဖက်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စစ်ဆေးရေးဌာန', phone: '၀၉-၄၂၁၀၀၂၀၀၇', address: 'မုံရွာမြို့', remarks: 'စစ်ဆေးရေးအဖွဲ့', photo: '' },
-            { id: 'တ-၅၁၀၀၀၈', rankFull: 'ဒုတိယတပ်ကြပ်', rankAbbr: 'ဒုတက', name: 'အောင်ကိုလတ်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1994-10-09', nrc: '၇/ပမန(နိုင်)၂၇၈၉၀၁', fatherName: 'ဦးကိုလတ်', motherName: 'ဒေါ်ခင်လေး', occupation: 'လုံခြုံရေး', occupationType: 'လုံခြုံရေး', position: 'ကင်းစခန်းတာဝန်', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'လုံခြုံရေးတာဝန်', location: 'တောင်ဘက်မျှော်စင်ကင်း', phone: '၀၉-၄၂၁၀၀၂၀၀၈', address: 'ပြည်မြို့', remarks: 'ကင်းစခန်းတာဝန်', photo: '' },
-            { id: 'တ-၅၁၀၀၀၉', rankFull: 'တပ်သား', rankAbbr: 'တသ', name: 'ဇေယျာဖြိုး', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1999-04-02', nrc: '၉/မထလ(နိုင်)၂၈၉၀၁၂', fatherName: 'ဦးဖြိုးဝင်း', motherName: 'ဒေါ်မာလာ', occupation: 'ရုံးအကူ', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'ရုံးအကူတပ်သား', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၄၂၁၀၀၂၀၀၉', address: 'မိတ္ထီလာမြို့', remarks: 'ရုံးအကူ', photo: '' },
-            { id: 'တ-၅၁၀၀၁၀', rankFull: 'တပ်သား', rankAbbr: 'တသ', name: 'ဟိန်းထက်ဇော်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '2000-07-29', nrc: '၇/တငန(နိုင်)၂၉၀၁၂၃', fatherName: 'ဦးထက်ဇော်', motherName: 'ဒေါ်စုစု', occupation: 'ယာဉ်မောင်း/သယ်ပို့', occupationType: 'သယ်ယူပို့ဆောင်ရေး', position: 'သယ်ပို့တပ်သား', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်ပြင်', race: 'ကရင်', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'တာဝန်ခရီး', location: 'တောင်ငူမြို့', phone: '၀၉-၄၂၁၀၀၂၀၁၀', address: 'တောင်ငူမြို့', remarks: 'ပစ္စည်းသယ်ယူပို့ဆောင်ရေး', photo: '' },
+            { id: 'တ-၅၁၀၀၀၁', rankFull: 'အရာခံဗိုလ်', rankAbbr: 'အရခဗ', name: 'ဦးမြင့်သိန်း', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1978-03-11', nrc: '၁၂/အစန(နိုင်)၂၀၁၂၃၄', fatherName: 'ဦးသိန်းမောင်', motherName: 'ဒေါ်တင်တင်', occupation: 'ရုံးအုပ်', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'စစ်သည်', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၄၂၁၀၀၂၀၀၁', address: 'ရန်ကုန်မြို့', remarks: 'ရုံးအုပ်ကြီး', photo: '' },
+            { id: 'တ-၅၁၀၀၀၂', rankFull: 'ဒုတိယအရာခံဗိုလ်', rankAbbr: 'ဒုအရခဗ', name: 'တင်မောင်ဝင်း', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'ကျား', dob: '1981-09-19', nrc: '၇/ပခန(နိုင်)၂၁၂၃၄၅', fatherName: 'ဦးမောင်ဝင်း', motherName: 'ဒေါ်အေးကြည်', occupation: 'စာရင်းကိုင်', occupationType: 'ငွေစာရင်း/စတို', position: 'စစ်သည်', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၄၂၁၀၀၂၀၀၂', address: 'ပဲခူးမြို့', remarks: 'စာရင်းကိုင်', photo: '' },
+            { id: 'တ-၅၁၀၀၀၃', rankFull: 'တပ်ခွဲတပ်ကြပ်ကြီး', rankAbbr: 'ခွဲတကက', name: 'လှမျိုးအောင်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1984-06-27', nrc: '၈/မကန(နိုင်)၂၂၃၄၅၆', fatherName: 'ဦးမျိုးအောင်', motherName: 'ဒေါ်စိန်စိန်', occupation: 'တပ်ခွဲစာရေး', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'စစ်သည်', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'ခွင့်', location: 'မကွေးမြို့', phone: '၀၉-၄၂၁၀၀၂၀၀၃', address: 'မကွေးမြို့', remarks: 'လုပ်သက်ခွင့်', photo: '' },
+            { id: 'တ-၅၁၀၀၀၄', rankFull: 'တပ်ကြပ်ကြီး', rankAbbr: 'တကက', name: 'ကျော်ဇင်လတ်', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'ကျား', dob: '1986-11-14', nrc: '၉/မဟမ(နိုင်)၂၃၄၅၆၇', fatherName: 'ဦးဇင်လတ်', motherName: 'ဒေါ်ခင်ထွေး', occupation: 'စတိုထိန်း', occupationType: 'ငွေစာရင်း/စတို', position: 'စစ်သည်', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'ဆေးရုံတက်', location: 'တပ်မတော်ဆေးရုံ', phone: '၀၉-၄၂၁၀၀၂၀၀၄', address: 'မန္တလေးမြို့', remarks: 'တပ်မတော်ဆေးရုံ', photo: '' },
+            { id: 'တ-၅၁၀၀၀၅', rankFull: 'တပ်ကြပ်ကြီး', rankAbbr: 'တကက', name: 'ဝင်းနိုင်ဦး', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1987-05-08', nrc: '၅/စကန(နိုင်)၂၄၅၆၇၈', fatherName: 'ဦးနိုင်ဦး', motherName: 'ဒေါ်မြမြ', occupation: 'စက်ကိုင်', occupationType: 'စက်မှုထုတ်လုပ်ရေး', position: 'စစ်သည်', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၂', phone: '၀၉-၄၂၁၀၀၂၀၀၅', address: 'စစ်ကိုင်းမြို့', remarks: 'စက်ကိုင်ကြီးကြပ်', photo: '' },
+            { id: 'တ-၅၁၀၀၀၆', rankFull: 'တပ်ကြပ်', rankAbbr: 'တက', name: 'မင်းမင်းစိုး', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1991-08-21', nrc: '၁၂/မဂဒ(နိုင်)၂၅၆၇၈၉', fatherName: 'ဦးမင်းစိုး', motherName: 'ဒေါ်နုနု', occupation: 'လုံခြုံရေး', occupationType: 'လုံခြုံရေး', position: 'စစ်သည်', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'လုံခြုံရေးတာဝန်', location: 'ဂိတ် (၁)', phone: '၀၉-၄၂၁၀၀၂၀၀၆', address: 'ရန်ကုန်မြို့', remarks: 'ဂိတ် (၁) တာဝန်ကျ', photo: '' },
+            { id: 'တ-၅၁၀၀၀၇', rankFull: 'တပ်ကြပ်', rankAbbr: 'တက', name: 'သန်းထိုက်အောင်', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'ကျား', dob: '1992-01-16', nrc: '၅/မရန(နိုင်)၂၆၇၈၉၀', fatherName: 'ဦးထိုက်အောင်', motherName: 'ဒေါ်သန်းသန်း', occupation: 'စစ်ဆေးရေး', occupationType: 'အရည်အသွေးစစ်ဆေးရေး', position: 'စစ်သည်', staffType: 'တွဲဖက်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စစ်ဆေးရေးဌာန', phone: '၀၉-၄၂၁၀၀၂၀၀၇', address: 'မုံရွာမြို့', remarks: 'စစ်ဆေးရေးအဖွဲ့', photo: '' },
+            { id: 'တ-၅၁၀၀၀၈', rankFull: 'ဒုတိယတပ်ကြပ်', rankAbbr: 'ဒုတက', name: 'အောင်ကိုလတ်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1994-10-09', nrc: '၇/ပမန(နိုင်)၂၇၈၉၀၁', fatherName: 'ဦးကိုလတ်', motherName: 'ဒေါ်ခင်လေး', occupation: 'လုံခြုံရေး', occupationType: 'လုံခြုံရေး', position: 'စစ်သည်', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'လုံခြုံရေးတာဝန်', location: 'တောင်ဘက်မျှော်စင်ကင်း', phone: '၀၉-၄၂၁၀၀၂၀၀၈', address: 'ပြည်မြို့', remarks: 'ကင်းစခန်းတာဝန်', photo: '' },
+            { id: 'တ-၅၁၀၀၀၉', rankFull: 'တပ်သား', rankAbbr: 'တသ', name: 'ဇေယျာဖြိုး', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1999-04-02', nrc: '၉/မထလ(နိုင်)၂၈၉၀၁၂', fatherName: 'ဦးဖြိုးဝင်း', motherName: 'ဒေါ်မာလာ', occupation: 'ရုံးအကူ', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'စစ်သည်', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၄၂၁၀၀၂၀၀၉', address: 'မိတ္ထီလာမြို့', remarks: 'ရုံးအကူ', photo: '' },
+            { id: 'တ-၅၁၀၀၁၀', rankFull: 'တပ်သား', rankAbbr: 'တသ', name: 'ဟိန်းထက်ဇော်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '2000-07-29', nrc: '၇/တငန(နိုင်)၂၉၀၁၂၃', fatherName: 'ဦးထက်ဇော်', motherName: 'ဒေါ်စုစု', occupation: 'ယာဉ်မောင်း/သယ်ပို့', occupationType: 'သယ်ယူပို့ဆောင်ရေး', position: 'စစ်သည်', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်ပြင်', race: 'ကရင်', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'တာဝန်ခရီး', location: 'တောင်ငူမြို့', phone: '၀၉-၄၂၁၀၀၂၀၁၀', address: 'တောင်ငူမြို့', remarks: 'ပစ္စည်းသယ်ယူပို့ဆောင်ရေး', photo: '' },
 
             // ၃။ အမြဲတမ်းဝန်ထမ်းအမည်စာရင်း (၁၀ ဦး)
-            { id: 'ဝ-၆၁၀၀၀၁', rankFull: 'အရာထမ်း', rankAbbr: 'အရာထမ်း', name: 'ဒေါ်ခင်မာလာ', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'မ', dob: '1980-02-14', nrc: '၁၂/ဗဟန(နိုင်)၃၀၁၂၃၄', fatherName: 'ဦးမောင်မောင်', motherName: 'ဒေါ်ခင်ညွန့်', occupation: 'ဦးစီးအရာရှိ', occupationType: 'စီမံခန့်ခွဲမှု', position: 'ဦးစီးအရာရှိ (စီမံ)', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၂၅၁၀၀၃၀၀၁', address: 'ရန်ကုန်မြို့', remarks: 'ဦးစီးအရာရှိ (စီမံ)', photo: '' },
-            { id: 'ဝ-၆၁၀၀၀၂', rankFull: 'အမှုထမ်း', rankAbbr: 'အမှုထမ်း', name: 'ဒေါ်သီတာအေး', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'မ', dob: '1985-06-18', nrc: '၁၂/တမန(နိုင်)၃၁၂၃၄၅', fatherName: 'ဦးအေးမောင်', motherName: 'ဒေါ်သန်းမြင့်', occupation: 'အကြီးတန်းစာရေး', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'အကြီးတန်းစာရေး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၂၅၁၀၀၃၀၀၂', address: 'ရန်ကုန်မြို့', remarks: 'အကြီးတန်းစာရေး', photo: '' },
-            { id: 'ဝ-၆၁၀၀၀၃', rankFull: 'ကျွမ်းကျင်အဆင့်-၁', rankAbbr: 'ကျွမ်း-၁', name: 'ဦးသိန်းဇော်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1982-10-25', nrc: '၁၂/အစန(နိုင်)၃၂၃၄၅၆', fatherName: 'ဦးဇော်ဝင်း', motherName: 'ဒေါ်လှကြည်', occupation: 'ပုံစံထုတ်ကျွမ်းကျင်', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'ကျွမ်းကျင်အဆင့်-၁', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၁', phone: '၀၉-၂၅၁၀၀၃၀၀၃', address: 'အင်းစိန်မြို့နယ်', remarks: 'ပုံစံထုတ်ကျွမ်းကျင်', photo: '' },
-            { id: 'ဝ-၆၁၀၀၀၄', rankFull: 'ကျွမ်းကျင်အဆင့်-၂', rankAbbr: 'ကျွမ်း-၂', name: 'ဦးမျိုးမင်းသန့်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1986-04-12', nrc: '၁၂/လသယ(နိုင်)၃၃၄၅၆၇', fatherName: 'ဦးမင်းသန့်', motherName: 'ဒေါ်ခင်ဆွေ', occupation: 'တွင်ခုံစက်ကိုင်', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'ကျွမ်းကျင်အဆင့်-၂', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'ခွင့်', location: 'လှိုင်သာယာ', phone: '၀၉-၂၅၁၀၀၃၀၀၄', address: 'လှိုင်သာယာ', remarks: 'ရှောင်တခင်ခွင့်', photo: '' },
-            { id: 'ဝ-၆၁၀၀၀၅', rankFull: 'ကျွမ်းကျင်အဆင့်-၃', rankAbbr: 'ကျွမ်း-၃', name: 'ဦးစိုးလွင်', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'ကျား', dob: '1988-08-30', nrc: '၁၂/မဂဒ(နိုင်)၃၄၅၆၇၈', fatherName: 'ဦးလွင်ဦး', motherName: 'ဒေါ်မြင့်အေး', occupation: 'ဓာတ်ခွဲစစ်ဆေးရေး', occupationType: 'အရည်အသွေးစစ်ဆေးရေး', position: 'ကျွမ်းကျင်အဆင့်-၃', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စစ်ဆေးရေးဌာန', phone: '၀၉-၂၅၁၀၀၃၀၀၅', address: 'မင်္ဂလာဒုံ', remarks: 'ဓာတ်ခွဲစစ်ဆေးရေး', photo: '' },
-            { id: 'ဝ-၆၁၀၀၀၆', rankFull: 'ကျွမ်းကျင်အဆင့်-၄', rankAbbr: 'ကျွမ်း-၄', name: 'ဒေါ်နွယ်နွယ်ဝင်း', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'မ', dob: '1991-12-07', nrc: '၁၂/ဥကမ(နိုင်)၃၅၆၇၈၉', fatherName: 'ဦးဝင်းမြင့်', motherName: 'ဒေါ်အေးမူ', occupation: 'တပ်ဆင်ရေး', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'ကျွမ်းကျင်အဆင့်-၄', staffType: 'တွဲဖက်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၁', phone: '၀၉-၂၅၁၀၀၃၀၀၆', address: 'မြောက်ဥက္ကလာ', remarks: 'တပ်ဆင်ရေးဌာနစိတ်', photo: '' },
-            { id: 'ဝ-၆၁၀၀၀၇', rankFull: 'ကျွမ်းကျင်အဆင့်-၅', rankAbbr: 'ကျွမ်း-၅', name: 'ဦးကျော်သူရ', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1993-05-19', nrc: '၁၂/သလန(နိုင်)၃၆၇၈၉၀', fatherName: 'ဦးသူရ', motherName: 'ဒေါ်နီနီ', occupation: 'ဂဟေဆက်', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'ကျွမ်းကျင်အဆင့်-၅', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'ဆေးရုံတက်', location: 'သန်လျင်ဆေးရုံ', phone: '၀၉-၂၅၁၀၀၃၀၀၇', address: 'သန်လျင်မြို့', remarks: 'ပြင်ပလူနာကုသမှု', photo: '' },
-            { id: 'ဝ-၆၁၀၀၀၈', rankFull: 'အမှုထမ်း', rankAbbr: 'အမှုထမ်း', name: 'ဒေါ်အေးမြတ်မွန်', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'မ', dob: '1994-09-23', nrc: '၁၂/တမန(နိုင်)၃၇၈၉၀၁', fatherName: 'ဦးမြတ်မွန်', motherName: 'ဒေါ်ခင်ဝင်း', occupation: 'ငွေစာရင်းစာရေး', occupationType: 'ငွေစာရင်း/စတို', position: 'အငယ်တန်းစာရေး', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၂၅၁၀၀၃၀၀၈', address: 'တာမွေမြို့နယ်', remarks: 'ငွေစာရင်းဌာနစိတ်', photo: '' },
-            { id: 'ဝ-၆၁၀၀၀၉', rankFull: 'လုပ်သား', rankAbbr: 'လသ', name: 'ဦးမောင်မောင်လတ်', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1990-01-11', nrc: '၁၂/မဘန(နိုင်)၃၈၉၀၁၂', fatherName: 'ဦးမောင်လတ်', motherName: 'ဒေါ်တင်အေး', occupation: 'အထွေထွေလုပ်သား', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'လုပ်သား', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၂၅၁၀၀၃၀၀၉', address: 'မှော်ဘီမြို့', remarks: 'သန့်ရှင်းရေးနှင့် ပြုပြင်ရေး', photo: '' },
-            { id: 'ဝ-၆၁၀၀၁၀', rankFull: 'လုပ်သား', rankAbbr: 'လသ', name: 'ဒေါ်စန်းစန်းဌေး', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'မ', dob: '1995-11-28', nrc: '၁၂/ရပသ(နိုင်)၃၉၀၁၂၃', fatherName: 'ဦးဌေးဝင်း', motherName: 'ဒေါ်စန်းမြင့်', occupation: 'ထုပ်ပိုးလုပ်သား', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'လုပ်သား', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'အခြား', location: 'ရွှေပြည်သာ', phone: '၀၉-၂၅၁၀၀၃၀၁၀', address: 'ရွှေပြည်သာ', remarks: 'မိသားစုကိစ္စခွင့်ပြု', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၁', rankFull: 'အရာထမ်း', rankAbbr: 'အရာထမ်း', name: 'ဒေါ်ခင်မာလာ', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'မ', dob: '1980-02-14', nrc: '၁၂/ဗဟန(နိုင်)၃၀၁၂၃၄', fatherName: 'ဦးမောင်မောင်', motherName: 'ဒေါ်ခင်ညွန့်', occupation: 'ဦးစီးအရာရှိ', occupationType: 'စီမံခန့်ခွဲမှု', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၂၅၁၀၀၃၀၀၁', address: 'ရန်ကုန်မြို့', remarks: 'ဦးစီးအရာရှိ (စီမံ)', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၂', rankFull: 'အမှုထမ်း', rankAbbr: 'အမှုထမ်း', name: 'ဒေါ်သီတာအေး', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'မ', dob: '1985-06-18', nrc: '၁၂/တမန(နိုင်)၃၁၂၃၄၅', fatherName: 'ဦးအေးမောင်', motherName: 'ဒေါ်သန်းမြင့်', occupation: 'အကြီးတန်းစာရေး', occupationType: 'စီမံ/ရုံးလုပ်ငန်း', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၂၅၁၀၀၃၀၀၂', address: 'ရန်ကုန်မြို့', remarks: 'အကြီးတန်းစာရေး', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၃', rankFull: 'ကျွမ်းကျင်အဆင့်-၁', rankAbbr: 'ကျွမ်း-၁', name: 'ဦးသိန်းဇော်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1982-10-25', nrc: '၁၂/အစန(နိုင်)၃၂၃၄၅၆', fatherName: 'ဦးဇော်ဝင်း', motherName: 'ဒေါ်လှကြည်', occupation: 'ပုံစံထုတ်ကျွမ်းကျင်', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၁', phone: '၀၉-၂၅၁၀၀၃၀၀၃', address: 'အင်းစိန်မြို့နယ်', remarks: 'ပုံစံထုတ်ကျွမ်းကျင်', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၄', rankFull: 'ကျွမ်းကျင်အဆင့်-၂', rankAbbr: 'ကျွမ်း-၂', name: 'ဦးမျိုးမင်းသန့်', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1986-04-12', nrc: '၁၂/လသယ(နိုင်)၃၃၄၅၆၇', fatherName: 'ဦးမင်းသန့်', motherName: 'ဒေါ်ခင်ဆွေ', occupation: 'တွင်ခုံစက်ကိုင်', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'ခွင့်', location: 'လှိုင်သာယာ', phone: '၀၉-၂၅၁၀၀၃၀၀၄', address: 'လှိုင်သာယာ', remarks: 'ရှောင်တခင်ခွင့်', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၅', rankFull: 'ကျွမ်းကျင်အဆင့်-၃', rankAbbr: 'ကျွမ်း-၃', name: 'ဦးစိုးလွင်', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'ကျား', dob: '1988-08-30', nrc: '၁၂/မဂဒ(နိုင်)၃၄၅၆၇၈', fatherName: 'ဦးလွင်ဦး', motherName: 'ဒေါ်မြင့်အေး', occupation: 'ဓာတ်ခွဲစစ်ဆေးရေး', occupationType: 'အရည်အသွေးစစ်ဆေးရေး', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စစ်ဆေးရေးဌာန', phone: '၀၉-၂၅၁၀၀၃၀၀၅', address: 'မင်္ဂလာဒုံ', remarks: 'ဓာတ်ခွဲစစ်ဆေးရေး', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၆', rankFull: 'ကျွမ်းကျင်အဆင့်-၄', rankAbbr: 'ကျွမ်း-၄', name: 'ဒေါ်နွယ်နွယ်ဝင်း', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'မ', dob: '1991-12-07', nrc: '၁၂/ဥကမ(နိုင်)၃၅၆၇၈၉', fatherName: 'ဦးဝင်းမြင့်', motherName: 'ဒေါ်အေးမူ', occupation: 'တပ်ဆင်ရေး', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'တွဲဖက်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၁', phone: '၀၉-၂၅၁၀၀၃၀၀၆', address: 'မြောက်ဥက္ကလာ', remarks: 'တပ်ဆင်ရေးဌာနစိတ်', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၇', rankFull: 'ကျွမ်းကျင်အဆင့်-၅', rankAbbr: 'ကျွမ်း-၅', name: 'ဦးကျော်သူရ', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1993-05-19', nrc: '၁၂/သလန(နိုင်)၃၆၇၈၉၀', fatherName: 'ဦးသူရ', motherName: 'ဒေါ်နီနီ', occupation: 'ဂဟေဆက်', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'ပျက်ကွက်', absentReason: 'ဆေးရုံတက်', location: 'သန်လျင်ဆေးရုံ', phone: '၀၉-၂၅၁၀၀၃၀၀၇', address: 'သန်လျင်မြို့', remarks: 'ပြင်ပလူနာကုသမှု', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၈', rankFull: 'အမှုထမ်း', rankAbbr: 'အမှုထမ်း', name: 'ဒေါ်အေးမြတ်မွန်', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'မ', dob: '1994-09-23', nrc: '၁၂/တမန(နိုင်)၃၇၈၉၀၁', fatherName: 'ဦးမြတ်မွန်', motherName: 'ဒေါ်ခင်ဝင်း', occupation: 'ငွေစာရင်းစာရေး', occupationType: 'ငွေစာရင်း/စတို', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'သန္ဓေ', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၂၅၁၀၀၃၀၀၈', address: 'တာမွေမြို့နယ်', remarks: 'ငွေစာရင်းဌာနစိတ်', photo: '' },
+            { id: 'ဝ-၆၁၀၀၀၉', rankFull: 'လုပ်သား', rankAbbr: 'လသ', name: 'ဦးမောင်မောင်လတ်', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1990-01-11', nrc: '၁၂/မဘန(နိုင်)၃၈၉၀၁၂', fatherName: 'ဦးမောင်လတ်', motherName: 'ဒေါ်တင်အေး', occupation: 'အထွေထွေလုပ်သား', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၂၅၁၀၀၃၀၀၉', address: 'မှော်ဘီမြို့', remarks: 'သန့်ရှင်းရေးနှင့် ပြုပြင်ရေး', photo: '' },
+            { id: 'ဝ-၆၁၀၀၁၀', rankFull: 'လုပ်သား', rankAbbr: 'လသ', name: 'ဒေါ်စန်းစန်းဌေး', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'မ', dob: '1995-11-28', nrc: '၁၂/ရပသ(နိုင်)၃၉၀၁၂၃', fatherName: 'ဦးဌေးဝင်း', motherName: 'ဒေါ်စန်းမြင့်', occupation: 'ထုပ်ပိုးလုပ်သား', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'အမြဲတမ်းဝန်ထမ်း', staffType: 'သန္ဓေ', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'အခြား', location: 'ရွှေပြည်သာ', phone: '၀၉-၂၅၁၀၀၃၀၁၀', address: 'ရွှေပြည်သာ', remarks: 'မိသားစုကိစ္စခွင့်ပြု', photo: '' },
 
             // ၄။ အရပ်သားဝန်ထမ်းအမည်စာရင်း (နမူနာ ၅ ဦး)
-            { id: 'အရပ်-၇၁၀၀၀၁', rankFull: 'နေ့စားဝန်ထမ်း', rankAbbr: 'နေ့စား', name: 'ဦးအောင်မျိုးဝင်း', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1992-04-15', nrc: '၁၂/အစန(နိုင်)၄၀၁၂၃၄', fatherName: 'ဦးမျိုးဝင်း', motherName: 'ဒေါ်တင်လှ', occupation: 'အရပ်သားစက်အကူ', occupationType: 'စက်မှုအထောက်အကူ', position: 'နေ့စားဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၁', phone: '၀၉-၆၉၁၀၀၄၀၀၁', address: 'အင်းစိန်မြို့နယ်', remarks: 'နေ့စားအလုပ်သမား', photo: '' },
-            { id: 'အရပ်-၇၁၀၀၀၂', rankFull: 'ပုတ်ပြတ်ဝန်ထမ်း', rankAbbr: 'ပုတ်ပြတ်', name: 'ဒေါ်မေသဇင်', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'မ', dob: '1996-08-19', nrc: '၁၂/မဂဒ(နိုင်)၄၁၂၃၄၅', fatherName: 'ဦးသဇင်', motherName: 'ဒေါ်အေးမြင့်', occupation: 'စာဖိုဆောင်အကူ', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'ပုတ်ပြတ်ဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၆၉၁၀၀၄၀၀၂', address: 'မင်္ဂလာဒုံ', remarks: 'စားရိပ်သာအကူ', photo: '' },
-            { id: 'အရပ်-၇၁၀၀၀၃', rankFull: 'အရပ်သားကျွမ်းကျင်', rankAbbr: 'အရပ်သားကျွမ်းကျင်', name: 'ဦးဇော်လင်းထွန်း', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1989-11-02', nrc: '၁၂/လသယ(နိုင်)၄၂၃၄၅၆', fatherName: 'ဦးလင်းထွန်း', motherName: 'ဒေါ်ခင်မာ', occupation: 'လျှပ်စစ်ပြင်ဆင်ရေး', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'အရပ်သားကျွမ်းကျင်', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၂', phone: '၀၉-၆၉၁၀၀၄၀၀၃', address: 'လှိုင်သာယာ', remarks: 'လျှပ်စစ်ပိုင်းအကူ', photo: '' },
-            { id: 'အရပ်-၇၁၀၀၀၄', rankFull: 'ယာယီအရပ်သားဝန်ထမ်း', rankAbbr: 'ယာယီဝန်ထမ်း', name: 'ဒေါ်ဖြူဖြူသင်း', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'မ', dob: '1997-02-24', nrc: '၁၂/ရပသ(နိုင်)၄၃၄၅၆၇', fatherName: 'ဦးသင်းအောင်', motherName: 'ဒေါ်စန်းနွဲ့', occupation: 'ထုပ်ပိုးရေးအကူ', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'ယာယီအရပ်သားဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'ခွင့်', location: 'ရွှေပြည်သာ', phone: '၀၉-၆၉၁၀၀၄၀၀၄', address: 'ရွှေပြည်သာ', remarks: 'ခွင့်တိုင်ကြားထား', photo: '' },
-            { id: 'အရပ်-၇၁၀၀၀၅', rankFull: 'အရပ်သားလုပ်သား', rankAbbr: 'အရပ်သားလသ', name: 'ဦးကျော်မင်းလတ်', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1993-07-10', nrc: '၁၂/မဘန(နိုင်)၄၄၅၆၇၈', fatherName: 'ဦးမင်းလတ်', motherName: 'ဒေါ်တင်တင်', occupation: 'ခြံသန့်ရှင်းရေး', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'အရပ်သားလုပ်သား', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၆၉၁၀၀၄၀၀၅', address: 'မှော်ဘီမြို့', remarks: 'ပတ်ဝန်းကျင်သန့်ရှင်းရေး', photo: '' }
+            { id: 'အရပ်-၇၁၀၀၀၁', rankFull: 'နေ့စားဝန်ထမ်း', rankAbbr: 'နေ့စား', name: 'ဦးအောင်မျိုးဝင်း', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'ထုတ်လုပ်ရေးဌာန-၁', deptAbbr: 'ထလရ-၁', gender: 'ကျား', dob: '1992-04-15', nrc: '၁၂/အစန(နိုင်)၄၀၁၂၃၄', fatherName: 'ဦးမျိုးဝင်း', motherName: 'ဒေါ်တင်လှ', occupation: 'အရပ်သားစက်အကူ', occupationType: 'စက်မှုအထောက်အကူ', position: 'အရပ်သားဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၁', phone: '၀၉-၆၉၁၀၀၄၀၀၁', address: 'အင်းစိန်မြို့နယ်', remarks: 'နေ့စားအလုပ်သမား', photo: '' },
+            { id: 'အရပ်-၇၁၀၀၀၂', rankFull: 'ပုတ်ပြတ်ဝန်ထမ်း', rankAbbr: 'ပုတ်ပြတ်', name: 'ဒေါ်မေသဇင်', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'စီမံရေးဌာန', deptAbbr: 'စမရ', gender: 'မ', dob: '1996-08-19', nrc: '၁၂/မဂဒ(နိုင်)၄၁၂၃၄၅', fatherName: 'ဦးသဇင်', motherName: 'ဒေါ်အေးမြင့်', occupation: 'စာဖိုဆောင်အကူ', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'အရပ်သားဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'တန်းစီ', absentReason: '', location: 'စီမံရေးဌာန', phone: '၀၉-၆၉၁၀၀၄၀၀၂', address: 'မင်္ဂလာဒုံ', remarks: 'စားရိပ်သာအကူ', photo: '' },
+            { id: 'အရပ်-၇၁၀၀၀၃', rankFull: 'အရပ်သားကျွမ်းကျင်', rankAbbr: 'အရပ်သားကျွမ်းကျင်', name: 'ဦးဇော်လင်းထွန်း', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'ထုတ်လုပ်ရေးဌာန-၂', deptAbbr: 'ထလရ-၂', gender: 'ကျား', dob: '1989-11-02', nrc: '၁၂/လသယ(နိုင်)၄၂၃၄၅၆', fatherName: 'ဦးလင်းထွန်း', motherName: 'ဒေါ်ခင်မာ', occupation: 'လျှပ်စစ်ပြင်ဆင်ရေး', occupationType: 'စက်မှုကျွမ်းကျင်', position: 'အရပ်သားဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'ထုတ်လုပ်ရေးဌာန-၂', phone: '၀၉-၆၉၁၀၀၄၀၀၃', address: 'လှိုင်သာယာ', remarks: 'လျှပ်စစ်ပိုင်းအကူ', photo: '' },
+            { id: 'အရပ်-၇၁၀၀၀၄', rankFull: 'ယာယီအရပ်သားဝန်ထမ်း', rankAbbr: 'ယာယီဝန်ထမ်း', name: 'ဒေါ်ဖြူဖြူသင်း', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'စစ်ဆေးရေးဌာန', deptAbbr: 'စဆရ', gender: 'မ', dob: '1997-02-24', nrc: '၁၂/ရပသ(နိုင်)၄၃၄၅၆၇', fatherName: 'ဦးသင်းအောင်', motherName: 'ဒေါ်စန်းနွဲ့', occupation: 'ထုပ်ပိုးရေးအကူ', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'အရပ်သားဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်ပြင်', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'ပျို', status: 'ပျက်ကွက်', absentReason: 'ခွင့်', location: 'ရွှေပြည်သာ', phone: '၀၉-၆၉၁၀၀၄၀၀၄', address: 'ရွှေပြည်သာ', remarks: 'ခွင့်တိုင်ကြားထား', photo: '' },
+            { id: 'အရပ်-၇၁၀၀၀၅', rankFull: 'အရပ်သားလုပ်သား', rankAbbr: 'အရပ်သားလသ', name: 'ဦးကျော်မင်းလတ်', roleGroup: 'အရပ်သားဝန်ထမ်း', deptFull: 'စက်ရုံဌာနချုပ်', deptAbbr: 'ဌနခ', gender: 'ကျား', dob: '1993-07-10', nrc: '၁၂/မဘန(နိုင်)၄၄၅၆၇၈', fatherName: 'ဦးမင်းလတ်', motherName: 'ဒေါ်တင်တင်', occupation: 'ခြံသန့်ရှင်းရေး', occupationType: 'အထွေထွေလုပ်ငန်း', position: 'အရပ်သားဝန်ထမ်း', staffType: 'ယာယီတာဝန်', unitScope: 'တပ်တွင်း', race: 'ဗမာ', religion: 'ဗုဒ္ဓ', maritalStatus: 'အို', status: 'တန်းစီ', absentReason: '', location: 'စက်ရုံဌာနချုပ်', phone: '၀၉-၆၉၁၀၀၄၀၀၅', address: 'မှော်ဘီမြို့', remarks: 'ပတ်ဝန်းကျင်သန့်ရှင်းရေး', photo: '' }
         ];
         let securityDutyData = [
             { id: 'ကြည်း-၄၁၀၀၉', rankAbbr: 'ဗိုလ်', name: 'ဖြိုးဝေကျော်', deptAbbr: 'ထလရ-၂', staffType: 'သန္ဓေ', status: 'ပျက်ကွက်', absentReason: 'လုံခြုံရေးတာဝန်', remarks: 'တပ်တွင်းလုံခြုံရေးအဖွဲ့ခေါင်းဆောင်', dutyType: 'တပ်တွင်း', location: 'ဂိတ် (၁) - ပင်မဝင်ပေါက်', weaponType: 'MA-5 MK-II', weaponModel: '9mm Pistol', weaponCode: 'WPN-101', weaponSerial: 'SN-2026101', ammoCount: 'ကျည် ၃၀ တောင့်', startDate: '2026-11-15' },
@@ -2775,10 +2760,10 @@ var db = admin.firestore();</pre>
         }
 
         function resolvePersonnelRoleGroup(person) {
-            if (person.roleGroup === 'အရပ်သားဝန်ထမ်း') return 'အရပ်သားဝန်ထမ်း';
-            if (person.roleGroup === 'အမြဲတမ်းဝန်ထမ်း') return 'အမြဲတမ်းဝန်ထမ်း';
-            if (person.roleGroup === 'အရာရှိ') return 'အရာရှိ';
-            if (person.roleGroup === 'စစ်သည်') return 'စစ်သည်';
+            if (person.position === 'အရပ်သားဝန်ထမ်း' || person.roleGroup === 'အရပ်သားဝန်ထမ်း') return 'အရပ်သားဝန်ထမ်း';
+            if (person.position === 'အမြဲတမ်းဝန်ထမ်း' || person.roleGroup === 'အမြဲတမ်းဝန်ထမ်း') return 'အမြဲတမ်းဝန်ထမ်း';
+            if (person.position === 'အရာရှိ' || person.roleGroup === 'အရာရှိ') return 'အရာရှိ';
+            if (person.position === 'စစ်သည်' || person.roleGroup === 'စစ်သည်') return 'စစ်သည်';
 
             const rankStr = String(person.rankAbbr || person.rankFull || '').trim();
             const typeStr = String(person.staffType || '').trim();
@@ -2917,7 +2902,14 @@ var db = admin.firestore();</pre>
                 if (parsed.POSITION_DEFINITIONS && typeof parsed.POSITION_DEFINITIONS === 'object') {
                     POSITION_DEFINITIONS = normalizePositionDefinitions(parsed.POSITION_DEFINITIONS);
                 }
-                if (Array.isArray(parsed.personnelData)) personnelData = parsed.personnelData;
+                if (Array.isArray(parsed.personnelData)) {
+                    personnelData = parsed.personnelData;
+                    personnelData.forEach(p => {
+                        if (!['အရာရှိ', 'စစ်သည်', 'အမြဲတမ်းဝန်ထမ်း', 'အရပ်သားဝန်ထမ်း'].includes(p.position)) {
+                            p.position = resolvePersonnelRoleGroup(p);
+                        }
+                    });
+                }
                 if (Array.isArray(parsed.securityDutyData)) securityDutyData = parsed.securityDutyData;
                 if (Array.isArray(parsed.armoryData)) armoryData = parsed.armoryData;
                 if (Array.isArray(parsed.prodStatementData)) prodStatementData = parsed.prodStatementData;
@@ -3065,27 +3057,30 @@ var db = admin.firestore();</pre>
             }
         }
 
+        let activePositionFilter = '';
+
         function switchTab(tabName) {
             const headerTitleEl = document.getElementById('page-header-title');
             const tabSectionMap = {
-                dashboard: { sectionId: 'dashboard-tab', title: 'Dashboard Summary', category: 'ALL' },
-                officer: { sectionId: 'personnel-tab', title: 'အရာရှိအမည်စာရင်း', category: 'အရာရှိ' },
-                soldier: { sectionId: 'personnel-tab', title: 'စစ်သည်အမည်စာရင်း', category: 'စစ်သည်' },
-                staff: { sectionId: 'personnel-tab', title: 'အမြဲတမ်းဝန်ထမ်း', category: 'အမြဲတမ်းဝန်ထမ်း' },
-                civilian: { sectionId: 'personnel-tab', title: 'အရပ်သားဝန်ထမ်း', category: 'အရပ်သားဝန်ထမ်း' },
-                'civilian-master': { sectionId: 'civilian-master-tab', title: 'Name List Master', category: 'အရပ်သားဝန်ထမ်း' },
-                personnel: { sectionId: 'personnel-tab', title: 'အမြဲတမ်းဝန်ထမ်း', category: 'ALL' },
-                absent: { sectionId: 'absent-tab', title: 'တန်းစီအင်အားစာရင်းနှင့် ပျက်ကွက်အမည်စာရင်း', category: 'ALL' },
-                duty: { sectionId: 'duty-tab', title: 'လုံခြုံရေးတာဝန်အမည်စာရင်း', category: 'ALL' },
-                armory: { sectionId: 'armory-tab', title: 'ကြီးကြပ်/ကန့်သတ်စာရင်း', category: 'ALL' },
-                prod: { sectionId: 'prod-tab', title: 'Prod; Statement', category: 'ALL' },
-                announcement: { sectionId: 'announcement-tab', title: 'Announcement', category: 'ALL' },
-                users: { sectionId: 'users-tab', title: 'User Management', category: 'ALL' },
-                settings: { sectionId: 'settings-tab', title: 'Setting', category: 'ALL' }
+                dashboard: { sectionId: 'dashboard-tab', title: 'Dashboard Summary', category: 'ALL', positionFilter: '' },
+                officer: { sectionId: 'civilian-master-tab', title: 'အရာရှိအမည်စာရင်း', category: 'အရာရှိ', positionFilter: 'အရာရှိ' },
+                soldier: { sectionId: 'civilian-master-tab', title: 'စစ်သည်အမည်စာရင်း', category: 'စစ်သည်', positionFilter: 'စစ်သည်' },
+                staff: { sectionId: 'civilian-master-tab', title: 'အမြဲတမ်းဝန်ထမ်းစာရင်း', category: 'အမြဲတမ်းဝန်ထမ်း', positionFilter: 'အမြဲတမ်းဝန်ထမ်း' },
+                civilian: { sectionId: 'civilian-master-tab', title: 'အရပ်သားဝန်ထမ်းစာရင်း', category: 'အရပ်သားဝန်ထမ်း', positionFilter: 'အရပ်သားဝန်ထမ်း' },
+                'civilian-master': { sectionId: 'civilian-master-tab', title: 'Name List Master', category: 'ALL', positionFilter: '' },
+                personnel: { sectionId: 'civilian-master-tab', title: 'Name List Master', category: 'ALL', positionFilter: '' },
+                absent: { sectionId: 'absent-tab', title: 'တန်းစီအင်အားစာရင်းနှင့် ပျက်ကွက်အမည်စာရင်း', category: 'ALL', positionFilter: '' },
+                duty: { sectionId: 'duty-tab', title: 'လုံခြုံရေးတာဝန်အမည်စာရင်း', category: 'ALL', positionFilter: '' },
+                armory: { sectionId: 'armory-tab', title: 'ကြီးကြပ်/ကန့်သတ်စာရင်း', category: 'ALL', positionFilter: '' },
+                prod: { sectionId: 'prod-tab', title: 'Prod; Statement', category: 'ALL', positionFilter: '' },
+                announcement: { sectionId: 'announcement-tab', title: 'Announcement', category: 'ALL', positionFilter: '' },
+                users: { sectionId: 'users-tab', title: 'User Management', category: 'ALL', positionFilter: '' },
+                settings: { sectionId: 'settings-tab', title: 'Setting', category: 'ALL', positionFilter: '' }
             };
 
             const targetInfo = tabSectionMap[tabName] || tabSectionMap.dashboard;
             activePersonnelCategoryTab = targetInfo.category;
+            activePositionFilter = targetInfo.positionFilter || '';
 
             // Hide all tab sections
             document.querySelectorAll('.tab-content').forEach(sec => sec.classList.add('hidden'));
@@ -3094,6 +3089,20 @@ var db = admin.firestore();</pre>
 
             // Update header title
             if (headerTitleEl) headerTitleEl.textContent = targetInfo.title;
+
+            // Update civilian-master card title
+            const cmTitleEl = document.getElementById('civilian-master-title');
+            if (cmTitleEl) cmTitleEl.textContent = targetInfo.title;
+
+            // Remove/hide Import button on (အရာရှိအမည်စာရင်း၊ စစ်သည်အမည်စာရင်း၊ အမြဲတမ်းဝန်ထမ်းစာရင်း၊ အရပ်သားဝန်ထမ်းစာရင်း)
+            const cmImportBtn = document.getElementById('civilian-master-import-btn');
+            if (cmImportBtn) {
+                if (['officer', 'soldier', 'staff', 'civilian'].includes(tabName)) {
+                    cmImportBtn.classList.add('hidden');
+                } else {
+                    cmImportBtn.classList.remove('hidden');
+                }
+            }
 
             // Highlight active sidebar button
             document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -3109,9 +3118,10 @@ var db = admin.firestore();</pre>
             // Render active view
             if (tabName === 'dashboard') {
                 renderDashboardView();
-            } else if (tabName === 'civilian-master') {
+            } else if (['officer', 'soldier', 'staff', 'civilian', 'civilian-master'].includes(tabName)) {
+                tablePageState.civilianMaster = 1;
                 renderCivilianNameListMaster();
-            } else if (['officer', 'soldier', 'staff', 'civilian', 'personnel'].includes(tabName)) {
+            } else if (tabName === 'personnel') {
                 initInlinePersonnelControls();
                 renderPersonnelDirectory();
             } else if (tabName === 'absent') {
@@ -6996,7 +7006,7 @@ var db = admin.firestore();</pre>
                 if (document.getElementById('p-form-mother')) document.getElementById('p-form-mother').value = p.motherName || '';
                 if (document.getElementById('p-form-occupation')) document.getElementById('p-form-occupation').value = p.occupation || '';
                 if (document.getElementById('p-form-occ-type')) document.getElementById('p-form-occ-type').value = p.occupationType || '';
-                if (document.getElementById('p-form-position')) document.getElementById('p-form-position').value = p.position || '';
+                if (document.getElementById('p-form-position')) document.getElementById('p-form-position').value = p ? (p.position || resolvePersonnelRoleGroup(p) || 'အရာရှိ') : (activePositionFilter || 'အရာရှိ');
                 if (document.getElementById('p-form-race')) document.getElementById('p-form-race').value = p.race || '';
                 if (document.getElementById('p-form-religion')) document.getElementById('p-form-religion').value = p.religion || '';
                 if (document.getElementById('p-form-marital')) document.getElementById('p-form-marital').value = p.maritalStatus || 'ပျို';
@@ -7052,12 +7062,11 @@ var db = admin.firestore();</pre>
         }
 
         function addCivilianMasterRecord() {
-            activePersonnelCategoryTab = 'အရပ်သားဝန်ထမ်း';
+            activePersonnelCategoryTab = activePositionFilter || 'အရာရှိ';
             openPersonnelForm(-1);
-            const staffTypeSelect = document.getElementById('p-form-type');
-            if (staffTypeSelect && Array.from(staffTypeSelect.options).some(option => option.value === 'အရပ်သား')) {
-                staffTypeSelect.value = 'အရပ်သား';
-                handleStaffTypeChange();
+            if (activePositionFilter) {
+                const posEl = document.getElementById('p-form-position');
+                if (posEl) posEl.value = activePositionFilter;
             }
         }
 
@@ -7107,10 +7116,14 @@ var db = admin.firestore();</pre>
             const filterValue = document.getElementById('civilian-master-filter')?.value.trim().toLocaleLowerCase() || '';
             return personnelData
                 .filter(person => {
+                    const pos = (person.position || resolvePersonnelRoleGroup(person) || '').trim();
+                    if (activePositionFilter && pos !== activePositionFilter) {
+                        return false;
+                    }
                     if (!filterValue) return true;
                     const searchableValues = [
                         person.id, person.rankAbbr, person.rankFull, person.name,
-                        person.deptFull, person.deptAbbr, person.position, person.gender,
+                        person.deptFull, person.deptAbbr, pos, person.gender,
                         person.status, person.absentReason, person.staffType, person.dob,
                         person.nrc, person.fatherName, person.motherName, person.address,
                         person.addressType, person.race, person.religion, person.phone, person.remarks
@@ -7126,7 +7139,7 @@ var db = admin.firestore();</pre>
                 getRankAbbr(person.rankAbbr || person.rankFull),
                 person.name,
                 getDeptAbbr(person.deptAbbr || person.deptFull),
-                person.position,
+                person.position || resolvePersonnelRoleGroup(person) || '',
                 person.gender,
                 person.status,
                 person.status === 'ပျက်ကွက်' ? person.absentReason : '',
