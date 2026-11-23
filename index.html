@@ -646,9 +646,14 @@
                 <button id="nav-staff" onclick="switchTab('staff')" title="အမြဲတမ်းဝန်ထမ်းစာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
                     <span class="font-bold">အမြဲတမ်းဝန်ထမ်းစာရင်း</span>
                 </button>
-                <button id="nav-civilian" onclick="switchTab('civilian')" title="အရပ်သားဝန်ထမ်းစာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
-                    <span class="font-bold">အရပ်သားဝန်ထမ်းစာရင်း</span>
-                </button>
+                <div class="flex flex-col gap-1 flex-shrink-0">
+                    <button id="nav-civilian" onclick="switchTab('civilian')" title="အရပ်သားဝန်ထမ်းစာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
+                        <span class="font-bold">အရပ်သားဝန်ထမ်းစာရင်း</span>
+                    </button>
+                    <button id="nav-civilian-master" onclick="switchTab('civilian-master')" title="Name List Master" class="nav-btn flex items-center justify-start pl-7 pr-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
+                        <span class="font-bold">Name List Master</span>
+                    </button>
+                </div>
                 <button id="nav-absent" onclick="switchTab('absent')" title="တန်းစီအင်အားစာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
                     <span class="font-bold">တန်းစီအင်အားစာရင်း</span>
                 </button>
@@ -680,9 +685,9 @@
     <!-- MAIN CONTENT SHELL -->
     <div class="flex-1 flex flex-col min-w-0 min-h-0 h-full overflow-hidden">
         <!-- Top Modern Blue Header Bar (Fixed) -->
-        <header class="relative bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-800 text-white px-4 py-2 shadow-md flex flex-wrap justify-between items-center gap-2 flex-shrink-0 z-20">
+        <header class="relative bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-800 text-white px-4 py-0 shadow-md flex flex-nowrap justify-between items-center gap-2 flex-shrink-0 z-20">
             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                <h1 id="page-header-title" class="font-bold text-xs leading-tight tracking-wide whitespace-normal break-words">Dashboard Summary</h1>
+                <h1 id="page-header-title" class="font-bold text-xs leading-tight tracking-wide truncate">Dashboard Summary</h1>
             </div>
             <div class="flex items-center gap-2.5 text-xs flex-shrink-0">
                 <button onclick="toggleGlobalSearch()" id="global-search-toggle-btn" class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/20 shadow-sm transition" title="Search all records" aria-label="Search all records">
@@ -732,7 +737,7 @@
                     <div class="flex flex-wrap items-start justify-between gap-2">
                         <div class="min-w-0 flex-1">
                             <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-blue-700 dark:text-blue-300 font-bold">Announcement</span>
+                                <span class="text-blue-700 dark:text-blue-300 font-bold">ကြေညာချက်အမှတ် - </span>
                                 <span id="dashboard-announcement-count" class="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 font-semibold"></span>
                             </div>
                             <h2 id="dashboard-announcement-title" class="font-bold text-slate-900 dark:text-white"></h2>
@@ -749,8 +754,8 @@
                             <span id="count-officer" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-officer-present-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">တန်းစီ - ၀</span>
-                            <span id="dash-officer-absent-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">ပျက်ကွက် - ၀</span>
+                            <span id="dash-officer-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-officer-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
                     <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
@@ -759,8 +764,8 @@
                             <span id="count-soldier" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-soldier-present-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">တန်းစီ - ၀</span>
-                            <span id="dash-soldier-absent-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">ပျက်ကွက် - ၀</span>
+                            <span id="dash-soldier-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-soldier-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
                     <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
@@ -769,8 +774,8 @@
                             <span id="count-staff" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-staff-present-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">တန်းစီ - ၀</span>
-                            <span id="dash-staff-absent-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">ပျက်ကွက် - ၀</span>
+                            <span id="dash-staff-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-staff-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
                     <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
@@ -779,8 +784,8 @@
                             <span id="count-civilian" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-civilian-present-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">တန်းစီ - ၀</span>
-                            <span id="dash-civilian-absent-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">ပျက်ကွက် - ၀</span>
+                            <span id="dash-civilian-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-civilian-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
                     <div class="col-span-2 sm:col-span-1 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
@@ -789,8 +794,8 @@
                             <span id="count-total" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-present-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">တန်းစီ - ၀</span>
-                            <span id="dash-absent-badge" class="section-heading-bold text-slate-800 dark:text-slate-200">ပျက်ကွက် - ၀</span>
+                            <span id="dash-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
                 </div>
@@ -981,7 +986,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-slate-600 dark:text-slate-300 mb-1 font-semibold">နေရပ်လိပ်စာ</label>
-                                    <input type="text" id="p-in-address" class="w-full bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
+                                    <select id="p-in-address" class="w-full bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500"></select>
                                 </div>
                                 <div class="sm:col-span-2 lg:col-span-3">
                                     <label class="block text-slate-600 dark:text-slate-300 mb-1 font-semibold">မှတ်ချက်</label>
@@ -996,9 +1001,7 @@
                 <div class="space-y-2">
                     <div id="personnel-table-actions" class="role-write-action flex justify-end gap-2">
                         <button onclick="openPersonnelForm(-1)" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
-                        <button onclick="triggerExcelImport('personnel')" class="px-2.5 py-1 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
                         <button onclick="exportPersonnelExcel()" class="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
-                        <input type="file" id="p-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'personnel')">
                     </div>
 
                     <!-- Search & Filter Bar -->
@@ -1036,8 +1039,9 @@
                                 <th class="p-3 text-left">ပျက်ကွက်အကြောင်းရင်း</th>
                                 <th class="p-3 text-left">ဝန်ထမ်းအမျိုးအစား</th>
                                 <th class="p-3 text-left">နေရပ်လိပ်စာ</th>
+                                <th class="p-3 text-left">ဖုန်းနံပါတ်</th>
                                 <th class="p-3 text-left">မှတ်ချက်</th>
-                                <th class="p-3 text-center">Function</th>
+                                <th class="p-3 text-center"></th>
                                 <th class="p-3 text-right"></th>
                             </tr>
                         </thead>
@@ -1048,6 +1052,69 @@
                 <!-- Personnel Pagination Bar -->
                 <div id="personnel-pagination-bar"></div>
             </section>
+
+            <section id="civilian-master-tab" class="tab-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-4 py-3 bg-slate-100 dark:bg-slate-700/70 border-b border-slate-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <h2 class="font-bold text-slate-900 dark:text-white">Name List Master</h2>
+                        <div class="flex flex-wrap items-center justify-end gap-1.5 self-end sm:self-auto">
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-xs whitespace-nowrap">
+                                <span class="text-slate-600 dark:text-slate-300">အရေအတွက်</span>
+                                <strong id="civilian-master-count" class="text-blue-700 dark:text-blue-300">၀</strong>
+                            </div>
+                            <select id="civilian-master-filter" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="w-40 max-w-48 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1.5 text-xs font-normal">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                            <button onclick="triggerExcelImport('civilian-master')" class="role-write-action px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
+                            <button onclick="exportCivilianMasterExcel()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
+                            <button onclick="printCivilianNameListMaster()" class="px-2.5 py-1.5 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Print</button>
+                            <input type="file" id="civilian-master-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'civilian-master')">
+                            <button onclick="addCivilianMasterRecord()" class="role-write-action px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs whitespace-nowrap">
+                            <thead class="bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-600">
+                                <tr>
+                                    <th class="px-3 py-2">ကိုယ်ပိုင်အမှတ်</th>
+                                    <th class="px-3 py-2">အဆင့်</th>
+                                    <th class="px-3 py-2">ဝန်ထမ်းအမည်</th>
+                                    <th class="px-3 py-2">ဌာနအမည်</th>
+                                    <th class="px-3 py-2">ရာထူး</th>
+                                    <th class="px-3 py-2">ကျား/မ</th>
+                                    <th class="px-3 py-2">လက်ရှိအခြေအနေ</th>
+                                    <th class="px-3 py-2">ပျက်ကွက်အကြောင်းရင်း</th>
+                                    <th class="px-3 py-2">ဝန်ထမ်းအမျိုးအစား</th>
+                                    <th class="px-3 py-2">နေရပ်လိပ်စာ</th>
+                                    <th class="px-3 py-2">ဖုန်းနံပါတ်</th>
+                                    <th class="px-3 py-2">မှတ်ချက်</th>
+                                    <th class="px-3 py-2 text-center">အသေးစိတ်</th>
+                                </tr>
+                            </thead>
+                            <tbody id="civilian-master-list" class="divide-y divide-slate-200 dark:divide-slate-700 align-middle"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="civilian-master-pagination-bar"></div>
+            </section>
+
+            <div id="civilian-master-detail-modal" role="dialog" aria-modal="true" aria-labelledby="civilian-master-detail-title" onclick="if(event.target === this) closeCivilianMasterDetailModal()" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-3 sm:p-4">
+                <div class="bg-white dark:bg-slate-800 rounded-xl max-w-3xl w-full shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden max-h-[92vh] flex flex-col modal-animate">
+                    <div class="bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-800 text-white px-4 py-3 flex justify-between items-center gap-3 flex-shrink-0">
+                        <h3 id="civilian-master-detail-title" class="font-bold text-sm text-white">အချက်အလက်အသေးစိတ်</h3>
+                        <div class="flex items-center gap-2">
+                            <button onclick="editCivilianMasterDetailRecord()" class="role-write-action px-3 py-1 bg-white/15 hover:bg-white/25 text-white border border-white/30 rounded-lg font-bold text-xs transition">Edit</button>
+                            <button onclick="closeCivilianMasterDetailModal()" class="text-white/80 hover:text-white p-1 rounded-lg transition" aria-label="ပိတ်မည်">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="civilian-master-detail-fields" class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto"></div>
+                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/30 flex justify-end border-t border-slate-200 dark:border-slate-700 flex-shrink-0">
+                        <button onclick="closeCivilianMasterDetailModal()" class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-lg font-bold text-xs transition">Close</button>
+                    </div>
+                </div>
+            </div>
 
             <!-- ABSENT STRENGTH & PARADE TAB (တန်းစီအင်အားစာရင်းနှင့် ပျက်ကွက်အမည်စာရင်း) -->
             <section id="absent-tab" class="tab-content hidden space-y-4">
@@ -1807,7 +1874,7 @@ var db = admin.firestore();</pre>
                     <!-- Ranks Management -->
                     <div class="bg-white dark:bg-slate-800 p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
                         <div class="flex justify-between items-center border-b dark:border-slate-700 pb-2">
-                            <h3 class="font-bold text-slate-900 dark:text-white text-xs">ရာထူး/အဆင့် သတ်မှတ်ချက်များ</h3>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs">အဆင့်သတ်မှတ်ချက်များ</h3>
                             <button onclick="addRankItem()" class="text-blue-600 dark:text-blue-400 hover:underline text-xs font-bold py-1">+ အသစ်ထည့်</button>
                         </div>
                         <div class="flex gap-1.5 border-b dark:border-slate-700 pb-2">
@@ -1817,6 +1884,15 @@ var db = admin.firestore();</pre>
                                         <button id="rank-tab-civilian" onclick="showRankCategory('civilian')" class="flex-1 bg-slate-200 dark:bg-slate-600 text-slate-700 dark:text-slate-200 py-2 px-2 rounded-lg text-xs font-semibold">အရပ်သားဝန်ထမ်း</button>
                         </div>
                         <div id="rank-definitions-list" class="space-y-2 max-h-80 overflow-y-auto"></div>
+                    </div>
+
+                    <!-- Position Management -->
+                    <div class="bg-white dark:bg-slate-800 p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+                        <div class="flex justify-between items-center border-b dark:border-slate-700 pb-2">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs">ရာထူးသတ်မှတ်ချက်များ</h3>
+                            <button onclick="addPositionItem()" class="text-blue-600 dark:text-blue-400 hover:underline text-xs font-bold py-1">+ အသစ်ထည့်</button>
+                        </div>
+                        <div id="position-definitions-list" class="space-y-2 max-h-80 overflow-y-auto"></div>
                     </div>
 
                     <!-- Current Status Management -->
@@ -2104,7 +2180,7 @@ var db = admin.firestore();</pre>
                     </div>
                     <div>
                         <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">နေရပ်လိပ်စာ</label>
-                        <input type="text" id="p-form-address" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
+                        <select id="p-form-address" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500"></select>
                     </div>
                 </div>
 
@@ -2113,14 +2189,10 @@ var db = admin.firestore();</pre>
                     <input type="text" id="p-form-remarks" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 outline-none focus:border-blue-500">
                 </div>
 
-                <div class="pt-2 flex justify-between items-center gap-2 border-t dark:border-slate-700">
-                    <div>
-                        <button type="button" id="p-form-delete-btn" onclick="deletePersonnelFromFormModal()" class="hidden px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-xs transition">Delete</button>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button type="button" onclick="closePersonnelFormModal()" class="px-4 py-2 bg-slate-500 hover:bg-slate-600 text-white rounded-lg font-bold text-xs transition">Cancel</button>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition">Save</button>
-                    </div>
+                <div class="pt-2 flex justify-end items-center gap-2 border-t dark:border-slate-700">
+                    <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition">Save</button>
+                    <button type="button" id="p-form-delete-btn" onclick="deletePersonnelFromFormModal()" class="hidden px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-xs transition">Delete</button>
+                    <button type="button" onclick="closePersonnelFormModal()" class="px-4 py-2 bg-slate-500 hover:bg-slate-600 text-white rounded-lg font-bold text-xs transition">Cancel</button>
                 </div>
             </form>
         </div>
@@ -2313,11 +2385,18 @@ var db = admin.firestore();</pre>
         })();
         let firestoreDb = null;
         let firebaseAuth = null;
+        let firebaseAuthStateUnsubscribe = null;
         let firestoreUnsubscribe = null;
+        let firestoreNetworkListenersRegistered = false;
         let hasPendingCloudSync = localStorage.getItem(FIREBASE_PENDING_SYNC_KEY) === '1';
         let isApplyingRemoteSnapshot = false;
         let autoSyncDebounceTimer = null;
         let currentSessionUser = null;
+        let currentFirebaseUid = '';
+
+        function getCurrentFirebaseUid() {
+            return firebaseAuth?.currentUser?.uid || currentFirebaseUid || '';
+        }
 
         const DEFAULT_DEPT_MAPPING = [
             { full: 'စက်ရုံဌာနချုပ်', abbr: 'ဌနခ' },
@@ -2371,6 +2450,9 @@ var db = admin.firestore();</pre>
                 { full: 'ထမင်းချက်', abbr: 'ထမင်းချက်' }
             ]
         };
+
+        const DEFAULT_POSITION_DEFINITIONS = ['အရာရှိ', 'စစ်သည်', 'အမြဲတမ်းဝန်ထမ်း', 'အရပ်သားဝန်ထမ်း'];
+        let POSITION_DEFINITIONS = [...DEFAULT_POSITION_DEFINITIONS];
 
         const RANK_DEFINITIONS_VERSION = 2;
         let staffTypeList = ['သန္ဓေ', 'တွဲဖက်', 'ယာယီတာဝန်', 'အရပ်သား'];
@@ -2589,6 +2671,7 @@ var db = admin.firestore();</pre>
         let editingStaffTypeIndex = -1;
         let editingDeptIndex = -1;
         let editingRankIndex = -1;
+        let editingPositionIndex = -1;
         let editingStatusIndex = -1;
         let editingAddressTypeIndex = -1;
         let editingSecurityDutyTypeIndex = -1;
@@ -2601,11 +2684,13 @@ var db = admin.firestore();</pre>
 
         // Pagination State (15 rows per page across tables)
         const ITEMS_PER_PAGE = 15;
+        const CIVILIAN_MASTER_ITEMS_PER_PAGE = 20;
         const tablePageState = {
             officer: 1,
             soldier: 1,
             staff: 1,
             civilian: 1,
+            civilianMaster: 1,
             ALL: 1,
             absent: 1,
             duty: 1,
@@ -2633,6 +2718,7 @@ var db = admin.firestore();</pre>
             const targetKey = key === 'personnel' ? getActivePersonnelPageKey() : key;
             tablePageState[targetKey] = Math.max(1, newPage);
             if (key === 'personnel') renderPersonnelDirectory();
+            else if (key === 'civilianMaster') renderCivilianNameListMaster();
             else if (key === 'absent') renderAbsentSummary();
             else if (key === 'duty') renderSecurityDuty();
             else if (key === 'armory') renderArmory();
@@ -2640,17 +2726,17 @@ var db = admin.firestore();</pre>
             document.getElementById('main-workspace')?.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function renderPaginationControls(containerId, key, currentPage, totalItems, unitLabel = 'ခု') {
+        function renderPaginationControls(containerId, key, currentPage, totalItems, unitLabel = 'ခု', pageSize = ITEMS_PER_PAGE) {
             const el = document.getElementById(containerId);
             if (!el) return;
-            const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
+            const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
             if (totalItems === 0) {
                 el.innerHTML = '';
                 return;
             }
             const safePage = Math.min(Math.max(1, currentPage), totalPages);
-            const startItem = (safePage - 1) * ITEMS_PER_PAGE + 1;
-            const endItem = Math.min(totalItems, safePage * ITEMS_PER_PAGE);
+            const startItem = (safePage - 1) * pageSize + 1;
+            const endItem = Math.min(totalItems, safePage * pageSize);
 
             let pageButtons = '';
             const maxVisible = 5;
@@ -2774,6 +2860,22 @@ var db = admin.firestore();</pre>
             return migrated;
         }
 
+        function normalizePositionDefinitions(value) {
+            if (Array.isArray(value)) {
+                return [...new Set(value.filter(position => typeof position === 'string').map(position => position.trim()).filter(Boolean))];
+            }
+            if (value && typeof value === 'object') {
+                const legacyEntries = Object.values(value)
+                    .filter(Array.isArray)
+                    .flat()
+                    .filter(position => typeof position === 'string')
+                    .map(position => position.trim())
+                    .filter(Boolean);
+                return [...new Set([...DEFAULT_POSITION_DEFINITIONS, ...legacyEntries])];
+            }
+            return [...DEFAULT_POSITION_DEFINITIONS];
+        }
+
         function loadSystemState() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
@@ -2811,6 +2913,9 @@ var db = admin.firestore();</pre>
                         ? migrateRankDefinitions(parsed.RANK_DEFINITIONS)
                         : parsed.RANK_DEFINITIONS;
                     persistRankMigration = rankVersion < RANK_DEFINITIONS_VERSION;
+                }
+                if (parsed.POSITION_DEFINITIONS && typeof parsed.POSITION_DEFINITIONS === 'object') {
+                    POSITION_DEFINITIONS = normalizePositionDefinitions(parsed.POSITION_DEFINITIONS);
                 }
                 if (Array.isArray(parsed.personnelData)) personnelData = parsed.personnelData;
                 if (Array.isArray(parsed.securityDutyData)) securityDutyData = parsed.securityDutyData;
@@ -2968,6 +3073,7 @@ var db = admin.firestore();</pre>
                 soldier: { sectionId: 'personnel-tab', title: 'စစ်သည်အမည်စာရင်း', category: 'စစ်သည်' },
                 staff: { sectionId: 'personnel-tab', title: 'အမြဲတမ်းဝန်ထမ်း', category: 'အမြဲတမ်းဝန်ထမ်း' },
                 civilian: { sectionId: 'personnel-tab', title: 'အရပ်သားဝန်ထမ်း', category: 'အရပ်သားဝန်ထမ်း' },
+                'civilian-master': { sectionId: 'civilian-master-tab', title: 'Name List Master', category: 'အရပ်သားဝန်ထမ်း' },
                 personnel: { sectionId: 'personnel-tab', title: 'အမြဲတမ်းဝန်ထမ်း', category: 'ALL' },
                 absent: { sectionId: 'absent-tab', title: 'တန်းစီအင်အားစာရင်းနှင့် ပျက်ကွက်အမည်စာရင်း', category: 'ALL' },
                 duty: { sectionId: 'duty-tab', title: 'လုံခြုံရေးတာဝန်အမည်စာရင်း', category: 'ALL' },
@@ -3003,6 +3109,8 @@ var db = admin.firestore();</pre>
             // Render active view
             if (tabName === 'dashboard') {
                 renderDashboardView();
+            } else if (tabName === 'civilian-master') {
+                renderCivilianNameListMaster();
             } else if (['officer', 'soldier', 'staff', 'civilian', 'personnel'].includes(tabName)) {
                 initInlinePersonnelControls();
                 renderPersonnelDirectory();
@@ -3406,6 +3514,26 @@ var db = admin.firestore();</pre>
             sel.innerHTML = statusList.map(s => `<option value="${s}">${s}</option>`).join('') + `<option value="CUSTOM">Custom</option>`;
         }
 
+        function populateAddressTypeSelect(selectId, selectedValue = '') {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+
+            const options = [...new Set(addressTypeList.map(value => String(value || '').trim()).filter(Boolean))];
+            const currentValue = String(selectedValue ?? '').trim();
+
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.textContent = 'ရွေးချယ်ပါ';
+            select.replaceChildren(placeholder);
+            options.forEach(value => {
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = value;
+                select.appendChild(option);
+            });
+            select.value = options.includes(currentValue) ? currentValue : '';
+        }
+
         function handleStaffTypeChange() {
             const typeSel = document.getElementById('p-form-type');
             const customType = document.getElementById('p-form-type-custom');
@@ -3597,6 +3725,7 @@ var db = admin.firestore();</pre>
             if (!guardWritePermission()) return;
             const map = {
                 personnel: 'p-excel-input',
+                'civilian-master': 'civilian-master-excel-input',
                 absent: 'ab-excel-input',
                 duty: 'd-excel-input',
                 armory: 'a-excel-input',
@@ -3636,7 +3765,66 @@ var db = admin.firestore();</pre>
                         return;
                     }
                     let importedCount = 0;
-                    if (scope === 'personnel' || scope === 'absent') {
+                    if (scope === 'civilian-master') {
+                        rows.forEach(r => {
+                            const getValue = (...keys) => {
+                                for (const key of keys) {
+                                    if (r[key] !== undefined && r[key] !== null && String(r[key]).trim() !== '') {
+                                        return String(r[key]).trim();
+                                    }
+                                }
+                                return '';
+                            };
+                            const idVal = getValue('ကိုယ်ပိုင်အမှတ်', 'ID');
+                            const nameVal = getValue('ဝန်ထမ်းအမည်', 'အမည်', 'Name');
+                            if (!idVal || !nameVal) return;
+
+                            const rankRaw = getValue('အဆင့်', 'Rank');
+                            const deptRaw = getValue('ဌာနအမည်', 'ဌာန', 'Dept');
+                            const statusVal = getValue('လက်ရှိအခြေအနေ', 'Status') || statusList[0] || 'တန်းစီ';
+                            const dobRaw = r['မွေးသက္ကရာဇ်'] ?? r.DOB ?? '';
+                            const dobVal = typeof dobRaw === 'number'
+                                ? new Date(Date.UTC(1899, 11, 30) + dobRaw * 86400000).toISOString().slice(0, 10)
+                                : String(dobRaw).trim();
+                            personnelData.unshift({
+                                id: idVal,
+                                rankFull: getRankFull(rankRaw),
+                                rankAbbr: getRankAbbr(rankRaw),
+                                name: nameVal,
+                                roleGroup: 'အရပ်သားဝန်ထမ်း',
+                                deptFull: getDeptFull(deptRaw),
+                                deptAbbr: getDeptAbbr(deptRaw),
+                                position: getValue('ရာထူး', 'Position'),
+                                gender: getValue('ကျား/မ', 'Gender'),
+                                status: statusVal,
+                                absentReason: statusVal === 'ပျက်ကွက်' ? getValue('ပျက်ကွက်အကြောင်းရင်း', 'ပျက်ကွက်အကြောင်းအရင်း', 'Absent Reason') : '',
+                                staffType: getValue('ဝန်ထမ်းအမျိုးအစား', 'Staff Type') || (staffTypeList.includes('အရပ်သား') ? 'အရပ်သား' : staffTypeList[0] || ''),
+                                dob: dobVal,
+                                nrc: getValue('နိုင်ငံသားစိစစ်ရေးကတ်အမှတ်', 'မှတ်ပုံတင်အမှတ်', 'NRC'),
+                                fatherName: getValue('အဘအမည်', 'Father Name', "Father's Name"),
+                                motherName: getValue('အမိအမည်', 'Mother Name', "Mother's Name"),
+                                address: getValue('နေရပ်လိပ်စာ', 'လိပ်စာ', 'Address'),
+                                race: getValue('လူမျိုး', 'Race'),
+                                religion: getValue('ဘာသာ', 'Religion'),
+                                phone: getValue('ဖုန်းနံပါတ်', 'ဖုန်း', 'Phone'),
+                                remarks: getValue('မှတ်ချက်', 'Remarks'),
+                                location: getValue('တည်နေရာ', 'Location'),
+                                occupation: getValue('အလုပ်ကိုင်', 'အလုပ်အကိုင်', 'Occupation'),
+                                occupationType: getValue('အလုပ်အကိုင်အမျိုးအစား', 'Occupation Type'),
+                                maritalStatus: getValue('ပျို/အို', 'Marital Status'),
+                                photo: ''
+                            });
+                            importedCount++;
+                        });
+                        const masterFilter = document.getElementById('civilian-master-filter');
+                        if (masterFilter) masterFilter.value = '';
+                        tablePageState.civilianMaster = 1;
+                        saveSystemState();
+                        renderPersonnelDirectory();
+                        renderCivilianNameListMaster();
+                        renderAbsentSummary();
+                        renderDashboardView();
+                    } else if (scope === 'personnel' || scope === 'absent') {
                         rows.forEach(r => {
                             const idVal = String(r['ကိုယ်ပိုင်အမှတ်'] || r['ID'] || '').trim();
                             const nameVal = String(r['အမည်'] || r['Name'] || '').trim();
@@ -3664,6 +3852,7 @@ var db = admin.firestore();</pre>
                         });
                         saveSystemState();
                         renderPersonnelDirectory();
+                        renderCivilianNameListMaster();
                         renderAbsentSummary();
                         renderDashboardView();
                     } else if (scope === 'duty') {
@@ -3848,7 +4037,7 @@ var db = admin.firestore();</pre>
             const payload = {
                 exportedAt: new Date().toISOString(),
                 staffTypeList, statusList, addressTypeList, securityDutyTypeList, armoryCategoryList, armoryStatusList,
-                raceList, religionList, absentReasonCategories, absentReasonRows, DEPT_MAPPING, RANK_DEFINITIONS,
+                raceList, religionList, absentReasonCategories, absentReasonRows, DEPT_MAPPING, RANK_DEFINITIONS, POSITION_DEFINITIONS,
                 rankDefinitionsVersion: RANK_DEFINITIONS_VERSION,
                 personnelData, securityDutyData, armoryData, prodStatementData, announcementData, userRoles, userData
             };
@@ -3955,6 +4144,7 @@ var db = admin.firestore();</pre>
                     religionList = ['ဗုဒ္ဓ', 'ခရစ်ယာန်', 'မွတ်စလင်', 'ဟိန္ဒူ'];
                     DEPT_MAPPING = JSON.parse(JSON.stringify(DEFAULT_DEPT_MAPPING));
                     RANK_DEFINITIONS = JSON.parse(JSON.stringify(DEFAULT_RANK_DEFINITIONS));
+                    POSITION_DEFINITIONS = JSON.parse(JSON.stringify(DEFAULT_POSITION_DEFINITIONS));
                 }
                 saveSystemState();
                 renderDashboardView();
@@ -3993,6 +4183,7 @@ var db = admin.firestore();</pre>
                     absentReasonRows,
                     DEPT_MAPPING,
                     RANK_DEFINITIONS,
+                    POSITION_DEFINITIONS,
                     rankDefinitionsVersion: RANK_DEFINITIONS_VERSION,
                     personnelData,
                     securityDutyData,
@@ -4034,6 +4225,9 @@ var db = admin.firestore();</pre>
                     RANK_DEFINITIONS = rankVersion < RANK_DEFINITIONS_VERSION
                         ? migrateRankDefinitions(remoteData.RANK_DEFINITIONS)
                         : remoteData.RANK_DEFINITIONS;
+                }
+                if (remoteData.POSITION_DEFINITIONS && typeof remoteData.POSITION_DEFINITIONS === 'object') {
+                    POSITION_DEFINITIONS = normalizePositionDefinitions(remoteData.POSITION_DEFINITIONS);
                 }
                 if (Array.isArray(remoteData.personnelData)) personnelData = remoteData.personnelData;
                 if (Array.isArray(remoteData.securityDutyData)) securityDutyData = remoteData.securityDutyData;
@@ -4083,6 +4277,7 @@ var db = admin.firestore();</pre>
                     absentReasonRows,
                     DEPT_MAPPING,
                     RANK_DEFINITIONS,
+                    POSITION_DEFINITIONS,
                     rankDefinitionsVersion: RANK_DEFINITIONS_VERSION,
                     personnelData,
                     securityDutyData,
@@ -4098,18 +4293,23 @@ var db = admin.firestore();</pre>
                 updateFirebaseSyncUI('synced');
                 if (notify) showToast('Firestore Cloud သို့ ဒေတာများ Sync လုပ်ပြီးပါပြီ', 'success');
             } catch (err) {
-                console.warn('Firestore sync skipped/offline:', err?.message || err);
+                const errorCode = String(err?.code || err?.message || 'unknown error').slice(0, 80);
+                console.warn('Firestore sync failed:', err);
                 localStorage.setItem(FIREBASE_PENDING_SYNC_KEY, '1');
                 hasPendingCloudSync = true;
-                updateFirebaseSyncUI('offline');
-                if (notify) showToast('Firestore Sync မအောင်မြင်ပါ (Offline Mode)', 'error');
+                updateFirebaseSyncUI('offline', `Firestore Error: ${errorCode}`);
+                if (notify) showToast(`Firestore Sync မအောင်မြင်ပါ (${errorCode})`, 'error');
             }
         }
 
         function initFirebaseFirestore() {
             try {
-                if (typeof firebase === 'undefined' || !FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey) {
-                    updateFirebaseSyncUI('offline');
+                if (typeof firebase === 'undefined') {
+                    updateFirebaseSyncUI('offline', 'Firebase SDK မတင်နိုင်ပါ');
+                    return;
+                }
+                if (!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || !FIREBASE_CONFIG.projectId) {
+                    updateFirebaseSyncUI('offline', 'Firestore config မပြည့်စုံပါ');
                     return;
                 }
                 if (!firebase.apps || firebase.apps.length === 0) {
@@ -4117,10 +4317,31 @@ var db = admin.firestore();</pre>
                 }
                 if (firebase.auth) {
                     firebaseAuth = firebase.auth();
+                    if (typeof firebaseAuthStateUnsubscribe === 'function') firebaseAuthStateUnsubscribe();
+                    firebaseAuthStateUnsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+                        currentFirebaseUid = user?.uid || '';
+                        if (!currentSessionUser) return;
+
+                        const sessionEmail = (currentSessionUser.username || '').toLowerCase();
+                        const firebaseEmail = (user?.email || '').toLowerCase();
+                        if (user?.uid && sessionEmail && sessionEmail === firebaseEmail) {
+                            currentSessionUser.firebaseUid = user.uid;
+                        } else {
+                            delete currentSessionUser.firebaseUid;
+                        }
+                        localStorage.setItem(ACTIVE_AUTH_SESSION_KEY, JSON.stringify(currentSessionUser));
+                    });
                 }
                 if (firebase.firestore) {
                     firestoreDb = firebase.firestore();
                     updateFirebaseSyncUI('connected');
+
+                    if (!firestoreNetworkListenersRegistered) {
+                        window.addEventListener('online', () => {
+                            initFirebaseFirestore();
+                        });
+                        firestoreNetworkListenersRegistered = true;
+                    }
 
                     const docRef = getFirestoreMasterDocRef();
                     if (docRef) {
@@ -4132,10 +4353,12 @@ var db = admin.firestore();</pre>
                                     applyRemoteFirestoreSnapshot(data);
                                 }
                             }
-                            updateFirebaseSyncUI('synced');
-                        }, () => {
-                            updateFirebaseSyncUI('offline');
-                        });
+                            updateFirebaseSyncUI(snap?.metadata?.fromCache ? 'offline' : (hasPendingCloudSync ? 'queued' : 'synced'));
+                        }, (err) => {
+                            const errorCode = String(err?.code || err?.message || 'unknown error').slice(0, 80);
+                            console.warn('Firestore listener failed:', err);
+                            updateFirebaseSyncUI('offline', `Firestore Error: ${errorCode}`);
+                        }, { includeMetadataChanges: true });
 
                         if (hasPendingCloudSync) {
                             syncToFirebaseFirestore('flush_pending_queue', false);
@@ -4144,7 +4367,8 @@ var db = admin.firestore();</pre>
                 }
             } catch (err) {
                 console.warn('Firebase initialization fallback:', err);
-                updateFirebaseSyncUI('offline');
+                const errorCode = String(err?.code || err?.message || 'unknown error').slice(0, 80);
+                updateFirebaseSyncUI('offline', `Firebase Error: ${errorCode}`);
             }
         }
 
@@ -4167,8 +4391,11 @@ var db = admin.firestore();</pre>
                 appId: appId || FIREBASE_CONFIG.appId
             };
             localStorage.setItem(FIREBASE_CUSTOM_CFG_KEY, JSON.stringify(FIREBASE_CONFIG));
-            initFirebaseFirestore();
-            syncToFirebaseFirestore('custom_config_saved', true);
+            localStorage.setItem(FIREBASE_PENDING_SYNC_KEY, '1');
+            hasPendingCloudSync = true;
+            updateFirebaseSyncUI('queued');
+            showToast('Firestore config သိမ်းပြီးပါပြီ။ ချိတ်ဆက်မှုအသစ်အတွက် ပြန်လည်စတင်နေပါသည်', 'info');
+            setTimeout(() => window.location.reload(), 700);
         }
 
         function handleServiceAccountKeyUpload(event) {
@@ -4375,9 +4602,16 @@ var db = admin.firestore();</pre>
             } catch (err) {}
         }
 
-        function applyUserSession(userObj, notify = true) {
-            currentSessionUser = userObj;
-            localStorage.setItem(ACTIVE_AUTH_SESSION_KEY, JSON.stringify(userObj));
+        function applyUserSession(userObj, notify = true, firebaseUid = '') {
+            const firebaseUser = firebaseAuth?.currentUser;
+            const sessionEmail = (userObj.username || '').toLowerCase();
+            const firebaseEmail = (firebaseUser?.email || '').toLowerCase();
+            const matchedUid = firebaseUid || (sessionEmail && sessionEmail === firebaseEmail ? firebaseUser?.uid : '');
+            currentFirebaseUid = firebaseUser?.uid || firebaseUid || '';
+            currentSessionUser = { ...userObj };
+            if (matchedUid) currentSessionUser.firebaseUid = matchedUid;
+            else delete currentSessionUser.firebaseUid;
+            localStorage.setItem(ACTIVE_AUTH_SESSION_KEY, JSON.stringify(currentSessionUser));
 
             const authScreen = document.getElementById('auth-gateway-screen');
             if (authScreen) authScreen.classList.add('hidden');
@@ -4571,7 +4805,7 @@ var db = admin.firestore();</pre>
                     if (result && result.user) {
                         const gEmail = (result.user.email || '').toLowerCase();
                         const gName = result.user.displayName || gEmail.split('@')[0];
-                        completeGoogleSession(gEmail, gName);
+                        completeGoogleSession(gEmail, gName, result.user.uid);
                         return;
                     }
                 } catch (err) {
@@ -4633,7 +4867,7 @@ var db = admin.firestore();</pre>
             completeGoogleSession(emailVal, displayName);
         }
 
-        function completeGoogleSession(email, displayName) {
+        function completeGoogleSession(email, displayName, firebaseUid = '') {
             let normalizedEmail = (email || '').trim().toLowerCase();
             if (normalizedEmail === 'ppa45929@gmailcom') normalizedEmail = 'ppa45929@gmail.com';
             if (!normalizedEmail) return;
@@ -4670,7 +4904,7 @@ var db = admin.firestore();</pre>
                 return;
             }
             document.getElementById('google-chooser-box')?.classList.add('hidden');
-            applyUserSession(existing, true);
+            applyUserSession(existing, true, firebaseUid);
         }
 
         function handleUserLogout() {
@@ -4678,6 +4912,7 @@ var db = admin.firestore();</pre>
                 firebaseAuth.signOut().catch(() => {});
             }
             currentSessionUser = null;
+            currentFirebaseUid = '';
             localStorage.removeItem(ACTIVE_AUTH_SESSION_KEY);
             document.body.classList.remove('role-view-only');
             const authScreen = document.getElementById('auth-gateway-screen');
@@ -5186,6 +5421,7 @@ var db = admin.firestore();</pre>
             if (statusSel) {
                 statusSel.innerHTML = statusList.map(s => `<option value="${s}">${s}</option>`).join('');
             }
+            populateAddressTypeSelect('p-in-address');
 
             syncInlinePersonnelRanks();
             toggleInlinePersonnelAbsent();
@@ -5251,6 +5487,7 @@ var db = admin.firestore();</pre>
             if (!p) return;
             togglePersonnelFormPanel(true);
             document.getElementById('p-inline-index').value = index;
+            populateAddressTypeSelect('p-in-address', p.address);
             document.getElementById('p-in-id').value = p.id || '';
             document.getElementById('p-in-type').value = p.staffType || staffTypeList[0] || '';
             syncInlinePersonnelRanks();
@@ -5331,6 +5568,10 @@ var db = admin.firestore();</pre>
             saveSystemState();
             inlineClearPersonnel(false);
             renderPersonnelDirectory();
+            const masterFilter = document.getElementById('civilian-master-filter');
+            if (masterFilter) masterFilter.value = '';
+            tablePageState.civilianMaster = 1;
+            renderCivilianNameListMaster();
             renderDashboardView();
             showToast('ဝန်ထမ်းအသစ် ထည့်သွင်းပြီးပါပြီ', 'success');
         }
@@ -5384,6 +5625,7 @@ var db = admin.firestore();</pre>
             saveSystemState();
             inlineClearPersonnel(false);
             renderPersonnelDirectory();
+            renderCivilianNameListMaster();
             renderDashboardView();
             showToast('ဝန်ထမ်းအချက်အလက်အား သိမ်းဆည်း (Save) ပြီးပါပြီ', 'success');
         }
@@ -5406,6 +5648,7 @@ var db = admin.firestore();</pre>
                 saveSystemState();
                 if (clearInline) inlineClearPersonnel(false);
                 renderPersonnelDirectory();
+                renderCivilianNameListMaster();
                 renderDashboardView();
                 showToast('ဝန်ထမ်းအချက်အလက်အား ဖျက်ကွက်ပြီးပါပြီ', 'error');
             });
@@ -5440,6 +5683,7 @@ var db = admin.firestore();</pre>
             const container = document.getElementById('personnel-list-container');
             const mobileContainer = document.getElementById('personnel-mobile-cards');
             if (!container) return;
+            renderCivilianNameListMaster();
 
             const query = (document.getElementById('personnel-search')?.value || '').trim().toLowerCase();
             const rankFilter = document.getElementById('personnel-filter-rank')?.value || 'ALL';
@@ -5481,7 +5725,7 @@ var db = admin.firestore();</pre>
             const paginated = filtered.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
             if (filtered.length === 0) {
-                container.innerHTML = `<tr><td colspan="13" class="text-center py-8 text-slate-400">ဝန်ထမ်းစာရင်း မရှိသေးပါ</td></tr>`;
+                container.innerHTML = `<tr><td colspan="14" class="text-center py-8 text-slate-400">ဝန်ထမ်းစာရင်း မရှိသေးပါ</td></tr>`;
                 if (mobileContainer) {
                     mobileContainer.innerHTML = `<div class="col-span-full bg-white dark:bg-slate-800 rounded-xl p-6 text-center text-slate-400 border border-slate-200 dark:border-slate-700">ဝန်ထမ်းစာရင်း မရှိသေးပါ</div>`;
                 }
@@ -5505,6 +5749,7 @@ var db = admin.firestore();</pre>
                         <td class="p-3 text-rose-600 dark:text-rose-400 font-medium">${absentReasonText}</td>
                         <td class="p-3">${p.staffType || '-'}</td>
                         <td class="p-3 text-slate-700 dark:text-slate-300">${p.address || '-'}</td>
+                        <td class="p-3 text-slate-700 dark:text-slate-300">${p.phone || '-'}</td>
                         <td class="p-3 text-slate-600 dark:text-slate-400">${p.remarks || '-'}</td>
                         <td class="p-3 text-center space-x-1" onclick="event.stopPropagation()">
                             <button onclick="openPersonnelForm(${realIndex})" class="role-write-action p-1.5 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold transition" title="ပြင်ဆင်မည်">✏️</button>
@@ -6338,6 +6583,114 @@ var db = admin.firestore();</pre>
             saveWorkbookToLocal(wb, fileName, `${titleLabel} Local Excel ဖိုင် သိမ်းဆည်းပြီးပါပြီ`);
         }
 
+        function exportCivilianMasterExcel() {
+            if (!ensureExcelLibrary()) return;
+            const records = getCivilianMasterRecords().map(person => ({
+                'ကိုယ်ပိုင်အမှတ်': person.id || '',
+                'အဆင့်': person.rankAbbr || person.rankFull || '',
+                'ဝန်ထမ်းအမည်': person.name || '',
+                'ဌာနအမည်': person.deptFull || person.deptAbbr || '',
+                'ရာထူး': person.position || '',
+                'ကျား/မ': person.gender || '',
+                'လက်ရှိအခြေအနေ': person.status || '',
+                'ပျက်ကွက်အကြောင်းရင်း': person.status === 'ပျက်ကွက်' ? (person.absentReason || '') : '',
+                'ဝန်ထမ်းအမျိုးအစား': person.staffType || '',
+                'မွေးသက္ကရာဇ်': person.dob || '',
+                'နိုင်ငံသားစိစစ်ရေးကတ်အမှတ်': person.nrc || '',
+                'အဘအမည်': person.fatherName || '',
+                'အမိအမည်': person.motherName || '',
+                'နေရပ်လိပ်စာ': person.address || '',
+                'လူမျိုး': person.race || '',
+                'ဘာသာ': person.religion || '',
+                'ဖုန်းနံပါတ်': person.phone || '',
+                'မှတ်ချက်': person.remarks || ''
+            }));
+            const ws = XLSX.utils.json_to_sheet(records.length ? records : [{ 'မှတ်ချက်': 'စာရင်း မရှိပါ' }]);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Name_List_Master');
+            const fileName = `Name_List_Master_${new Date().toISOString().split('T')[0]}.xlsx`;
+            saveWorkbookToLocal(wb, fileName, 'Name List Master Excel ဖိုင် သိမ်းဆည်းပြီးပါပြီ');
+        }
+
+        function printCivilianNameListMaster() {
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                showToast('Print ပြုလုပ်ရန် Pop-up ခွင့်ပြုချက် လိုအပ်ပါသည်', 'error');
+                return;
+            }
+
+            const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[character]);
+            const headers = [
+                'ကိုယ်ပိုင်အမှတ်', 'အဆင့်', 'ဝန်ထမ်းအမည်', 'ဌာနအမည်', 'ရာထူး', 'ကျား/မ',
+                'လက်ရှိအခြေအနေ', 'ပျက်ကွက်အကြောင်းရင်း', 'ဝန်ထမ်းအမျိုးအစား', 'မွေးသက္ကရာဇ်',
+                'နိုင်ငံသားစိစစ်ရေးကတ်အမှတ်', 'အဘအမည်', 'အမိအမည်', 'နေရပ်လိပ်စာ',
+                'လူမျိုး', 'ဘာသာ', 'ဖုန်းနံပါတ်', 'မှတ်ချက်'
+            ];
+            const rows = getCivilianMasterRecords().map(person => [
+                person.id,
+                person.rankAbbr || person.rankFull,
+                person.name,
+                person.deptFull || person.deptAbbr,
+                person.position,
+                person.gender,
+                person.status,
+                person.status === 'ပျက်ကွက်' ? person.absentReason : '',
+                person.staffType,
+                person.dob,
+                person.nrc,
+                person.fatherName,
+                person.motherName,
+                person.address,
+                person.race,
+                person.religion,
+                person.phone,
+                person.remarks
+            ]);
+            const filterSelect = document.getElementById('civilian-master-filter');
+            const filterLabel = filterSelect?.selectedOptions[0]?.textContent || 'အားလုံးပြရန်';
+            const tableHeader = headers.map(header => `<th>${escapeHtml(header)}</th>`).join('');
+            const tableRows = rows.length
+                ? rows.map(row => `<tr>${row.map(value => `<td>${escapeHtml(value === undefined || value === null || value === '' ? '-' : value)}</td>`).join('')}</tr>`).join('')
+                : `<tr><td colspan="${headers.length}" class="empty">စာရင်း မရှိပါ</td></tr>`;
+
+            printWindow.document.open();
+            printWindow.onload = () => {
+                printWindow.focus();
+                printWindow.print();
+            };
+            printWindow.document.write(`<!doctype html>
+                <html lang="my">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Name List Master</title>
+                    <style>
+                        @page { size: landscape; margin: 10mm; }
+                        body { font-family: "Noto Sans Myanmar", "Padauk", sans-serif; color: #111827; }
+                        h1 { margin: 0 0 6px; font-size: 16px; }
+                        p { margin: 0 0 12px; font-size: 10px; }
+                        table { width: 100%; border-collapse: collapse; table-layout: auto; }
+                        th, td { border: 1px solid #64748b; padding: 4px; font-size: 8px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+                        th { background: #e2e8f0; }
+                        thead { display: table-header-group; }
+                        tr { break-inside: avoid; }
+                        .empty { text-align: center; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Name List Master</h1>
+                    <p>စစ်ထုတ်မှု: ${escapeHtml(filterLabel)} · အရေအတွက်: ${escapeHtml(rows.length)} · ပုံနှိပ်ရက်စွဲ: ${escapeHtml(new Date().toLocaleString())}</p>
+                    <table><thead><tr>${tableHeader}</tr></thead><tbody>${tableRows}</tbody></table>
+                </body>
+                </html>`);
+            printWindow.document.close();
+        }
+
         function exportDutyExcel() {
             if (!ensureExcelLibrary()) return;
             const query = (document.getElementById('duty-search')?.value || '').trim().toLowerCase();
@@ -6584,6 +6937,7 @@ var db = admin.firestore();</pre>
             
             const form = document.getElementById('personnel-form');
             form.reset();
+            populateAddressTypeSelect('p-form-address', index >= 0 ? personnelData[index]?.address || '' : '');
             document.getElementById('p-form-index').value = index;
             document.getElementById('p-form-photo-base64').value = '';
             document.getElementById('p-form-photo-preview').innerHTML = `<span class="text-xl">📷</span>`;
@@ -6672,8 +7026,9 @@ var db = admin.firestore();</pre>
             document.getElementById('personnel-form-modal').classList.remove('hidden');
         }
 
-        function closePersonnelFormModal() {
+        function closePersonnelFormModal(preserveCivilianMasterDetails = false) {
             document.getElementById('personnel-form-modal').classList.add('hidden');
+            if (!preserveCivilianMasterDetails) civilianMasterEditReturnIndex = null;
         }
 
         function deletePersonnelFromFormModal() {
@@ -6681,16 +7036,230 @@ var db = admin.firestore();</pre>
             const index = parseInt(document.getElementById('p-form-index').value);
             if (index < 0 || !personnelData[index]) return;
             const p = personnelData[index];
+            const returnToCivilianMasterDetails = civilianMasterEditReturnIndex !== null;
             openConfirmModal(`"${p.name}" (${p.id}) ၏ အချက်အလက်ကို ဖျက်မည်။ သေချာပါသလား?`, () => {
                 personnelData.splice(index, 1);
                 saveSystemState();
                 closePersonnelFormModal();
                 closePersonnelModal();
+                if (returnToCivilianMasterDetails) closeCivilianMasterDetailModal();
                 renderPersonnelDirectory();
+                renderCivilianNameListMaster();
                 renderAbsentSummary();
                 renderDashboardView();
                 showToast('ဝန်ထမ်းအချက်အလက်အား ဖျက်ကွက်ပြီးပါပြီ', 'error');
             });
+        }
+
+        function addCivilianMasterRecord() {
+            activePersonnelCategoryTab = 'အရပ်သားဝန်ထမ်း';
+            openPersonnelForm(-1);
+            const staffTypeSelect = document.getElementById('p-form-type');
+            if (staffTypeSelect && Array.from(staffTypeSelect.options).some(option => option.value === 'အရပ်သား')) {
+                staffTypeSelect.value = 'အရပ်သား';
+                handleStaffTypeChange();
+            }
+        }
+
+        function populateCivilianMasterFilter() {
+            const select = document.getElementById('civilian-master-filter');
+            if (!select) return;
+            const selectedValue = select.value;
+            const rankOptions = Object.values(RANK_DEFINITIONS || {}).flatMap(ranks =>
+                (Array.isArray(ranks) ? ranks : []).map(rank => rank.abbr)
+            );
+            const groups = [
+                ['ဌာနအမည်', (DEPT_MAPPING || []).map(dept => dept.abbr)],
+                ['အဆင့်', rankOptions],
+                ['ဝန်ထမ်းအမျိုးအစား', staffTypeList],
+                ['လက်ရှိအခြေအနေ', statusList],
+                ['နေရပ်အမျိုးအစား', addressTypeList],
+                ['လုံခြုံရေးတာဝန်အမျိုးအစား', securityDutyTypeList],
+                ['ကြီးကြပ်/ကန့်သတ်အမျိုးအစား', armoryCategoryList],
+                ['ကြီးကြပ်/ကန့်သတ်အခြေအနေ', armoryStatusList],
+                ['လူမျိုး', raceList],
+                ['ဘာသာ', religionList]
+            ];
+            select.replaceChildren();
+            const allOption = document.createElement('option');
+            allOption.value = '';
+            allOption.textContent = 'အားလုံးပြရန်';
+            select.appendChild(allOption);
+            groups.forEach(([label, values]) => {
+                const group = document.createElement('optgroup');
+                group.label = label;
+                [...new Set(values.filter(value => value !== undefined && value !== null && String(value).trim()).map(String))].forEach(value => {
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.textContent = value;
+                    group.appendChild(option);
+                });
+                if (group.children.length) select.appendChild(group);
+            });
+            if (Array.from(select.options).some(option => option.value === selectedValue)) {
+                select.value = selectedValue;
+            } else {
+                select.value = '';
+            }
+        }
+
+        function getCivilianMasterRecords() {
+            const filterValue = document.getElementById('civilian-master-filter')?.value.trim().toLocaleLowerCase() || '';
+            return personnelData
+                .filter(person => {
+                    if (!filterValue) return true;
+                    const searchableValues = [
+                        person.id, person.rankAbbr, person.rankFull, person.name,
+                        person.deptFull, person.deptAbbr, person.position, person.gender,
+                        person.status, person.absentReason, person.staffType, person.dob,
+                        person.nrc, person.fatherName, person.motherName, person.address,
+                        person.addressType, person.race, person.religion, person.phone, person.remarks
+                    ];
+                    return searchableValues.some(value => String(value || '').toLocaleLowerCase().includes(filterValue));
+                })
+                .sort(compareByRankSeniority);
+        }
+
+        function getCivilianMasterDisplayValues(person) {
+            return [
+                person.id,
+                getRankAbbr(person.rankAbbr || person.rankFull),
+                person.name,
+                getDeptAbbr(person.deptAbbr || person.deptFull),
+                person.position,
+                person.gender,
+                person.status,
+                person.status === 'ပျက်ကွက်' ? person.absentReason : '',
+                person.staffType,
+                person.address,
+                person.phone,
+                person.remarks
+            ];
+        }
+
+        function renderCivilianNameListMaster() {
+            const container = document.getElementById('civilian-master-list');
+            if (!container) return;
+
+            populateCivilianMasterFilter();
+            const personnelRecords = getCivilianMasterRecords();
+            const countElement = document.getElementById('civilian-master-count');
+            if (countElement) countElement.textContent = toMyanmarNumerals(personnelRecords.length);
+            const totalPages = Math.max(1, Math.ceil(personnelRecords.length / CIVILIAN_MASTER_ITEMS_PER_PAGE));
+            if (tablePageState.civilianMaster > totalPages) tablePageState.civilianMaster = totalPages;
+            const currentPage = tablePageState.civilianMaster || 1;
+            const startIndex = (currentPage - 1) * CIVILIAN_MASTER_ITEMS_PER_PAGE;
+            const paginatedPersonnel = personnelRecords.slice(startIndex, startIndex + CIVILIAN_MASTER_ITEMS_PER_PAGE);
+            container.replaceChildren();
+
+            if (!personnelRecords.length) {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.colSpan = 13;
+                cell.className = 'px-3 py-8 text-center text-slate-400';
+                cell.textContent = document.getElementById('civilian-master-filter')?.value
+                    ? 'စစ်ထုတ်မှုနှင့် ကိုက်ညီသော အချက်အလက် မရှိပါ'
+                    : 'ဝန်ထမ်းအမည်စာရင်း မရှိသေးပါ';
+                row.appendChild(cell);
+                container.appendChild(row);
+                renderPaginationControls('civilian-master-pagination-bar', 'civilianMaster', 1, 0, 'ဦး', CIVILIAN_MASTER_ITEMS_PER_PAGE);
+                return;
+            }
+
+            paginatedPersonnel.forEach(person => {
+                const values = getCivilianMasterDisplayValues(person);
+                const row = document.createElement('tr');
+                row.className = 'text-slate-800 dark:text-slate-200 cursor-pointer hover:bg-blue-50/60 dark:hover:bg-slate-700/50';
+                row.tabIndex = 0;
+                row.setAttribute('role', 'button');
+                row.setAttribute('aria-haspopup', 'dialog');
+                row.title = 'အသေးစိတ်ကြည့်ရန်';
+                values.forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.className = 'px-3 py-2';
+                    cell.textContent = value === undefined || value === null || value === '' ? '-' : String(value);
+                    row.appendChild(cell);
+                });
+
+                const detailButtonCell = document.createElement('td');
+                detailButtonCell.className = 'px-3 py-2 text-center';
+                const detailButton = document.createElement('button');
+                detailButton.type = 'button';
+                detailButton.className = 'inline-flex items-center justify-center w-7 h-7 rounded-full text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-slate-600 font-bold text-lg leading-none';
+                detailButton.textContent = '>';
+                detailButton.setAttribute('aria-label', `${person.name || person.id || 'ဝန်ထမ်း'} ၏ အသေးစိတ်ကြည့်ရန်`);
+                detailButton.title = 'အသေးစိတ်ကြည့်ရန်';
+                detailButton.addEventListener('click', event => {
+                    event.stopPropagation();
+                    openCivilianMasterDetailModal(person, values);
+                });
+                detailButtonCell.appendChild(detailButton);
+                row.appendChild(detailButtonCell);
+
+                row.addEventListener('click', () => openCivilianMasterDetailModal(person, values));
+                row.addEventListener('keydown', event => {
+                    if (event.target === row && (event.key === 'Enter' || event.key === ' ')) {
+                        event.preventDefault();
+                        openCivilianMasterDetailModal(person, values);
+                    }
+                });
+                container.appendChild(row);
+            });
+            renderPaginationControls('civilian-master-pagination-bar', 'civilianMaster', currentPage, personnelRecords.length, 'ဦး', CIVILIAN_MASTER_ITEMS_PER_PAGE);
+        }
+
+        let civilianMasterDetailRecord = null;
+        let civilianMasterEditReturnIndex = null;
+
+        function openCivilianMasterDetailModal(person, values) {
+            const modal = document.getElementById('civilian-master-detail-modal');
+            const title = document.getElementById('civilian-master-detail-title');
+            const fields = document.getElementById('civilian-master-detail-fields');
+            if (!modal || !title || !fields) return;
+
+            civilianMasterDetailRecord = person;
+            title.textContent = `${person.name || person.id || 'ဝန်ထမ်း'} - အချက်အလက်အသေးစိတ်`;
+            const headers = Array.from(document.querySelectorAll('#civilian-master-tab thead th'))
+                .map(header => header.textContent.trim())
+                .slice(0, values.length);
+            fields.replaceChildren();
+
+            headers.forEach((label, index) => {
+                const field = document.createElement('div');
+                field.className = 'min-w-0 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 p-3';
+                const fieldLabel = document.createElement('span');
+                fieldLabel.className = 'block text-xs font-bold text-blue-900 dark:text-blue-300 mb-1';
+                fieldLabel.textContent = label;
+                const fieldValue = document.createElement('span');
+                fieldValue.className = 'block text-sm text-slate-900 dark:text-white whitespace-pre-wrap break-words';
+                const value = values[index];
+                fieldValue.textContent = value === undefined || value === null || value === '' ? '-' : String(value);
+                field.append(fieldLabel, fieldValue);
+                fields.appendChild(field);
+            });
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function editCivilianMasterDetailRecord() {
+            if (!guardWritePermission()) return;
+            const index = personnelData.indexOf(civilianMasterDetailRecord);
+            if (index < 0) {
+                showToast('ပြင်ဆင်လိုသော ဝန်ထမ်းအချက်အလက်ကို ရှာမတွေ့ပါ', 'error');
+                return;
+            }
+
+            civilianMasterEditReturnIndex = index;
+            openPersonnelForm(index);
+        }
+
+        function closeCivilianMasterDetailModal() {
+            const modal = document.getElementById('civilian-master-detail-modal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            civilianMasterDetailRecord = null;
         }
 
         function handleSavePersonnel(e) {
@@ -6771,13 +7340,29 @@ var db = admin.firestore();</pre>
                     : resolvePersonnelRoleGroup(pData);
                 personnelData.unshift(pData);
             }
+            if (index < 0 && !document.getElementById('civilian-master-tab')?.classList.contains('hidden')) {
+                tablePageState.civilianMaster = 1;
+            }
 
+            const returnToCivilianMasterDetails = civilianMasterEditReturnIndex !== null;
+            const civilianMasterDetailIndex = civilianMasterEditReturnIndex;
             saveSystemState();
-            closePersonnelFormModal();
-            closePersonnelModal();
+            closePersonnelFormModal(returnToCivilianMasterDetails);
+            if (!returnToCivilianMasterDetails) closePersonnelModal();
             renderPersonnelDirectory();
+            if (index < 0) {
+                const masterFilter = document.getElementById('civilian-master-filter');
+                if (masterFilter) masterFilter.value = '';
+                tablePageState.civilianMaster = 1;
+            }
+            renderCivilianNameListMaster();
             renderAbsentSummary();
             renderDashboardView();
+            if (returnToCivilianMasterDetails && personnelData[civilianMasterDetailIndex]) {
+                const person = personnelData[civilianMasterDetailIndex];
+                openCivilianMasterDetailModal(person, getCivilianMasterDisplayValues(person));
+                civilianMasterEditReturnIndex = null;
+            }
             showToast(index >= 0 ? 'ဝန်ထမ်းအချက်အလက် ပြင်ဆင်ပြီးပါပြီ' : 'ဝန်ထမ်းအသစ် ထည့်သွင်းပြီးပါပြီ', 'success');
         }
 
@@ -7723,6 +8308,7 @@ var db = admin.firestore();</pre>
             renderStaffTypes();
             renderDepartmentSettings();
             showRankCategory(currentRankCategory);
+            renderPositionDefinitions();
             renderStatusSettings();
             renderAddressTypeSettings();
             renderSecurityDutyTypeSettings();
@@ -8446,6 +9032,109 @@ var db = admin.firestore();</pre>
             showRankCategory(currentRankCategory);
         }
 
+        function renderPositionDefinitions() {
+            const container = document.getElementById('position-definitions-list');
+            if (!container) return;
+            container.replaceChildren();
+
+            POSITION_DEFINITIONS.forEach((position, index) => {
+                const row = document.createElement('div');
+                row.className = 'flex flex-wrap justify-between items-center gap-2 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs';
+
+                if (editingPositionIndex === index) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = position;
+                    input.placeholder = 'ရာထူးအမည်';
+                    input.className = 'flex-1 min-w-[120px] bg-slate-100 dark:bg-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 outline-none';
+
+                    const actions = document.createElement('div');
+                    actions.className = 'flex gap-1.5';
+                    const saveButton = document.createElement('button');
+                    saveButton.type = 'button';
+                    saveButton.className = 'px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg';
+                    saveButton.textContent = 'သိမ်းဆည်းရန်';
+                    saveButton.addEventListener('click', () => savePositionItem(index, input.value));
+                    const cancelButton = document.createElement('button');
+                    cancelButton.type = 'button';
+                    cancelButton.className = 'px-2.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg';
+                    cancelButton.textContent = 'Cancel';
+                    cancelButton.addEventListener('click', cancelPositionItem);
+                    actions.append(saveButton, cancelButton);
+                    row.append(input, actions);
+                } else {
+                    const label = document.createElement('span');
+                    label.className = 'min-w-0 flex-1 font-semibold text-slate-800 dark:text-slate-200';
+                    label.textContent = position;
+
+                    const actions = document.createElement('div');
+                    actions.className = 'flex gap-1.5 flex-shrink-0';
+                    const editButton = document.createElement('button');
+                    editButton.type = 'button';
+                    editButton.title = 'Edit';
+                    editButton.className = 'p-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition inline-flex items-center justify-center';
+                    editButton.innerHTML = SETTING_EDIT_ICON_SVG;
+                    editButton.addEventListener('click', () => editPositionItem(index));
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type = 'button';
+                    deleteButton.title = 'Delete';
+                    deleteButton.className = 'p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition inline-flex items-center justify-center';
+                    deleteButton.innerHTML = SETTING_DELETE_ICON_SVG;
+                    deleteButton.addEventListener('click', () => deletePositionItem(index));
+                    actions.append(editButton, deleteButton);
+                    row.append(label, actions);
+                }
+
+                container.appendChild(row);
+            });
+        }
+
+        function addPositionItem() {
+            if (!guardWritePermission()) return;
+            POSITION_DEFINITIONS.push('ရာထူးအသစ်');
+            editingPositionIndex = POSITION_DEFINITIONS.length - 1;
+            saveSystemState();
+            renderPositionDefinitions();
+        }
+
+        function editPositionItem(index) {
+            if (!guardWritePermission()) return;
+            editingPositionIndex = index;
+            renderPositionDefinitions();
+        }
+
+        function savePositionItem(index, value) {
+            if (!guardWritePermission()) return;
+            const position = String(value ?? '').trim();
+            if (!position) {
+                showToast('ရာထူးအမည် ဖြည့်သွင်းပါ', 'error');
+                return;
+            }
+            if (index < 0 || index >= POSITION_DEFINITIONS.length) return;
+
+            POSITION_DEFINITIONS[index] = position;
+            editingPositionIndex = -1;
+            saveSystemState();
+            showToast('ရာထူးသတ်မှတ်ချက် မွမ်းမံပြီးပါပြီ', 'success');
+            renderPositionDefinitions();
+        }
+
+        function deletePositionItem(index) {
+            if (!guardWritePermission()) return;
+            if (index < 0 || index >= POSITION_DEFINITIONS.length) return;
+
+            POSITION_DEFINITIONS.splice(index, 1);
+            editingPositionIndex = -1;
+            saveSystemState();
+            showToast('ရာထူးသတ်မှတ်ချက် ဖျက်ပြီးပါပြီ', 'error');
+            renderPositionDefinitions();
+        }
+
+        function cancelPositionItem() {
+            editingPositionIndex = -1;
+            renderPositionDefinitions();
+        }
+
         // --- PROD; STATEMENT CRUD, CALCULATIONS & RENDER ---
         const PROD_MONTH_KEYS = ['apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'jan', 'feb', 'mar'];
         const PROD_DESC_PRESETS = ['GSD', 'Issue', 'Prod;'];
@@ -8577,7 +9266,7 @@ var db = admin.firestore();</pre>
             const elTotPlan = document.getElementById('pr-sub-totalplan');
             const elAch = document.getElementById('pr-sub-achieved');
 
-            if (elItems) elItems.textContent = toMyanmarNumerals(totalItems);
+            if (elItems) elItems.textContent = String(totalItems);
             if (elDebt) elDebt.textContent = formatProdNum(sumDebt);
             if (elPlan) elPlan.textContent = formatProdNum(sumPlan);
             if (elTotPlan) elTotPlan.textContent = formatProdNum(sumTotalPlan);
@@ -9079,7 +9768,12 @@ var db = admin.firestore();</pre>
                 }
             });
             document.addEventListener('keydown', event => {
-                if (event.key === 'Escape') toggleGlobalSearch(false);
+                if (event.key === 'Escape') {
+                    toggleGlobalSearch(false);
+                    if (document.getElementById('personnel-form-modal')?.classList.contains('hidden')) {
+                        closeCivilianMasterDetailModal();
+                    }
+                }
             });
 
             renderDashboardView();
