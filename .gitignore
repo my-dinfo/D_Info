@@ -1,0 +1,25 @@
+# Node dependencies
+node_modules/
+
+# Android build outputs & local configs
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android/app/*.iml
+
+# Compiled Binaries
+*.apk
+*.aab
+
+# System & IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*

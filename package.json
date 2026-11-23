@@ -1,0 +1,17 @@
+{
+  "name": "mydata",
+  "version": "1.0.0",
+  "description": "Data Information Mobile App",
+  "scripts": {
+    "build": "node -e \"const fs=require('fs'); if(!fs.existsSync('www')) fs.mkdirSync('www'); fs.copyFileSync('index.html', 'www/index.html'); console.log('Web assets built to www/');\"",
+    "build:apk": "powershell -ExecutionPolicy Bypass -File ./build-apk.ps1",
+    "cap:sync": "npx cap sync android",
+    "cap:build": "npx cap build android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.1",
+    "@capacitor/cli": "^7.0.1",
+    "@capacitor/core": "^7.0.1",
+    "firebase": "^13.4.0"
+  }
+}
