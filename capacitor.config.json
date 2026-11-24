@@ -1,9 +1,0 @@
-{
-  "appId": "com.company.mydata",
-  "appName": "Data Information",
-  "webDir": "www",
-  "server": {
-    "androidScheme": "https",
-    "cleartext": true
-  }
-}
