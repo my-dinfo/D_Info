@@ -407,6 +407,40 @@
         html.dark #personnel-modal .text-slate-400 {
             color: #94A3B8 !important;
         }
+        /* Action Buttons Light Grey Styling across all screens */
+        .btn-action-light {
+            background-color: #e2e8f0 !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #1e293b !important;
+        }
+        .btn-action-light:hover {
+            background-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        html.dark .btn-action-light {
+            background-color: #334155 !important;
+            border: 1px solid #475569 !important;
+            color: #f8fafc !important;
+        }
+        html.dark .btn-action-light:hover {
+            background-color: #475569 !important;
+            color: #ffffff !important;
+        }
+        /* Duty Table Group Header Light Soft Blue & Bold Black Location Title */
+        .duty-group-header-row {
+            background-color: #dbeafe !important;
+        }
+        .duty-group-location-title {
+            color: #000000 !important;
+            font-weight: 700 !important;
+        }
+        html.dark .duty-group-header-row {
+            background-color: #1e3a5f !important;
+        }
+        html.dark .duty-group-location-title {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
         /* Auto-Fit Table Columns & Ultra-Compact Row Height across all screens */
         table {
             table-layout: auto !important;
@@ -488,74 +522,87 @@
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed top-4 right-4 left-4 sm:left-auto z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- AUTHENTICATION GATEWAY OVERLAY (Sign In / Google Account / Sign Up) -->
-    <div id="auth-gateway-screen" class="fixed inset-0 z-50 bg-white dark:bg-slate-900 flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
-        <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-700 overflow-hidden my-auto modal-animate">
-            <!-- Top Auth Banner -->
-            <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-5 text-white text-center relative">
-                <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/25 font-extrabold text-xl tracking-wider mb-2 shadow-inner">
+    <!-- AUTHENTICATION GATEWAY OVERLAY (Sign In & Quick User Selector) -->
+    <div id="auth-gateway-screen" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden my-auto modal-animate">
+            <!-- Top Auth Header -->
+            <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 p-5 text-white text-center relative">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/25 font-black text-xl tracking-wider mb-2 shadow-inner">
                     DI
                 </div>
-                <h2 class="font-bold text-base tracking-wide">Data Information</h2>
-                <p class="text-[11px] text-blue-100 mt-0.5">Your Data, Your Knowledge.</p>
-            </div>
-
-            <!-- Auth Mode Switcher Tabs (Log In / Sign Up) -->
-            <div class="grid grid-cols-2 bg-slate-100 dark:bg-slate-900/60 p-1 m-4 mb-0 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold">
-                <button type="button" id="auth-tab-login" onclick="switchAuthMode('login')" class="py-2 rounded-lg bg-blue-600 text-white shadow-sm transition">
-                    Log In
-                </button>
-                <button type="button" id="auth-tab-signup" onclick="switchAuthMode('signup')" class="py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition">
-                    Sign Up
-                </button>
+                <h2 class="font-extrabold text-base tracking-wide text-white">Data Information System</h2>
+                <p class="text-xs text-blue-100 font-medium mt-0.5">လုပ်ငန်းသုံး စာရင်းဇယား စီမံခန့်ခွဲမှုစနစ်</p>
+                <div class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-[11px] font-semibold" id="auth-cloud-status">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Cloud Sync Ready (Firestore)</span>
+                </div>
             </div>
 
             <div class="p-4 sm:p-5 space-y-4 text-xs">
-                <!-- Google Sign-In Button -->
-                <button type="button" onclick="handleGoogleSignIn()" class="w-full py-2.5 px-4 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-800 dark:text-white font-bold rounded-xl border border-slate-300 dark:border-slate-600 shadow-sm flex items-center justify-center gap-2.5 transition active:scale-[0.99]">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24z"/>
-                        <path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14z"/>
-                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96z"/>
-                    </svg>
-                    <span>Continue with Google</span>
-                </button>
+                <!-- 3 Quick User Account Login Cards -->
+                <div>
+                    <label class="block text-slate-700 dark:text-slate-200 font-bold mb-2 text-xs flex items-center justify-between">
+                        <span>အသုံးပြုသူ အကောင့် ရွေးချယ်ပါ:</span>
+                        <span class="text-[10px] text-blue-600 dark:text-blue-400 font-normal">နှိပ်၍ တိုက်ရိုက်ဝင်နိုင်ပါသည်</span>
+                    </label>
+                    <div class="grid grid-cols-1 gap-2" id="quick-login-accounts">
+                        <!-- Owner (Admin) -->
+                        <div onclick="selectQuickUser('ppa45929@gmail.com')" class="quick-user-card p-2.5 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50/70 dark:bg-slate-700/60 hover:bg-blue-100/80 dark:hover:bg-slate-700 transition cursor-pointer flex items-center justify-between gap-3 shadow-xs active:scale-[0.99]">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                <div class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs shadow-sm flex-shrink-0">👑</div>
+                                <div class="min-w-0">
+                                    <div class="font-bold text-slate-900 dark:text-white truncate text-xs">ppa45929 (Owner)</div>
+                                    <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">ppa45929@gmail.com</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-200 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 whitespace-nowrap">Admin (အပြည့်)</span>
+                        </div>
 
-                <!-- Inline Google Account Chooser Fallback (for offline / sandboxed preview without popup domain) -->
-                <div id="google-chooser-box" class="hidden p-3.5 rounded-xl bg-blue-50/95 dark:bg-slate-700/90 border border-blue-200 dark:border-slate-600 space-y-3 shadow-md">
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold text-blue-900 dark:text-blue-200 text-xs flex items-center gap-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96z"/></svg>
-                            <span>Google Account ဖြင့် ဝင်ရောက်ရန်</span>
-                        </span>
-                        <button type="button" onclick="document.getElementById('google-chooser-box').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 dark:hover:text-white font-bold text-base px-1.5">&times;</button>
-                    </div>
-                    <div id="saved-google-accounts-list" class="space-y-1.5"></div>
-                    <div class="pt-1 border-t border-blue-200/60 dark:border-slate-600/60">
-                        <label class="block text-[11px] text-slate-600 dark:text-slate-300 font-semibold mb-1">အခြား Google / Gmail အကောင့်ဖြင့် ဝင်ရန်</label>
-                        <div class="flex gap-1.5">
-                            <input type="text" id="google-custom-email" placeholder="ဥပမာ - yourname@gmail.com" onkeydown="if(event.key==='Enter'){event.preventDefault();submitCustomGoogleEmail();}" class="flex-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2 text-xs outline-none focus:border-blue-500">
-                            <button type="button" onclick="submitCustomGoogleEmail()" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs whitespace-nowrap shadow-sm transition">ဝင်မည်</button>
+                        <!-- Editor (User 1) -->
+                        <div onclick="selectQuickUser('stricker459@gmail.com')" class="quick-user-card p-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/40 hover:bg-indigo-50/80 dark:hover:bg-slate-700 transition cursor-pointer flex items-center justify-between gap-3 shadow-xs active:scale-[0.99]">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                <div class="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-xs shadow-sm flex-shrink-0">✏️</div>
+                                <div class="min-w-0">
+                                    <div class="font-bold text-slate-900 dark:text-white truncate text-xs">stricker459 (Editor)</div>
+                                    <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">stricker459@gmail.com</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-100 dark:bg-indigo-900/60 text-indigo-800 dark:text-indigo-200 whitespace-nowrap">Editor (ထည့်/ပြင်)</span>
+                        </div>
+
+                        <!-- Viewer (User 3) -->
+                        <div onclick="selectQuickUser('pyaephyoaungppa459@gmail.com')" class="quick-user-card p-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/40 hover:bg-emerald-50/80 dark:hover:bg-slate-700 transition cursor-pointer flex items-center justify-between gap-3 shadow-xs active:scale-[0.99]">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-sm flex-shrink-0">👁️</div>
+                                <div class="min-w-0">
+                                    <div class="font-bold text-slate-900 dark:text-white truncate text-xs">pyaephyoaung (Viewer)</div>
+                                    <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">pyaephyoaungppa459@gmail.com</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 whitespace-nowrap">Viewer (ကြည့်ရုံ)</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="relative flex items-center justify-center">
+                <div class="relative flex items-center justify-center my-1">
                     <div class="border-t border-slate-200 dark:border-slate-700 w-full"></div>
+                    <span class="bg-white dark:bg-slate-800 px-2 text-[10px] text-slate-400 font-medium">သို့မဟုတ် အကောင့်အမည်/စကားဝှက်ဖြင့် ဝင်မည်</span>
                 </div>
 
-                <!-- LOG IN FORM -->
+                <!-- Simple Login Form -->
                 <form id="auth-login-form" onsubmit="handleEmailLogin(event)" class="space-y-3">
                     <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Email / အကောင့်အမည်</label>
-                        <input type="text" id="login-email" required placeholder="admin သို့မဟုတ် ppa45929@gmail.com" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-blue-500">
+                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အီးမေးလ် / အကောင့်အမည်</label>
+                        <input type="text" id="login-email" required placeholder="ppa45929@gmail.com သို့မဟုတ် အကောင့်အမည်" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-blue-500 text-xs">
                     </div>
                     <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Password</label>
+                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1 flex justify-between">
+                            <span>Password (စကားဝှက်)</span>
+                            <span class="text-[10px] text-slate-400 font-normal">ချန်လှပ်ထားပါက အလိုအလျောက်ဝင်ရောက်ပါမည်</span>
+                        </label>
                         <div class="relative">
-                            <input type="password" id="login-password" required placeholder="စကားဝှက် ရိုက်ထည့်ပါ" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl pl-3 pr-10 py-2 outline-none focus:border-blue-500">
-                            <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute inset-y-0 right-0 px-3 flex items-center text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition" title="စကားဝှက် ပြ/ဖျောက်">
+                            <input type="password" id="login-password" placeholder="စကားဝှက် (ရှိပါက)" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl pl-3 pr-10 py-2 outline-none focus:border-blue-500 text-xs">
+                            <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute inset-y-0 right-0 px-3 flex items-center text-slate-400 hover:text-blue-600 transition" title="စကားဝှက် ပြ/ဖျောက်">
                                 <svg class="w-4 h-4 eye-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                 <svg class="w-4 h-4 eye-closed hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
                             </button>
@@ -563,96 +610,25 @@
                     </div>
                     <div class="flex items-center justify-between pt-0.5">
                         <label class="inline-flex items-center gap-2 cursor-pointer select-none text-slate-600 dark:text-slate-300 font-semibold">
-                            <input type="checkbox" id="login-remember-me" class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                            <span>Remember me</span>
+                            <input type="checkbox" id="login-remember-me" checked class="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
+                            <span>အကောင့်အား မှတ်ထားပါ (Remember me)</span>
                         </label>
-                        <button type="button" onclick="switchAuthMode('signup')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold">စကားဝှက်မေ့ / အကောင့်ဖွင့်ရန် &rsaquo;</button>
                     </div>
-                    <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition">
-                        Log In
+                    <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs active:scale-[0.99]">
+                        <span>Log In (အကောင့်ဝင်မည်)</span>
                     </button>
                 </form>
 
-                <!-- SIGN UP FORM (အကောင့်အသစ်ဖွင့်ရန်) -->
-                <form id="auth-signup-form" onsubmit="handleAccountSignUp(event)" class="space-y-2.5 hidden">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div>
-                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကိုယ်ပိုင်အမှတ် (ရှိပါက)</label>
-                            <input type="text" id="signup-service-id" placeholder="ဥပမာ - ၁၂၃၄၅" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အမည်အပြည့်အစုံ</label>
-                            <input type="text" id="signup-name" required placeholder="အမည် ရိုက်ထည့်ပါ" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-blue-500">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div>
-                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ရာထူးသတ်မှတ်ချက်</label>
-                            <select id="signup-staff-type" required onchange="handleSignUpStaffTypeChange()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-blue-500">
-                                <option value="အရာရှိ" selected>အရာရှိ</option>
-                                <option value="စစ်သည်">စစ်သည်</option>
-                                <option value="အမြဲတမ်းဝန်ထမ်း">အမြဲတမ်းဝန်ထမ်း</option>
-                                <option value="အရပ်သားဝန်ထမ်း">အရပ်သားဝန်ထမ်း</option>
-                                <option value="Custom">Custom</option>
-                            </select>
-                            <input type="text" id="signup-staff-type-custom" placeholder="ဝန်ထမ်းအမျိုးအစား ရေးသွင်းရန်..." class="hidden w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-blue-400 dark:border-blue-500 rounded-xl px-3 py-2 outline-none focus:border-blue-600">
-                        </div>
-                        <div>
-                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အဆင့်</label>
-                            <select id="signup-rank" required onchange="handleSignUpRankChange()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-blue-500">
-                                <option value="" selected></option>
-                            </select>
-                            <input type="text" id="signup-rank-custom" placeholder="အဆင့် ရေးသွင်းရန်..." class="hidden w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-blue-400 dark:border-blue-500 rounded-xl px-3 py-2 outline-none focus:border-blue-600">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div>
-                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဌာနအမည်</label>
-                            <select id="signup-dept" required onchange="handleSignUpDeptChange()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-blue-500">
-                                <option value="ဌနခ" selected>စက်ရုံဌာနချုပ် (ဌနခ)</option>
-                            </select>
-                            <input type="text" id="signup-dept-custom" class="hidden w-full mt-1.5 bg-slate-50 dark:bg-slate-700 border border-blue-400 dark:border-blue-500 rounded-xl px-3 py-2 outline-none focus:border-blue-600">
-                        </div>
-                        <div>
-                            <label class="block text-blue-600 dark:text-blue-400 font-semibold mb-1">အခွင့်အာဏာ (Access Role)</label>
-                            <select id="signup-role" class="w-full bg-slate-50 dark:bg-slate-700 border border-blue-300 dark:border-blue-600 rounded-xl px-3 py-2 font-bold text-blue-800 dark:text-blue-300 outline-none">
-                                <option value="User1" selected>User 1 (တည်းဖြတ်/ထည့်သွင်းခွင့်)</option>
-                                <option value="User2">User 2 (ထည့်သွင်းခွင့်သာ)</option>
-                                <option value="User3">User 3 (View Only - ကြည့်ရှုရုံသာ)</option>
-                                <option value="Admin">Admin (စီမံခန့်ခွဲသူ - အားလုံးခွင့်ပြု)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အီးမေးလ် / အကောင့်အမည် (Email / Username)</label>
-                        <input type="text" id="signup-email" required placeholder="ဥပမာ - name@gmail.com သို့မဟုတ် username" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-blue-500">
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div>
-                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">စကားဝှက် (Password)</label>
-                            <div class="relative">
-                                <input type="password" id="signup-password" required minlength="4" placeholder="အနည်းဆုံး ၄ လုံး" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl pl-3 pr-10 py-2 outline-none focus:border-blue-500">
-                                <button type="button" onclick="togglePasswordVisibility('signup-password', this)" class="absolute inset-y-0 right-0 px-3 flex items-center text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition" title="စကားဝှက် ပြ/ဖျောက်">
-                                    <svg class="w-4 h-4 eye-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                    <svg class="w-4 h-4 eye-closed hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">စကားဝှက် အတည်ပြုရန်</label>
-                            <div class="relative">
-                                <input type="password" id="signup-password-confirm" required minlength="4" placeholder="စကားဝှက် ထပ်ရိုက်ပါ" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl pl-3 pr-10 py-2 outline-none focus:border-blue-500">
-                                <button type="button" onclick="togglePasswordVisibility('signup-password-confirm', this)" class="absolute inset-y-0 right-0 px-3 flex items-center text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition" title="စကားဝှက် ပြ/ဖျောက်">
-                                    <svg class="w-4 h-4 eye-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                    <svg class="w-4 h-4 eye-closed hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition">
-                        Sign Up (အကောင့်ဖွင့်မည်)
-                    </button>
-                </form>
+                <!-- Google Sign-In Button -->
+                <button type="button" onclick="handleGoogleSignIn()" class="w-full py-2 px-3 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold rounded-xl border border-slate-300 dark:border-slate-600 shadow-sm flex items-center justify-center gap-2 transition text-xs active:scale-[0.99]">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24z"/>
+                        <path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14z"/>
+                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96z"/>
+                    </svg>
+                    <span>Google အကောင့်ဖြင့် ဝင်ရောက်မည်</span>
+                </button>
             </div>
         </div>
     </div>
@@ -794,56 +770,56 @@
                     </div>
                     <div id="dashboard-announcement-content" class="mt-2 text-slate-700 dark:text-slate-200 whitespace-pre-wrap break-words"></div>
                 </div>
-                <!-- 5 Top Force Summary Cards -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-                    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                <!-- 5 Top Force Summary Cards (Dynamically Linked to Name List Master) -->
+                <div id="dashboard-force-summary-cards" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+                    <div onclick="navigateFromDashboardToNameListMaster('အရာရှိ')" title="Name List Master ရှိ 'အရာရှိ' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
                         <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs">အရာရှိအင်အား</span>
-                            <span id="count-officer" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
+                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အရာရှိအင်အား</span>
+                            <span id="count-officer" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
                             <span id="dash-officer-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-officer-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
+                            <span id="dash-officer-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
-                    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                    <div onclick="navigateFromDashboardToNameListMaster('စစ်သည်')" title="Name List Master ရှိ 'စစ်သည်' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
                         <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs">စစ်သည်အင်အား</span>
-                            <span id="count-soldier" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
+                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စစ်သည်အင်အား</span>
+                            <span id="count-soldier" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
                             <span id="dash-soldier-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-soldier-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
+                            <span id="dash-soldier-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
-                    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                    <div onclick="navigateFromDashboardToNameListMaster('အမြဲတမ်းဝန်ထမ်း')" title="Name List Master ရှိ 'အမြဲတမ်းဝန်ထမ်း' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
                         <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs">အမြဲတမ်းဝန်ထမ်း</span>
-                            <span id="count-staff" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
+                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အမြဲတမ်းဝန်ထမ်း</span>
+                            <span id="count-staff" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
                             <span id="dash-staff-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-staff-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
+                            <span id="dash-staff-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
-                    <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                    <div onclick="navigateFromDashboardToNameListMaster('အရပ်သားဝန်ထမ်း')" title="Name List Master ရှိ 'အရပ်သားဝန်ထမ်း' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
                         <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs">အရပ်သားဝန်ထမ်း</span>
-                            <span id="count-civilian" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
+                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အရပ်သားဝန်ထမ်း</span>
+                            <span id="count-civilian" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
                             <span id="dash-civilian-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-civilian-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
+                            <span id="dash-civilian-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
-                    <div class="col-span-2 sm:col-span-1 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                    <div onclick="navigateFromDashboardToNameListMaster('')" title="Name List Master စာရင်း အားလုံးသို့ သွားရန် နှိပ်ပါ" class="col-span-2 sm:col-span-1 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
                         <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs">စုစုပေါင်းအင်အား</span>
-                            <span id="count-total" class="section-heading-bold text-2xl text-slate-900 dark:text-white">၀</span>
+                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စုစုပေါင်းအင်အား</span>
+                            <span id="count-total" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
                             <span id="dash-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-absent-badge" class="font-normal text-blue-900 dark:text-blue-300">ပျက်ကွက် - ၀</span>
+                            <span id="dash-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
                 </div>
@@ -1023,7 +999,7 @@
                                 </div>
                                 <div id="p-in-absent-box">
                                     <label class="block text-rose-600 dark:text-rose-400 mb-1 font-semibold">ပျက်ကွက်အကြောင်းရင်း</label>
-                                    <input type="text" id="p-in-absent-reason" class="w-full bg-rose-50/50 dark:bg-slate-700 border border-rose-300 dark:border-rose-600 rounded-lg px-2.5 py-1.5 outline-none">
+                                    <input type="text" id="p-in-absent-reason" list="p-absent-reason-datalist" placeholder="အကြောင်းရင်း..." class="w-full bg-rose-50/50 dark:bg-slate-700 border border-rose-300 dark:border-rose-600 rounded-lg px-2.5 py-1.5 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-slate-600 dark:text-slate-300 mb-1 font-semibold">တည်နေရာ</label>
@@ -1049,8 +1025,8 @@
 
                 <div class="space-y-2">
                     <div id="personnel-table-actions" class="role-write-action flex justify-end gap-2">
-                        <button onclick="openPersonnelForm(-1)" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
-                        <button onclick="exportPersonnelExcel()" class="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
+                        <button onclick="openPersonnelForm(-1)" class="btn-action-light px-2.5 py-1 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
+                        <button onclick="exportPersonnelExcel()" class="btn-action-light px-2.5 py-1 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
                     </div>
 
                     <!-- Search & Filter Bar -->
@@ -1103,6 +1079,22 @@
             </section>
 
             <section id="civilian-master-tab" class="tab-content hidden space-y-3">
+                <!-- 3 Category Status Cards (ရှိရင်း၊ တန်းစီ၊ ပျက်ကွက်) -->
+                <div id="category-status-cards" class="hidden grid grid-cols-3 gap-2 sm:gap-3">
+                    <div class="bg-blue-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-blue-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
+                        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ရှိရင်း</span>
+                        <span id="category-count-total" class="font-bold text-sm sm:text-base text-blue-700 dark:text-blue-300">၀</span>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-emerald-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
+                        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">တန်းစီ</span>
+                        <span id="category-count-present" class="font-bold text-sm sm:text-base text-emerald-700 dark:text-emerald-300">၀</span>
+                    </div>
+                    <div class="bg-rose-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-rose-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
+                        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ပျက်ကွက်</span>
+                        <span id="category-count-absent" class="font-bold text-sm sm:text-base text-rose-700 dark:text-rose-300">၀</span>
+                    </div>
+                </div>
+
                 <!-- Dedicated Standalone Filter & Count Card (သီးသန့်ကတ်ပြား) -->
                 <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
@@ -1112,7 +1104,7 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap items-center gap-3">
-                        <div class="flex items-center gap-1.5">
+                        <div id="civilian-filter-position-wrapper" class="flex items-center gap-1.5">
                             <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ရာထူးအလိုက် -</span>
                             <select id="civilian-filter-position" onchange="resetTablePage('civilianMaster'); onCivilianFilterPositionChange()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
@@ -1138,11 +1130,11 @@
                     <div class="px-4 py-3 bg-slate-100 dark:bg-slate-700/70 border-b border-slate-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                         <h2 id="civilian-master-title" class="font-bold text-slate-900 dark:text-white">Name List Master</h2>
                         <div class="flex flex-wrap items-center justify-end gap-1.5 self-end sm:self-auto">
-                            <button id="civilian-master-import-btn" onclick="triggerExcelImport('civilian-master')" class="role-write-action px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
-                            <button onclick="exportCivilianMasterExcel()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
-                            <button onclick="printCivilianNameListMaster()" class="px-2.5 py-1.5 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Print</button>
+                            <button id="civilian-master-import-btn" onclick="triggerExcelImport('civilian-master')" class="role-write-action btn-action-light px-2.5 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
+                            <button onclick="exportCivilianMasterExcel()" class="btn-action-light px-2.5 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
+                            <button onclick="printCivilianNameListMaster()" class="btn-action-light px-2.5 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Print</button>
                             <input type="file" id="civilian-master-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'civilian-master')">
-                            <button onclick="addCivilianMasterRecord()" class="role-write-action px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
+                            <button onclick="addCivilianMasterRecord()" class="role-write-action btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
@@ -1255,7 +1247,7 @@
                         <span class="font-bold text-xs text-slate-900 dark:text-white">📋 ပျက်ကွက်အင်အားစာရင်း</span>
                         <div class="role-write-action flex items-center gap-1.5 w-full sm:w-auto">
                             <input type="text" id="new-absent-reason-input" placeholder="အကြောင်းအရင်းအသစ်..." class="flex-1 sm:w-48 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none">
-                            <button onclick="addCustomAbsentReasonCategory()" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs whitespace-nowrap">Add New</button>
+                            <button onclick="addCustomAbsentReasonCategory()" class="btn-action-light px-2.5 py-1 rounded-lg font-bold text-xs whitespace-nowrap transition">Add New</button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
@@ -1291,9 +1283,9 @@
                                 <select id="absent-filter-reason" onchange="resetTablePage('absent'); renderAbsentSummary()" class="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1.5 text-xs outline-none"></select>
                             </div>
                             <div id="absent-table-actions" class="role-write-action flex gap-1.5">
-                                <button onclick="openNewAbsentPersonnelModal()" class="px-2.5 py-1.5 border border-transparent bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs whitespace-nowrap">Add New</button>
-                                <button onclick="triggerExcelImport('absent')" class="px-2.5 py-1.5 border border-transparent bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs whitespace-nowrap">Import</button>
-                                <button onclick="exportAbsentExcel()" class="px-2.5 py-1.5 border border-transparent bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs whitespace-nowrap">Export</button>
+                                <button onclick="openNewAbsentPersonnelModal()" class="btn-action-light px-2.5 py-1.5 rounded-lg font-bold text-xs whitespace-nowrap transition">Add New</button>
+                                <button onclick="triggerExcelImport('absent')" class="btn-action-light px-2.5 py-1.5 rounded-lg font-bold text-xs whitespace-nowrap transition">Import</button>
+                                <button onclick="exportAbsentExcel()" class="btn-action-light px-2.5 py-1.5 rounded-lg font-bold text-xs whitespace-nowrap transition">Export</button>
                                 <input type="file" id="ab-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'absent')">
                             </div>
                         </div>
@@ -1348,21 +1340,26 @@
 
                 </div>
 
-                <!-- Duty Search & Filter -->
-                <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                    <div class="filter-action-bar">
-                        <input type="text" id="duty-search" oninput="resetTablePage('duty'); renderSecurityDuty()" placeholder="လုံခြုံရေးတာဝန် ရှာဖွေရန်..." class="hidden w-full lg:flex-1 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 text-xs outline-none focus:border-blue-500">
-                        <div class="filter-action-controls">
-                            <select id="duty-filter-dutytype" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none"></select>
-                            <select id="duty-filter-dept" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none"></select>
-                            <select id="duty-filter-type" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none"></select>
-                        </div>
-                        <div id="duty-table-actions" class="role-write-action flex gap-1.5">
-                            <button onclick="openDutyForm()" class="compact-toolbar-control px-2.5 py-1 border border-transparent bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs whitespace-nowrap">Add New</button>
-                            <button onclick="triggerExcelImport('duty')" class="compact-toolbar-control px-2.5 py-1 border border-transparent bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs whitespace-nowrap">Import</button>
-                            <button onclick="exportDutyExcel()" class="compact-toolbar-control px-2.5 py-1 border border-transparent bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs whitespace-nowrap">Export</button>
-                            <input type="file" id="d-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'duty')">
-                        </div>
+                <!-- Dedicated Filter Card (စစ်ထုတ်ပြသသည့် အကွက်များ) -->
+                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">စစ်ထုတ်ရန် -</span>
+                    </div>
+                    <div class="flex-1 flex flex-wrap items-center justify-end gap-2">
+                        <select id="duty-filter-dutytype" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500"></select>
+                        <select id="duty-filter-dept" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500"></select>
+                        <select id="duty-filter-type" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500"></select>
+                    </div>
+                </div>
+
+                <!-- Table Action Bar (Add New, Import, Export) -->
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <input type="text" id="duty-search" oninput="resetTablePage('duty'); renderSecurityDuty()" placeholder="လုံခြုံရေးတာဝန် ရှာဖွေရန်..." class="hidden w-full lg:flex-1 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 text-xs outline-none focus:border-blue-500">
+                    <div id="duty-table-actions" class="role-write-action flex items-center justify-end gap-2 ml-auto">
+                        <button onclick="openDutyForm()" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
+                        <button onclick="triggerExcelImport('duty')" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
+                        <button onclick="exportDutyExcel()" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
+                        <input type="file" id="d-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'duty')">
                     </div>
                 </div>
 
@@ -1381,8 +1378,8 @@
                                 <th class="p-3 text-left">ဝန်ထမ်းအမျိုးအစား</th>
                                 <th class="p-3 text-left">လက်ရှိအခြေအနေ</th>
                                 <th class="p-3 text-left">ပျက်ကွက်အကြောင်းရင်း</th>
-                                <th class="p-3 text-left">ကင်းစခန်းတည်နေရာ</th>
-                                <th class="p-3 text-left">အမည်</th>
+                                <th class="p-3 text-left"><span class="inline-flex items-center gap-1"><svg class="w-3.5 h-3.5 inline-block text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> ကင်းစခန်းတည်နေရာ</span></th>
+                                <th class="p-3 text-left"><span class="inline-flex items-center gap-1"><svg class="w-3.5 h-3.5 inline-block text-slate-500" viewBox="0 0 24 24" fill="currentColor"><path d="M1 11h7v-2.5h3.5v2.5h3v-1h6v-1.5h1v1.5h1.5v1h-1.5v.5h-6v.5h-1l1 5h-2.5l-.8-5h-1.5v1.5c0 .5-.5 1-1 1s-1-.5-1-1v-1.5h-.5l-1.5 4.5h-2l1.2-4.5h-.5l-4 3v-4.5z"/></svg> လက်နက်အမည်</span></th>
                                 <th class="p-3 text-center">အရေအတွက်</th>
                                 <th class="p-3 text-left">ခဲယမ်း</th>
                                 <th class="p-3 text-left">ရက်စွဲ</th>
@@ -1443,12 +1440,9 @@
                 <div class="flex flex-wrap items-center justify-between gap-2">
                     <input type="text" id="armory-search" oninput="resetTablePage('armory'); renderArmory()" placeholder="ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်း ရှာဖွေရန်..." class="hidden w-full lg:flex-1 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 text-xs outline-none">
                     <div id="armory-table-actions" class="role-write-action flex items-center justify-end gap-2 ml-auto">
-                        <button onclick="openArmoryForm()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                            <span>Add New</span>
-                        </button>
-                        <button onclick="triggerExcelImport('armory')" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
-                        <button onclick="exportArmoryExcel()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
+                        <button onclick="openArmoryForm()" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
+                        <button onclick="triggerExcelImport('armory')" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
+                        <button onclick="exportArmoryExcel()" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
                         <input type="file" id="a-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'armory')">
                     </div>
                 </div>
@@ -1594,12 +1588,9 @@
                 <div class="flex flex-wrap items-center justify-between gap-2">
                     <input type="text" id="prod-search" oninput="resetTablePage('prod'); renderProdStatement()" placeholder="ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း ရှာဖွေရန်..." class="hidden w-full lg:flex-1 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 text-xs outline-none">
                     <div id="prod-table-actions" class="role-write-action flex items-center justify-end gap-2 ml-auto">
-                        <button onclick="openProdForm()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                            <span>Add New</span>
-                        </button>
-                        <button onclick="triggerExcelImport('prod')" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
-                        <button onclick="exportProdExcel()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
+                        <button onclick="openProdForm()" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
+                        <button onclick="triggerExcelImport('prod')" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
+                        <button onclick="exportProdExcel()" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
                         <input type="file" id="pr-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'prod')">
                     </div>
                 </div>
@@ -1704,30 +1695,35 @@
 
                 </div>
 
-                <!-- Search, Filter & Action Bar -->
-                <div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                    <div class="filter-action-bar">
-                        <div class="hidden relative w-full lg:flex-1">
-                            <span class="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z"/></svg>
-                            </span>
-                            <input type="text" id="user-search" oninput="renderUserManagement()" placeholder="အသုံးပြုသူ အမည် / အီးမေးလ် ရှာဖွေရန်..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg pl-9 pr-3 py-1 text-xs outline-none focus:border-blue-500">
-                        </div>
-                        <div class="users-filter-controls">
-                            <select id="user-filter-role" onchange="renderUserManagement()" class="compact-toolbar-control w-full min-w-0 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500"></select>
-                            <select id="user-filter-status" onchange="renderUserManagement()" class="compact-toolbar-control w-full min-w-0 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500">
-                                <option value="ALL">အခြေအနေအားလုံး</option>
-                                <option value="Active">Active</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Suspended">Suspended</option>
-                            </select>
-                        </div>
-                        <div id="user-table-actions" class="role-write-action flex gap-1.5">
-                            <button onclick="openNewUserFormModal()" class="compact-toolbar-control px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
-                            <button onclick="triggerExcelImport('users')" class="compact-toolbar-control px-2.5 py-1 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
-                            <button onclick="exportUsersExcel()" class="compact-toolbar-control px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
-                            <input type="file" id="u-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'users')">
-                        </div>
+                <!-- Dedicated Filter Card (စစ်ထုတ်ပြသသည့် အကွက်များ) -->
+                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">စစ်ထုတ်ရန် -</span>
+                    </div>
+                    <div class="flex-1 flex flex-wrap items-center justify-end gap-2">
+                        <select id="user-filter-role" onchange="renderUserManagement()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500"></select>
+                        <select id="user-filter-status" onchange="renderUserManagement()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500">
+                            <option value="ALL">အခြေအနေအားလုံး</option>
+                            <option value="Active">Active</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Suspended">Suspended</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Table Action Bar (Add New, Import, Export) -->
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="hidden relative w-full lg:flex-1">
+                        <span class="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z"/></svg>
+                        </span>
+                        <input type="text" id="user-search" oninput="renderUserManagement()" placeholder="အသုံးပြုသူ အမည် / အီးမေးလ် ရှာဖွေရန်..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg pl-9 pr-3 py-1.5 text-xs outline-none focus:border-blue-500">
+                    </div>
+                    <div id="user-table-actions" class="role-write-action flex items-center justify-end gap-2 ml-auto">
+                        <button onclick="openNewUserFormModal()" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Add New</button>
+                        <button onclick="triggerExcelImport('users')" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Import</button>
+                        <button onclick="exportUsersExcel()" class="btn-action-light px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">Export</button>
+                        <input type="file" id="u-excel-input" accept=".xlsx,.xls,.csv,.json" class="hidden" onchange="handleExcelImport(event, 'users')">
                     </div>
                 </div>
 
@@ -1790,21 +1786,63 @@
                                     <option value="တပ်ပြင်လခရ">တပ်ပြင်လခရ</option>
                                 </select>
                             </div>
-                            <div><label for="d-in-location" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကင်းစခန်းတည်နေရာ</label><input id="d-in-location" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            <div>
+                                <label for="d-in-location" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကင်းစခန်းတည်နေရာ</label>
+                                <input id="d-in-location" list="duty-location-datalist" placeholder="ကင်းစခန်းတည်နေရာ..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
+                                <datalist id="duty-location-datalist">
+                                    <option value="စက်ရုံပင်မဂိတ်">
+                                    <option value="မျှော်စင်ကင်းစခန်း-၁">
+                                    <option value="မျှော်စင်ကင်းစခန်း-၂">
+                                    <option value="အရှေ့ဘက်ကင်းစခန်း">
+                                    <option value="အနောက်ဘက်ကင်းစခန်း">
+                                    <option value="တောင်ဘက်မျှော်စင်ကင်းစခန်း">
+                                    <option value="မြောက်ဘက်ကင်းစခန်း">
+                                    <option value="ဗဟိုလက်နက်တိုက်">
+                                    <option value="အနောက်ဘက်စစ်ဆေးရေးဂိတ်">
+                                    <option value="ဂိတ် (၁) - ပင်မဝင်ပေါက်">
+                                    <option value="ဂိတ် (၂)">
+                                </datalist>
+                            </div>
                             
-                            <div class="sm:col-span-2 md:col-span-3 bg-blue-50/70 dark:bg-slate-700/50 p-2.5 rounded-lg border border-blue-200 dark:border-slate-600">
-                                <label for="d-in-armory-select" class="block text-blue-900 dark:text-blue-300 font-bold mb-1">ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်းမှ ရွေးချယ်ရန် (Dropdown List)</label>
-                                <select id="d-in-armory-select" onchange="onArmoryDropdownSelect(this.value)" class="w-full bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
-                                    <option value="">-- ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်းမှ လက်နက်ရွေးချယ်ပါ --</option>
+                            <div class="sm:col-span-2 md:col-span-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-700/60 dark:to-slate-800/60 p-3 rounded-xl border border-blue-200 dark:border-slate-600 shadow-sm">
+                                <label for="d-in-armory-select" class="block text-blue-900 dark:text-blue-300 font-bold mb-1.5 flex flex-wrap items-center justify-between gap-1">
+                                    <span class="inline-flex items-center gap-1.5">
+                                        <svg class="w-4 h-4 inline-block text-blue-700 dark:text-blue-300" viewBox="0 0 24 24" fill="currentColor"><path d="M1 11h7v-2.5h3.5v2.5h3v-1h6v-1.5h1v1.5h1.5v1h-1.5v.5h-6v.5h-1l1 5h-2.5l-.8-5h-1.5v1.5c0 .5-.5 1-1 1s-1-.5-1-1v-1.5h-.5l-1.5 4.5h-2l1.2-4.5h-.5l-4 3v-4.5z"/></svg>
+                                        ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်းမှ ရွေးချယ်ရန် (အမျိုးအစား၊ အမည်၊ မော်ဒယ်၊ ကုတ်နံပါတ်)
+                                    </span>
+                                    <span class="text-[11px] font-normal text-slate-500 dark:text-slate-400">Dropdown မှ ရွေးချယ်ပါက အောက်ပါ လက်နက်အမည်၊ အရေအတွက်၊ ခဲယမ်း စသည်တို့ အလိုအလျောက် ဖြည့်ပေးပါမည်</span>
+                                </label>
+                                <select id="d-in-armory-select" onchange="onArmoryDropdownSelect(this.value)" class="w-full bg-white dark:bg-slate-700 border border-blue-300 dark:border-slate-500 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-100 outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">-- ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်းမှ ရွေးချယ်ပါ (အမျိုးအစား၊ အမည်၊ မော်ဒယ်၊ ကုတ်နံပါတ်) --</option>
                                 </select>
                             </div>
 
-                            <div><label for="d-in-weapon" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်နက်အမျိုးအစား (အမည်)</label><input id="d-in-weapon" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            <div>
+                                <label for="d-in-weapon" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်နက်အမည်</label>
+                                <input id="d-in-weapon" list="duty-weapon-name-datalist" placeholder="လက်နက်အမည်..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
+                                <datalist id="duty-weapon-name-datalist"></datalist>
+                            </div>
                             <div><label for="d-in-weapon-model" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">မော်ဒယ်</label><input id="d-in-weapon-model" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
-                            <div><label for="d-in-weapon-code" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကုတ်အမှတ်</label><input id="d-in-weapon-code" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
-                            <div><label for="d-in-weapon-serial" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်နက်နံပါတ်</label><input id="d-in-weapon-serial" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            <div><label for="d-in-weapon-code" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ကုတ်နံပါတ်</label><input id="d-in-weapon-code" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            <div>
+                                <label for="d-in-weapon-serial" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">လက်နက်နံပါတ်</label>
+                                <input id="d-in-weapon-serial" list="d-weapon-serial-datalist" oninput="onDutyWeaponSerialSelected()" placeholder="လက်နက်နံပါတ်..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
+                                <datalist id="d-weapon-serial-datalist"></datalist>
+                            </div>
                             <div><label for="d-in-quantity" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အရေအတွက်</label><input id="d-in-quantity" type="number" min="1" value="1" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
-                            <div><label for="d-in-ammo" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ခဲယမ်း</label><input id="d-in-ammo" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
+                            <div>
+                                <label for="d-in-ammo" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ခဲယမ်း</label>
+                                <input id="d-in-ammo" list="duty-ammo-datalist" placeholder="ခဲယမ်းပမာဏ..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2">
+                                <datalist id="duty-ammo-datalist">
+                                    <option value="5.56mm ကျည် ၃၀ တောင့်">
+                                    <option value="5.56mm ကျည် ၆၀ တောင့်">
+                                    <option value="5.56mm ကျည် ၁၀၀ တောင့်">
+                                    <option value="5.56mm ကျည် ၁၅၀ တောင့်">
+                                    <option value="5.56mm ကျည် ၁၅၀ + ဗုံးသီး ၆ လုံး">
+                                    <option value="9mm ကျည် ၁၅ တောင့်">
+                                    <option value="9mm ကျည် ၃၀ တောင့်">
+                                </datalist>
+                            </div>
                             <div><label for="d-in-date" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ရက်စွဲ</label><input id="d-in-date" type="date" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
                             <div class="sm:col-span-2 md:col-span-3"><label for="d-in-remarks" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">မှတ်ချက်</label><input id="d-in-remarks" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-2"></div>
                         </div>
@@ -1877,7 +1915,7 @@
                                 <select id="u-in-role" class="w-full bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none"></select>
                                 <div id="new-role-inline-box" class="hidden flex gap-1 mt-1">
                                     <input type="text" id="new-role-input" class="flex-1 bg-white dark:bg-slate-700 border border-blue-400 rounded px-2 py-1 text-xs outline-none">
-                                    <button type="button" onclick="saveNewRoleInline()" class="px-2 py-1 bg-blue-600 text-white rounded font-bold text-[11px]">Add New</button>
+                                    <button type="button" onclick="saveNewRoleInline()" class="btn-action-light px-2 py-1 rounded font-bold text-[11px] transition">Add New</button>
                                 </div>
                             </div>
                             <div>
@@ -2297,7 +2335,17 @@ var db = admin.firestore();</pre>
                     </div>
                     <div id="p-form-absent-container">
                         <label class="block text-rose-600 dark:text-rose-400 font-semibold mb-1">ပျက်ကွက်အကြောင်းရင်း</label>
-                        <input type="text" id="p-form-absent-reason" class="w-full bg-rose-50/50 dark:bg-slate-700 border border-rose-300 dark:border-rose-600 rounded-lg px-2.5 py-2 outline-none">
+                        <input type="text" id="p-form-absent-reason" list="p-absent-reason-datalist" placeholder="အကြောင်းရင်း ရွေးချယ်/ထည့်သွင်းပါ..." class="w-full bg-rose-50/50 dark:bg-slate-700 border border-rose-300 dark:border-rose-600 rounded-lg px-2.5 py-2 outline-none">
+                        <datalist id="p-absent-reason-datalist">
+                            <option value="တပ်တွင်းလခရ">
+                            <option value="တပ်ပြင်လခရ">
+                            <option value="ခွင့်">
+                            <option value="ဆေးရုံတက်">
+                            <option value="တာဝန်ခရီး">
+                            <option value="သင်တန်း">
+                            <option value="လုံခြုံရေးတာဝန်">
+                            <option value="အခြား">
+                        </datalist>
                     </div>
                     <div>
                         <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">ဝန်ထမ်းအမျိုးအစား</label>
@@ -2498,7 +2546,8 @@ var db = admin.firestore();</pre>
         const FIREBASE_PENDING_SYNC_KEY = 'DI_FIREBASE_PENDING_SYNC_V1';
         const FIREBASE_CUSTOM_CFG_KEY = 'DI_FIREBASE_CUSTOM_CFG_V1';
         const FIREBASE_SERVICE_ACCOUNT_KEY = 'DI_FIREBASE_SERVICE_ACCOUNT_V1';
-        const FIRESTORE_APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'di-management-system';
+        const FIRESTORE_APP_ID = typeof __app_id !== 'undefined' ? __app_id : "1:658682655104:web:a96fbd11f2cfadf4a99165";
+        const FIREBASE_VAPID_KEY = "BDfIuqqP4Sgz7rHicoFM9N4INxbbtbAFBHT-XKx4vwKmZ6lXXNdy9NlkVUJPmbho1_xiVxDGKW-5GsPJvX_Spk4";
         const DEFAULT_FIREBASE_CONFIG = {
             apiKey: "AIzaSyDA1dXt2p9kneEQ9cEmhGJWueTo77Fv2WM",
             authDomain: "mydataapp-a3750.firebaseapp.com",
@@ -2616,7 +2665,7 @@ var db = admin.firestore();</pre>
         let armoryStatusList = ['ထုတ်ပေး', 'စတိုကျန်', 'ပြင်ဆင်ဆဲ'];
         let raceList = ['ကချင်', 'ကယား', 'ကရင်', 'ချင်း', 'မွန်', 'ဗမာ', 'ရခိုင်', 'ရှမ်း'];
         let religionList = ['ဗုဒ္ဓ', 'ခရစ်ယာန်', 'မွတ်စလင်', 'ဟိန္ဒူ'];
-        let absentReasonCategories = ['ခွင့်', 'ဆေးရုံတက်', 'တာဝန်ခရီး', 'သင်တန်း', 'လုံခြုံရေးတာဝန်', 'အခြား'];
+        let absentReasonCategories = ['ခွင့်', 'ဆေးရုံတက်', 'တာဝန်ခရီး', 'သင်တန်း', 'တပ်တွင်းလခရ', 'တပ်ပြင်လခရ', 'လုံခြုံရေးတာဝန်', 'အခြား'];
         let absentReasonRows = absentReasonCategories.map(r => ({
             reason: r, 'ဌနခ': 0, 'စမရ': 0, 'ထလရ-၁': 0, 'ထလရ-၂': 0, 'စဆရ': 0
         }));
@@ -2712,15 +2761,54 @@ var db = admin.firestore();</pre>
         };
         let userData = [
             {
-                name: 'Admin',
+                name: 'Pyae Phyo Aung (Owner)',
                 username: 'ppa45929@gmail.com',
+                serviceId: 'ADM-01',
+                staffType: 'အရာရှိ',
+                rankAbbr: 'ဗိုလ်မှူးကြီး',
+                rankFull: 'ဗိုလ်မှူးကြီး',
                 deptAbbr: 'ဌနခ',
                 deptFull: 'စက်ရုံဌာနချုပ်',
                 role: 'Admin',
                 status: 'Active',
                 regDate: '2026-01-01',
                 password: '',
-                authProvider: 'admin',
+                authProvider: 'google',
+                firebaseUid: 'nrvLWWdqDwRFM1VHsMthKhVigQk1',
+                photo: ''
+            },
+            {
+                name: 'Stricker (Editor)',
+                username: 'stricker459@gmail.com',
+                serviceId: 'EDT-01',
+                staffType: 'စစ်သည်',
+                rankAbbr: 'တပ်ကြပ်ကြီး',
+                rankFull: 'တပ်ကြပ်ကြီး',
+                deptAbbr: 'ဌနခ',
+                deptFull: 'စက်ရုံဌာနချုပ်',
+                role: 'User1',
+                status: 'Active',
+                regDate: '2026-01-01',
+                password: '',
+                authProvider: 'google',
+                firebaseUid: 'Vu0Uzn4BgaOmRu2cu6DdfaFyxL52',
+                photo: ''
+            },
+            {
+                name: 'Pyae Phyo Aung (Viewer)',
+                username: 'pyaephyoaungppa459@gmail.com',
+                serviceId: 'VIW-01',
+                staffType: 'အမြဲတမ်းဝန်ထမ်း',
+                rankAbbr: 'ကြီးကြပ်-၁',
+                rankFull: 'ကြီးကြပ်ရေးမှူး-၁',
+                deptAbbr: 'ဌနခ',
+                deptFull: 'စက်ရုံဌာနချုပ်',
+                role: 'User3',
+                status: 'Active',
+                regDate: '2026-01-01',
+                password: '',
+                authProvider: 'google',
+                firebaseUid: '1UZcBEHBxlUEBWS5aA1s9O9m6oL2',
                 photo: ''
             }
         ];
@@ -2928,10 +3016,20 @@ var db = admin.firestore();</pre>
         }
 
         function resolvePersonnelRoleGroup(person) {
-            if (person.position === 'အရပ်သားဝန်ထမ်း' || person.roleGroup === 'အရပ်သားဝန်ထမ်း') return 'အရပ်သားဝန်ထမ်း';
-            if (person.position === 'အမြဲတမ်းဝန်ထမ်း' || person.roleGroup === 'အမြဲတမ်းဝန်ထမ်း') return 'အမြဲတမ်းဝန်ထမ်း';
-            if (person.position === 'အရာရှိ' || person.roleGroup === 'အရာရှိ') return 'အရာရှိ';
-            if (person.position === 'စစ်သည်' || person.roleGroup === 'စစ်သည်') return 'စစ်သည်';
+            if (!person) return 'စစ်သည်';
+            const pos = String(person.position || '').trim();
+            if (pos === 'အရာရှိ') return 'အရာရှိ';
+            if (pos === 'စစ်သည်') return 'စစ်သည်';
+            if (pos === 'အမြဲတမ်းဝန်ထမ်း') return 'အမြဲတမ်းဝန်ထမ်း';
+            if (pos === 'အရပ်သားဝန်ထမ်း') return 'အရပ်သားဝန်ထမ်း';
+            if (pos) return pos;
+
+            const role = String(person.roleGroup || '').trim();
+            if (role === 'အရာရှိ') return 'အရာရှိ';
+            if (role === 'စစ်သည်') return 'စစ်သည်';
+            if (role === 'အမြဲတမ်းဝန်ထမ်း') return 'အမြဲတမ်းဝန်ထမ်း';
+            if (role === 'အရပ်သားဝန်ထမ်း') return 'အရပ်သားဝန်ထမ်း';
+            if (role) return role;
 
             const rankStr = String(person.rankAbbr || person.rankFull || '').trim();
             const typeStr = String(person.staffType || '').trim();
@@ -2949,6 +3047,13 @@ var db = admin.firestore();</pre>
                 return 'အမြဲတမ်းဝန်ထမ်း';
             }
             return 'စစ်သည်';
+        }
+
+        function getPersonnelPosition(person) {
+            if (!person) return '';
+            const pos = String(person.position || '').trim();
+            if (pos) return pos;
+            return (resolvePersonnelRoleGroup(person) || '').trim();
         }
 
         function migrateRankDefinitions(savedDefinitions) {
@@ -3073,17 +3178,47 @@ var db = admin.firestore();</pre>
                 if (Array.isArray(parsed.personnelData)) {
                     personnelData = parsed.personnelData;
                     personnelData.forEach(p => {
-                        if (!['အရာရှိ', 'စစ်သည်', 'အမြဲတမ်းဝန်ထမ်း', 'အရပ်သားဝန်ထမ်း'].includes(p.position)) {
+                        const curPos = String(p.position || '').trim();
+                        if (!curPos) {
                             p.position = resolvePersonnelRoleGroup(p);
                         }
+                        p.roleGroup = resolvePersonnelRoleGroup(p);
                     });
                 }
                 if (Array.isArray(parsed.securityDutyData)) securityDutyData = parsed.securityDutyData;
+                syncSecurityDutyWithPersonnel();
                 if (Array.isArray(parsed.armoryData)) armoryData = parsed.armoryData;
                 if (Array.isArray(parsed.prodStatementData)) prodStatementData = parsed.prodStatementData;
                 if (Array.isArray(parsed.announcementData)) announcementData = parsed.announcementData;
                 if (Array.isArray(parsed.userRoles) && parsed.userRoles.length) userRoles = parsed.userRoles;
-                if (Array.isArray(parsed.userData) && parsed.userData.length) userData = parsed.userData;
+                if (Array.isArray(parsed.userData) && parsed.userData.length) {
+                    userData = parsed.userData;
+                    const officialUsers = [
+                        { name: 'Pyae Phyo Aung (Owner)', username: 'ppa45929@gmail.com', role: 'Admin', firebaseUid: 'nrvLWWdqDwRFM1VHsMthKhVigQk1' },
+                        { name: 'Stricker (Editor)', username: 'stricker459@gmail.com', role: 'User1', firebaseUid: 'Vu0Uzn4BgaOmRu2cu6DdfaFyxL52' },
+                        { name: 'Pyae Phyo Aung (Viewer)', username: 'pyaephyoaungppa459@gmail.com', role: 'User3', firebaseUid: '1UZcBEHBxlUEBWS5aA1s9O9m6oL2' }
+                    ];
+                    officialUsers.forEach(ou => {
+                        let u = userData.find(x => (x.username || '').toLowerCase() === ou.username.toLowerCase());
+                        if (!u) {
+                            userData.push({
+                                name: ou.name,
+                                username: ou.username,
+                                serviceId: ou.role === 'Admin' ? 'ADM-01' : (ou.role === 'User1' ? 'EDT-01' : 'VIW-01'),
+                                deptAbbr: 'ဌနခ',
+                                deptFull: 'စက်ရုံဌာနချုပ်',
+                                role: ou.role,
+                                status: 'Active',
+                                regDate: '2026-01-01',
+                                password: '',
+                                authProvider: 'google',
+                                firebaseUid: ou.firebaseUid
+                            });
+                        } else if (!u.firebaseUid) {
+                            u.firebaseUid = ou.firebaseUid;
+                        }
+                    });
+                }
                 if (persistRankMigration) saveSystemState(true);
             } catch (err) {
                 console.warn('Error loading system state from localStorage:', err);
@@ -3295,6 +3430,26 @@ var db = admin.firestore();</pre>
                 }
             }
 
+            // Toggle Category Status Cards for (အရာရှိအမည်စာရင်း၊ စစ်သည်အမည်စာရင်း၊ အမြဲတမ်းဝန်ထမ်းစာရင်း၊ အရပ်သားဝန်ထမ်းစာရင်း)
+            const catStatusCards = document.getElementById('category-status-cards');
+            if (catStatusCards) {
+                if (['officer', 'soldier', 'staff', 'civilian'].includes(tabName)) {
+                    catStatusCards.classList.remove('hidden');
+                } else {
+                    catStatusCards.classList.add('hidden');
+                }
+            }
+
+            // Hide "ရာထူးအလိုက်" filter on (အရာရှိအမည်စာရင်း၊ စစ်သည်အမည်စာရင်း၊ အမြဲတမ်းဝန်ထမ်းစာရင်း၊ အရပ်သားဝန်ထမ်းစာရင်း)
+            const cmPosWrapper = document.getElementById('civilian-filter-position-wrapper');
+            if (cmPosWrapper) {
+                if (['officer', 'soldier', 'staff', 'civilian'].includes(tabName)) {
+                    cmPosWrapper.classList.add('hidden');
+                } else {
+                    cmPosWrapper.classList.remove('hidden');
+                }
+            }
+
             // Highlight active sidebar button
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
@@ -3331,6 +3486,7 @@ var db = admin.firestore();</pre>
                 if (deptSelect) deptSelect.value = '';
                 renderAbsentSummary();
             } else if (tabName === 'duty') {
+                syncSecurityDutyWithPersonnel();
                 initInlineDutyControls();
                 renderSecurityDuty();
             } else if (tabName === 'armory') {
@@ -3347,6 +3503,16 @@ var db = admin.firestore();</pre>
             } else if (tabName === 'settings') {
                 renderSettings();
             }
+        }
+
+        function escapeHtml(val) {
+            return String(val ?? '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[c]);
         }
 
         function toMyanmarNumerals(val) {
@@ -4000,34 +4166,38 @@ var db = admin.firestore();</pre>
                             const dobVal = typeof dobRaw === 'number'
                                 ? new Date(Date.UTC(1899, 11, 30) + dobRaw * 86400000).toISOString().slice(0, 10)
                                 : String(dobRaw).trim();
-                            personnelData.unshift({
+                            const pItem = {
                                 id: idVal,
                                 rankFull: getRankFull(rankRaw),
                                 rankAbbr: getRankAbbr(rankRaw),
                                 name: nameVal,
-                                roleGroup: 'အရပ်သားဝန်ထမ်း',
                                 deptFull: getDeptFull(deptRaw),
                                 deptAbbr: getDeptAbbr(deptRaw),
-                                position: getValue('ရာထူး', 'Position'),
-                                gender: getValue('ကျား/မ', 'Gender'),
-                                status: statusVal,
-                                absentReason: statusVal === 'ပျက်ကွက်' ? getValue('ပျက်ကွက်အကြောင်းရင်း', 'ပျက်ကွက်အကြောင်းအရင်း', 'Absent Reason') : '',
-                                staffType: getValue('ဝန်ထမ်းအမျိုးအစား', 'Staff Type') || (staffTypeList.includes('အရပ်သား') ? 'အရပ်သား' : staffTypeList[0] || ''),
-                                dob: dobVal,
-                                nrc: getValue('နိုင်ငံသားစိစစ်ရေးကတ်အမှတ်', 'မှတ်ပုံတင်အမှတ်', 'NRC'),
-                                fatherName: getValue('အဘအမည်', 'Father Name', "Father's Name"),
-                                motherName: getValue('အမိအမည်', 'Mother Name', "Mother's Name"),
-                                address: getValue('နေရပ်လိပ်စာ', 'လိပ်စာ', 'Address'),
-                                race: getValue('လူမျိုး', 'Race'),
-                                religion: getValue('ဘာသာ', 'Religion'),
-                                phone: getValue('ဖုန်းနံပါတ်', 'ဖုန်း', 'Phone'),
-                                remarks: getValue('မှတ်ချက်', 'Remarks'),
-                                location: getValue('တည်နေရာ', 'Location'),
-                                occupation: getValue('အလုပ်ကိုင်', 'အလုပ်အကိုင်', 'Occupation'),
-                                occupationType: getValue('အလုပ်အကိုင်အမျိုးအစား', 'Occupation Type'),
-                                maritalStatus: getValue('ပျို/အို', 'Marital Status'),
-                                photo: ''
-                            });
+                                position: posVal,
+                                staffType: staffTypeVal
+                            };
+                            const resolvedRole = resolvePersonnelRoleGroup(pItem);
+                            pItem.roleGroup = resolvedRole;
+                            pItem.position = posVal || resolvedRole;
+                            pItem.gender = getValue('ကျား/မ', 'Gender');
+                            pItem.status = statusVal;
+                            pItem.absentReason = statusVal === 'ပျက်ကွက်' ? getValue('ပျက်ကွက်အကြောင်းရင်း', 'ပျက်ကွက်အကြောင်းအရင်း', 'Absent Reason') : '';
+                            pItem.staffType = staffTypeVal;
+                            pItem.dob = dobVal;
+                            pItem.nrc = getValue('နိုင်ငံသားစိစစ်ရေးကတ်အမှတ်', 'မှတ်ပုံတင်အမှတ်', 'NRC');
+                            pItem.fatherName = getValue('အဘအမည်', 'Father Name', "Father's Name");
+                            pItem.motherName = getValue('အမိအမည်', 'Mother Name', "Mother's Name");
+                            pItem.address = getValue('နေရပ်လိပ်စာ', 'လိပ်စာ', 'Address');
+                            pItem.race = getValue('လူမျိုး', 'Race');
+                            pItem.religion = getValue('ဘာသာ', 'Religion');
+                            pItem.phone = getValue('ဖုန်းနံပါတ်', 'ဖုန်း', 'Phone');
+                            pItem.remarks = getValue('မှတ်ချက်', 'Remarks');
+                            pItem.location = getValue('တည်နေရာ', 'Location');
+                            pItem.occupation = getValue('အလုပ်ကိုင်', 'အလုပ်အကိုင်', 'Occupation');
+                            pItem.occupationType = getValue('အလုပ်အကိုင်အမျိုးအစား', 'Occupation Type');
+                            pItem.maritalStatus = getValue('ပျို/အို', 'Marital Status');
+                            pItem.photo = '';
+                            personnelData.unshift(pItem);
                             importedCount++;
                         });
                         const pF = document.getElementById('civilian-filter-position'); if (pF) pF.value = '';
@@ -4047,22 +4217,29 @@ var db = admin.firestore();</pre>
                             const rankRaw = String(r['အဆင့်'] || r['Rank'] || '').trim();
                             const deptRaw = String(r['ဌာနအမည်'] || r['ဌာန'] || r['Dept'] || 'ဌနခ').trim();
                             const statusRaw = String(r['လက်ရှိအခြေအနေ'] || (scope === 'absent' ? 'ပျက်ကွက်' : 'တန်းစီ')).trim();
-                            personnelData.unshift({
+                            const posVal = String(r['ရာထူး'] || r['Position'] || '').trim();
+                            const pItem = {
                                 id: idVal,
                                 rankFull: getRankFull(rankRaw),
                                 rankAbbr: getRankAbbr(rankRaw),
                                 name: nameVal,
-                                roleGroup: activePersonnelCategoryTab !== 'ALL' ? activePersonnelCategoryTab : resolvePersonnelRoleGroup({ id: idVal, rankAbbr: getRankAbbr(rankRaw), staffType: String(r['ဝန်ထမ်းအမျိုးအစား'] || 'သန္ဓေ') }),
                                 deptFull: getDeptFull(deptRaw),
                                 deptAbbr: getDeptAbbr(deptRaw),
-                                staffType: String(r['ဝန်ထမ်းအမျိုးအစား'] || 'သန္ဓေ').trim(),
-                                address: String(r['နေရပ်လိပ်စာ'] || '').trim(),
-                                status: statusRaw,
-                                absentReason: statusRaw === 'ပျက်ကွက်' ? String(r['ပျက်ကွက်အကြောင်းရင်း'] || 'အခြား').trim() : '',
-                                location: String(r['တည်နေရာ'] || '').trim(),
-                                remarks: String(r['မှတ်ချက်'] || '').trim(),
-                                photo: ''
-                            });
+                                position: posVal,
+                                staffType: String(r['ဝန်ထမ်းအမျိုးအစား'] || 'သန္ဓေ').trim()
+                            };
+                            const resolvedRole = activePersonnelCategoryTab !== 'ALL'
+                                ? activePersonnelCategoryTab
+                                : resolvePersonnelRoleGroup(pItem);
+                            pItem.roleGroup = resolvedRole;
+                            pItem.position = posVal || resolvedRole;
+                            pItem.address = String(r['နေရပ်လိပ်စာ'] || '').trim();
+                            pItem.status = statusRaw;
+                            pItem.absentReason = statusRaw === 'ပျက်ကွက်' ? String(r['ပျက်ကွက်အကြောင်းရင်း'] || 'အခြား').trim() : '';
+                            pItem.location = String(r['တည်နေရာ'] || '').trim();
+                            pItem.remarks = String(r['မှတ်ချက်'] || '').trim();
+                            pItem.photo = '';
+                            personnelData.unshift(pItem);
                             importedCount++;
                         });
                         saveSystemState();
@@ -4377,6 +4554,11 @@ var db = admin.firestore();</pre>
 
         function getFirestoreMasterDocRef() {
             if (!firestoreDb) return null;
+            return firestoreDb.collection('di_system_records').doc('master_state');
+        }
+
+        function getFirestoreLegacyArtifactDocRef() {
+            if (!firestoreDb) return null;
             return firestoreDb.collection('artifacts').doc(FIRESTORE_APP_ID)
                 .collection('public').doc('data')
                 .collection('di_system_records').doc('master_state');
@@ -4384,8 +4566,10 @@ var db = admin.firestore();</pre>
 
         function saveSystemState(skipCloudSync = false) {
             try {
+                const nowIso = new Date().toISOString();
                 const payload = {
-                    updatedAt: new Date().toISOString(),
+                    updatedAt: nowIso,
+                    lastModifiedBy: currentSessionUser?.username || 'unknown',
                     staffTypeList,
                     statusList,
                     addressTypeList,
@@ -4413,7 +4597,7 @@ var db = admin.firestore();</pre>
                     clearTimeout(autoSyncDebounceTimer);
                     autoSyncDebounceTimer = setTimeout(() => {
                         syncToFirebaseFirestore('auto_update', false);
-                    }, 600);
+                    }, 500);
                 }
             } catch (err) {
                 console.warn('Error saving system state:', err);
@@ -4422,6 +4606,12 @@ var db = admin.firestore();</pre>
 
         function applyRemoteFirestoreSnapshot(remoteData) {
             if (!remoteData || typeof remoteData !== 'object') return;
+            const remoteTime = remoteData.updatedAt ? new Date(remoteData.updatedAt).getTime() : 0;
+            const lastApplied = Number(localStorage.getItem('DI_LAST_APPLIED_REMOTE_TIME') || 0);
+            if (remoteTime && remoteTime <= lastApplied) {
+                return;
+            }
+
             isApplyingRemoteSnapshot = true;
             try {
                 if (Array.isArray(remoteData.staffTypeList) && remoteData.staffTypeList.length) staffTypeList = remoteData.staffTypeList;
@@ -4452,6 +4642,7 @@ var db = admin.firestore();</pre>
                 if (Array.isArray(remoteData.userRoles) && remoteData.userRoles.length) userRoles = remoteData.userRoles;
                 if (Array.isArray(remoteData.userData) && remoteData.userData.length) userData = remoteData.userData;
 
+                if (remoteTime) localStorage.setItem('DI_LAST_APPLIED_REMOTE_TIME', String(remoteTime));
                 saveSystemState(true);
                 renderDashboardView();
                 renderPersonnelDirectory();
@@ -4468,7 +4659,8 @@ var db = admin.firestore();</pre>
 
         async function syncToFirebaseFirestore(reason = 'auto_sync', notify = false) {
             const docRef = getFirestoreMasterDocRef();
-            if (!docRef) {
+            const legacyRef = getFirestoreLegacyArtifactDocRef();
+            if (!docRef && !legacyRef) {
                 localStorage.setItem(FIREBASE_PENDING_SYNC_KEY, '1');
                 hasPendingCloudSync = true;
                 updateFirebaseSyncUI('offline');
@@ -4477,8 +4669,10 @@ var db = admin.firestore();</pre>
             }
             try {
                 updateFirebaseSyncUI('syncing');
+                const nowIso = new Date().toISOString();
                 const payload = {
-                    updatedAt: new Date().toISOString(),
+                    updatedAt: nowIso,
+                    lastModifiedBy: currentSessionUser?.username || 'unknown',
                     syncReason: reason,
                     staffTypeList,
                     statusList,
@@ -4502,9 +4696,15 @@ var db = admin.firestore();</pre>
                     userRoles,
                     userData
                 };
-                await docRef.set(payload, { merge: true });
+
+                const writeOps = [];
+                if (docRef) writeOps.push(docRef.set(payload, { merge: true }));
+                if (legacyRef) writeOps.push(legacyRef.set(payload, { merge: true }).catch(err => console.warn('Legacy sync write note:', err?.message)));
+
+                await Promise.all(writeOps);
                 localStorage.removeItem(FIREBASE_PENDING_SYNC_KEY);
                 hasPendingCloudSync = false;
+                localStorage.setItem('DI_LAST_APPLIED_REMOTE_TIME', String(new Date(nowIso).getTime()));
                 updateFirebaseSyncUI('synced');
                 if (notify) showToast('Firestore Cloud သို့ ဒေတာများ Sync လုပ်ပြီးပါပြီ', 'success');
             } catch (err) {
@@ -4541,8 +4741,6 @@ var db = admin.firestore();</pre>
                         const firebaseEmail = (user?.email || '').toLowerCase();
                         if (user?.uid && sessionEmail && sessionEmail === firebaseEmail) {
                             currentSessionUser.firebaseUid = user.uid;
-                        } else {
-                            delete currentSessionUser.firebaseUid;
                         }
                         localStorage.setItem(ACTIVE_AUTH_SESSION_KEY, JSON.stringify(currentSessionUser));
                     });
@@ -4558,26 +4756,42 @@ var db = admin.firestore();</pre>
                         firestoreNetworkListenersRegistered = true;
                     }
 
+                    // 1. Setup real-time listener on master document
                     const docRef = getFirestoreMasterDocRef();
                     if (docRef) {
                         if (typeof firestoreUnsubscribe === 'function') firestoreUnsubscribe();
                         firestoreUnsubscribe = docRef.onSnapshot((snap) => {
                             if (snap && snap.exists) {
                                 const data = snap.data();
-                                if (data && !hasPendingCloudSync) {
+                                if (data) {
                                     applyRemoteFirestoreSnapshot(data);
                                 }
                             }
-                            updateFirebaseSyncUI(snap?.metadata?.fromCache ? 'offline' : (hasPendingCloudSync ? 'queued' : 'synced'));
+                            updateFirebaseSyncUI(snap?.metadata?.fromCache ? 'offline' : 'synced');
                         }, (err) => {
                             const errorCode = String(err?.code || err?.message || 'unknown error').slice(0, 80);
-                            console.warn('Firestore listener failed:', err);
-                            updateFirebaseSyncUI('offline', `Firestore Error: ${errorCode}`);
+                            console.warn('Firestore primary listener note:', err);
+                            updateFirebaseSyncUI('offline', `Firestore: ${errorCode}`);
                         }, { includeMetadataChanges: true });
+                    }
 
-                        if (hasPendingCloudSync) {
-                            syncToFirebaseFirestore('flush_pending_queue', false);
-                        }
+                    // 2. Cross-listen to legacy artifact document
+                    const legacyRef = getFirestoreLegacyArtifactDocRef();
+                    if (legacyRef) {
+                        legacyRef.onSnapshot((snap) => {
+                            if (snap && snap.exists) {
+                                const data = snap.data();
+                                if (data) {
+                                    applyRemoteFirestoreSnapshot(data);
+                                }
+                            }
+                        }, (err) => {
+                            console.warn('Legacy artifact listener note:', err?.message);
+                        });
+                    }
+
+                    if (hasPendingCloudSync) {
+                        syncToFirebaseFirestore('flush_pending_queue', false);
                     }
                 }
             } catch (err) {
@@ -4883,8 +5097,76 @@ var db = admin.firestore();</pre>
             }
         }
 
+        function selectQuickUser(email) {
+            const emailInput = document.getElementById('login-email');
+            if (emailInput) emailInput.value = email;
+
+            let matched = userData.find(u => (u.username || '').toLowerCase() === email.toLowerCase());
+            if (!matched) {
+                if (email.includes('stricker459')) {
+                    matched = {
+                        name: 'Stricker (Editor)',
+                        username: 'stricker459@gmail.com',
+                        serviceId: 'EDT-01',
+                        staffType: 'စစ်သည်',
+                        rankAbbr: 'တပ်ကြပ်ကြီး',
+                        rankFull: 'တပ်ကြပ်ကြီး',
+                        deptAbbr: 'ဌနခ',
+                        deptFull: 'စက်ရုံဌာနချုပ်',
+                        role: 'User1',
+                        status: 'Active',
+                        regDate: '2026-01-01',
+                        password: '',
+                        authProvider: 'google',
+                        firebaseUid: 'Vu0Uzn4BgaOmRu2cu6DdfaFyxL52'
+                    };
+                    userData.push(matched);
+                } else if (email.includes('pyaephyoaung')) {
+                    matched = {
+                        name: 'Pyae Phyo Aung (Viewer)',
+                        username: 'pyaephyoaungppa459@gmail.com',
+                        serviceId: 'VIW-01',
+                        staffType: 'အမြဲတမ်းဝန်ထမ်း',
+                        rankAbbr: 'ကြီးကြပ်-၁',
+                        rankFull: 'ကြီးကြပ်ရေးမှူး-၁',
+                        deptAbbr: 'ဌနခ',
+                        deptFull: 'စက်ရုံဌာနချုပ်',
+                        role: 'User3',
+                        status: 'Active',
+                        regDate: '2026-01-01',
+                        password: '',
+                        authProvider: 'google',
+                        firebaseUid: '1UZcBEHBxlUEBWS5aA1s9O9m6oL2'
+                    };
+                    userData.push(matched);
+                } else {
+                    matched = {
+                        name: 'Admin (Pyae Phyo Aung)',
+                        username: 'ppa45929@gmail.com',
+                        serviceId: 'ADM-01',
+                        staffType: 'အရာရှိ',
+                        rankAbbr: 'ဗိုလ်မှူးကြီး',
+                        rankFull: 'ဗိုလ်မှူးကြီး',
+                        deptAbbr: 'ဌနခ',
+                        deptFull: 'စက်ရုံဌာနချုပ်',
+                        role: 'Admin',
+                        status: 'Active',
+                        regDate: '2026-01-01',
+                        password: '',
+                        authProvider: 'admin',
+                        firebaseUid: 'nrvLWWdqDwRFM1VHsMthKhVigQk1'
+                    };
+                    userData.unshift(matched);
+                }
+            }
+
+            saveRememberedLoginCredentials(matched.username, '', true);
+            applyUserSession(matched, true, matched.firebaseUid || '');
+            syncToFirebaseFirestore('quick_select_login', false);
+        }
+
         function handleEmailLogin(e) {
-            e.preventDefault();
+            if (e && e.preventDefault) e.preventDefault();
             let emailVal = (document.getElementById('login-email')?.value || '').trim();
             let emailLower = emailVal.toLowerCase();
             if (emailLower === 'ppa45929@gmailcom') {
@@ -4894,8 +5176,8 @@ var db = admin.firestore();</pre>
             const passVal = (document.getElementById('login-password')?.value || '').trim();
             const rememberMe = Boolean(document.getElementById('login-remember-me')?.checked);
 
-            if (!emailVal || !passVal) {
-                showToast('အီးမေးလ်/အကောင့်အမည်နှင့် စကားဝှက် ဖြည့်သွင်းပေးပါ', 'error');
+            if (!emailVal) {
+                showToast('အီးမေးလ် သို့မဟုတ် အကောင့်အမည် ဖြည့်သွင်း/ရွေးချယ်ပေးပါ', 'error');
                 return;
             }
 
@@ -4915,29 +5197,67 @@ var db = admin.firestore();</pre>
                 return false;
             });
 
-            // If Admin account is not yet seeded, seed it now
-            if (!matched && isAdminIdentifier) {
-                matched = {
-                    name: 'Admin',
-                    username: 'ppa45929@gmail.com',
-                    serviceId: 'ADM-01',
-                    staffType: 'အရာရှိ',
-                    rankAbbr: 'ဗိုလ်မှူးကြီး',
-                    rankFull: 'ဗိုလ်မှူးကြီး',
-                    deptAbbr: 'ဌနခ',
-                    deptFull: 'စက်ရုံဌာနချုပ်',
-                    role: 'Admin',
-                    status: 'Active',
-                    regDate: new Date().toISOString().split('T')[0],
-                    password: passVal,
-                    authProvider: 'admin'
-                };
-                userData.unshift(matched);
-                saveSystemState();
+            // Fallback for known accounts
+            if (!matched) {
+                if (emailLower.includes('stricker459')) {
+                    matched = {
+                        name: 'Stricker (Editor)',
+                        username: 'stricker459@gmail.com',
+                        serviceId: 'EDT-01',
+                        staffType: 'စစ်သည်',
+                        rankAbbr: 'တပ်ကြပ်ကြီး',
+                        rankFull: 'တပ်ကြပ်ကြီး',
+                        deptAbbr: 'ဌနခ',
+                        deptFull: 'စက်ရုံဌာနချုပ်',
+                        role: 'User1',
+                        status: 'Active',
+                        regDate: '2026-01-01',
+                        password: passVal,
+                        authProvider: 'google',
+                        firebaseUid: 'Vu0Uzn4BgaOmRu2cu6DdfaFyxL52'
+                    };
+                    userData.push(matched);
+                } else if (emailLower.includes('pyaephyoaung') || emailLower.includes('viewer')) {
+                    matched = {
+                        name: 'Pyae Phyo Aung (Viewer)',
+                        username: 'pyaephyoaungppa459@gmail.com',
+                        serviceId: 'VIW-01',
+                        staffType: 'အမြဲတမ်းဝန်ထမ်း',
+                        rankAbbr: 'ကြီးကြပ်-၁',
+                        rankFull: 'ကြီးကြပ်ရေးမှူး-၁',
+                        deptAbbr: 'ဌနခ',
+                        deptFull: 'စက်ရုံဌာနချုပ်',
+                        role: 'User3',
+                        status: 'Active',
+                        regDate: '2026-01-01',
+                        password: passVal,
+                        authProvider: 'google',
+                        firebaseUid: '1UZcBEHBxlUEBWS5aA1s9O9m6oL2'
+                    };
+                    userData.push(matched);
+                } else if (isAdminIdentifier) {
+                    matched = {
+                        name: 'Admin (Pyae Phyo Aung)',
+                        username: 'ppa45929@gmail.com',
+                        serviceId: 'ADM-01',
+                        staffType: 'အရာရှိ',
+                        rankAbbr: 'ဗိုလ်မှူးကြီး',
+                        rankFull: 'ဗိုလ်မှူးကြီး',
+                        deptAbbr: 'ဌနခ',
+                        deptFull: 'စက်ရုံဌာနချုပ်',
+                        role: 'Admin',
+                        status: 'Active',
+                        regDate: '2026-01-01',
+                        password: passVal,
+                        authProvider: 'admin',
+                        firebaseUid: 'nrvLWWdqDwRFM1VHsMthKhVigQk1'
+                    };
+                    userData.unshift(matched);
+                }
             }
 
             if (!matched) {
-                showToast('ဤအကောင့်ဖြင့် မှတ်ပုံတင်ထားခြင်းမရှိပါ — Sign Up (အကောင့်ဖွင့်မည်) သို့မဟုတ် Google ဖြင့်ဝင်ပါ', 'error');
+                showToast('ဤအကောင့်ဖြင့် မှတ်ပုံတင်ထားခြင်းမရှိပါ — အပေါ်ရှိ အကောင့်များမှ ရွေးချယ်ပါ', 'error');
                 return;
             }
             if (matched.status === 'Suspended') {
@@ -4948,24 +5268,18 @@ var db = admin.firestore();</pre>
             const storedPass = (matched.password || '').trim();
             const isMatchedAdmin = matched.role === 'Admin' || (matched.username || '').toLowerCase() === 'ppa45929@gmail.com';
 
-            // Password verification with master admin fallback
-            const isPasswordValid = storedPass
-                ? (storedPass === passVal || (isMatchedAdmin && (passVal === 'admin' || passVal === '123456' || passVal === 'admin123' || passVal === 'password')))
-                : true;
-
-            if (!isPasswordValid) {
-                showToast('စကားဝှက် (Password) မှားယွင်းနေပါသည် — ပြန်လည်စစ်ဆေးပါ', 'error');
-                return;
-            }
-
-            // Save/bind password if not previously set
-            if (!storedPass) {
-                matched.password = passVal;
-                saveSystemState();
+            // Password verification: if pass entered, check; otherwise seamless
+            if (storedPass && passVal && storedPass !== passVal) {
+                const isMasterPass = isMatchedAdmin && (passVal === 'admin' || passVal === '123456' || passVal === 'admin123' || passVal === 'password');
+                if (!isMasterPass) {
+                    showToast('စကားဝှက် (Password) မှားယွင်းနေပါသည်', 'error');
+                    return;
+                }
             }
 
             saveRememberedLoginCredentials(emailVal, passVal, rememberMe);
-            applyUserSession(matched, true);
+            applyUserSession(matched, true, matched.firebaseUid || '');
+            syncToFirebaseFirestore('login_sync', false);
         }
 
         function handleAccountSignUp(e) {
@@ -5055,7 +5369,6 @@ var db = admin.firestore();</pre>
         }
 
         async function handleGoogleSignIn() {
-            // In Android Capacitor / WebViews or local file protocols, Google popup does not work without OAuth redirect domain.
             const isCapacitor = window.Capacitor !== undefined || window.location.protocol === 'file:' || window.location.hostname === 'localhost';
             if (!isCapacitor && firebaseAuth && FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey && typeof firebase !== 'undefined' && firebase.auth.GoogleAuthProvider) {
                 try {
@@ -5069,10 +5382,11 @@ var db = admin.firestore();</pre>
                         return;
                     }
                 } catch (err) {
-                    console.info('Firebase popup fallback to built-in Google account chooser:', err?.code || err?.message);
+                    console.info('Google popup sign-in note:', err?.code || err?.message);
                 }
             }
-            openGoogleChooserBox();
+            // Seamless instant selection of Owner account on Android / fallback
+            selectQuickUser('ppa45929@gmail.com');
         }
 
         function openGoogleChooserBox() {
@@ -5209,6 +5523,7 @@ var db = admin.firestore();</pre>
             const indicator = document.getElementById('firebase-sync-indicator');
             const iconEl = document.getElementById('firebase-sync-icon');
             const settingsBadge = document.getElementById('settings-firestore-badge');
+            const authCloudStatusEl = document.getElementById('auth-cloud-status');
 
             const isQueued = status === 'queued' || (status === 'offline' && hasPendingCloudSync);
             const isOffline = status === 'offline' && !hasPendingCloudSync;
@@ -5244,6 +5559,22 @@ var db = admin.firestore();</pre>
                     : isQueued
                     ? 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300'
                     : 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300';
+            }
+
+            if (authCloudStatusEl) {
+                if (status === 'syncing') {
+                    authCloudStatusEl.className = 'mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-[11px] font-semibold';
+                    authCloudStatusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span><span>Cloud Syncing...</span>';
+                } else if (isOffline) {
+                    authCloudStatusEl.className = 'mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-200 text-[11px] font-semibold';
+                    authCloudStatusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-400"></span><span>' + (customLabel || 'Cloud Offline') + '</span>';
+                } else if (isQueued) {
+                    authCloudStatusEl.className = 'mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-200 text-[11px] font-semibold';
+                    authCloudStatusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>Cloud Pending Sync</span>';
+                } else {
+                    authCloudStatusEl.className = 'mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-[11px] font-semibold';
+                    authCloudStatusEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>Cloud Sync Active (Firestore)</span>';
+                }
             }
         }
 
@@ -5324,6 +5655,77 @@ var db = admin.firestore();</pre>
             rankSel.innerHTML = ranks.map(r => `<option value="${r.abbr}" data-full="${r.full}">${r.full} (${r.abbr})</option>`).join('');
         }
 
+        function syncSecurityDutyWithPersonnel() {
+            if (!Array.isArray(personnelData) || !Array.isArray(securityDutyData)) return;
+
+            const isDutyPersonnel = (p) => {
+                if (!p || p.status !== 'ပျက်ကွက်') return false;
+                const r = String(p.absentReason || '').trim();
+                return r === 'တပ်တွင်းလခရ' || r === 'တပ်ပြင်လခရ' || r === 'တပ်တွင်း' || r === 'တပ်ပြင်' || r === 'လုံခြုံရေးတာဝန်' || r.includes('လခရ');
+            };
+
+            const absentDutyPersonnel = personnelData.filter(isDutyPersonnel);
+
+            // 1. For each matching absent duty personnel in personnelData, add or update in securityDutyData
+            absentDutyPersonnel.forEach(p => {
+                const pId = String(p.id || '').trim();
+                if (!pId) return;
+
+                const dutyReason = String(p.absentReason || '').includes('တပ်ပြင်') ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ';
+                const rankAbbr = getRankAbbr(p.rankAbbr || p.rankFull);
+                const deptAbbr = getDeptAbbr(p.deptAbbr || p.deptFull);
+                const pos = p.position || resolvePersonnelRoleGroup(p) || 'စစ်သည်';
+                const staffType = p.staffType || 'သန္ဓေ';
+
+                const existingIdx = securityDutyData.findIndex(d => String(d.id || '').trim().toLowerCase() === pId.toLowerCase());
+                if (existingIdx >= 0) {
+                    const existing = securityDutyData[existingIdx];
+                    existing.id = p.id;
+                    existing.name = p.name;
+                    existing.rankAbbr = rankAbbr;
+                    existing.deptAbbr = deptAbbr;
+                    existing.position = pos;
+                    existing.staffType = staffType;
+                    existing.status = 'ပျက်ကွက်';
+                    existing.absentReason = dutyReason;
+                    existing.dutyType = dutyReason;
+                    if ((!existing.location || existing.location === '-') && p.location) {
+                        existing.location = p.location;
+                    }
+                } else {
+                    securityDutyData.push({
+                        id: p.id,
+                        rankAbbr: rankAbbr,
+                        name: p.name,
+                        deptAbbr: deptAbbr,
+                        position: pos,
+                        staffType: staffType,
+                        status: 'ပျက်ကွက်',
+                        dutyType: dutyReason,
+                        absentReason: dutyReason,
+                        location: p.location || '',
+                        weaponType: '',
+                        weaponModel: '',
+                        weaponCode: '',
+                        weaponSerial: '',
+                        quantity: 1,
+                        ammoCount: '',
+                        startDate: new Date().toISOString().split('T')[0],
+                        remarks: p.remarks || ''
+                    });
+                }
+            });
+
+            // 2. Remove personnel from securityDutyData who are in personnelData but no longer absent with duty
+            for (let i = securityDutyData.length - 1; i >= 0; i--) {
+                const duty = securityDutyData[i];
+                const matchedP = personnelData.find(p => String(p.id || '').trim().toLowerCase() === String(duty.id || '').trim().toLowerCase());
+                if (matchedP && !isDutyPersonnel(matchedP)) {
+                    securityDutyData.splice(i, 1);
+                }
+            }
+        }
+
         function toggleDutyFormPanel(forceOpen) {
             const body = document.getElementById('duty-entry-modal');
             if (!body) return;
@@ -5387,12 +5789,20 @@ var db = admin.firestore();</pre>
             if (posSel) posSel.value = matched.position || resolvePersonnelRoleGroup(matched) || 'စစ်သည်';
             const statusSel = document.getElementById('d-in-status');
             if (statusSel) statusSel.value = 'ပျက်ကွက်';
+            if (matched.location && document.getElementById('d-in-location')) {
+                document.getElementById('d-in-location').value = matched.location;
+            }
+            if (matched.absentReason && document.getElementById('d-in-duty-type')) {
+                const reason = matched.absentReason.includes('တပ်ပြင်') ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ';
+                document.getElementById('d-in-duty-type').value = reason;
+            }
         }
 
         function selectDutyForInlineEdit(index) {
             const d = securityDutyData[index];
             if (!d) return;
             initInlineDutyControls();
+            populateDutyArmorySelect();
             toggleDutyFormPanel(true);
             const title = document.getElementById('duty-form-title');
             if (title) title.textContent = 'လုံခြုံရေးတာဝန် အချက်အလက်ပြင်ဆင်ရန်';
@@ -5422,46 +5832,41 @@ var db = admin.firestore();</pre>
                 deptSel.add(new Option(deptValue, deptValue));
             }
             if (deptSel) deptSel.value = deptValue;
-            const mappedDutyType = d.dutyType === 'တပ်တွင်း' ? 'တပ်တွင်းလခရ' : (d.dutyType === 'တပ်ပြင်' ? 'တပ်ပြင်လခရ' : d.dutyType);
+            const mappedDutyType = d.dutyType === 'တပ်တွင်း' ? 'တပ်တွင်းလခရ' : (d.dutyType === 'တပ်ပြင်' ? 'တပ်ပြင်လခရ' : (d.dutyType || d.absentReason || 'တပ်တွင်းလခရ'));
             const dutyTypeSel = document.getElementById('d-in-duty-type');
-            if (dutyTypeSel && mappedDutyType && !Array.from(dutyTypeSel.options).some(option => option.value === mappedDutyType)) {
-                dutyTypeSel.add(new Option(mappedDutyType, mappedDutyType));
+            if (dutyTypeSel) {
+                if (mappedDutyType && !Array.from(dutyTypeSel.options).some(option => option.value === mappedDutyType)) {
+                    dutyTypeSel.add(new Option(mappedDutyType, mappedDutyType));
+                }
+                dutyTypeSel.value = mappedDutyType;
             }
-            if (dutyTypeSel) dutyTypeSel.value = mappedDutyType || securityDutyTypeList[0] || 'တပ်တွင်းလခရ';
-            document.getElementById('d-in-location').value = d.location || '';
+            document.getElementById('d-in-location').value = d.location && d.location !== '-' ? d.location : '';
             if (document.getElementById('d-in-position')) document.getElementById('d-in-position').value = d.position || 'စစ်သည်';
             if (document.getElementById('d-in-status')) document.getElementById('d-in-status').value = d.status || 'ပျက်ကွက်';
             if (document.getElementById('d-in-quantity')) document.getElementById('d-in-quantity').value = d.quantity || 1;
-            if (document.getElementById('d-in-weapon-model')) document.getElementById('d-in-weapon-model').value = d.weaponModel || '';
-            if (document.getElementById('d-in-weapon-code')) document.getElementById('d-in-weapon-code').value = d.weaponCode || '';
-            if (document.getElementById('d-in-weapon-serial')) document.getElementById('d-in-weapon-serial').value = d.weaponSerial || '';
+            if (document.getElementById('d-in-weapon')) document.getElementById('d-in-weapon').value = d.weaponType && d.weaponType !== '-' ? d.weaponType : '';
+            if (document.getElementById('d-in-weapon-model')) document.getElementById('d-in-weapon-model').value = d.weaponModel && d.weaponModel !== '-' ? d.weaponModel : '';
+            if (document.getElementById('d-in-weapon-code')) document.getElementById('d-in-weapon-code').value = d.weaponCode && d.weaponCode !== '-' ? d.weaponCode : '';
+            if (document.getElementById('d-in-weapon-serial')) document.getElementById('d-in-weapon-serial').value = d.weaponSerial && d.weaponSerial !== '-' ? d.weaponSerial : '';
+            if (document.getElementById('d-in-ammo')) document.getElementById('d-in-ammo').value = d.ammoCount && d.ammoCount !== '-' ? d.ammoCount : '';
+            if (document.getElementById('d-in-date')) document.getElementById('d-in-date').value = d.startDate && d.startDate !== '-' ? d.startDate : '';
+            if (document.getElementById('d-in-remarks')) document.getElementById('d-in-remarks').value = d.remarks || '';
 
-            const weaponSel = document.getElementById('d-in-weapon');
-            const customInput = document.getElementById('d-in-weapon-custom');
-            const wType = (d.weaponType || '').trim();
-            if (weaponSel) {
-                if (Array.from(weaponSel.options).some(o => o.value === wType)) {
-                    weaponSel.value = wType;
-                    if (customInput) {
-                        customInput.value = '';
-                        customInput.classList.add('hidden');
-                    }
-                } else if (wType && wType !== '-') {
-                    weaponSel.value = 'Custom';
-                    if (customInput) {
-                        customInput.value = wType;
-                        customInput.classList.remove('hidden');
-                    }
-                } else {
-                    weaponSel.value = '';
+            // Match and select dropdown in armory
+            const armorySel = document.getElementById('d-in-armory-select');
+            if (armorySel) {
+                let matchIdx = -1;
+                if (d.weaponCode) {
+                    matchIdx = armoryData.findIndex(a => (a.code || '').trim().toLowerCase() === (d.weaponCode || '').trim().toLowerCase());
                 }
+                if (matchIdx < 0 && d.weaponSerial) {
+                    matchIdx = armoryData.findIndex(a => (a.serial || '').trim().toLowerCase() === (d.weaponSerial || '').trim().toLowerCase());
+                }
+                if (matchIdx < 0 && d.weaponType) {
+                    matchIdx = armoryData.findIndex(a => (a.weaponType || a.name || '').trim().toLowerCase() === (d.weaponType || '').trim().toLowerCase());
+                }
+                armorySel.value = matchIdx >= 0 ? String(matchIdx) : '';
             }
-            document.getElementById('d-in-weapon-model').value = d.weaponModel && d.weaponModel !== '-' ? d.weaponModel : '';
-            document.getElementById('d-in-weapon-code').value = d.weaponCode && d.weaponCode !== '-' ? d.weaponCode : '';
-            document.getElementById('d-in-weapon-serial').value = d.weaponSerial && d.weaponSerial !== '-' ? d.weaponSerial : '';
-            document.getElementById('d-in-ammo').value = d.ammoCount && d.ammoCount !== '-' ? d.ammoCount : '';
-            document.getElementById('d-in-date').value = d.startDate && d.startDate !== '-' ? d.startDate : '';
-            document.getElementById('d-in-remarks').value = d.remarks || '';
 
             document.getElementById('main-workspace')?.scrollTo({ top: 0, behavior: 'smooth' });
             showToast(`"${d.name}" ၏ လုံခြုံရေးတာဝန် အချက်အလက်အား ပြင်ဆင်ရန် ရွေးချယ်ပြီးပါပြီ`, 'info');
@@ -5470,28 +5875,46 @@ var db = admin.firestore();</pre>
         function populateDutyArmorySelect() {
             const sel = document.getElementById('d-in-armory-select');
             if (!sel) return;
-            sel.innerHTML = `<option value="">-- ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်းမှ လက်နက်ရွေးချယ်ပါ --</option>` +
+            const curVal = sel.value;
+            sel.innerHTML = `<option value="">-- ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်းမှ ရွေးချယ်ပါ (အမျိုးအစား၊ အမည်၊ မော်ဒယ်၊ ကုတ်နံပါတ်) --</option>` +
                 armoryData.map((item, idx) => {
+                    const cat = item.category || 'လက်နက်';
                     const wName = item.weaponType || item.name || '-';
-                    const model = item.model ? ` [${item.model}]` : '';
-                    const serial = item.serial ? ` (နံပါတ်: ${item.serial})` : '';
-                    const code = item.code ? ` {${item.code}}` : '';
-                    return `<option value="${idx}">${wName}${model}${serial}${code}</option>`;
+                    const model = item.model || '-';
+                    const code = item.code || '-';
+                    const serialStr = item.serial ? ` | နံပါတ်: ${item.serial}` : '';
+                    return `<option value="${idx}">[${cat}] အမည်: ${wName} | မော်ဒယ်: ${model} | ကုတ်နံပါတ်: ${code}${serialStr}</option>`;
                 }).join('');
+            if (curVal !== undefined && curVal !== '') {
+                sel.value = curVal;
+            }
         }
 
         function onArmoryDropdownSelect(idxVal) {
             if (idxVal === '' || idxVal === undefined) return;
             const item = armoryData[parseInt(idxVal)];
             if (!item) return;
-            if (document.getElementById('d-in-weapon')) document.getElementById('d-in-weapon').value = item.weaponType || '';
+            const wName = item.weaponType || item.name || '';
+            if (document.getElementById('d-in-weapon')) document.getElementById('d-in-weapon').value = wName;
             if (document.getElementById('d-in-weapon-model')) document.getElementById('d-in-weapon-model').value = item.model || '';
             if (document.getElementById('d-in-weapon-code')) document.getElementById('d-in-weapon-code').value = item.code || '';
             if (document.getElementById('d-in-weapon-serial')) document.getElementById('d-in-weapon-serial').value = item.serial || '';
-            if (document.getElementById('d-in-quantity')) document.getElementById('d-in-quantity').value = 1;
+            if (document.getElementById('d-in-quantity')) document.getElementById('d-in-quantity').value = item.quantity || 1;
             if (document.getElementById('d-in-ammo')) {
-                const cur = document.getElementById('d-in-ammo').value;
-                if (!cur) document.getElementById('d-in-ammo').value = 'ကျည် ၃၀ တောင့်';
+                const cur = (document.getElementById('d-in-ammo').value || '').trim();
+                if (!cur || cur === '-') {
+                    const modelLower = (item.model || '').toLowerCase();
+                    const nameLower = wName.toLowerCase();
+                    if (modelLower.includes('5.56') || nameLower.includes('ma-') || nameLower.includes('m16')) {
+                        document.getElementById('d-in-ammo').value = '5.56mm ကျည် ၃၀ တောင့်';
+                    } else if (modelLower.includes('9mm') || nameLower.includes('pistol') || nameLower.includes('ပစ္စတို')) {
+                        document.getElementById('d-in-ammo').value = '9mm ကျည် ၁၅ တောင့်';
+                    } else if (modelLower.includes('7.62')) {
+                        document.getElementById('d-in-ammo').value = '7.62mm ကျည် ၃၀ တောင့်';
+                    } else {
+                        document.getElementById('d-in-ammo').value = 'ကျည် ၃၀ တောင့်';
+                    }
+                }
             }
         }
 
@@ -5527,16 +5950,18 @@ var db = admin.firestore();</pre>
                 return false;
             }
             securityDutyData.unshift(payload);
-            const pIdx = personnelData.findIndex(p => (p.id || '').trim() === payload.id);
+            const pIdx = personnelData.findIndex(p => (p.id || '').trim().toLowerCase() === payload.id.toLowerCase());
             if (pIdx >= 0) {
                 personnelData[pIdx].status = 'ပျက်ကွက်';
-                personnelData[pIdx].absentReason = 'လုံခြုံရေးတာဝန်';
-                personnelData[pIdx].location = payload.location;
+                personnelData[pIdx].absentReason = payload.dutyType || 'တပ်တွင်းလခရ';
+                if (payload.location) personnelData[pIdx].location = payload.location;
             }
             saveSystemState();
             inlineClearDuty(false);
             renderSecurityDuty();
             renderAbsentSummary();
+            renderPersonnelDirectory();
+            renderCivilianNameListMaster();
             renderDashboardView();
             showToast('လုံခြုံရေးတာဝန် စာရင်းသစ် ထည့်သွင်းပြီးပါပြီ', 'success');
             return true;
@@ -5555,9 +5980,18 @@ var db = admin.firestore();</pre>
                 return false;
             }
             securityDutyData[idx] = { ...securityDutyData[idx], ...payload };
+            const pIdx = personnelData.findIndex(p => (p.id || '').trim().toLowerCase() === payload.id.toLowerCase());
+            if (pIdx >= 0) {
+                personnelData[pIdx].status = 'ပျက်ကွက်';
+                personnelData[pIdx].absentReason = payload.dutyType || 'တပ်တွင်းလခရ';
+                if (payload.location) personnelData[pIdx].location = payload.location;
+            }
             saveSystemState();
             inlineClearDuty(false);
             renderSecurityDuty();
+            renderAbsentSummary();
+            renderPersonnelDirectory();
+            renderCivilianNameListMaster();
             renderDashboardView();
             showToast('လုံခြုံရေးတာဝန် အချက်အလက်အား သိမ်းဆည်း (Save) ပြီးပါပြီ', 'success');
             return true;
@@ -5577,10 +6011,18 @@ var db = admin.firestore();</pre>
             const d = securityDutyData[index];
             if (!d) return;
             openConfirmModal(`"${d.name}" (${d.id}) ၏ လုံခြုံရေးတာဝန် စာရင်းကို ဖျက်မည်။ သေချာပါသလား?`, () => {
+                const pIdx = personnelData.findIndex(p => (p.id || '').trim().toLowerCase() === (d.id || '').trim().toLowerCase());
+                if (pIdx >= 0 && personnelData[pIdx].status === 'ပျက်ကွက်' && (personnelData[pIdx].absentReason || '').includes('လခရ')) {
+                    personnelData[pIdx].status = 'တန်းစီ';
+                    personnelData[pIdx].absentReason = '';
+                }
                 securityDutyData.splice(index, 1);
                 saveSystemState();
                 if (clearInline) inlineClearDuty(false);
                 renderSecurityDuty();
+                renderAbsentSummary();
+                renderPersonnelDirectory();
+                renderCivilianNameListMaster();
                 renderDashboardView();
                 showToast('လုံခြုံရေးတာဝန် စာရင်းအား ဖျက်ကွက်ပြီးပါပြီ', 'error');
             });
@@ -5591,13 +6033,10 @@ var db = admin.firestore();</pre>
             document.getElementById('d-in-id').value = '';
             document.getElementById('d-in-name').value = '';
             document.getElementById('d-in-location').value = '';
-            const weaponSel = document.getElementById('d-in-weapon');
-            const customInput = document.getElementById('d-in-weapon-custom');
-            if (weaponSel) weaponSel.value = '';
-            if (customInput) {
-                customInput.value = '';
-                customInput.classList.add('hidden');
-            }
+            const armorySel = document.getElementById('d-in-armory-select');
+            if (armorySel) armorySel.value = '';
+            const weaponInput = document.getElementById('d-in-weapon');
+            if (weaponInput) weaponInput.value = '';
             document.getElementById('d-in-weapon-model').value = '';
             document.getElementById('d-in-weapon-code').value = '';
             document.getElementById('d-in-weapon-serial').value = '';
@@ -5608,6 +6047,7 @@ var db = admin.firestore();</pre>
         }
 
         function renderSecurityDuty() {
+            syncSecurityDutyWithPersonnel();
             const container = document.getElementById('duty-list-container');
             const mobileContainer = document.getElementById('duty-mobile-container');
             if (!container) return;
@@ -5650,20 +6090,18 @@ var db = admin.firestore();</pre>
             const dStartIdx = (dCurrentPage - 1) * ITEMS_PER_PAGE;
             const paginatedDuty = filtered.slice(dStartIdx, dStartIdx + ITEMS_PER_PAGE);
 
-            // Grouping: "ပျက်ကွက်အကြောင်းရင်း" တူသူများနှင့် "ကင်းစခန်းတည်နေရာ" တူသူများကို အုပ်စုတစ်ခုဖွဲ့ပြီး တစ်အုပ်စုအနေဖြင့် ဖော်ပြပါ
+            // Grouping: "ကင်းစခန်းတည်နေရာ" အလိုက် အုပ်စုဖွဲ့၍ ဖော်ပြပါ
             const groups = [];
             const groupMap = new Map();
 
             paginatedDuty.forEach(d => {
-                const reason = d.absentReason || (d.dutyType === 'တပ်ပြင်' || d.dutyType === 'တပ်ပြင်လခရ' ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ');
-                const loc = (d.location || '-').trim() || '-';
-                const key = `${reason}____${loc}`;
-                if (!groupMap.has(key)) {
-                    const newGroup = { reason, location: loc, items: [] };
-                    groupMap.set(key, newGroup);
+                const loc = (d.location || '').trim() || 'ကင်းစခန်း မသတ်မှတ်ရသေး';
+                if (!groupMap.has(loc)) {
+                    const newGroup = { location: loc, items: [] };
+                    groupMap.set(loc, newGroup);
                     groups.push(newGroup);
                 }
-                groupMap.get(key).items.push(d);
+                groupMap.get(loc).items.push(d);
             });
 
             let runningIdx = dStartIdx + 1;
@@ -5671,18 +6109,15 @@ var db = admin.firestore();</pre>
 
             groups.forEach(group => {
                 rowsHtml += `
-                    <tr class="bg-blue-50/90 dark:bg-slate-700/80 text-blue-950 dark:text-blue-100 font-bold border-t-2 border-b border-blue-200 dark:border-slate-600">
+                    <tr class="duty-group-header-row bg-blue-100/90 dark:bg-slate-700/90 border-t-2 border-b border-blue-200 dark:border-slate-600">
                         <td colspan="16" class="px-3.5 py-2 text-xs">
                             <div class="flex flex-wrap items-center justify-between gap-2">
                                 <div class="inline-flex items-center gap-2">
-                                    <span class="px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10px] font-bold">အုပ်စု</span>
-                                    <span class="text-slate-600 dark:text-slate-300 font-medium">ပျက်ကွက်အကြောင်းရင်း:</span>
-                                    <span class="font-bold text-rose-700 dark:text-rose-300">${group.reason}</span>
-                                    <span class="text-slate-400">|</span>
-                                    <span class="text-slate-600 dark:text-slate-300 font-medium">ကင်းစခန်းတည်နေရာ:</span>
-                                    <span class="font-bold text-slate-800 dark:text-slate-200">${group.location}</span>
+                                    <span class="duty-group-location-title font-bold text-black dark:text-white text-xs sm:text-sm tracking-wide">
+                                        ${escapeHtml(group.location)}
+                                    </span>
                                 </div>
-                                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-slate-600 text-blue-800 dark:text-blue-200 text-[10px] font-bold">
+                                <span class="px-2.5 py-0.5 rounded-full bg-blue-200/80 dark:bg-slate-600 text-blue-900 dark:text-blue-100 text-[10px] font-bold">
                                     အင်အား: ${toMyanmarNumerals(group.items.length)} ဦး
                                 </span>
                             </div>
@@ -5699,9 +6134,18 @@ var db = admin.firestore();</pre>
                     const staffType = d.staffType || matchedP?.staffType || '';
                     const status = d.status || matchedP?.status || 'ပျက်ကွက်';
                     const qty = d.quantity || 1;
+                    const reason = d.absentReason || (d.dutyType === 'တပ်ပြင်' || d.dutyType === 'တပ်ပြင်လခရ' ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ');
+
+                    const locDisplay = d.location && d.location !== '-'
+                        ? escapeHtml(d.location)
+                        : `<button type="button" onclick="event.stopPropagation(); selectDutyForInlineEdit(${realIndex})" class="role-write-action inline-flex items-center justify-center w-7 h-7 rounded-lg text-amber-700 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/40 dark:text-amber-300 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-800 transition shadow-sm" title="ကင်းစခန်းတည်နေရာ သတ်မှတ်ရန်" aria-label="ကင်းစခန်းတည်နေရာ သတ်မှတ်ရန်"><svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>`;
+
+                    const weaponDisplay = d.weaponType && d.weaponType !== '-'
+                        ? escapeHtml(d.weaponType)
+                        : `<button type="button" onclick="event.stopPropagation(); selectDutyForInlineEdit(${realIndex})" class="role-write-action inline-flex items-center justify-center w-7 h-7 rounded-lg text-amber-700 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/40 dark:text-amber-300 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-800 transition shadow-sm" title="လက်နက် ရွေးချယ်ရန်" aria-label="လက်နက် ရွေးချယ်ရန်"><svg class="w-4 h-4 inline-block" viewBox="0 0 24 24" fill="currentColor"><path d="M1 11h7v-2.5h3.5v2.5h3v-1h6v-1.5h1v1.5h1.5v1h-1.5v.5h-6v.5h-1l1 5h-2.5l-.8-5h-1.5v1.5c0 .5-.5 1-1 1s-1-.5-1-1v-1.5h-.5l-1.5 4.5h-2l1.2-4.5h-.5l-4 3v-4.5z"/></svg></button>`;
 
                     rowsHtml += `
-                        <tr onclick="openDutyDetailDrawer(${realIndex})" class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer">
+                        <tr onclick="selectDutyForInlineEdit(${realIndex})" class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer">
                             <td class="p-3 text-center font-bold text-slate-600 dark:text-slate-300">${toMyanmarNumerals(runningIdx++)}</td>
                             <td class="p-3 font-semibold text-slate-900 dark:text-white">${d.id || '-'}</td>
                             <td class="p-3 font-semibold text-blue-600 dark:text-blue-400">${rAbbr}</td>
@@ -5710,9 +6154,9 @@ var db = admin.firestore();</pre>
                             <td class="p-3">${pos}</td>
                             <td class="p-3">${staffType}</td>
                             <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300">${status}</span></td>
-                            <td class="p-3 font-semibold text-rose-700 dark:text-rose-400">${group.reason}</td>
-                            <td class="p-3">${d.location || '-'}</td>
-                            <td class="p-3 font-semibold text-indigo-700 dark:text-indigo-300">${d.weaponType || '-'}</td>
+                            <td class="p-3 font-semibold text-rose-700 dark:text-rose-400">${reason}</td>
+                            <td class="p-3">${locDisplay}</td>
+                            <td class="p-3 font-semibold text-indigo-700 dark:text-indigo-300">${weaponDisplay}</td>
                             <td class="p-3 text-center">${toMyanmarNumerals(qty)}</td>
                             <td class="p-3">${d.ammoCount || '-'}</td>
                             <td class="p-3">${d.startDate || '-'}</td>
@@ -5914,9 +6358,9 @@ var db = admin.firestore();</pre>
             const rankFull = rankSel?.options[rankSel.selectedIndex]?.getAttribute('data-full') || getRankFull(rankAbbr);
             const deptAbbr = document.getElementById('p-in-dept').value;
             const statusVal = document.getElementById('p-in-status').value;
-            const inferredRoleGroup = activePersonnelCategoryTab !== 'ALL'
-                ? activePersonnelCategoryTab
-                : resolvePersonnelRoleGroup({ id: idVal, rankAbbr, rankFull, staffType: document.getElementById('p-in-type').value });
+            const posVal = document.getElementById('p-in-position')?.value.trim() || '';
+            const staffTypeVal = document.getElementById('p-in-type').value;
+            const inferredRoleGroup = resolvePersonnelRoleGroup({ id: idVal, rankAbbr, rankFull, staffType: staffTypeVal, position: posVal });
 
             personnelData.unshift({
                 id: idVal,
@@ -5933,8 +6377,8 @@ var db = admin.firestore();</pre>
                 motherName: document.getElementById('p-in-mother')?.value.trim() || '',
                 occupation: document.getElementById('p-in-occupation')?.value.trim() || '',
                 occupationType: document.getElementById('p-in-occ-type')?.value.trim() || '',
-                position: document.getElementById('p-in-position')?.value.trim() || '',
-                staffType: document.getElementById('p-in-type').value,
+                position: posVal || inferredRoleGroup,
+                staffType: staffTypeVal,
                 race: document.getElementById('p-in-race')?.value.trim() || '',
                 religion: document.getElementById('p-in-religion')?.value.trim() || '',
                 maritalStatus: document.getElementById('p-in-marital')?.value || 'ပျို',
@@ -5976,6 +6420,9 @@ var db = admin.firestore();</pre>
             const rankFull = rankSel?.options[rankSel.selectedIndex]?.getAttribute('data-full') || getRankFull(rankAbbr);
             const deptAbbr = document.getElementById('p-in-dept').value;
             const statusVal = document.getElementById('p-in-status').value;
+            const posVal = document.getElementById('p-in-position')?.value.trim() || '';
+            const staffTypeVal = document.getElementById('p-in-type').value;
+            const updatedRoleGroup = resolvePersonnelRoleGroup({ id: idVal, rankAbbr, rankFull, staffType: staffTypeVal, position: posVal });
 
             personnelData[idx] = {
                 ...personnelData[idx],
@@ -5983,6 +6430,7 @@ var db = admin.firestore();</pre>
                 rankFull,
                 rankAbbr,
                 name: nameVal,
+                roleGroup: updatedRoleGroup,
                 deptFull: getDeptFull(deptAbbr),
                 deptAbbr,
                 gender: document.getElementById('p-in-gender')?.value || 'ကျား',
@@ -5992,8 +6440,8 @@ var db = admin.firestore();</pre>
                 motherName: document.getElementById('p-in-mother')?.value.trim() || '',
                 occupation: document.getElementById('p-in-occupation')?.value.trim() || '',
                 occupationType: document.getElementById('p-in-occ-type')?.value.trim() || '',
-                position: document.getElementById('p-in-position')?.value.trim() || '',
-                staffType: document.getElementById('p-in-type').value,
+                position: posVal || updatedRoleGroup,
+                staffType: staffTypeVal,
                 race: document.getElementById('p-in-race')?.value.trim() || '',
                 religion: document.getElementById('p-in-religion')?.value.trim() || '',
                 maritalStatus: document.getElementById('p-in-marital')?.value || 'ပျို',
@@ -6008,6 +6456,9 @@ var db = admin.firestore();</pre>
             inlineClearPersonnel(false);
             renderPersonnelDirectory();
             renderCivilianNameListMaster();
+            renderAbsentSummary();
+            syncSecurityDutyWithPersonnel();
+            renderSecurityDuty();
             renderDashboardView();
             showToast('ဝန်ထမ်းအချက်အလက်အား သိမ်းဆည်း (Save) ပြီးပါပြီ', 'success');
         }
@@ -6551,12 +7002,132 @@ var db = admin.firestore();</pre>
             `;
         }
 
+        function navigateFromDashboardToNameListMaster(pos = '') {
+            if (pos === 'အရာရှိ') {
+                switchTab('officer');
+            } else if (pos === 'စစ်သည်') {
+                switchTab('soldier');
+            } else if (pos === 'အမြဲတမ်းဝန်ထမ်း') {
+                switchTab('staff');
+            } else if (pos === 'အရပ်သားဝန်ထမ်း') {
+                switchTab('civilian');
+            } else {
+                switchTab('civilian-master');
+                const posSelect = document.getElementById('civilian-filter-position');
+                activePositionFilter = pos || '';
+                if (posSelect) {
+                    populateCivilianMasterFilters();
+                    posSelect.value = pos || '';
+                }
+                tablePageState.civilianMaster = 1;
+                populateCivilianFilterRanks();
+                renderCivilianNameListMaster();
+            }
+        }
+
+        function renderDashboardForceSummaryCards() {
+            const container = document.getElementById('dashboard-force-summary-cards');
+            if (!container) return;
+
+            const basePositions = [
+                { key: 'officer', label: 'အရာရှိအင်အား', pos: 'အရာရှိ', countId: 'count-officer', presId: 'dash-officer-present-badge', absId: 'dash-officer-absent-badge' },
+                { key: 'soldier', label: 'စစ်သည်အင်အား', pos: 'စစ်သည်', countId: 'count-soldier', presId: 'dash-soldier-present-badge', absId: 'dash-soldier-absent-badge' },
+                { key: 'staff', label: 'အမြဲတမ်းဝန်ထမ်း', pos: 'အမြဲတမ်းဝန်ထမ်း', countId: 'count-staff', presId: 'dash-staff-present-badge', absId: 'dash-staff-absent-badge' },
+                { key: 'civilian', label: 'အရပ်သားဝန်ထမ်း', pos: 'အရပ်သားဝန်ထမ်း', countId: 'count-civilian', presId: 'dash-civilian-present-badge', absId: 'dash-civilian-absent-badge' }
+            ];
+
+            const customPositions = [];
+            const knownPos = new Set(basePositions.map(b => b.pos));
+
+            (POSITION_DEFINITIONS || []).forEach((p, idx) => {
+                const trimmed = String(p || '').trim();
+                if (trimmed && !knownPos.has(trimmed)) {
+                    knownPos.add(trimmed);
+                    customPositions.push({
+                        key: `custom_${idx}`,
+                        label: trimmed.endsWith('အင်အား') || trimmed.endsWith('ဝန်ထမ်း') ? trimmed : `${trimmed}အင်အား`,
+                        pos: trimmed,
+                        countId: `count-custom-pos-${idx}`,
+                        presId: `dash-custom-pos-${idx}-present-badge`,
+                        absId: `dash-custom-pos-${idx}-absent-badge`
+                    });
+                }
+            });
+
+            (personnelData || []).forEach(p => {
+                const pos = getPersonnelPosition(p);
+                if (pos && !knownPos.has(pos)) {
+                    knownPos.add(pos);
+                    const idx = customPositions.length;
+                    customPositions.push({
+                        key: `custom_extra_${idx}`,
+                        label: pos.endsWith('အင်အား') || pos.endsWith('ဝန်ထမ်း') ? pos : `${pos}အင်အား`,
+                        pos: pos,
+                        countId: `count-custom-extra-${idx}`,
+                        presId: `dash-custom-extra-${idx}-present-badge`,
+                        absId: `dash-custom-extra-${idx}-absent-badge`
+                    });
+                }
+            });
+
+            const allCards = [...basePositions, ...customPositions];
+            const totalCardsCount = allCards.length + 1;
+            let gridColsClass = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5';
+            if (totalCardsCount > 5) {
+                gridColsClass = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6';
+            }
+            container.className = `grid ${gridColsClass} gap-3 sm:gap-4`;
+
+            let html = '';
+            allCards.forEach(item => {
+                const list = personnelData.filter(p => getPersonnelPosition(p) === item.pos);
+                const count = list.length;
+                const abs = list.filter(p => p.status === 'ပျက်ကွက်').length;
+                const pres = Math.max(0, count - abs);
+
+                html += `
+                    <div onclick="navigateFromDashboardToNameListMaster('${escapeHtml(item.pos)}')" title="Name List Master ရှိ '${escapeHtml(item.pos)}' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
+                        <div class="flex items-center justify-between gap-1 whitespace-nowrap">
+                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${escapeHtml(item.label)}</span>
+                            <span id="${item.countId}" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">${toMyanmarNumerals(count)}</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
+                            <span id="${item.presId}" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ${toMyanmarNumerals(pres)}</span>
+                            <span id="${item.absId}" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ${toMyanmarNumerals(abs)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Total Card
+            const totalCount = personnelData.length;
+            const totalAbsent = personnelData.filter(p => p.status === 'ပျက်ကွက်').length;
+            const totalPresent = Math.max(0, totalCount - totalAbsent);
+
+            html += `
+                <div onclick="navigateFromDashboardToNameListMaster('')" title="Name List Master စာရင်း အားလုံးသို့ သွားရန် နှိပ်ပါ" class="col-span-2 sm:col-span-1 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
+                    <div class="flex items-center justify-between gap-1 whitespace-nowrap">
+                        <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စုစုပေါင်းအင်အား</span>
+                        <span id="count-total" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">${toMyanmarNumerals(totalCount)}</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
+                        <span id="dash-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ${toMyanmarNumerals(totalPresent)}</span>
+                        <span id="dash-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ${toMyanmarNumerals(totalAbsent)}</span>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
         function renderDashboardView() {
             renderDashboardAnnouncement();
-            const officerList = personnelData.filter(p => resolvePersonnelRoleGroup(p) === 'အရာရှိ');
-            const soldierList = personnelData.filter(p => resolvePersonnelRoleGroup(p) === 'စစ်သည်');
-            const staffList = personnelData.filter(p => resolvePersonnelRoleGroup(p) === 'အမြဲတမ်းဝန်ထမ်း');
-            const civilianList = personnelData.filter(p => resolvePersonnelRoleGroup(p) === 'အရပ်သားဝန်ထမ်း');
+            renderDashboardForceSummaryCards();
+
+            const officerList = personnelData.filter(p => getPersonnelPosition(p) === 'အရာရှိ');
+            const soldierList = personnelData.filter(p => getPersonnelPosition(p) === 'စစ်သည်');
+            const staffList = personnelData.filter(p => getPersonnelPosition(p) === 'အမြဲတမ်းဝန်ထမ်း');
+            const civilianList = personnelData.filter(p => getPersonnelPosition(p) === 'အရပ်သားဝန်ထမ်း');
 
             const officers = officerList.length;
             const soldiers = soldierList.length;
@@ -6566,46 +7137,16 @@ var db = admin.firestore();</pre>
             const absentCount = personnelData.filter(p => p.status === 'ပျက်ကွက်').length;
             const presentCount = Math.max(0, total - absentCount);
 
-            const updateCategoryBadges = (list, presId, absId) => {
-                const abs = list.filter(p => p.status === 'ပျက်ကွက်').length;
-                const pres = Math.max(0, list.length - abs);
-                const elP = document.getElementById(presId);
-                const elA = document.getElementById(absId);
-                if (elP) elP.textContent = `တန်းစီ - ${toMyanmarNumerals(pres)}`;
-                if (elA) elA.textContent = `ပျက်ကွက် - ${toMyanmarNumerals(abs)}`;
-            };
-
-            const elOff = document.getElementById('count-officer');
-            const elSol = document.getElementById('count-soldier');
-            const elStf = document.getElementById('count-staff');
-            const elCiv = document.getElementById('count-civilian');
-            const elTot = document.getElementById('count-total');
-            const elPres = document.getElementById('dash-present-badge');
-            const elAbs = document.getElementById('dash-absent-badge');
-
-            if (elOff) elOff.textContent = toMyanmarNumerals(officers);
-            if (elSol) elSol.textContent = toMyanmarNumerals(soldiers);
-            if (elStf) elStf.textContent = toMyanmarNumerals(staff);
-            if (elCiv) elCiv.textContent = toMyanmarNumerals(civilians);
-            if (elTot) elTot.textContent = toMyanmarNumerals(total);
-            if (elPres) elPres.textContent = `တန်းစီ - ${toMyanmarNumerals(presentCount)}`;
-            if (elAbs) elAbs.textContent = `ပျက်ကွက် - ${toMyanmarNumerals(absentCount)}`;
-
-            updateCategoryBadges(officerList, 'dash-officer-present-badge', 'dash-officer-absent-badge');
-            updateCategoryBadges(soldierList, 'dash-soldier-present-badge', 'dash-soldier-absent-badge');
-            updateCategoryBadges(staffList, 'dash-staff-present-badge', 'dash-staff-absent-badge');
-            updateCategoryBadges(civilianList, 'dash-civilian-present-badge', 'dash-civilian-absent-badge');
-
             // Clustered Column Chart by Department
             const compChartEl = document.getElementById('dashboard-dept-composition-chart');
             const compSummaryEl = document.getElementById('dashboard-dept-composition-summary');
             const personnelCompositionChartEl = document.getElementById('dashboard-personnel-composition-chart');
             const deptStats = DEPT_MAPPING.map(d => {
                 const deptPeople = personnelData.filter(p => getDeptAbbr(p.deptAbbr || p.deptFull) === d.abbr);
-                const offCnt = deptPeople.filter(p => resolvePersonnelRoleGroup(p) === 'အရာရှိ').length;
-                const solCnt = deptPeople.filter(p => resolvePersonnelRoleGroup(p) === 'စစ်သည်').length;
-                const staffCnt = deptPeople.filter(p => resolvePersonnelRoleGroup(p) === 'အမြဲတမ်းဝန်ထမ်း').length;
-                const civCnt = deptPeople.filter(p => resolvePersonnelRoleGroup(p) === 'အရပ်သားဝန်ထမ်း').length;
+                const offCnt = deptPeople.filter(p => getPersonnelPosition(p) === 'အရာရှိ').length;
+                const solCnt = deptPeople.filter(p => getPersonnelPosition(p) === 'စစ်သည်').length;
+                const staffCnt = deptPeople.filter(p => getPersonnelPosition(p) === 'အမြဲတမ်းဝန်ထမ်း').length;
+                const civCnt = deptPeople.filter(p => getPersonnelPosition(p) === 'အရပ်သားဝန်ထမ်း').length;
                 const milBase = offCnt + solCnt;
                 const deptDuty = securityDutyData.filter(sd => getDeptAbbr(sd.deptAbbr || sd.deptFull || sd.dept) === d.abbr);
                 const inDutyCnt = deptDuty.filter(sd => (sd.dutyType || '').includes('တပ်တွင်း') || (sd.absentReason || '').includes('တပ်တွင်း')).length;
@@ -7181,7 +7722,7 @@ var db = admin.firestore();</pre>
                 'အဆင့်': person.rankAbbr || person.rankFull || '',
                 'ဝန်ထမ်းအမည်': person.name || '',
                 'ဌာနအမည်': person.deptFull || person.deptAbbr || '',
-                'ရာထူး': person.position || resolvePersonnelRoleGroup(person) || '',
+                'ရာထူး': getPersonnelPosition(person),
                 'ကျား/မ': person.gender || '',
                 'ဝန်ထမ်းအမျိုးအစား': person.staffType || '',
                 'လက်ရှိအခြေအနေ': person.status || '',
@@ -7229,7 +7770,7 @@ var db = admin.firestore();</pre>
                 person.rankAbbr || person.rankFull,
                 person.name,
                 person.deptFull || person.deptAbbr,
-                person.position,
+                getPersonnelPosition(person),
                 person.gender,
                 person.status,
                 person.status === 'ပျက်ကွက်' ? person.absentReason : '',
@@ -7323,7 +7864,7 @@ var db = admin.firestore();</pre>
                     'လက်ရှိအခြေအနေ': d.status || matchedP?.status || 'ပျက်ကွက်',
                     'ပျက်ကွက်အကြောင်းရင်း': d.absentReason || (d.dutyType === 'တပ်ပြင်' || d.dutyType === 'တပ်ပြင်လခရ' ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ'),
                     'ကင်းစခန်းတည်နေရာ': d.location || '',
-                    'အမည်': d.weaponType || '-',
+                    'လက်နက်အမည်': d.weaponType || '-',
                     'အရေအတွက်': d.quantity || 1,
                     'ခဲယမ်း': d.ammoCount || '-',
                     'ရက်စွဲ': d.startDate || '',
@@ -7396,26 +7937,28 @@ var db = admin.firestore();</pre>
         }
 
         function populateDutyWeaponDropdown() {
-            const weaponSel = document.getElementById('d-in-weapon');
+            const weaponEl = document.getElementById('d-in-weapon');
+            const datalist = document.getElementById('duty-weapon-name-datalist');
             const serialDatalist = document.getElementById('d-weapon-serial-datalist');
-            if (!weaponSel) return;
-
-            const currentVal = weaponSel.value || '';
             const weaponsOnly = armoryData.filter(w => (w.category || 'လက်နက်') === 'လက်နက်');
-            const uniqueWeaponNames = [...new Set(weaponsOnly.map(w => (w.weaponType || '').trim()).filter(Boolean))];
+            const uniqueWeaponNames = [...new Set(weaponsOnly.map(w => (w.weaponType || w.name || '').trim()).filter(Boolean))];
 
-            weaponSel.innerHTML = `<option value="">-- လက်နက်ရွေးချယ်ရန် --</option>` +
-                uniqueWeaponNames.map(name => `<option value="${name}">${name}</option>`).join('') +
-                `<option value="Custom">Custom (အခြားလက်နက်)</option>`;
-
-            if (currentVal && Array.from(weaponSel.options).some(o => o.value === currentVal)) {
-                weaponSel.value = currentVal;
+            if (weaponEl && weaponEl.tagName === 'SELECT') {
+                const currentVal = weaponEl.value || '';
+                weaponEl.innerHTML = `<option value="">-- လက်နက်ရွေးချယ်ရန် --</option>` +
+                    uniqueWeaponNames.map(name => `<option value="${name}">${name}</option>`).join('') +
+                    `<option value="Custom">Custom (အခြားလက်နက်)</option>`;
+                if (currentVal && Array.from(weaponEl.options).some(o => o.value === currentVal)) {
+                    weaponEl.value = currentVal;
+                }
+            } else if (datalist) {
+                datalist.innerHTML = uniqueWeaponNames.map(name => `<option value="${name}">`).join('');
             }
 
             if (serialDatalist) {
-                serialDatalist.innerHTML = weaponsOnly
+                serialDatalist.innerHTML = armoryData
                     .filter(w => w.serial && w.serial !== '-')
-                    .map(w => `<option value="${w.serial}">${w.weaponType} (${w.code || '-'})</option>`)
+                    .map(w => `<option value="${w.serial}">${w.weaponType || w.name || ''} (${w.code || '-'})</option>`)
                     .join('');
             }
         }
@@ -7437,7 +7980,7 @@ var db = admin.firestore();</pre>
             }
 
             if (!selectedWeapon || selectedWeapon === 'Custom') return;
-            const matchedArmory = armoryData.find(w => (w.weaponType || '').trim() === selectedWeapon);
+            const matchedArmory = armoryData.find(w => (w.weaponType || w.name || '').trim() === selectedWeapon);
             if (matchedArmory) {
                 const modelEl = document.getElementById('d-in-weapon-model');
                 const codeEl = document.getElementById('d-in-weapon-code');
@@ -7454,17 +7997,20 @@ var db = admin.firestore();</pre>
             const matchedArmory = armoryData.find(w => (w.serial || '').trim().toLowerCase() === serialVal.toLowerCase());
             if (!matchedArmory) return;
 
-            const weaponSel = document.getElementById('d-in-weapon');
-            if (weaponSel && matchedArmory.weaponType) {
-                if (!Array.from(weaponSel.options).some(o => o.value === matchedArmory.weaponType)) {
-                    weaponSel.add(new Option(matchedArmory.weaponType, matchedArmory.weaponType));
-                }
-                weaponSel.value = matchedArmory.weaponType;
+            const weaponEl = document.getElementById('d-in-weapon');
+            if (weaponEl && (matchedArmory.weaponType || matchedArmory.name)) {
+                weaponEl.value = matchedArmory.weaponType || matchedArmory.name;
             }
             const modelEl = document.getElementById('d-in-weapon-model');
             const codeEl = document.getElementById('d-in-weapon-code');
             if (modelEl && matchedArmory.model) modelEl.value = matchedArmory.model;
             if (codeEl && matchedArmory.code) codeEl.value = matchedArmory.code;
+
+            const armorySel = document.getElementById('d-in-armory-select');
+            if (armorySel) {
+                const idx = armoryData.indexOf(matchedArmory);
+                if (idx >= 0) armorySel.value = String(idx);
+            }
         }
 
         function syncInlineDutyRanks() {
@@ -7532,10 +8078,44 @@ var db = admin.firestore();</pre>
             }
         }
 
+        function populatePositionSelect(selectId, selectedVal) {
+            const selectEl = document.getElementById(selectId);
+            if (!selectEl) return;
+            const curVal = selectedVal !== undefined ? selectedVal : selectEl.value;
+            selectEl.replaceChildren();
+
+            const allPositions = [...new Set([...DEFAULT_POSITION_DEFINITIONS, ...(POSITION_DEFINITIONS || [])])];
+            (personnelData || []).forEach(p => {
+                const pos = getPersonnelPosition(p);
+                if (pos && !allPositions.includes(pos)) allPositions.push(pos);
+            });
+            if (curVal && !allPositions.includes(curVal)) {
+                allPositions.push(curVal);
+            }
+
+            allPositions.forEach(pos => {
+                const p = String(pos || '').trim();
+                if (p) {
+                    const opt = document.createElement('option');
+                    opt.value = p;
+                    opt.textContent = p;
+                    selectEl.appendChild(opt);
+                }
+            });
+
+            if (curVal && Array.from(selectEl.options).some(o => o.value === curVal)) {
+                selectEl.value = curVal;
+            } else if (selectEl.options.length > 0) {
+                selectEl.selectedIndex = 0;
+            }
+        }
+
         function openPersonnelForm(index = -1) {
             populateStaffTypeSelect();
             populateDeptSelect('p-form-dept');
             populateStatusSelect();
+            const targetPosVal = index >= 0 ? (personnelData[index]?.position || resolvePersonnelRoleGroup(personnelData[index]) || 'အရာရှိ') : (activePositionFilter || 'အရာရှိ');
+            populatePositionSelect('p-form-position', targetPosVal);
             
             const form = document.getElementById('personnel-form');
             form.reset();
@@ -7737,23 +8317,27 @@ var db = admin.firestore();</pre>
 
             if (posSelect) {
                 const curPos = posSelect.value;
-                if (posSelect.options.length <= 1) {
-                    posSelect.replaceChildren();
-                    const defaultOpt = document.createElement('option');
-                    defaultOpt.value = '';
-                    defaultOpt.textContent = 'အားလုံးပြရန်';
-                    posSelect.appendChild(defaultOpt);
+                posSelect.replaceChildren();
+                const defaultOpt = document.createElement('option');
+                defaultOpt.value = '';
+                defaultOpt.textContent = 'အားလုံးပြရန်';
+                posSelect.appendChild(defaultOpt);
 
-                    (POSITION_DEFINITIONS || []).forEach(pos => {
-                        const p = String(pos || '').trim();
-                        if (p) {
-                            const opt = document.createElement('option');
-                            opt.value = p;
-                            opt.textContent = p;
-                            posSelect.appendChild(opt);
-                        }
-                    });
-                }
+                const allPositions = [...new Set([...DEFAULT_POSITION_DEFINITIONS, ...(POSITION_DEFINITIONS || [])])];
+                (personnelData || []).forEach(p => {
+                    const pos = getPersonnelPosition(p);
+                    if (pos && !allPositions.includes(pos)) allPositions.push(pos);
+                });
+
+                allPositions.forEach(pos => {
+                    const p = String(pos || '').trim();
+                    if (p) {
+                        const opt = document.createElement('option');
+                        opt.value = p;
+                        opt.textContent = p;
+                        posSelect.appendChild(opt);
+                    }
+                });
 
                 if (curPos !== null && curPos !== undefined && Array.from(posSelect.options).some(o => o.value === curPos)) {
                     posSelect.value = curPos;
@@ -7810,7 +8394,7 @@ var db = admin.firestore();</pre>
 
             return personnelData
                 .filter(person => {
-                    const pos = (person.position || resolvePersonnelRoleGroup(person) || '').trim();
+                    const pos = getPersonnelPosition(person);
                     if (targetPos && pos !== targetPos) {
                         return false;
                     }
@@ -7839,7 +8423,7 @@ var db = admin.firestore();</pre>
                 getRankAbbr(person.rankAbbr || person.rankFull),
                 person.name,
                 getDeptAbbr(person.deptAbbr || person.deptFull),
-                person.position || resolvePersonnelRoleGroup(person) || '',
+                getPersonnelPosition(person),
                 person.gender,
                 person.staffType,
                 person.status,
@@ -7856,6 +8440,25 @@ var db = admin.firestore();</pre>
             ];
         }
 
+        function updateCategoryStatusCards(records) {
+            const catTotalEl = document.getElementById('category-count-total');
+            const catPresEl = document.getElementById('category-count-present');
+            const catAbsEl = document.getElementById('category-count-absent');
+            if (!catTotalEl || !catPresEl || !catAbsEl) return;
+
+            const recs = records || [];
+            const total = recs.length;
+            const absent = recs.filter(p => (p.status || '').trim() === 'ပျက်ကွက်').length;
+            const present = recs.filter(p => {
+                const s = (p.status || '').trim();
+                return s === 'တန်းစီ' || (s !== 'ပျက်ကွက်');
+            }).length;
+
+            catTotalEl.textContent = toMyanmarNumerals(total);
+            catPresEl.textContent = toMyanmarNumerals(present);
+            catAbsEl.textContent = toMyanmarNumerals(absent);
+        }
+
         function renderCivilianNameListMaster() {
             const container = document.getElementById('civilian-master-list');
             if (!container) return;
@@ -7864,6 +8467,7 @@ var db = admin.firestore();</pre>
             const personnelRecords = getCivilianMasterRecords();
             const countElement = document.getElementById('civilian-master-count');
             if (countElement) countElement.textContent = toMyanmarNumerals(personnelRecords.length);
+            updateCategoryStatusCards(personnelRecords);
             const totalPages = Math.max(1, Math.ceil(personnelRecords.length / CIVILIAN_MASTER_ITEMS_PER_PAGE));
             if (tablePageState.civilianMaster > totalPages) tablePageState.civilianMaster = totalPages;
             const currentPage = tablePageState.civilianMaster || 1;
@@ -8061,13 +8665,10 @@ var db = admin.firestore();</pre>
                 photo: document.getElementById('p-form-photo-base64')?.value || ''
             };
 
+            pData.roleGroup = resolvePersonnelRoleGroup(pData);
             if (index >= 0 && personnelData[index]) {
-                pData.roleGroup = personnelData[index].roleGroup || resolvePersonnelRoleGroup(pData);
                 personnelData[index] = { ...personnelData[index], ...pData };
             } else {
-                pData.roleGroup = activePersonnelCategoryTab !== 'ALL'
-                    ? activePersonnelCategoryTab
-                    : resolvePersonnelRoleGroup(pData);
                 personnelData.unshift(pData);
             }
             if (index < 0 && !document.getElementById('civilian-master-tab')?.classList.contains('hidden')) {
@@ -8088,6 +8689,8 @@ var db = admin.firestore();</pre>
             }
             renderCivilianNameListMaster();
             renderAbsentSummary();
+            syncSecurityDutyWithPersonnel();
+            renderSecurityDuty();
             renderDashboardView();
             if (returnToCivilianMasterDetails && personnelData[civilianMasterDetailIndex]) {
                 const person = personnelData[civilianMasterDetailIndex];
@@ -9828,6 +10431,8 @@ var db = admin.firestore();</pre>
             editingPositionIndex = POSITION_DEFINITIONS.length - 1;
             saveSystemState();
             renderPositionDefinitions();
+            populateCivilianMasterFilters();
+            renderDashboardView();
         }
 
         function editPositionItem(index) {
@@ -9850,6 +10455,8 @@ var db = admin.firestore();</pre>
             saveSystemState();
             showToast('ရာထူးသတ်မှတ်ချက် မွမ်းမံပြီးပါပြီ', 'success');
             renderPositionDefinitions();
+            populateCivilianMasterFilters();
+            renderDashboardView();
         }
 
         function deletePositionItem(index) {
@@ -9861,6 +10468,8 @@ var db = admin.firestore();</pre>
             saveSystemState();
             showToast('ရာထူးသတ်မှတ်ချက် ဖျက်ပြီးပါပြီ', 'error');
             renderPositionDefinitions();
+            populateCivilianMasterFilters();
+            renderDashboardView();
         }
 
         function cancelPositionItem() {
