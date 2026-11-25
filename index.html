@@ -1122,6 +1122,18 @@
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
                         </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">လက်ရှိအခြေအနေအလိုက် -</span>
+                            <select id="civilian-filter-status" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">နေရပ်လိပ်စာအလိုက် -</span>
+                            <select id="civilian-filter-address" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
+                                <option value="">အားလုံးပြရန်</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -3472,6 +3484,10 @@ var db = admin.firestore();</pre>
                 if (rankSelect) rankSelect.value = '';
                 const deptSelect = document.getElementById('civilian-filter-dept');
                 if (deptSelect) deptSelect.value = '';
+                const statusSelect = document.getElementById('civilian-filter-status');
+                if (statusSelect) statusSelect.value = '';
+                const addrSelect = document.getElementById('civilian-filter-address');
+                if (addrSelect) addrSelect.value = '';
                 renderCivilianNameListMaster();
             } else if (tabName === 'personnel') {
                 initInlinePersonnelControls();
@@ -4203,6 +4219,8 @@ var db = admin.firestore();</pre>
                         const pF = document.getElementById('civilian-filter-position'); if (pF) pF.value = '';
                         const rF = document.getElementById('civilian-filter-rank'); if (rF) rF.value = '';
                         const dF = document.getElementById('civilian-filter-dept'); if (dF) dF.value = '';
+                        const sF = document.getElementById('civilian-filter-status'); if (sF) sF.value = '';
+                        const aF = document.getElementById('civilian-filter-address'); if (aF) aF.value = '';
                         tablePageState.civilianMaster = 1;
                         saveSystemState();
                         renderPersonnelDirectory();
@@ -6396,6 +6414,8 @@ var db = admin.firestore();</pre>
             const pF = document.getElementById('civilian-filter-position'); if (pF) pF.value = '';
             const rF = document.getElementById('civilian-filter-rank'); if (rF) rF.value = '';
             const dF = document.getElementById('civilian-filter-dept'); if (dF) dF.value = '';
+            const sF = document.getElementById('civilian-filter-status'); if (sF) sF.value = '';
+            const aF = document.getElementById('civilian-filter-address'); if (aF) aF.value = '';
             tablePageState.civilianMaster = 1;
             renderCivilianNameListMaster();
             renderDashboardView();
@@ -7788,7 +7808,9 @@ var db = admin.firestore();</pre>
             const posVal = document.getElementById('civilian-filter-position')?.value || activePositionFilter || '';
             const rankVal = document.getElementById('civilian-filter-rank')?.value || '';
             const deptVal = document.getElementById('civilian-filter-dept')?.value || '';
-            const filterParts = [posVal, rankVal, deptVal].filter(Boolean);
+            const statusVal = document.getElementById('civilian-filter-status')?.value || '';
+            const addrVal = document.getElementById('civilian-filter-address')?.value || '';
+            const filterParts = [posVal, rankVal, deptVal, statusVal, addrVal].filter(Boolean);
             const filterLabel = filterParts.length ? filterParts.join(' / ') : 'အားလုံး';
             const tableHeader = headers.map(header => `<th>${escapeHtml(header)}</th>`).join('');
             const tableRows = rows.length
@@ -8246,6 +8268,7 @@ var db = admin.firestore();</pre>
             const posVal = document.getElementById('civilian-filter-position')?.value;
             activePositionFilter = (posVal !== undefined && posVal !== null) ? posVal.trim() : '';
             populateCivilianFilterRanks();
+            populateCivilianFilterAddress();
             renderCivilianNameListMaster();
         }
 
@@ -8259,7 +8282,14 @@ var db = admin.firestore();</pre>
             defaultOpt.textContent = 'အားလုံးပြရန်';
             rankSelect.appendChild(defaultOpt);
 
-            const posVal = (document.getElementById('civilian-filter-position')?.value ?? activePositionFilter ?? '').trim();
+            let targetCategory = '';
+            if (activePersonnelCategoryTab && activePersonnelCategoryTab !== 'ALL') {
+                targetCategory = activePersonnelCategoryTab;
+            } else {
+                const posSelect = document.getElementById('civilian-filter-position');
+                targetCategory = (posSelect ? posSelect.value : (activePositionFilter ?? '')).trim();
+            }
+
             const posToRankKey = {
                 'အရာရှိ': 'officer',
                 'စစ်သည်': 'soldier',
@@ -8274,19 +8304,36 @@ var db = admin.firestore();</pre>
                 civilian: 'အရပ်သားဝန်ထမ်း'
             };
 
-            const specificKey = posToRankKey[posVal];
+            const specificKey = posToRankKey[targetCategory];
             if (specificKey && RANK_DEFINITIONS && Array.isArray(RANK_DEFINITIONS[specificKey])) {
                 const ranks = RANK_DEFINITIONS[specificKey] || [];
+                const seenVals = new Set();
                 ranks.forEach(r => {
                     const val = (r.abbr || r.full || '').trim();
-                    if (val) {
+                    if (val && !seenVals.has(val)) {
+                        seenVals.add(val);
                         const opt = document.createElement('option');
                         opt.value = val;
                         opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
                         rankSelect.appendChild(opt);
                     }
                 });
+
+                // Also check if any existing personnel in personnelData belonging to this position category has a rank not in definitions
+                (personnelData || []).forEach(p => {
+                    if (getPersonnelPosition(p) === targetCategory) {
+                        const val = (p.rankAbbr || p.rankFull || '').trim();
+                        if (val && !seenVals.has(val)) {
+                            seenVals.add(val);
+                            const opt = document.createElement('option');
+                            opt.value = val;
+                            opt.textContent = val;
+                            rankSelect.appendChild(opt);
+                        }
+                    }
+                });
             } else {
+                // Only when on Name List Master and no category is selected, show grouped ranks
                 Object.entries(RANK_DEFINITIONS || {}).forEach(([catKey, ranks]) => {
                     if (!Array.isArray(ranks) || !ranks.length) return;
                     const group = document.createElement('optgroup');
@@ -8308,6 +8355,75 @@ var db = admin.firestore();</pre>
                 rankSelect.value = curRank;
             } else {
                 rankSelect.value = '';
+            }
+        }
+
+        function populateCivilianFilterStatus() {
+            const statusSelect = document.getElementById('civilian-filter-status');
+            if (!statusSelect) return;
+            const curVal = statusSelect.value;
+            statusSelect.replaceChildren();
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = '';
+            defaultOpt.textContent = 'အားလုံးပြရန်';
+            statusSelect.appendChild(defaultOpt);
+
+            const allStatuses = [...new Set([...(statusList || ['တန်းစီ', 'ပျက်ကွက်']), ...(personnelData || []).map(p => (p.status || '').trim()).filter(Boolean)])];
+            allStatuses.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s;
+                opt.textContent = s;
+                statusSelect.appendChild(opt);
+            });
+
+            if (curVal && Array.from(statusSelect.options).some(o => o.value === curVal)) {
+                statusSelect.value = curVal;
+            } else {
+                statusSelect.value = '';
+            }
+        }
+
+        function populateCivilianFilterAddress() {
+            const addrSelect = document.getElementById('civilian-filter-address');
+            if (!addrSelect) return;
+            const curVal = addrSelect.value;
+            addrSelect.replaceChildren();
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = '';
+            defaultOpt.textContent = 'အားလုံးပြရန်';
+            addrSelect.appendChild(defaultOpt);
+
+            let targetCategory = '';
+            if (activePersonnelCategoryTab && activePersonnelCategoryTab !== 'ALL') {
+                targetCategory = activePersonnelCategoryTab;
+            } else {
+                const posSelect = document.getElementById('civilian-filter-position');
+                targetCategory = (posSelect ? posSelect.value : (activePositionFilter ?? '')).trim();
+            }
+
+            const scopedPersonnel = targetCategory
+                ? (personnelData || []).filter(p => getPersonnelPosition(p) === targetCategory)
+                : (personnelData || []);
+
+            const allAddresses = [...new Set([
+                ...(addressTypeList || []),
+                ...scopedPersonnel.map(p => (p.address || '').trim()).filter(Boolean)
+            ])];
+
+            allAddresses.forEach(a => {
+                const val = String(a || '').trim();
+                if (val) {
+                    const opt = document.createElement('option');
+                    opt.value = val;
+                    opt.textContent = val;
+                    addrSelect.appendChild(opt);
+                }
+            });
+
+            if (curVal && Array.from(addrSelect.options).some(o => o.value === curVal)) {
+                addrSelect.value = curVal;
+            } else {
+                addrSelect.value = '';
             }
         }
 
@@ -8339,16 +8455,18 @@ var db = admin.firestore();</pre>
                     }
                 });
 
-                if (curPos !== null && curPos !== undefined && Array.from(posSelect.options).some(o => o.value === curPos)) {
-                    posSelect.value = curPos;
-                } else if (activePositionFilter && Array.from(posSelect.options).some(o => o.value === activePositionFilter)) {
+                if (activePositionFilter && Array.from(posSelect.options).some(o => o.value === activePositionFilter)) {
                     posSelect.value = activePositionFilter;
+                } else if (curPos && Array.from(posSelect.options).some(o => o.value === curPos)) {
+                    posSelect.value = curPos;
                 } else {
                     posSelect.value = '';
                 }
             }
 
             populateCivilianFilterRanks();
+            populateCivilianFilterStatus();
+            populateCivilianFilterAddress();
 
             if (deptSelect) {
                 const curDept = deptSelect.value;
@@ -8385,12 +8503,18 @@ var db = admin.firestore();</pre>
         }
 
         function getCivilianMasterRecords() {
-            const posSelect = document.getElementById('civilian-filter-position');
-            const posFilter = (posSelect ? posSelect.value : (activePositionFilter ?? '')).trim();
+            let targetPos = '';
+            if (activePersonnelCategoryTab && activePersonnelCategoryTab !== 'ALL') {
+                targetPos = activePersonnelCategoryTab;
+            } else {
+                const posSelect = document.getElementById('civilian-filter-position');
+                targetPos = (posSelect ? posSelect.value : (activePositionFilter ?? '')).trim();
+            }
+
             const rankFilter = document.getElementById('civilian-filter-rank')?.value.trim() || '';
             const deptFilter = document.getElementById('civilian-filter-dept')?.value.trim() || '';
-
-            const targetPos = posFilter;
+            const statusFilter = document.getElementById('civilian-filter-status')?.value.trim() || '';
+            const addressFilter = document.getElementById('civilian-filter-address')?.value.trim() || '';
 
             return personnelData
                 .filter(person => {
@@ -8401,7 +8525,16 @@ var db = admin.firestore();</pre>
                     if (rankFilter) {
                         const rAbbr = (person.rankAbbr || '').trim();
                         const rFull = (person.rankFull || '').trim();
-                        if (rAbbr !== rankFilter && rFull !== rankFilter && getRankAbbr(rFull) !== rankFilter && getRankAbbr(rAbbr) !== rankFilter) {
+                        const targetAbbr = getRankAbbr(rankFilter) || rankFilter;
+                        const targetFull = getRankFull(rankFilter) || rankFilter;
+                        if (
+                            rAbbr !== rankFilter &&
+                            rFull !== rankFilter &&
+                            rAbbr !== targetAbbr &&
+                            rFull !== targetFull &&
+                            getRankAbbr(rFull) !== targetAbbr &&
+                            getRankAbbr(rAbbr) !== targetAbbr
+                        ) {
                             return false;
                         }
                     }
@@ -8409,6 +8542,18 @@ var db = admin.firestore();</pre>
                         const dAbbr = (person.deptAbbr || '').trim();
                         const dFull = (person.deptFull || '').trim();
                         if (dAbbr !== deptFilter && dFull !== deptFilter && getDeptAbbr(dFull) !== deptFilter && getDeptAbbr(dAbbr) !== deptFilter) {
+                            return false;
+                        }
+                    }
+                    if (statusFilter) {
+                        const s = (person.status || '').trim();
+                        if (s !== statusFilter) {
+                            return false;
+                        }
+                    }
+                    if (addressFilter) {
+                        const a = (person.address || '').trim();
+                        if (a !== addressFilter) {
                             return false;
                         }
                     }
@@ -8467,7 +8612,19 @@ var db = admin.firestore();</pre>
             const personnelRecords = getCivilianMasterRecords();
             const countElement = document.getElementById('civilian-master-count');
             if (countElement) countElement.textContent = toMyanmarNumerals(personnelRecords.length);
-            updateCategoryStatusCards(personnelRecords);
+
+            let targetCategory = '';
+            if (activePersonnelCategoryTab && activePersonnelCategoryTab !== 'ALL') {
+                targetCategory = activePersonnelCategoryTab;
+            } else {
+                const posSelect = document.getElementById('civilian-filter-position');
+                targetCategory = (posSelect ? posSelect.value : (activePositionFilter ?? '')).trim();
+            }
+            const allCategoryRecords = targetCategory
+                ? (personnelData || []).filter(p => getPersonnelPosition(p) === targetCategory)
+                : personnelRecords;
+            updateCategoryStatusCards(allCategoryRecords);
+
             const totalPages = Math.max(1, Math.ceil(personnelRecords.length / CIVILIAN_MASTER_ITEMS_PER_PAGE));
             if (tablePageState.civilianMaster > totalPages) tablePageState.civilianMaster = totalPages;
             const currentPage = tablePageState.civilianMaster || 1;
@@ -8480,7 +8637,14 @@ var db = admin.firestore();</pre>
                 const cell = document.createElement('td');
                 cell.colSpan = 20;
                 cell.className = 'px-3 py-8 text-center text-slate-400';
-                const hasFilter = !!(document.getElementById('civilian-filter-position')?.value || document.getElementById('civilian-filter-rank')?.value || document.getElementById('civilian-filter-dept')?.value || activePositionFilter);
+                const hasFilter = !!(
+                    document.getElementById('civilian-filter-position')?.value ||
+                    document.getElementById('civilian-filter-rank')?.value ||
+                    document.getElementById('civilian-filter-dept')?.value ||
+                    document.getElementById('civilian-filter-status')?.value ||
+                    document.getElementById('civilian-filter-address')?.value ||
+                    activePositionFilter
+                );
                 cell.textContent = hasFilter
                     ? 'စစ်ထုတ်မှုနှင့် ကိုက်ညီသော အချက်အလက် မရှိပါ'
                     : 'ဝန်ထမ်းအမည်စာရင်း မရှိသေးပါ';
@@ -8685,6 +8849,8 @@ var db = admin.firestore();</pre>
                 const pF = document.getElementById('civilian-filter-position'); if (pF) pF.value = '';
                 const rF = document.getElementById('civilian-filter-rank'); if (rF) rF.value = '';
                 const dF = document.getElementById('civilian-filter-dept'); if (dF) dF.value = '';
+                const sF = document.getElementById('civilian-filter-status'); if (sF) sF.value = '';
+                const aF = document.getElementById('civilian-filter-address'); if (aF) aF.value = '';
                 tablePageState.civilianMaster = 1;
             }
             renderCivilianNameListMaster();
