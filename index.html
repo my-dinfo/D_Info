@@ -484,12 +484,12 @@
             font-weight: 700 !important;
         }
         #floating-scroll-top-btn {
-            width: 44px !important;
-            height: 44px !important;
-            min-width: 44px !important;
-            min-height: 44px !important;
-            max-width: 44px !important;
-            max-height: 44px !important;
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
+            min-height: 36px !important;
+            max-width: 36px !important;
+            max-height: 36px !important;
             border-radius: 50% !important;
             padding: 0 !important;
             margin: 0 !important;
@@ -881,7 +881,7 @@
                     </div>
                 </div>
 
-                <!-- Weapon Breakdown & Purpose Distribution Summary Card -->
+                <!-- Weapon Type Cards (လက်နက်အမျိုးအစားအလိုက် စာရင်းကတ်ပြားများ) -->
                 <div class="bg-white dark:bg-slate-800 p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3.5">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-2.5">
                         <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5">
@@ -889,12 +889,16 @@
                                 <path d="M2 15l5-4h13l3-2h14l2 2h19v2h-16l-2 2h-8l-2 6h-4l2-6h-6l-4 5H3l-1-5zm26-2h5v-1h-5v1zm11-2h13v1H39v-1z"/>
                                 <path d="M31 15l1.5 6h3l-1.5-6h-3z"/>
                             </svg>
-                            <span>ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်း အမျိုးအစားနှင့် ဖြန့်ခွဲမှု အနှစ်ချုပ် (%)</span>
+                            <span>လက်နက်အမျိုးအစားအလိုက် စာရင်းကတ်ပြားများ</span>
                         </h3>
-                        <span id="dashboard-weapon-total-badge" class="section-heading-bold text-slate-800 dark:text-slate-200 text-xs">စုစုပေါင်း - ၀</span>
+                        <span id="dashboard-weapon-total-badge" class="section-heading-bold text-slate-800 dark:text-slate-200 text-xs font-bold">စုစုပေါင်း - ၀ လက်</span>
                     </div>
-                    <div id="dashboard-weapon-distribution-linechart" class="overflow-x-auto pt-2 pb-1"></div>
-                    <div id="dashboard-weapon-distribution-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs"></div>
+
+                    <!-- Mini Overview Banner across all weapons -->
+                    <div id="dashboard-weapon-overview-banner" class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs"></div>
+
+                    <!-- Individual Cards Grid: One card per weapon type -->
+                    <div id="dashboard-weapon-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pt-1"></div>
                 </div>
             </section>
 
@@ -2162,11 +2166,11 @@ var db = admin.firestore();</pre>
     <button id="floating-scroll-top-btn" 
             type="button" 
             onclick="scrollToTop()" 
-            class="fixed bottom-5 left-5 z-40 w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 active:scale-90 text-white shadow-xl shadow-blue-600/40 dark:shadow-slate-900/70 border-2 border-white/40 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 pointer-events-none translate-y-3 scale-90 hover:opacity-100 hover:scale-105 cursor-pointer group backdrop-blur-xs p-0 m-0" 
-            style="width: 44px !important; height: 44px !important; min-width: 44px !important; min-height: 44px !important; max-width: 44px !important; max-height: 44px !important; border-radius: 50% !important; padding: 0 !important; margin: 0 !important; aspect-ratio: 1 / 1 !important;"
+            class="fixed bottom-5 left-5 z-40 w-9 h-9 rounded-full bg-blue-600 hover:bg-blue-700 active:scale-90 text-white shadow-lg shadow-blue-600/30 dark:shadow-slate-900/60 border border-white/50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 pointer-events-none translate-y-3 scale-90 hover:opacity-100 hover:scale-105 cursor-pointer group backdrop-blur-xs p-0 m-0" 
+            style="width: 36px !important; height: 36px !important; min-width: 36px !important; min-height: 36px !important; max-width: 36px !important; max-height: 36px !important; border-radius: 50% !important; padding: 0 !important; margin: 0 !important; aspect-ratio: 1 / 1 !important;" 
             title="အပေါ်သို့ ပြန်တက်ရန် (Scroll to Top)" 
             aria-label="Scroll to Top">
-        <svg class="w-5 h-5 transition-transform duration-200 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 transition-transform duration-200 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
         </svg>
     </button>
@@ -7338,185 +7342,150 @@ var db = admin.firestore();</pre>
                     { label: 'ပြင်ဆင်ဆဲ', value: repairCnt, color: '#ef4444' }
                 ], armoryData.length, 'စာရင်းဝင်');
             }
+            updateDashboardWeaponCards();
+        }
+
+        function updateDashboardWeaponCards() {
+            const cardsGrid = document.getElementById('dashboard-weapon-cards-grid');
+            const overviewBanner = document.getElementById('dashboard-weapon-overview-banner');
+            const totalBadge = document.getElementById('dashboard-weapon-total-badge');
+            if (!cardsGrid) return;
+
+            const weaponsOnly = armoryData.filter(w => (w.category || 'လက်နက်') === 'လက်နက်');
+            const list = weaponsOnly.length > 0 ? weaponsOnly : armoryData;
+
+            // Group by weaponType
+            const groups = {};
+            list.forEach(w => {
+                const typeName = (w.weaponType || w.name || 'အမည်မဖော်ပြထားသော လက်နက်').trim();
+                if (!groups[typeName]) {
+                    groups[typeName] = {
+                        name: typeName,
+                        models: new Set(),
+                        ledgerQty: 0,
+                        issuedQty: 0,
+                        storeQty: 0,
+                        repairQty: 0,
+                        totalCount: 0
+                    };
+                }
+                const m = (w.model || '').trim();
+                if (m) groups[typeName].models.add(m);
+
+                const q = getArmoryRowQuantities(w);
+                const isRepair = (w.status || '').trim() === 'ပြင်ဆင်ဆဲ';
+                const isIssued = ['ထုတ်ပေး', 'ဖြန့်ခွဲ', 'ဖြန့်ခွဲ/ထုတ်ပေး'].some(k => (w.status || '').includes(k));
+                const isStore = (w.status || '').trim() === 'စတိုကျန်';
+
+                const rowLedger = q.ledgerQty || 1;
+                const rowIssued = isRepair ? 0 : (isIssued ? (q.quantity || 1) : 0);
+                const rowRepair = isRepair ? (q.quantity || rowLedger || 1) : 0;
+                const rowStore = isStore ? (q.storeQty || rowLedger) : (isRepair || isIssued ? Math.max(0, rowLedger - rowIssued - rowRepair) : q.storeQty);
+
+                groups[typeName].ledgerQty += rowLedger;
+                groups[typeName].issuedQty += rowIssued;
+                groups[typeName].repairQty += rowRepair;
+                groups[typeName].storeQty += rowStore;
+                groups[typeName].totalCount += rowLedger;
+            });
+
+            const groupKeys = Object.keys(groups);
+            if (groupKeys.length === 0) {
+                cardsGrid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400">လက်နက်စာရင်း မရှိသေးပါ</div>`;
+                if (overviewBanner) overviewBanner.innerHTML = '';
+                if (totalBadge) totalBadge.textContent = 'စုစုပေါင်း - ၀ လက်';
+                return;
+            }
+
+            let sumLedger = 0;
+            let sumIssued = 0;
+            let sumStore = 0;
+            let sumRepair = 0;
+            let sumTotal = 0;
+
+            const cardsHtml = groupKeys.map((key) => {
+                const g = groups[key];
+                const modelText = Array.from(g.models).join(', ') || '-';
+                sumLedger += g.ledgerQty;
+                sumIssued += g.issuedQty;
+                sumStore += g.storeQty;
+                sumRepair += g.repairQty;
+                sumTotal += g.totalCount;
+
+                return `
+                    <div class="bg-slate-50 dark:bg-slate-700/50 p-3.5 rounded-xl border border-slate-200 dark:border-slate-600 shadow-xs flex flex-col justify-between gap-3 hover:shadow-md hover:border-blue-400 dark:hover:border-blue-500 transition-all">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-blue-600 flex-shrink-0"></span>
+                                    <h4 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate" title="${escapeHtml(g.name)}">${escapeHtml(g.name)}</h4>
+                                </div>
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 truncate pl-3.5" title="${escapeHtml(modelText)}">${escapeHtml(modelText)}</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-black bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200 border border-blue-200 dark:border-blue-700 shadow-xs">
+                                    ${toMyanmarNumerals(g.totalCount)} လက်
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-1.5 text-center text-[11px]">
+                            <div class="bg-amber-50/80 dark:bg-slate-800/80 p-1.5 rounded-lg border border-amber-200/60 dark:border-slate-600">
+                                <div class="text-slate-500 dark:text-slate-400 text-[10px]">ထုတ်ပေး</div>
+                                <div class="font-bold text-amber-700 dark:text-amber-400 mt-0.5">${toMyanmarNumerals(g.issuedQty)} လက်</div>
+                            </div>
+                            <div class="bg-emerald-50/80 dark:bg-slate-800/80 p-1.5 rounded-lg border border-emerald-200/60 dark:border-slate-600">
+                                <div class="text-slate-500 dark:text-slate-400 text-[10px]">စတိုကျန်</div>
+                                <div class="font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">${toMyanmarNumerals(g.storeQty)} လက်</div>
+                            </div>
+                            <div class="bg-rose-50/80 dark:bg-slate-800/80 p-1.5 rounded-lg border border-rose-200/60 dark:border-slate-600">
+                                <div class="text-slate-500 dark:text-slate-400 text-[10px]">ပြင်ဆင်ဆဲ</div>
+                                <div class="font-bold text-rose-700 dark:text-rose-400 mt-0.5">${toMyanmarNumerals(g.repairQty)} လက်</div>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-200/80 dark:border-slate-600 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+                            <span>ရှိရင်း/လယ်ဂျာ</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200">${toMyanmarNumerals(g.ledgerQty)} လက်</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            cardsGrid.innerHTML = cardsHtml;
+
+            if (overviewBanner) {
+                overviewBanner.innerHTML = `
+                    <div class="bg-blue-50/90 dark:bg-slate-700/60 p-2.5 rounded-lg border border-blue-200 dark:border-slate-600 flex justify-between items-center">
+                        <span class="text-slate-600 dark:text-slate-300 font-semibold">ရှိရင်း စုစုပေါင်း</span>
+                        <span class="font-bold text-blue-700 dark:text-blue-300 text-xs sm:text-sm">${toMyanmarNumerals(sumLedger)} လက်</span>
+                    </div>
+                    <div class="bg-amber-50/90 dark:bg-slate-700/60 p-2.5 rounded-lg border border-amber-200 dark:border-slate-600 flex justify-between items-center">
+                        <span class="text-slate-600 dark:text-slate-300 font-semibold">ထုတ်ပေးထားရှိ</span>
+                        <span class="font-bold text-amber-700 dark:text-amber-300 text-xs sm:text-sm">${toMyanmarNumerals(sumIssued)} လက်</span>
+                    </div>
+                    <div class="bg-emerald-50/90 dark:bg-slate-700/60 p-2.5 rounded-lg border border-emerald-200 dark:border-slate-600 flex justify-between items-center">
+                        <span class="text-slate-600 dark:text-slate-300 font-semibold">စတိုကျန်ရှိ</span>
+                        <span class="font-bold text-emerald-700 dark:text-emerald-300 text-xs sm:text-sm">${toMyanmarNumerals(sumStore)} လက်</span>
+                    </div>
+                    <div class="bg-rose-50/90 dark:bg-slate-700/60 p-2.5 rounded-lg border border-rose-200 dark:border-slate-600 flex justify-between items-center">
+                        <span class="text-slate-600 dark:text-slate-300 font-semibold">ပြင်ဆင်ဆဲ</span>
+                        <span class="font-bold text-rose-700 dark:text-rose-300 text-xs sm:text-sm">${toMyanmarNumerals(sumRepair)} လက်</span>
+                    </div>
+                `;
+            }
+
+            if (totalBadge) {
+                totalBadge.textContent = `စုစုပေါင်း - ${toMyanmarNumerals(sumTotal)} လက် (${toMyanmarNumerals(groupKeys.length)} မျိုး)`;
+            }
+        }
+
+        function updateDashboardWeaponSummaryTable() {
+            updateDashboardWeaponCards();
         }
 
         function updateDashboardWeaponLineChart() {
-            // Controlled/Restricted Type & Issue Purpose Breakdown Card (Line Chart Style + Summary Legend)
-            const weaponLineChartEl = document.getElementById('dashboard-weapon-distribution-linechart');
-            const weaponDistGrid = document.getElementById('dashboard-weapon-distribution-grid');
-            const weaponTotalBadge = document.getElementById('dashboard-weapon-total-badge');
-            if (weaponLineChartEl || weaponDistGrid) {
-                const weaponsOnly = armoryData.filter(w => (w.category || 'လက်နက်') === 'လက်နက်');
-                const totalWeapons = weaponsOnly.length;
-                const uniqueWeaponTypes = new Set(weaponsOnly.map(w => (w.weaponType || '').trim()).filter(Boolean)).size;
-
-                const isIssuedStatus = (w) => ['ထုတ်ပေး', 'ဖြန့်ခွဲ', 'ဖြန့်ခွဲ/ထုတ်ပေး'].some(k => (w.status || '').includes(k));
-                const issuedWeapons = weaponsOnly.filter(isIssuedStatus);
-                const issuedCount = issuedWeapons.length;
-
-                const matchPurpose = (w, keywords) => {
-                    const text = `${w.dept || ''} ${w.location || ''} ${w.remarks || ''}`.toLowerCase();
-                    return keywords.some(kw => text.includes(kw));
-                };
-
-                const insideSecurityCount = issuedWeapons.filter(w => matchPurpose(w, ['တပ်တွင်းလခရ', 'တပ်တွင်း'])).length;
-                const outsideSecurityCount = issuedWeapons.filter(w => matchPurpose(w, ['တပ်ပြင်လခရ', 'တပ်ပြင်'])).length;
-                const tempDutyCount = issuedWeapons.filter(w => matchPurpose(w, ['ယာယီတာဝန်', 'ယာယီ'])).length;
-                const trainingCount = issuedWeapons.filter(w => matchPurpose(w, ['သင်တန်း'])).length;
-
-                if (weaponTotalBadge) {
-                    weaponTotalBadge.textContent = `စုစုပေါင်းစာရင်း - ${toMyanmarNumerals(armoryData.length)} မျိုး (လက်နက် ${toMyanmarNumerals(totalWeapons)})`;
-                }
-
-                const calcPct = (val, base) => base > 0 ? Math.round((val / base) * 100) : 0;
-
-                const items = [
-                    {
-                        label: 'လက်နက်အမျိုးအစား',
-                        shortLabel: 'အမျိုးအစား',
-                        count: uniqueWeaponTypes,
-                        unit: 'မျိုး',
-                        pct: calcPct(uniqueWeaponTypes, totalWeapons),
-                        pctNote: `${toMyanmarNumerals(calcPct(uniqueWeaponTypes, totalWeapons))}%`,
-                        pointColor: '#4f46e5',
-                        badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-800'
-                    },
-                    {
-                        label: 'ဖြန့်ခွဲ-ထုတ်ပေး',
-                        shortLabel: 'ဖြန့်ခွဲ-ထုတ်ပေး',
-                        count: issuedCount,
-                        unit: 'လက်',
-                        pct: calcPct(issuedCount, totalWeapons),
-                        pctNote: `${toMyanmarNumerals(calcPct(issuedCount, totalWeapons))}%`,
-                        pointColor: '#f59e0b',
-                        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800'
-                    },
-                    {
-                        label: 'တပ်တွင်းလခရ ထုတ်ပေး',
-                        shortLabel: 'တပ်တွင်းလခရ',
-                        count: insideSecurityCount,
-                        unit: 'လက်',
-                        pct: calcPct(insideSecurityCount, totalWeapons),
-                        pctNote: `${toMyanmarNumerals(calcPct(insideSecurityCount, totalWeapons))}%`,
-                        pointColor: '#2563eb',
-                        badgeClass: 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800'
-                    },
-                    {
-                        label: 'တပ်ပြင်လခရ ထုတ်ပေး',
-                        shortLabel: 'တပ်ပြင်လခရ',
-                        count: outsideSecurityCount,
-                        unit: 'လက်',
-                        pct: calcPct(outsideSecurityCount, totalWeapons),
-                        pctNote: `${toMyanmarNumerals(calcPct(outsideSecurityCount, totalWeapons))}%`,
-                        pointColor: '#10b981',
-                        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800'
-                    },
-                    {
-                        label: 'ယာယီတာဝန် ထုတ်ပေး',
-                        shortLabel: 'ယာယီတာဝန်',
-                        count: tempDutyCount,
-                        unit: 'လက်',
-                        pct: calcPct(tempDutyCount, totalWeapons),
-                        pctNote: `${toMyanmarNumerals(calcPct(tempDutyCount, totalWeapons))}%`,
-                        pointColor: '#9333ea',
-                        badgeClass: 'bg-purple-50 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800'
-                    },
-                    {
-                        label: 'သင်တန်း ထုတ်ပေး',
-                        shortLabel: 'သင်တန်း',
-                        count: trainingCount,
-                        unit: 'လက်',
-                        pct: calcPct(trainingCount, totalWeapons),
-                        pctNote: `${toMyanmarNumerals(calcPct(trainingCount, totalWeapons))}%`,
-                        pointColor: '#e11d48',
-                        badgeClass: 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:border-rose-800'
-                    }
-                ];
-
-                if (weaponLineChartEl) {
-                    const svgW = 840;
-                    const svgH = 225;
-                    const padL = 46;
-                    const padR = 46;
-                    const padT = 36;
-                    const padB = 46;
-                    const plotW = svgW - padL - padR;
-                    const plotH = svgH - padT - padB;
-                    const stepX = items.length > 1 ? plotW / (items.length - 1) : plotW / 2;
-
-                    const points = items.map((item, idx) => {
-                        const clampedPct = Math.max(0, Math.min(100, item.pct));
-                        const x = padL + idx * stepX;
-                        const y = padT + plotH - (clampedPct / 100) * plotH;
-                        return { ...item, x, y };
-                    });
-
-                    const polylinePoints = points.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
-                    const areaPoints = `${points[0].x.toFixed(1)},${(padT + plotH).toFixed(1)} ${polylinePoints} ${points[points.length - 1].x.toFixed(1)},${(padT + plotH).toFixed(1)}`;
-
-                    const yTicks = [0, 25, 50, 75, 100];
-                    const gridLinesHtml = yTicks.map(t => {
-                        const gy = padT + plotH - (t / 100) * plotH;
-                        return `
-                            <line x1="${padL}" y1="${gy.toFixed(1)}" x2="${svgW - padR}" y2="${gy.toFixed(1)}" stroke="currentColor" stroke-opacity="0.12" stroke-dasharray="4 4" />
-                            <text x="${padL - 8}" y="${(gy + 3.5).toFixed(1)}" text-anchor="end" fill="currentColor" fill-opacity="0.6" style="font-size:10px !important;" font-weight="600">${toMyanmarNumerals(t)}%</text>
-                        `;
-                    }).join('');
-
-                    const verticalGuidesHtml = points.map(p => `
-                        <line x1="${p.x.toFixed(1)}" y1="${padT}" x2="${p.x.toFixed(1)}" y2="${padT + plotH}" stroke="currentColor" stroke-opacity="0.06" />
-                    `).join('');
-
-                    const nodesHtml = points.map(p => {
-                        const labelY = Math.max(15, p.y - 11);
-                        return `
-                            <g>
-                                <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="7" fill="${p.pointColor}" fill-opacity="0.18" />
-                                <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.2" fill="${p.pointColor}" stroke="#ffffff" stroke-width="1.8" />
-                                <text x="${p.x.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" fill="${p.pointColor}" style="font-size:10px !important;" font-weight="700">
-                                    ${toMyanmarNumerals(p.count)} ${p.unit} (${p.pctNote})
-                                </text>
-                                <text x="${p.x.toFixed(1)}" y="${(padT + plotH + 18).toFixed(1)}" text-anchor="middle" fill="currentColor" style="font-size:10px !important;" font-weight="700">
-                                    ${p.shortLabel}
-                                </text>
-                            </g>
-                        `;
-                    }).join('');
-
-                    weaponLineChartEl.innerHTML = `
-                        <div class="min-w-[680px] text-slate-700 dark:text-slate-200">
-                            <svg viewBox="0 0 ${svgW} ${svgH}" class="w-full h-auto overflow-visible">
-                                <defs>
-                                    <linearGradient id="weaponLineAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#2563eb" stop-opacity="0.24" />
-                                        <stop offset="100%" stop-color="#2563eb" stop-opacity="0.02" />
-                                    </linearGradient>
-                                </defs>
-                                ${gridLinesHtml}
-                                ${verticalGuidesHtml}
-                                <polygon points="${areaPoints}" fill="url(#weaponLineAreaGrad)" />
-                                <polyline fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${polylinePoints}" />
-                                ${nodesHtml}
-                            </svg>
-                        </div>
-                    `;
-                }
-
-                if (weaponDistGrid) {
-                    weaponDistGrid.innerHTML = items.map(item => `
-                        <div class="px-3 py-2 rounded-xl bg-white dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2 whitespace-nowrap">
-                            <div class="flex items-center gap-1.5 min-w-0">
-                                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:${item.pointColor};"></span>
-                                <span class="text-slate-800 dark:text-slate-200 truncate" title="${item.label}">${item.label}</span>
-                            </div>
-                            <div class="flex items-center gap-1.5 flex-shrink-0">
-                                <span class="text-slate-900 dark:text-white">${toMyanmarNumerals(item.count)} <span class="text-slate-600 dark:text-slate-300">${item.unit}</span></span>
-                                <span class="text-slate-900 dark:text-white">(${item.pctNote})</span>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            }
+            updateDashboardWeaponCards();
         }
 
         const origRenderDashboardView = renderDashboardView;
