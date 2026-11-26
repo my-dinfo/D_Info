@@ -180,6 +180,24 @@
             font-weight: 700 !important;
             white-space: nowrap;
         }
+        /* Closer Horizontal & Vertical Spacing Between Cards Across All Screens */
+        main .grid,
+        #user-role-legend-list,
+        #civilian-master-detail-fields {
+            column-gap: 0.25rem !important;
+            row-gap: 0.25rem !important;
+        }
+        main section.tab-content > :not(.hidden) ~ :not(.hidden),
+        main #announcement-history-list > :not(.hidden) ~ :not(.hidden),
+        main #duty-mobile-container > :not(.hidden) ~ :not(.hidden) {
+            margin-top: 0.375rem !important;
+        }
+        main #dashboard-dept-composition-chart > div {
+            column-gap: 0.75rem !important;
+        }
+        main #dashboard-prod-monthly-chart > div {
+            column-gap: 0.5rem !important;
+        }
         .search-row-highlight {
             background-color: rgba(254, 240, 138, 0.9) !important;
             box-shadow: inset 0 0 0 2px #f59e0b !important;
@@ -491,6 +509,38 @@
         html.dark .btn-action-light:hover {
             background-color: #475569 !important;
             color: #ffffff !important;
+        }
+        /* Announcement History Link-Style Action Buttons (No Borders, No Underline) */
+        .ann-link-btn {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 2px 4px !important;
+            text-decoration: none !important;
+            cursor: pointer;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+        }
+        html.light main .ann-link-btn-edit,
+        .ann-link-btn-edit {
+            color: #1D4ED8 !important;
+        }
+        html.dark main .ann-link-btn-edit {
+            color: #60A5FA !important;
+        }
+        html.light main .ann-link-btn-save,
+        .ann-link-btn-save {
+            color: #047857 !important;
+        }
+        html.dark main .ann-link-btn-save {
+            color: #34D399 !important;
+        }
+        html.light main .ann-link-btn-delete,
+        .ann-link-btn-delete {
+            color: #BE123C !important;
+        }
+        html.dark main .ann-link-btn-delete {
+            color: #FB7185 !important;
         }
         /* Duty Table Group Header Light Soft Blue & Bold Black Location Title */
         .duty-group-header-row {
@@ -866,6 +916,7 @@
                         <div id="dashboard-announcement-meta" class="text-slate-500 dark:text-slate-400 text-xs"></div>
                     </div>
                     <div id="dashboard-announcement-content" class="mt-2 text-slate-700 dark:text-slate-200 whitespace-pre-wrap break-words"></div>
+                    <div id="dashboard-announcement-tables" class="hidden mt-3 space-y-2.5"></div>
                     <div id="dashboard-announcement-attachments" class="hidden mt-3 flex flex-wrap items-center gap-2"></div>
                 </div>
                 <!-- 5 Top Force Summary Cards (Dynamically Linked to Name List Master) -->
@@ -926,7 +977,7 @@
                 <div class="bg-white dark:bg-slate-800 p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
                     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
                         <div>
-                            <h3 class="font-bold text-slate-900 dark:text-white text-xs">📊 ဌာနအလိုက် ဝန်ထမ်းအုပ်စု အင်အားနှင့် အချိုးအစား</h3>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs">📊 ဌာနလိုက် အရာရှိ-စစ်သည်-ဝန်ထမ်း အင်အားနှင့်အချိုးအစား</h3>
                             <p class="text-slate-500 dark:text-slate-400">ဦးရေနှင့် ရာခိုင်နှုန်းသည် သက်ဆိုင်ရာဝန်ထမ်းအုပ်စု၏ စုစုပေါင်းအင်အားအပေါ် မူတည်ပါသည်။</p>
                         </div>
                         <div class="flex flex-wrap gap-3">
@@ -997,6 +1048,42 @@
 
                     <!-- Individual Cards Grid: One card per weapon type -->
                     <div id="dashboard-weapon-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pt-1"></div>
+                </div>
+
+                <!-- Production Statement Chart Bar (ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း ချက်ဘား) -->
+                <div id="dashboard-prod-chart-card" class="bg-white dark:bg-slate-800 p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3.5">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-2.5">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+                                </svg>
+                                <span>ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း</span>
+                            </h3>
+                            <span id="dashboard-prod-total-badge" class="text-xs font-bold text-slate-700 dark:text-slate-200"></span>
+                        </div>
+                        <div class="flex items-center gap-2 self-end sm:self-auto">
+                            <label for="dashboard-prod-fy-filter" class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ထုတ်လုပ်မှုနှစ် -</label>
+                            <select id="dashboard-prod-fy-filter" onchange="renderDashboardProdChart()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs font-semibold outline-none focus:border-blue-500">
+                                <option value="ALL">နှစ်အားလုံး (All Years)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Overview Qty & Percentage Cards -->
+                    <div id="dashboard-prod-overview-banner" class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs"></div>
+
+                    <!-- 12-Month Bar Chart (Apr - Mar: Qty & Percentage) -->
+                    <div class="bg-slate-50/80 dark:bg-slate-700/30 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="text-xs font-bold text-slate-800 dark:text-slate-200">လအလိုက် ထုတ်လုပ်မှု အရေအတွက်နှင့် ရာခိုင်နှုန်း (Apr - Mar)</span>
+                            <span id="dashboard-prod-month-subtitle" class="text-[11px] text-slate-500 dark:text-slate-400"></span>
+                        </div>
+                        <div id="dashboard-prod-monthly-chart" class="overflow-x-auto pb-1"></div>
+                    </div>
+
+                    <!-- Financial Years & Category Breakdown Bars -->
+                    <div id="dashboard-prod-breakdown-charts" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div>
                 </div>
             </section>
 
@@ -1510,19 +1597,19 @@
                 </div>
 
                 <!-- Dedicated Standalone Filter Card (စစ်ထုတ်ပြသသည့် ခလုတ်များ ကတ်ပြား) -->
-                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">လုံခြုံရေးအမျိုးအစား</span>
-                            <select id="duty-filter-dutytype" onchange="resetTablePage('duty'); renderSecurityDuty()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
+                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">လုံခြုံရေးအမျိုးအစား -</span>
+                            <select id="duty-filter-dutytype" onchange="resetTablePage('duty'); renderSecurityDuty()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
                         </div>
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာန</span>
-                            <select id="duty-filter-dept" onchange="resetTablePage('duty'); renderSecurityDuty()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာန -</span>
+                            <select id="duty-filter-dept" onchange="resetTablePage('duty'); renderSecurityDuty()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
                         </div>
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဝန်ထမ်းအမျိုးအစား</span>
-                            <select id="duty-filter-type" onchange="resetTablePage('duty'); renderSecurityDuty()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဝန်ထမ်းအမျိုးအစား -</span>
+                            <select id="duty-filter-type" onchange="resetTablePage('duty'); renderSecurityDuty()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
                         </div>
                     </div>
                 </div>
@@ -1592,32 +1679,32 @@
                     </div>
                 </div>
 
-                <!-- Dedicated Filter Card (စစ်ထုတ်ပြသသည့် ခလုတ်များ ကတ်ပြား) -->
-                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">အမျိုးအစား</span>
-                            <select id="armory-filter-cat" onchange="resetTablePage('armory'); renderArmory()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ပစ္စည်းအမည်</span>
-                            <select id="armory-filter-name" onchange="resetTablePage('armory'); renderArmory()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဖြန့်ခွဲမှု</span>
-                            <select id="armory-filter-status" onchange="resetTablePage('armory'); renderArmory()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Table Action Bar (Count, Add New, Import, Export) -->
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300">အရေအတွက်</span>
+                <!-- Dedicated Filter & Count Card (စစ်ထုတ်ပြသသည့် အရေအတွက်နှင့် ခလုတ်များ တစ်တန်းတည်း ကတ်ပြား) -->
+                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">အရေအတွက်</span>
                         <div class="inline-flex items-center justify-center min-w-[36px] px-2.5 py-1 bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 rounded-lg text-xs whitespace-nowrap">
                             <strong id="armory-master-count" class="text-blue-800 dark:text-blue-200 font-bold">၀</strong>
                         </div>
                     </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">အမျိုးအစား -</span>
+                            <select id="armory-filter-cat" onchange="resetTablePage('armory'); renderArmory()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ပစ္စည်းအမည် -</span>
+                            <select id="armory-filter-name" onchange="resetTablePage('armory'); renderArmory()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဖြန့်ခွဲမှု -</span>
+                            <select id="armory-filter-status" onchange="resetTablePage('armory'); renderArmory()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Action Bar (Add New, Import, Export) -->
+                <div class="flex flex-wrap items-center justify-end gap-2">
                     <input type="text" id="armory-search" oninput="resetTablePage('armory'); renderArmory()" placeholder="ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်း ရှာဖွေရန်..." class="hidden w-full lg:flex-1 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 text-xs outline-none">
                     <div id="armory-table-actions" class="role-write-action flex items-center justify-end gap-2 ml-auto">
                         <button onclick="openColumnConfigModal('armory')" class="btn-action-light px-2.5 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">ကော်လံပြင်ရန်</button>
@@ -1748,32 +1835,32 @@
                     </div>
                 </div>
 
-                <!-- Dedicated Filter Card (စစ်ထုတ်ပြသသည့် ခလုတ်များ ကတ်ပြား) -->
-                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">Financial Year</span>
-                            <select id="prod-filter-fy" onchange="resetTablePage('prod'); renderProdStatement()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">Description</span>
-                            <select id="prod-filter-desc" onchange="resetTablePage('prod'); renderProdStatement()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">Nomenclature</span>
-                            <select id="prod-filter-nom" onchange="resetTablePage('prod'); renderProdStatement()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Table Action Bar (Count, Add New, Import, Export) -->
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300">အရေအတွက်</span>
+                <!-- Dedicated Filter & Count Card (စစ်ထုတ်ပြသသည့် အရေအတွက်နှင့် ခလုတ်များ တစ်တန်းတည်း ကတ်ပြား) -->
+                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">အရေအတွက်</span>
                         <div class="inline-flex items-center justify-center min-w-[36px] px-2.5 py-1 bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 rounded-lg text-xs whitespace-nowrap">
                             <strong id="prod-master-count" class="text-blue-800 dark:text-blue-200 font-bold">၀</strong>
                         </div>
                     </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">Financial Year -</span>
+                            <select id="prod-filter-fy" onchange="resetTablePage('prod'); renderProdStatement()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">Description -</span>
+                            <select id="prod-filter-desc" onchange="resetTablePage('prod'); renderProdStatement()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">Nomenclature -</span>
+                            <select id="prod-filter-nom" onchange="resetTablePage('prod'); renderProdStatement()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Action Bar (Add New, Import, Export) -->
+                <div class="flex flex-wrap items-center justify-end gap-2">
                     <input type="text" id="prod-search" oninput="resetTablePage('prod'); renderProdStatement()" placeholder="ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း ရှာဖွေရန်..." class="hidden w-full lg:flex-1 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 text-xs outline-none">
                     <div id="prod-table-actions" class="role-write-action flex items-center justify-end gap-2 ml-auto">
                         <button onclick="openColumnConfigModal('prod')" class="btn-action-light px-2.5 py-1.5 rounded-lg font-bold text-xs shadow-sm transition whitespace-nowrap">ကော်လံပြင်ရန်</button>
@@ -1835,10 +1922,11 @@
                         <div>
                             <label for="announcement-content-input" class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">အကြောင်းအရာ</label>
                             <textarea id="announcement-content-input" rows="5" class="w-full resize-y bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 outline-none focus:border-blue-500"></textarea>
-                            <!-- Upload Photo & Upload PDF Bar -->
+                            <!-- Upload Photo, Upload PDF, Import & Insert Table Bar -->
                             <div class="mt-2 flex flex-wrap items-center gap-2">
                                 <input type="file" id="announcement-photo-input" accept="image/*" class="hidden" onchange="handleAnnouncementPhotoSelect(event)">
                                 <input type="file" id="announcement-pdf-input" accept="application/pdf,.pdf" class="hidden" onchange="handleAnnouncementPdfSelect(event)">
+                                <input type="file" id="announcement-import-input" accept=".xlsx,.xls,.csv,.txt,.md,.json" class="hidden" onchange="handleAnnouncementImportSelect(event)">
                                 <button type="button" onclick="document.getElementById('announcement-photo-input').click()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-bold text-xs transition shadow-xs">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload Photo</span>
@@ -1846,6 +1934,14 @@
                                 <button type="button" onclick="document.getElementById('announcement-pdf-input').click()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-rose-200 dark:border-rose-800 bg-rose-50 hover:bg-rose-100 dark:bg-rose-900/30 dark:hover:bg-rose-900/50 text-rose-700 dark:text-rose-300 font-bold text-xs transition shadow-xs">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
                                     <span>Upload PDF</span>
+                                </button>
+                                <button type="button" id="announcement-import-btn" onclick="document.getElementById('announcement-import-input').click()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 font-bold text-xs transition shadow-xs">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2.25A2.25 2.25 0 006.25 20.5h11.5A2.25 2.25 0 0020 18.25V16M16 8l-4-4m0 0L8 8m4-4v12"/></svg>
+                                    <span>Import</span>
+                                </button>
+                                <button type="button" id="announcement-insert-table-btn" onclick="openAnnouncementInsertTableModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-bold text-xs transition shadow-xs">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v13.5A2.25 2.25 0 0118.75 21H5.25A2.25 2.25 0 013 18.75V5.25zM3 9h18M3 15h18M9 9v12M15 9v12"/></svg>
+                                    <span>Insert Table</span>
                                 </button>
                             </div>
                             <div id="announcement-attachment-preview" class="hidden mt-2.5 flex flex-wrap gap-2"></div>
@@ -2877,6 +2973,37 @@ var db = admin.firestore();</pre>
                 <a id="ann-viewer-open-btn" href="#" target="_blank" rel="noopener noreferrer" class="hidden px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition">Open</a>
                 <a id="ann-viewer-download-btn" href="#" download="attachment" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold transition">Download</a>
                 <button type="button" onclick="closeAnnouncementViewerModal()" class="px-4 py-2 bg-slate-500 hover:bg-slate-600 text-white rounded-lg font-bold transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANNOUNCEMENT INSERT TABLE MODAL -->
+    <div id="announcement-table-modal" onclick="if(event.target === this) closeAnnouncementTableModal()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[80] flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl max-w-3xl w-full max-h-[90vh] shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col modal-animate">
+            <div class="bg-gradient-to-r from-indigo-700 via-blue-800 to-blue-900 text-white px-4 py-3 flex justify-between items-center gap-2 flex-shrink-0">
+                <h3 id="ann-table-modal-title" class="font-bold text-xs sm:text-sm text-white truncate">Insert Table (ဇယားထည့်သွင်းရန်)</h3>
+                <button type="button" onclick="closeAnnouncementTableModal()" class="text-white/80 hover:text-white text-xl font-bold px-1">&times;</button>
+            </div>
+            <div class="p-4 space-y-3 overflow-y-auto flex-1 text-xs">
+                <div class="flex flex-wrap items-center gap-2.5 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg border border-slate-200 dark:border-slate-600">
+                    <label class="inline-flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-200">
+                        <span>အတန်း (Rows):</span>
+                        <input type="number" id="ann-table-rows-input" min="1" max="30" value="3" onchange="resizeAnnouncementTableGrid()" class="w-16 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-500 rounded px-2 py-1 text-center font-bold outline-none focus:border-blue-500">
+                    </label>
+                    <label class="inline-flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-200">
+                        <span>ကော်လံ (Cols):</span>
+                        <input type="number" id="ann-table-cols-input" min="1" max="12" value="3" onchange="resizeAnnouncementTableGrid()" class="w-16 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-500 rounded px-2 py-1 text-center font-bold outline-none focus:border-blue-500">
+                    </label>
+                    <button type="button" onclick="addAnnouncementTableRow()" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded font-bold transition">+ Row</button>
+                    <button type="button" onclick="addAnnouncementTableCol()" class="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded font-bold transition">+ Col</button>
+                </div>
+                <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-600">
+                    <table id="ann-table-grid-editor" class="w-full text-left border-collapse"></table>
+                </div>
+            </div>
+            <div class="px-4 py-3 bg-slate-50 dark:bg-slate-700/40 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-2 flex-shrink-0">
+                <button type="button" onclick="closeAnnouncementTableModal()" class="px-3.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg font-bold transition">Cancel</button>
+                <button type="button" onclick="saveAnnouncementModalTable()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition shadow-xs">ဇယားထည့်သွင်းမည်</button>
             </div>
         </div>
     </div>
@@ -4351,6 +4478,9 @@ var db = admin.firestore();</pre>
 
         let pendingAnnouncementPhoto = null;
         let pendingAnnouncementPdf = null;
+        let pendingAnnouncementTables = [];
+        let editingPendingAnnouncementTableIndex = -1;
+        let announcementModalDraftTable = { headers: [], rows: [] };
         let announcementViewerBlobUrl = null;
 
         function compressAnnouncementImage(file) {
@@ -4436,17 +4566,386 @@ var db = admin.firestore();</pre>
             event.target.value = '';
         }
 
-        function removePendingAnnouncementAttachment(type) {
+        function removePendingAnnouncementAttachment(type, index = 0) {
             if (type === 'photo') pendingAnnouncementPhoto = null;
             if (type === 'pdf') pendingAnnouncementPdf = null;
+            if (type === 'table') pendingAnnouncementTables.splice(index, 1);
             renderPendingAnnouncementAttachments();
+        }
+
+        function normalizeAnnouncementTableObj(raw) {
+            const headers = Array.isArray(raw?.headers) ? raw.headers.map(h => String(h ?? '')) : [];
+            const colCount = Math.max(1, headers.length || 1);
+            const rawRows = Array.isArray(raw?.rows) ? raw.rows : [];
+            const rows = rawRows.map(r => {
+                const cellsArr = Array.isArray(r) ? r : (Array.isArray(r?.cells) ? r.cells : []);
+                return {
+                    cells: Array.from({ length: colCount }, (_, i) => String(cellsArr[i] ?? ''))
+                };
+            });
+            return { headers, rows };
+        }
+
+        function buildAnnouncementTablesElement(tables) {
+            const list = Array.isArray(tables) ? tables.map(normalizeAnnouncementTableObj).filter(t => t.headers.length || t.rows.length) : [];
+            if (!list.length) return null;
+            const wrap = document.createElement('div');
+            wrap.className = 'mt-3 space-y-2.5';
+            list.forEach(tbl => {
+                const box = document.createElement('div');
+                box.className = 'overflow-x-auto rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800';
+                const tableEl = document.createElement('table');
+                tableEl.className = 'w-full text-left text-xs border-collapse';
+                if (tbl.headers.length) {
+                    const thead = document.createElement('thead');
+                    thead.className = 'bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100 border-b border-slate-300 dark:border-slate-600';
+                    const tr = document.createElement('tr');
+                    tbl.headers.forEach((h, i) => {
+                        const th = document.createElement('th');
+                        th.className = 'px-2.5 py-1.5 font-bold border-r last:border-r-0 border-slate-200 dark:border-slate-600 whitespace-nowrap';
+                        th.textContent = h.trim() || `ကော်လံ ${toMyanmarNumerals(i + 1)}`;
+                        tr.appendChild(th);
+                    });
+                    thead.appendChild(tr);
+                    tableEl.appendChild(thead);
+                }
+                const tbody = document.createElement('tbody');
+                tbody.className = 'divide-y divide-slate-200 dark:divide-slate-700';
+                tbl.rows.forEach(rowObj => {
+                    const tr = document.createElement('tr');
+                    (rowObj.cells || []).forEach(val => {
+                        const td = document.createElement('td');
+                        td.className = 'px-2.5 py-1.5 border-r last:border-r-0 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200';
+                        td.textContent = val === '' ? '-' : val;
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                tableEl.appendChild(tbody);
+                box.appendChild(tableEl);
+                wrap.appendChild(box);
+            });
+            return wrap;
+        }
+
+        function parseAnnouncementCsvRows(text) {
+            const rows = [];
+            let curRow = [];
+            let curVal = '';
+            let inQuotes = false;
+            const src = String(text || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            for (let i = 0; i < src.length; i++) {
+                const ch = src[i];
+                if (inQuotes) {
+                    if (ch === '"' && src[i + 1] === '"') {
+                        curVal += '"';
+                        i++;
+                    } else if (ch === '"') {
+                        inQuotes = false;
+                    } else {
+                        curVal += ch;
+                    }
+                } else if (ch === '"') {
+                    inQuotes = true;
+                } else if (ch === ',') {
+                    curRow.push(curVal.trim());
+                    curVal = '';
+                } else if (ch === '\n') {
+                    curRow.push(curVal.trim());
+                    if (curRow.some(c => c !== '')) rows.push(curRow);
+                    curRow = [];
+                    curVal = '';
+                } else {
+                    curVal += ch;
+                }
+            }
+            curRow.push(curVal.trim());
+            if (curRow.some(c => c !== '')) rows.push(curRow);
+            return rows;
+        }
+
+        function appendAnnouncementContentText(text) {
+            const contentInput = document.getElementById('announcement-content-input');
+            if (!contentInput) return;
+            const incoming = String(text || '').trim();
+            if (!incoming) return;
+            const existing = contentInput.value.trim();
+            contentInput.value = existing ? `${existing}\n${incoming}` : incoming;
+        }
+
+        function handleAnnouncementImportSelect(event) {
+            const file = event.target?.files?.[0];
+            if (!file) return;
+            const name = file.name || 'imported';
+            const ext = (name.split('.').pop() || '').toLowerCase();
+
+            const resetInput = () => { if (event.target) event.target.value = ''; };
+
+            if (ext === 'xlsx' || ext === 'xls' || ext === 'csv') {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    try {
+                        let gridRows = [];
+                        if (typeof XLSX !== 'undefined') {
+                            const wb = ext === 'csv'
+                                ? XLSX.read(new TextDecoder('utf-8').decode(new Uint8Array(reader.result)), { type: 'string' })
+                                : XLSX.read(new Uint8Array(reader.result), { type: 'array' });
+                            const firstSheetName = wb.SheetNames && wb.SheetNames[0];
+                            if (firstSheetName) {
+                                gridRows = XLSX.utils.sheet_to_json(wb.Sheets[firstSheetName], { header: 1, defval: '' });
+                            }
+                        } else if (ext === 'csv') {
+                            gridRows = parseAnnouncementCsvRows(new TextDecoder('utf-8').decode(new Uint8Array(reader.result)));
+                        } else {
+                            showToast('Excel Library မတွေ့ရှိသဖြင့် CSV/TXT ဖိုင်ဖြင့် Import ပြုလုပ်ပေးပါ', 'error');
+                            resetInput();
+                            return;
+                        }
+                        const cleanRows = (gridRows || [])
+                            .map(r => (Array.isArray(r) ? r.map(c => String(c ?? '').trim()) : []))
+                            .filter(r => r.some(c => c !== ''));
+                        if (!cleanRows.length) {
+                            showToast('Import ဖိုင်အတွင်း အချက်အလက် မတွေ့ရှိပါ', 'error');
+                            resetInput();
+                            return;
+                        }
+                        const maxCols = Math.max(1, ...cleanRows.map(r => r.length));
+                        const headers = Array.from({ length: maxCols }, (_, i) => cleanRows[0][i] || `ကော်လံ ${toMyanmarNumerals(i + 1)}`);
+                        const bodyRows = cleanRows.slice(1).map(r => ({
+                            cells: Array.from({ length: maxCols }, (_, i) => r[i] || '')
+                        }));
+                        pendingAnnouncementTables.push({
+                            headers,
+                            rows: bodyRows.length ? bodyRows : [{ cells: Array.from({ length: maxCols }, () => '') }]
+                        });
+                        renderPendingAnnouncementAttachments();
+                        showToast(`"${name}" ဇယားဖိုင်ကို Import လုပ်ပြီးပါပြီ`, 'success');
+                    } catch (err) {
+                        showToast(`Import မအောင်မြင်ပါ (${err?.message || 'Read Error'})`, 'error');
+                    } finally {
+                        resetInput();
+                    }
+                };
+                reader.onerror = () => {
+                    showToast('ဖိုင်ဖတ်ရှုမှု မအောင်မြင်ပါ', 'error');
+                    resetInput();
+                };
+                reader.readAsArrayBuffer(file);
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    const text = String(reader.result || '');
+                    if (ext === 'json') {
+                        try {
+                            const parsed = JSON.parse(text);
+                            const titleInput = document.getElementById('announcement-title-input');
+                            if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+                                if (parsed.title && titleInput && !titleInput.value.trim()) titleInput.value = String(parsed.title);
+                                if (parsed.content) appendAnnouncementContentText(parsed.content);
+                                if (Array.isArray(parsed.tables)) {
+                                    parsed.tables.forEach(t => pendingAnnouncementTables.push(normalizeAnnouncementTableObj(t)));
+                                    renderPendingAnnouncementAttachments();
+                                }
+                                if (!parsed.content && !Array.isArray(parsed.tables)) appendAnnouncementContentText(text);
+                            } else {
+                                appendAnnouncementContentText(text);
+                            }
+                        } catch (e) {
+                            appendAnnouncementContentText(text);
+                        }
+                    } else {
+                        appendAnnouncementContentText(text);
+                    }
+                    showToast(`"${name}" ဖိုင်ကို Import လုပ်ပြီးပါပြီ`, 'success');
+                } finally {
+                    resetInput();
+                }
+            };
+            reader.onerror = () => {
+                showToast('ဖိုင်ဖတ်ရှုမှု မအောင်မြင်ပါ', 'error');
+                resetInput();
+            };
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        function syncAnnouncementDraftFromGridDom() {
+            const tableEl = document.getElementById('ann-table-grid-editor');
+            if (!tableEl) return;
+            const headerInputs = Array.from(tableEl.querySelectorAll('thead input[data-col]'));
+            if (headerInputs.length) {
+                announcementModalDraftTable.headers = headerInputs.map(inp => inp.value);
+            }
+            const bodyRows = Array.from(tableEl.querySelectorAll('tbody tr'));
+            if (bodyRows.length) {
+                announcementModalDraftTable.rows = bodyRows.map(tr => ({
+                    cells: Array.from(tr.querySelectorAll('input[data-col]')).map(inp => inp.value)
+                }));
+            }
+        }
+
+        function renderAnnouncementTableGridEditor() {
+            const tableEl = document.getElementById('ann-table-grid-editor');
+            const rowsInp = document.getElementById('ann-table-rows-input');
+            const colsInp = document.getElementById('ann-table-cols-input');
+            if (!tableEl) return;
+
+            const colCount = Math.max(1, announcementModalDraftTable.headers.length || 3);
+            const rowCount = Math.max(1, announcementModalDraftTable.rows.length || 1);
+            if (rowsInp) rowsInp.value = rowCount;
+            if (colsInp) colsInp.value = colCount;
+
+            tableEl.replaceChildren();
+            const thead = document.createElement('thead');
+            thead.className = 'bg-indigo-50 dark:bg-slate-700';
+            const hTr = document.createElement('tr');
+            for (let c = 0; c < colCount; c++) {
+                const th = document.createElement('th');
+                th.className = 'p-1.5 border-b border-r border-slate-200 dark:border-slate-600 min-w-[95px]';
+                const inp = document.createElement('input');
+                inp.type = 'text';
+                inp.setAttribute('data-col', String(c));
+                inp.placeholder = `ခေါင်းစဉ် ${c + 1}`;
+                inp.value = announcementModalDraftTable.headers[c] ?? '';
+                inp.className = 'w-full bg-white dark:bg-slate-800 border border-indigo-200 dark:border-slate-500 rounded px-2 py-1 font-bold text-xs text-slate-900 dark:text-white outline-none focus:border-indigo-500';
+                th.appendChild(inp);
+                hTr.appendChild(th);
+            }
+            const actTh = document.createElement('th');
+            actTh.className = 'p-1.5 border-b border-slate-200 dark:border-slate-600 text-center w-9 text-[11px] font-bold text-slate-500';
+            actTh.textContent = 'ဖျက်';
+            hTr.appendChild(actTh);
+            thead.appendChild(hTr);
+            tableEl.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+            for (let r = 0; r < rowCount; r++) {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b last:border-b-0 border-slate-200 dark:border-slate-700';
+                const rowCells = announcementModalDraftTable.rows[r]?.cells || [];
+                for (let c = 0; c < colCount; c++) {
+                    const td = document.createElement('td');
+                    td.className = 'p-1.5 border-r border-slate-200 dark:border-slate-700';
+                    const inp = document.createElement('input');
+                    inp.type = 'text';
+                    inp.setAttribute('data-col', String(c));
+                    inp.placeholder = '-';
+                    inp.value = rowCells[c] ?? '';
+                    inp.className = 'w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded px-2 py-1 text-xs text-slate-900 dark:text-white outline-none focus:border-blue-500';
+                    td.appendChild(inp);
+                    tr.appendChild(td);
+                }
+                const delTd = document.createElement('td');
+                delTd.className = 'p-1.5 text-center';
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.textContent = '✕';
+                delBtn.title = 'အတန်းဖျက်မည်';
+                delBtn.disabled = rowCount <= 1;
+                delBtn.className = 'px-1.5 py-0.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-700 rounded font-bold disabled:opacity-30';
+                delBtn.onclick = () => {
+                    syncAnnouncementDraftFromGridDom();
+                    if (announcementModalDraftTable.rows.length > 1) {
+                        announcementModalDraftTable.rows.splice(r, 1);
+                        renderAnnouncementTableGridEditor();
+                    }
+                };
+                delTd.appendChild(delBtn);
+                tr.appendChild(delTd);
+                tbody.appendChild(tr);
+            }
+            tableEl.appendChild(tbody);
+        }
+
+        function resizeAnnouncementTableGrid() {
+            syncAnnouncementDraftFromGridDom();
+            const targetRows = Math.max(1, Math.min(30, parseInt(document.getElementById('ann-table-rows-input')?.value, 10) || 1));
+            const targetCols = Math.max(1, Math.min(12, parseInt(document.getElementById('ann-table-cols-input')?.value, 10) || 1));
+            const prevH = announcementModalDraftTable.headers || [];
+            const prevR = announcementModalDraftTable.rows || [];
+            announcementModalDraftTable = {
+                headers: Array.from({ length: targetCols }, (_, c) => prevH[c] ?? `ကော်လံ ${toMyanmarNumerals(c + 1)}`),
+                rows: Array.from({ length: targetRows }, (_, r) => ({
+                    cells: Array.from({ length: targetCols }, (_, c) => prevR[r]?.cells?.[c] ?? '')
+                }))
+            };
+            renderAnnouncementTableGridEditor();
+        }
+
+        function addAnnouncementTableRow() {
+            const rowsInp = document.getElementById('ann-table-rows-input');
+            if (rowsInp) {
+                rowsInp.value = Math.min(30, (parseInt(rowsInp.value, 10) || 1) + 1);
+                resizeAnnouncementTableGrid();
+            }
+        }
+
+        function addAnnouncementTableCol() {
+            const colsInp = document.getElementById('ann-table-cols-input');
+            if (colsInp) {
+                colsInp.value = Math.min(12, (parseInt(colsInp.value, 10) || 1) + 1);
+                resizeAnnouncementTableGrid();
+            }
+        }
+
+        function openAnnouncementInsertTableModal(editIdx = -1) {
+            if (!guardWritePermission()) return;
+            const modal = document.getElementById('announcement-table-modal');
+            const titleEl = document.getElementById('ann-table-modal-title');
+            if (!modal) return;
+            editingPendingAnnouncementTableIndex = Number.isInteger(editIdx) ? editIdx : -1;
+            const existing = editingPendingAnnouncementTableIndex >= 0 ? pendingAnnouncementTables[editingPendingAnnouncementTableIndex] : null;
+            if (existing) {
+                const norm = normalizeAnnouncementTableObj(existing);
+                announcementModalDraftTable = {
+                    headers: [...norm.headers],
+                    rows: norm.rows.length ? norm.rows.map(r => ({ cells: [...r.cells] })) : [{ cells: norm.headers.map(() => '') }]
+                };
+                if (titleEl) titleEl.textContent = 'Edit Table (ဇယားပြင်ဆင်ရန်)';
+            } else {
+                announcementModalDraftTable = {
+                    headers: ['ကော်လံ ၁', 'ကော်လံ ၂', 'ကော်လံ ၃'],
+                    rows: [
+                        { cells: ['', '', ''] },
+                        { cells: ['', '', ''] },
+                        { cells: ['', '', ''] }
+                    ]
+                };
+                if (titleEl) titleEl.textContent = 'Insert Table (ဇယားထည့်သွင်းရန်)';
+            }
+            renderAnnouncementTableGridEditor();
+            modal.classList.remove('hidden');
+        }
+
+        function closeAnnouncementTableModal() {
+            document.getElementById('announcement-table-modal')?.classList.add('hidden');
+            editingPendingAnnouncementTableIndex = -1;
+        }
+
+        function saveAnnouncementModalTable() {
+            syncAnnouncementDraftFromGridDom();
+            const headers = announcementModalDraftTable.headers.map((h, i) => String(h || '').trim() || `ကော်လံ ${toMyanmarNumerals(i + 1)}`);
+            const rows = announcementModalDraftTable.rows.map(r => ({
+                cells: Array.from({ length: headers.length }, (_, i) => String(r.cells?.[i] ?? '').trim())
+            }));
+            const saved = { headers, rows };
+            if (editingPendingAnnouncementTableIndex >= 0 && pendingAnnouncementTables[editingPendingAnnouncementTableIndex]) {
+                pendingAnnouncementTables[editingPendingAnnouncementTableIndex] = saved;
+            } else {
+                pendingAnnouncementTables.push(saved);
+            }
+            closeAnnouncementTableModal();
+            renderPendingAnnouncementAttachments();
+            showToast('ဇယားထည့်သွင်းပြီးပါပြီ', 'success');
         }
 
         function renderPendingAnnouncementAttachments() {
             const container = document.getElementById('announcement-attachment-preview');
             if (!container) return;
             container.replaceChildren();
-            if (!pendingAnnouncementPhoto && !pendingAnnouncementPdf) {
+            if (!pendingAnnouncementPhoto && !pendingAnnouncementPdf && !pendingAnnouncementTables.length) {
                 container.classList.add('hidden');
                 return;
             }
@@ -4498,6 +4997,38 @@ var db = admin.firestore();</pre>
                 badge.append(iconSpan, nameSpan, viewBtn, rmBtn);
                 container.appendChild(badge);
             }
+
+            pendingAnnouncementTables.forEach((tbl, tIdx) => {
+                const norm = normalizeAnnouncementTableObj(tbl);
+                const card = document.createElement('div');
+                card.className = 'w-full bg-indigo-50/70 dark:bg-slate-700/70 border border-indigo-200 dark:border-indigo-800 rounded-lg p-2.5 text-xs space-y-2';
+                const topRow = document.createElement('div');
+                topRow.className = 'flex items-center justify-between gap-2';
+                const lbl = document.createElement('span');
+                lbl.className = 'font-bold text-indigo-800 dark:text-indigo-200';
+                lbl.textContent = `📊 Table (${toMyanmarNumerals(norm.rows.length)}×${toMyanmarNumerals(norm.headers.length)})`;
+                const btns = document.createElement('div');
+                btns.className = 'flex items-center gap-1.5';
+                const editBtn = document.createElement('button');
+                editBtn.type = 'button';
+                editBtn.className = 'px-2 py-0.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded font-bold text-[10px]';
+                editBtn.textContent = 'Edit';
+                editBtn.onclick = () => openAnnouncementInsertTableModal(tIdx);
+                const rmBtn = document.createElement('button');
+                rmBtn.type = 'button';
+                rmBtn.className = 'text-rose-600 hover:text-rose-800 font-bold px-1';
+                rmBtn.textContent = '✕';
+                rmBtn.onclick = () => removePendingAnnouncementAttachment('table', tIdx);
+                btns.append(editBtn, rmBtn);
+                topRow.append(lbl, btns);
+                card.appendChild(topRow);
+                const previewWrap = buildAnnouncementTablesElement([norm]);
+                if (previewWrap) {
+                    previewWrap.className = 'space-y-1';
+                    card.appendChild(previewWrap);
+                }
+                container.appendChild(card);
+            });
         }
 
         function dataUrlToBlobUrl(dataUrl) {
@@ -4594,6 +5125,64 @@ var db = admin.firestore();</pre>
             }
         }
 
+        let editingAnnouncementId = null;
+
+        function startEditAnnouncement(id) {
+            if (!guardWritePermission()) return;
+            editingAnnouncementId = id;
+            renderAnnouncementView();
+            const titleInput = document.getElementById(`ann-edit-title-${id}`);
+            if (titleInput) titleInput.focus();
+        }
+
+        function saveEditedAnnouncement(id) {
+            if (!guardWritePermission()) return;
+            const idx = (announcementData || []).findIndex(a => a && a.id === id);
+            if (idx < 0) return;
+            if (editingAnnouncementId !== id) {
+                showToast('ပြင်ဆင်လိုပါက Edit ကို ဦးစွာနှိပ်ပါ', 'info');
+                return;
+            }
+            const titleEl = document.getElementById(`ann-edit-title-${id}`);
+            const contentEl = document.getElementById(`ann-edit-content-${id}`);
+            const newTitle = titleEl ? titleEl.value.trim() : (announcementData[idx].title || '');
+            const newContent = contentEl ? contentEl.value.trim() : (announcementData[idx].content || '');
+            const item = announcementData[idx];
+            if (!newTitle) {
+                showToast('ကြေညာချက်ခေါင်းစဉ်ကို ဖြည့်သွင်းပါ', 'error');
+                return;
+            }
+            if (!newContent && !item.photoData && !item.pdfData && !(Array.isArray(item.tables) && item.tables.length)) {
+                showToast('အကြောင်းအရာ (သို့မဟုတ်) Photo / PDF / Table တစ်ခုခု ရှိရပါမည်', 'error');
+                return;
+            }
+            item.title = newTitle;
+            item.content = newContent;
+            item.updatedAt = new Date().toISOString();
+            editingAnnouncementId = null;
+            saveSystemState();
+            renderAnnouncementView();
+            renderDashboardAnnouncement();
+            showToast('ကြေညာချက် ပြင်ဆင်သိမ်းဆည်းပြီးပါပြီ', 'success');
+        }
+
+        function confirmDeleteAnnouncement(id) {
+            if (!guardWritePermission()) return;
+            const idx = (announcementData || []).findIndex(a => a && a.id === id);
+            if (idx < 0) return;
+            const title = announcementData[idx].title || 'ကြေညာချက်';
+            openConfirmModal(`"${title}" ကြေညာချက်ကို ဖျက်မည်။ သေချာပါသလား?`, () => {
+                const targetIdx = (announcementData || []).findIndex(a => a && a.id === id);
+                if (targetIdx < 0) return;
+                announcementData.splice(targetIdx, 1);
+                if (editingAnnouncementId === id) editingAnnouncementId = null;
+                saveSystemState();
+                renderAnnouncementView();
+                renderDashboardAnnouncement();
+                showToast('ကြေညာချက်ကို ဖျက်ပြီးပါပြီ', 'error');
+            });
+        }
+
         function renderAnnouncementView() {
             const countEl = document.getElementById('announcement-count');
             const listEl = document.getElementById('announcement-history-list');
@@ -4605,10 +5194,14 @@ var db = admin.firestore();</pre>
             if (timeInput) timeInput.value = formatAnnouncementTimestamp(new Date().toISOString());
             if (!listEl) return;
 
-            const announcements = getAnnouncementsNewestFirst().filter(item =>
-                !searchQuery || [item.id, item.title, item.content, item.announcer, item.createdAt, item.photoName, item.pdfName]
-                    .some(value => String(value || '').toLocaleLowerCase().includes(searchQuery))
-            );
+            const announcements = getAnnouncementsNewestFirst().filter(item => {
+                if (!searchQuery) return true;
+                const tableText = Array.isArray(item.tables)
+                    ? item.tables.flatMap(t => [...(t.headers || []), ...((t.rows || []).flatMap(r => r.cells || r || []))]).join(' ')
+                    : '';
+                return [item.id, item.title, item.content, item.announcer, item.createdAt, item.photoName, item.pdfName, tableText]
+                    .some(value => String(value || '').toLocaleLowerCase().includes(searchQuery));
+            });
             listEl.replaceChildren();
             if (!announcements.length) {
                 const emptyMessage = document.createElement('p');
@@ -4620,24 +5213,47 @@ var db = admin.firestore();</pre>
 
             announcements.forEach(item => {
                 const isSearchHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('announcement', item);
+                const isEditing = Boolean(item.id && editingAnnouncementId === item.id);
                 const card = document.createElement('article');
                 card.className = `p-3.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/40${isSearchHl ? ' search-row-highlight' : ''}`;
                 if (isSearchHl) card.setAttribute('data-search-highlighted', 'true');
                 card.dataset.announcementId = item.id || '';
-                const heading = document.createElement('h3');
-                heading.className = 'font-bold text-slate-900 dark:text-white';
-                heading.textContent = item.title || '';
-                const metadata = document.createElement('p');
-                metadata.className = 'mt-1 text-slate-500 dark:text-slate-400';
-                metadata.textContent = `${item.announcer || ''} · ${formatAnnouncementTimestamp(item.createdAt)}`;
-                card.append(heading, metadata);
 
-                if (item.content) {
-                    const content = document.createElement('p');
-                    content.className = 'mt-2 text-slate-700 dark:text-slate-200 whitespace-pre-wrap break-words';
-                    content.textContent = item.content;
-                    card.appendChild(content);
+                if (isEditing) {
+                    const editTitle = document.createElement('input');
+                    editTitle.type = 'text';
+                    editTitle.id = `ann-edit-title-${item.id}`;
+                    editTitle.maxLength = 200;
+                    editTitle.value = item.title || '';
+                    editTitle.className = 'w-full bg-white dark:bg-slate-800 border border-blue-400 dark:border-blue-500 rounded-lg px-2.5 py-1.5 font-bold text-slate-900 dark:text-white outline-none mb-2';
+                    const metadata = document.createElement('p');
+                    metadata.className = 'mb-2 text-slate-500 dark:text-slate-400';
+                    metadata.textContent = `${item.announcer || ''} · ${formatAnnouncementTimestamp(item.createdAt)}`;
+                    const editContent = document.createElement('textarea');
+                    editContent.id = `ann-edit-content-${item.id}`;
+                    editContent.rows = 4;
+                    editContent.value = item.content || '';
+                    editContent.className = 'w-full resize-y bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-slate-800 dark:text-slate-100 outline-none focus:border-blue-500';
+                    card.append(editTitle, metadata, editContent);
+                } else {
+                    const heading = document.createElement('h3');
+                    heading.className = 'font-bold text-slate-900 dark:text-white';
+                    heading.textContent = item.title || '';
+                    const metadata = document.createElement('p');
+                    metadata.className = 'mt-1 text-slate-500 dark:text-slate-400';
+                    metadata.textContent = `${item.announcer || ''} · ${formatAnnouncementTimestamp(item.createdAt)}`;
+                    card.append(heading, metadata);
+
+                    if (item.content) {
+                        const content = document.createElement('p');
+                        content.className = 'mt-2 text-slate-700 dark:text-slate-200 whitespace-pre-wrap break-words';
+                        content.textContent = item.content;
+                        card.appendChild(content);
+                    }
                 }
+
+                const tablesWrap = buildAnnouncementTablesElement(item.tables);
+                if (tablesWrap) card.appendChild(tablesWrap);
 
                 if (item.photoData || item.pdfData) {
                     const attWrap = document.createElement('div');
@@ -4683,6 +5299,31 @@ var db = admin.firestore();</pre>
                     card.appendChild(attWrap);
                 }
 
+                // Bottom Borderless Link Actions (Edit, Save, Delete)
+                const footerActions = document.createElement('div');
+                footerActions.className = 'role-write-action mt-2.5 pt-2 border-t border-slate-200/80 dark:border-slate-600/70 flex items-center justify-end gap-3.5';
+
+                const editLink = document.createElement('button');
+                editLink.type = 'button';
+                editLink.className = 'ann-link-btn ann-link-btn-edit';
+                editLink.textContent = 'Edit';
+                editLink.onclick = () => startEditAnnouncement(item.id);
+
+                const saveLink = document.createElement('button');
+                saveLink.type = 'button';
+                saveLink.className = 'ann-link-btn ann-link-btn-save';
+                saveLink.textContent = 'Save';
+                saveLink.onclick = () => saveEditedAnnouncement(item.id);
+
+                const deleteLink = document.createElement('button');
+                deleteLink.type = 'button';
+                deleteLink.className = 'ann-link-btn ann-link-btn-delete';
+                deleteLink.textContent = 'Delete';
+                deleteLink.onclick = () => confirmDeleteAnnouncement(item.id);
+
+                footerActions.append(editLink, saveLink, deleteLink);
+                card.appendChild(footerActions);
+
                 listEl.appendChild(card);
             });
         }
@@ -4695,11 +5336,23 @@ var db = admin.firestore();</pre>
             if (!latest) return;
             const title = document.getElementById('dashboard-announcement-title');
             const content = document.getElementById('dashboard-announcement-content');
+            const tablesHost = document.getElementById('dashboard-announcement-tables');
             const metadata = document.getElementById('dashboard-announcement-meta');
             const count = document.getElementById('dashboard-announcement-count');
             const attEl = document.getElementById('dashboard-announcement-attachments');
             if (title) title.textContent = latest.title || '';
             if (content) content.textContent = latest.content || '';
+            if (tablesHost) {
+                tablesHost.replaceChildren();
+                const tablesWrap = buildAnnouncementTablesElement(latest.tables);
+                if (tablesWrap) {
+                    tablesWrap.className = 'space-y-2.5';
+                    tablesHost.appendChild(tablesWrap);
+                    tablesHost.classList.remove('hidden');
+                } else {
+                    tablesHost.classList.add('hidden');
+                }
+            }
             if (metadata) metadata.textContent = `${latest.announcer || ''} · ${formatAnnouncementTimestamp(latest.createdAt)}`;
             if (count) count.textContent = toMyanmarNumerals(announcementData.length);
             if (attEl) {
@@ -4739,8 +5392,8 @@ var db = admin.firestore();</pre>
                 showToast('ကြေညာချက်ခေါင်းစဉ်ကို ဖြည့်သွင်းပါ', 'error');
                 return;
             }
-            if (!content && !pendingAnnouncementPhoto && !pendingAnnouncementPdf) {
-                showToast('အကြောင်းအရာ (သို့မဟုတ်) Photo / PDF ဖိုင်တစ်ခုခု ထည့်သွင်းပါ', 'error');
+            if (!content && !pendingAnnouncementPhoto && !pendingAnnouncementPdf && !pendingAnnouncementTables.length) {
+                showToast('အကြောင်းအရာ (သို့မဟုတ်) Photo / PDF / Table တစ်ခုခု ထည့်သွင်းပါ', 'error');
                 return;
             }
             if (!currentSessionUser) {
@@ -4767,12 +5420,16 @@ var db = admin.firestore();</pre>
                 entry.pdfData = pendingAnnouncementPdf.dataUrl;
                 entry.pdfName = pendingAnnouncementPdf.name || 'document.pdf';
             }
+            if (pendingAnnouncementTables.length) {
+                entry.tables = pendingAnnouncementTables.map(t => normalizeAnnouncementTableObj(t));
+            }
             announcementData.push(entry);
             saveSystemState();
             if (titleInput) titleInput.value = '';
             if (contentInput) contentInput.value = '';
             pendingAnnouncementPhoto = null;
             pendingAnnouncementPdf = null;
+            pendingAnnouncementTables = [];
             renderPendingAnnouncementAttachments();
             renderAnnouncementView();
             renderDashboardView();
@@ -10199,12 +10856,14 @@ function doGet(e) {
             const specificKey = posToRankKey[posVal];
             if (specificKey && RANK_DEFINITIONS && Array.isArray(RANK_DEFINITIONS[specificKey])) {
                 const ranks = RANK_DEFINITIONS[specificKey] || [];
+                const seenVals = new Set();
                 ranks.forEach(r => {
                     const val = (r.abbr || r.full || '').trim();
-                    if (val) {
+                    if (val && !seenVals.has(val)) {
+                        seenVals.add(val);
                         const opt = document.createElement('option');
                         opt.value = val;
-                        opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
+                        opt.textContent = val;
                         rankSelect.appendChild(opt);
                     }
                 });
@@ -10213,12 +10872,14 @@ function doGet(e) {
                     if (!Array.isArray(ranks) || !ranks.length) return;
                     const group = document.createElement('optgroup');
                     group.label = rankCategoryLabels[catKey] || catKey;
+                    const seenVals = new Set();
                     ranks.forEach(r => {
                         const val = (r.abbr || r.full || '').trim();
-                        if (val) {
+                        if (val && !seenVals.has(val)) {
+                            seenVals.add(val);
                             const opt = document.createElement('option');
                             opt.value = val;
-                            opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
+                            opt.textContent = val;
                             group.appendChild(opt);
                         }
                     });
@@ -10962,6 +11623,166 @@ function doGet(e) {
             updateDashboardWeaponCards();
         }
 
+        function renderDashboardProdChart() {
+            const fySelect = document.getElementById('dashboard-prod-fy-filter');
+            const totalBadge = document.getElementById('dashboard-prod-total-badge');
+            const overviewEl = document.getElementById('dashboard-prod-overview-banner');
+            const monthlyEl = document.getElementById('dashboard-prod-monthly-chart');
+            const monthSubEl = document.getElementById('dashboard-prod-month-subtitle');
+            const breakdownEl = document.getElementById('dashboard-prod-breakdown-charts');
+            if (!monthlyEl || !overviewEl) return;
+
+            const allRows = Array.isArray(prodStatementData) ? prodStatementData : [];
+            const allYears = [...new Set(allRows.map(r => String(r?.financialYears || '').trim()).filter(Boolean))].sort();
+
+            if (fySelect) {
+                const prevVal = fySelect.value || 'ALL';
+                fySelect.innerHTML = `<option value="ALL">နှစ်အားလုံး (${toMyanmarNumerals(allYears.length)} နှစ်)</option>` +
+                    allYears.map(fy => `<option value="${escapeHtml(fy)}">${escapeHtml(fy)}</option>`).join('');
+                fySelect.value = (prevVal === 'ALL' || allYears.includes(prevVal)) ? prevVal : 'ALL';
+            }
+
+            const selectedFy = fySelect ? fySelect.value : 'ALL';
+            const rows = selectedFy === 'ALL'
+                ? allRows
+                : allRows.filter(r => String(r?.financialYears || '').trim() === selectedFy);
+
+            const sumDebt = rows.reduce((acc, r) => acc + (Number(r?.debt2526) || 0), 0);
+            const sumPlan = rows.reduce((acc, r) => acc + (Number(r?.plan2627) || 0), 0);
+            const sumTotalPlan = rows.reduce((acc, r) => acc + (Number(r?.totalPlan) || ((Number(r?.debt2526) || 0) + (Number(r?.plan2627) || 0))), 0);
+            const sumTotal = rows.reduce((acc, r) => acc + (Number(r?.total) || PROD_MONTH_KEYS.reduce((ms, mk) => ms + (Number(r?.[mk]) || 0), 0)), 0);
+            const balance = Math.max(0, sumTotalPlan - sumTotal);
+            const completedPct = sumTotalPlan > 0 ? Math.round((sumTotal / sumTotalPlan) * 100) : 0;
+            const remainingPct = sumTotalPlan > 0 ? Math.max(0, 100 - completedPct) : 0;
+
+            if (totalBadge) {
+                totalBadge.textContent = `(${toMyanmarNumerals(rows.length)} မျိုး · ${toMyanmarNumerals(allYears.length)} နှစ်)`;
+            }
+
+            overviewEl.innerHTML = `
+                <div class="compact-stat-card bg-blue-50/90 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex flex-col justify-between gap-0.5">
+                    <span class="compact-stat-label text-slate-700 dark:text-slate-200">စုစုပေါင်းလျာထား (Total Plan)</span>
+                    <span class="compact-stat-value text-blue-700 dark:text-blue-300 font-bold">${toMyanmarNumerals(formatProdNum(sumTotalPlan))} (Debt: ${toMyanmarNumerals(formatProdNum(sumDebt))} / Plan: ${toMyanmarNumerals(formatProdNum(sumPlan))})</span>
+                </div>
+                <div class="compact-stat-card bg-emerald-50/90 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex flex-col justify-between gap-0.5">
+                    <span class="compact-stat-label text-slate-700 dark:text-slate-200">ထုတ်လုပ်ပြီးစီးမှု (Achieved)</span>
+                    <span class="compact-stat-value text-emerald-700 dark:text-emerald-300 font-bold">${toMyanmarNumerals(formatProdNum(sumTotal))} (${toMyanmarNumerals(completedPct)}%)</span>
+                </div>
+                <div class="compact-stat-card bg-amber-50/90 dark:bg-slate-700/60 border border-amber-200 dark:border-slate-600 flex flex-col justify-between gap-0.5">
+                    <span class="compact-stat-label text-slate-700 dark:text-slate-200">ထုတ်လုပ်ရန်ကျန်ရှိ (Balance)</span>
+                    <span class="compact-stat-value text-amber-700 dark:text-amber-300 font-bold">${toMyanmarNumerals(formatProdNum(balance))} (${toMyanmarNumerals(remainingPct)}%)</span>
+                </div>
+                <div class="compact-stat-card bg-indigo-50/90 dark:bg-slate-700/60 border border-indigo-200 dark:border-slate-600 flex flex-col justify-between gap-0.5">
+                    <span class="compact-stat-label text-slate-700 dark:text-slate-200">ထုတ်လုပ်မှုနှစ် (Financial Years)</span>
+                    <span class="compact-stat-value text-indigo-700 dark:text-indigo-300 font-bold">${selectedFy === 'ALL' ? (allYears.join(', ') || '-') : escapeHtml(selectedFy)}</span>
+                </div>
+            `;
+
+            if (!rows.length) {
+                monthlyEl.innerHTML = `<div class="py-6 text-center text-slate-400 text-xs">ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း အချက်အလက် မရှိသေးပါ</div>`;
+                if (monthSubEl) monthSubEl.textContent = '';
+                if (breakdownEl) breakdownEl.innerHTML = '';
+                return;
+            }
+
+            const monthLabels = {
+                apr: 'Apr', may: 'May', jun: 'Jun', jul: 'Jul', aug: 'Aug', sep: 'Sep',
+                oct: 'Oct', nov: 'Nov', dec: 'Dec', jan: 'Jan', feb: 'Feb', mar: 'Mar'
+            };
+            const monthStats = PROD_MONTH_KEYS.map(mk => {
+                const qty = rows.reduce((acc, r) => acc + (Number(r?.[mk]) || 0), 0);
+                const pctOfPlan = sumTotalPlan > 0 ? Math.round((qty / sumTotalPlan) * 1000) / 10 : 0;
+                const pctOfAchieved = sumTotal > 0 ? Math.round((qty / sumTotal) * 1000) / 10 : 0;
+                return { key: mk, label: monthLabels[mk] || mk, qty, pctOfPlan, pctOfAchieved };
+            });
+
+            const maxMonthQty = Math.max(1, ...monthStats.map(m => m.qty));
+            if (monthSubEl) {
+                monthSubEl.textContent = `စုစုပေါင်း - ${toMyanmarNumerals(formatProdNum(sumTotal))} (${toMyanmarNumerals(completedPct)}%)`;
+            }
+
+            monthlyEl.innerHTML = `
+                <div class="min-w-[620px] grid grid-cols-12 gap-2 items-end h-44 px-2 pt-8 pb-2 border-b border-slate-200 dark:border-slate-600">
+                    ${monthStats.map(m => {
+                        const barH = m.qty > 0 ? Math.max(8, Math.round((m.qty / maxMonthQty) * 96)) : 4;
+                        const barBg = m.qty > 0 ? '#2563eb' : '#cbd5e1';
+                        return `
+                            <div class="flex flex-col items-center justify-end gap-1 h-full" title="${m.label}: ${formatProdNum(m.qty)} (Plan ၏ ${m.pctOfPlan}% · စုစုပေါင်း၏ ${m.pctOfAchieved}%)">
+                                <div class="flex flex-col items-center leading-tight">
+                                    <span class="text-[10px] font-bold text-slate-900 dark:text-white whitespace-nowrap">${toMyanmarNumerals(formatProdNum(m.qty))}</span>
+                                    <span class="text-[9px] text-emerald-700 dark:text-emerald-300 font-semibold whitespace-nowrap">${toMyanmarNumerals(m.pctOfAchieved)}%</span>
+                                </div>
+                                <div class="w-5 sm:w-6 rounded-t transition-all" style="height:${barH}px;background:${barBg};"></div>
+                                <span class="text-[10px] font-bold text-slate-700 dark:text-slate-300">${m.label}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+
+            if (breakdownEl) {
+                const fyGroups = (allYears.length ? allYears : ['-']).map(fy => {
+                    const fyRows = fy === '-' ? allRows : allRows.filter(r => String(r?.financialYears || '').trim() === fy);
+                    const planSum = fyRows.reduce((a, r) => a + (Number(r?.totalPlan) || ((Number(r?.debt2526) || 0) + (Number(r?.plan2627) || 0))), 0);
+                    const totSum = fyRows.reduce((a, r) => a + (Number(r?.total) || 0), 0);
+                    const pct = planSum > 0 ? Math.round((totSum / planSum) * 100) : 0;
+                    return { fy, count: fyRows.length, planSum, totSum, pct };
+                });
+
+                const descMap = new Map();
+                rows.forEach(r => {
+                    const key = String(r?.description || 'အခြား').trim() || 'အခြား';
+                    const prev = descMap.get(key) || { label: key, count: 0, planSum: 0, totSum: 0 };
+                    prev.count += 1;
+                    prev.planSum += Number(r?.totalPlan) || ((Number(r?.debt2526) || 0) + (Number(r?.plan2627) || 0));
+                    prev.totSum += Number(r?.total) || 0;
+                    descMap.set(key, prev);
+                });
+                const descGroups = Array.from(descMap.values());
+                const descPalette = ['#2563eb', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'];
+
+                breakdownEl.innerHTML = `
+                    <div class="bg-slate-50/80 dark:bg-slate-700/30 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                        <div class="text-xs font-bold text-slate-800 dark:text-slate-200">ထုတ်လုပ်မှုနှစ်များအလိုက် ပြီးစီးမှု (Financial Years)</div>
+                        <div class="space-y-2">
+                            ${fyGroups.map(g => `
+                                <div class="space-y-1 text-xs">
+                                    <div class="flex flex-wrap items-center justify-between gap-1">
+                                        <span class="font-bold text-slate-800 dark:text-slate-100">${escapeHtml(g.fy)} (${toMyanmarNumerals(g.count)} မျိုး)</span>
+                                        <span class="text-slate-700 dark:text-slate-200 font-semibold">${toMyanmarNumerals(formatProdNum(g.totSum))} / ${toMyanmarNumerals(formatProdNum(g.planSum))} (${toMyanmarNumerals(g.pct)}%)</span>
+                                    </div>
+                                    <div class="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-600 overflow-hidden">
+                                        <div class="h-full rounded-full transition-all" style="width:${Math.min(100, Math.max(0, g.pct))}%;background:#10b981;"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="bg-slate-50/80 dark:bg-slate-700/30 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                        <div class="text-xs font-bold text-slate-800 dark:text-slate-200">အမျိုးအစားအလိုက် အရေအတွက်နှင့် ရာခိုင်နှုန်း (Description)</div>
+                        <div class="space-y-2">
+                            ${descGroups.map((g, i) => {
+                                const sharePct = sumTotal > 0 ? Math.round((g.totSum / sumTotal) * 100) : 0;
+                                const planPct = g.planSum > 0 ? Math.round((g.totSum / g.planSum) * 100) : 0;
+                                const color = descPalette[i % descPalette.length];
+                                return `
+                                    <div class="space-y-1 text-xs">
+                                        <div class="flex flex-wrap items-center justify-between gap-1">
+                                            <span class="font-bold text-slate-800 dark:text-slate-100">${escapeHtml(g.label)} (${toMyanmarNumerals(g.count)} မျိုး)</span>
+                                            <span class="text-slate-700 dark:text-slate-200 font-semibold">${toMyanmarNumerals(formatProdNum(g.totSum))} · စုစုပေါင်း၏ ${toMyanmarNumerals(sharePct)}% (Plan ၏ ${toMyanmarNumerals(planPct)}%)</span>
+                                        </div>
+                                        <div class="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-600 overflow-hidden">
+                                            <div class="h-full rounded-full transition-all" style="width:${Math.min(100, Math.max(0, sharePct))}%;background:${color};"></div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
         function updateDashboardWeaponLineChart() {
             updateDashboardWeaponCards();
         }
@@ -10970,6 +11791,7 @@ function doGet(e) {
         renderDashboardView = function() {
             origRenderDashboardView();
             updateDashboardWeaponLineChart();
+            renderDashboardProdChart();
         };
 
         function exportAbsentExcel() {
@@ -11766,7 +12588,7 @@ function doGet(e) {
                         seenVals.add(val);
                         const opt = document.createElement('option');
                         opt.value = val;
-                        opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
+                        opt.textContent = val;
                         rankSelect.appendChild(opt);
                     }
                 });
@@ -11774,7 +12596,8 @@ function doGet(e) {
                 // Also check if any existing personnel in personnelData belonging to this position category has a rank not in definitions
                 (personnelData || []).forEach(p => {
                     if (getPersonnelPosition(p) === targetCategory) {
-                        const val = (p.rankAbbr || p.rankFull || '').trim();
+                        const rawVal = (p.rankAbbr || p.rankFull || '').trim();
+                        const val = getRankAbbr(rawVal) || rawVal;
                         if (val && !seenVals.has(val)) {
                             seenVals.add(val);
                             const opt = document.createElement('option');
@@ -11790,12 +12613,14 @@ function doGet(e) {
                     if (!Array.isArray(ranks) || !ranks.length) return;
                     const group = document.createElement('optgroup');
                     group.label = rankCategoryLabels[catKey] || catKey;
+                    const seenVals = new Set();
                     ranks.forEach(r => {
                         const val = (r.abbr || r.full || '').trim();
-                        if (val) {
+                        if (val && !seenVals.has(val)) {
+                            seenVals.add(val);
                             const opt = document.createElement('option');
                             opt.value = val;
-                            opt.textContent = r.abbr && r.full && r.abbr !== r.full ? `${r.abbr} (${r.full})` : val;
+                            opt.textContent = val;
                             group.appendChild(opt);
                         }
                     });
@@ -11935,8 +12760,8 @@ function doGet(e) {
                         const val = abbr || full;
                         if (val) {
                             const opt = document.createElement('option');
-                            opt.value = abbr || full;
-                            opt.textContent = abbr && full && abbr !== full ? `${abbr} - ${full}` : val;
+                            opt.value = val;
+                            opt.textContent = val;
                             deptSelect.appendChild(opt);
                         }
                     });
@@ -12135,17 +12960,14 @@ function doGet(e) {
             const container = document.getElementById('civilian-master-list');
             if (!container) return;
 
-            const { visibleBuiltins, customColumns } = getEffectiveModuleColumns('personnel');
-            const isOfficerScreen = activePersonnelCategoryTab === 'အရာရှိ';
-            const officerVisibleKeys = new Set([
+            const { visibleBuiltins } = getEffectiveModuleColumns('personnel');
+            const summaryTableVisibleKeys = new Set([
                 'id', 'rank', 'name', 'dept', 'position', 'gender',
                 'staffType', 'status', 'absentReason', 'address', 'phone'
             ]);
-            const tableBuiltins = isOfficerScreen
-                ? visibleBuiltins.filter(col => officerVisibleKeys.has(col.key))
-                : visibleBuiltins;
-            const tableCustomColumns = isOfficerScreen ? [] : customColumns;
-            const totalMasterCols = tableBuiltins.length + tableCustomColumns.length + 2;
+            const tableBuiltins = visibleBuiltins.filter(col => summaryTableVisibleKeys.has(col.key));
+            const tableCustomColumns = [];
+            const totalMasterCols = tableBuiltins.length + 2;
             if (thead) {
                 const headTr = document.createElement('tr');
                 const numTh = document.createElement('th');
@@ -13542,357 +14364,3 @@ function doGet(e) {
             if (!guardWritePermission()) return;
             religionList.splice(idx, 1);
             editingReligionIndex = -1;
-            saveSystemState();
-            showToast('ဘာသာ သတ်မှတ်ချက် ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            renderReligionSettings();
-        }
-
-        function cancelReligionItem() {
-            editingReligionIndex = -1;
-            renderReligionSettings();
-        }
-
-        // ADDRESS / RESIDENCE TYPE SETTINGS (နေရပ်လိပ်စာ သတ်မှတ်ချက်)
-        function renderAddressTypeSettings() {
-            const container = document.getElementById('address-types-list');
-            if (!container) return;
-
-            container.innerHTML = addressTypeList.map((addr, idx) => {
-                if (editingAddressTypeIndex === idx) {
-                    return `
-                        <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-blue-400">
-                            <input type="text" id="edit-address-type-val" value="${addr}" class="flex-1 min-w-[120px] bg-slate-100 dark:bg-slate-700 px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 outline-none">
-                            <div class="flex gap-1.5">
-                                <button onclick="saveAddressTypeItem(${idx})" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs">သိမ်းဆည်းရန်</button>
-                                <button onclick="cancelAddressTypeItem()" class="px-2.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg text-xs">Cancel</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                return `
-                    <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
-                        <span class="font-semibold text-slate-800 dark:text-slate-200">${addr}</span>
-                        <div class="flex gap-1.5">
-                            <button onclick="editAddressTypeItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteAddressTypeItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function addAddressTypeItem() {
-            if (!guardWritePermission()) return;
-            addressTypeList.push("နေရပ်လိပ်စာအသစ်");
-            editingAddressTypeIndex = addressTypeList.length - 1;
-            saveSystemState();
-            renderAddressTypeSettings();
-        }
-
-        function editAddressTypeItem(idx) {
-            if (!guardWritePermission()) return;
-            editingAddressTypeIndex = idx;
-            renderAddressTypeSettings();
-        }
-
-        function saveAddressTypeItem(idx) {
-            if (!guardWritePermission()) return;
-            const input = document.getElementById('edit-address-type-val');
-            if (input && input.value.trim() !== "") {
-                addressTypeList[idx] = input.value.trim();
-                saveSystemState();
-                showToast('နေရပ်လိပ်စာ သတ်မှတ်ချက် မွမ်းမံပြီးပါပြီ', 'success');
-            }
-            editingAddressTypeIndex = -1;
-            renderAddressTypeSettings();
-        }
-
-        function deleteAddressTypeItem(idx) {
-            if (!guardWritePermission()) return;
-            addressTypeList.splice(idx, 1);
-            editingAddressTypeIndex = -1;
-            saveSystemState();
-            showToast('နေရပ်လိပ်စာ သတ်မှတ်ချက် ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            renderAddressTypeSettings();
-        }
-
-        function cancelAddressTypeItem() {
-            editingAddressTypeIndex = -1;
-            renderAddressTypeSettings();
-        }
-
-        // CONTROLLED / RESTRICTED INVENTORY CATEGORY SETTINGS (ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်း အမျိုးအစား သတ်မှတ်ချက်)
-        function renderArmoryCategorySettings() {
-            const container = document.getElementById('armory-category-types-list');
-            if (!container) return;
-
-            container.innerHTML = armoryCategoryList.map((cat, idx) => {
-                if (editingArmoryCategoryIndex === idx) {
-                    return `
-                        <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-blue-400">
-                            <input type="text" id="edit-armory-category-val" value="${cat}" class="flex-1 min-w-[120px] bg-slate-100 dark:bg-slate-700 px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 outline-none">
-                            <div class="flex gap-1.5">
-                                <button onclick="saveArmoryCategoryItem(${idx})" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs">သိမ်းဆည်းရန်</button>
-                                <button onclick="cancelArmoryCategoryItem()" class="px-2.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg text-xs">Cancel</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                return `
-                    <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
-                        <span class="font-semibold text-slate-800 dark:text-slate-200">${cat}</span>
-                        <div class="flex gap-1.5">
-                            <button onclick="editArmoryCategoryItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteArmoryCategoryItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function addArmoryCategoryItem() {
-            if (!guardWritePermission()) return;
-            armoryCategoryList.push("အမျိုးအစားအသစ်");
-            editingArmoryCategoryIndex = armoryCategoryList.length - 1;
-            saveSystemState();
-            renderArmoryCategorySettings();
-        }
-
-        function editArmoryCategoryItem(idx) {
-            if (!guardWritePermission()) return;
-            editingArmoryCategoryIndex = idx;
-            renderArmoryCategorySettings();
-        }
-
-        function saveArmoryCategoryItem(idx) {
-            if (!guardWritePermission()) return;
-            const input = document.getElementById('edit-armory-category-val');
-            if (input && input.value.trim() !== "") {
-                armoryCategoryList[idx] = input.value.trim();
-                saveSystemState();
-                initInlineArmoryControls();
-                showToast('ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်း အမျိုးအစား မွမ်းမံပြီးပါပြီ', 'success');
-            }
-            editingArmoryCategoryIndex = -1;
-            renderArmoryCategorySettings();
-        }
-
-        function deleteArmoryCategoryItem(idx) {
-            if (!guardWritePermission()) return;
-            armoryCategoryList.splice(idx, 1);
-            editingArmoryCategoryIndex = -1;
-            saveSystemState();
-            initInlineArmoryControls();
-            showToast('ကြီးကြပ်/ကန့်သတ်ပစ္စည်းများစာရင်း အမျိုးအစား ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            renderArmoryCategorySettings();
-        }
-
-        function cancelArmoryCategoryItem() {
-            editingArmoryCategoryIndex = -1;
-            renderArmoryCategorySettings();
-        }
-
-        // SECURITY DUTY TYPE SETTINGS (လုံခြုံရေးအမျိုးအစား)
-        function renderSecurityDutyTypeSettings() {
-            const container = document.getElementById('security-duty-types-list');
-            if (!container) return;
-
-            container.innerHTML = securityDutyTypeList.map((dt, idx) => {
-                if (editingSecurityDutyTypeIndex === idx) {
-                    return `
-                        <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-blue-400">
-                            <input type="text" id="edit-security-duty-type-val" value="${dt}" class="flex-1 min-w-[120px] bg-slate-100 dark:bg-slate-700 px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 outline-none">
-                            <div class="flex gap-1.5">
-                                <button onclick="saveSecurityDutyTypeItem(${idx})" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs">သိမ်းဆည်းရန်</button>
-                                <button onclick="cancelSecurityDutyTypeItem()" class="px-2.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg text-xs">Cancel</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                return `
-                    <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
-                        <span class="font-semibold text-slate-800 dark:text-slate-200">${dt}</span>
-                        <div class="flex gap-1.5">
-                            <button onclick="editSecurityDutyTypeItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteSecurityDutyTypeItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function addSecurityDutyTypeItem() {
-            if (!guardWritePermission()) return;
-            securityDutyTypeList.push("လုံခြုံရေးအမျိုးအစားအသစ်");
-            editingSecurityDutyTypeIndex = securityDutyTypeList.length - 1;
-            saveSystemState();
-            renderSecurityDutyTypeSettings();
-        }
-
-        function editSecurityDutyTypeItem(idx) {
-            if (!guardWritePermission()) return;
-            editingSecurityDutyTypeIndex = idx;
-            renderSecurityDutyTypeSettings();
-        }
-
-        function saveSecurityDutyTypeItem(idx) {
-            if (!guardWritePermission()) return;
-            const input = document.getElementById('edit-security-duty-type-val');
-            if (input && input.value.trim() !== "") {
-                securityDutyTypeList[idx] = input.value.trim();
-                saveSystemState();
-                initInlineDutyControls();
-                showToast('လုံခြုံရေးအမျိုးအစား သတ်မှတ်ချက် မွမ်းမံပြီးပါပြီ', 'success');
-            }
-            editingSecurityDutyTypeIndex = -1;
-            renderSecurityDutyTypeSettings();
-        }
-
-        function deleteSecurityDutyTypeItem(idx) {
-            if (!guardWritePermission()) return;
-            securityDutyTypeList.splice(idx, 1);
-            editingSecurityDutyTypeIndex = -1;
-            saveSystemState();
-            initInlineDutyControls();
-            showToast('လုံခြုံရေးအမျိုးအစား သတ်မှတ်ချက် ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            renderSecurityDutyTypeSettings();
-        }
-
-        function cancelSecurityDutyTypeItem() {
-            editingSecurityDutyTypeIndex = -1;
-            renderSecurityDutyTypeSettings();
-        }
-
-        // ARMORY ISSUE / DISTRIBUTION STATUS SETTINGS (ဖြန့်ခွဲ-ထုတ်ပေး)
-        function renderArmoryStatusSettings() {
-            const container = document.getElementById('armory-status-types-list');
-            if (!container) return;
-
-            container.innerHTML = armoryStatusList.map((st, idx) => {
-                if (editingArmoryStatusIndex === idx) {
-                    return `
-                        <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-blue-400">
-                            <input type="text" id="edit-armory-status-val" value="${st}" class="flex-1 min-w-[120px] bg-slate-100 dark:bg-slate-700 px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 outline-none">
-                            <div class="flex gap-1.5">
-                                <button onclick="saveArmoryStatusItem(${idx})" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs">သိမ်းဆည်းရန်</button>
-                                <button onclick="cancelArmoryStatusItem()" class="px-2.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg text-xs">Cancel</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                return `
-                    <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
-                        <span class="font-semibold text-slate-800 dark:text-slate-200">${st}</span>
-                        <div class="flex gap-1.5">
-                            <button onclick="editArmoryStatusItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteArmoryStatusItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function addArmoryStatusItem() {
-            if (!guardWritePermission()) return;
-            armoryStatusList.push("အမျိုးအစားအသစ်");
-            editingArmoryStatusIndex = armoryStatusList.length - 1;
-            saveSystemState();
-            renderArmoryStatusSettings();
-        }
-
-        function editArmoryStatusItem(idx) {
-            if (!guardWritePermission()) return;
-            editingArmoryStatusIndex = idx;
-            renderArmoryStatusSettings();
-        }
-
-        function saveArmoryStatusItem(idx) {
-            if (!guardWritePermission()) return;
-            const input = document.getElementById('edit-armory-status-val');
-            if (input && input.value.trim() !== "") {
-                armoryStatusList[idx] = input.value.trim();
-                saveSystemState();
-                initInlineArmoryControls();
-                showToast('လက်နက်ခဲယမ်း ဖြန့်ခွဲ-ထုတ်ပေး အမျိုးအစား မွမ်းမံပြီးပါပြီ', 'success');
-            }
-            editingArmoryStatusIndex = -1;
-            renderArmoryStatusSettings();
-        }
-
-        function deleteArmoryStatusItem(idx) {
-            if (!guardWritePermission()) return;
-            armoryStatusList.splice(idx, 1);
-            editingArmoryStatusIndex = -1;
-            saveSystemState();
-            initInlineArmoryControls();
-            showToast('လက်နက်ခဲယမ်း ဖြန့်ခွဲ-ထုတ်ပေး အမျိုးအစား ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            renderArmoryStatusSettings();
-        }
-
-        function cancelArmoryStatusItem() {
-            editingArmoryStatusIndex = -1;
-            renderArmoryStatusSettings();
-        }
-
-        // CURRENT STATUS SETTINGS
-        function renderStatusSettings() {
-            const container = document.getElementById('status-definitions-list');
-            if (!container) return;
-
-            container.innerHTML = statusList.map((st, idx) => {
-                if (editingStatusIndex === idx) {
-                    return `
-                        <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-lg border border-blue-400">
-                            <input type="text" id="edit-status-val" value="${st}" class="flex-1 min-w-[120px] bg-slate-100 dark:bg-slate-700 px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 outline-none">
-                            <div class="flex gap-1.5">
-                                <button onclick="saveStatusItem(${idx})" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs">သိမ်းဆည်းရန်</button>
-                                <button onclick="cancelStatusItem()" class="px-2.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg text-xs">Cancel</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                return `
-                    <div class="flex justify-between items-center bg-white dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 text-xs">
-                        <span class="font-semibold text-slate-800 dark:text-slate-200">${st}</span>
-                        <div class="flex gap-1.5">
-                            <button onclick="editStatusItem(${idx})" title="Edit" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_EDIT_ICON_SVG}</button>
-                            <button onclick="deleteStatusItem(${idx})" title="Delete" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center">${SETTING_DELETE_ICON_SVG}</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function addStatusItem() {
-            statusList.push("အခြေအနေအသစ်");
-            editingStatusIndex = statusList.length - 1;
-            saveSystemState();
-            renderStatusSettings();
-        }
-
-        function editStatusItem(idx) {
-            editingStatusIndex = idx;
-            renderStatusSettings();
-        }
-
-        function saveStatusItem(idx) {
-            const input = document.getElementById('edit-status-val');
-            if (input && input.value.trim() !== "") {
-                statusList[idx] = input.value.trim();
-                saveSystemState();
-                showToast('လက်ရှိအခြေအနေ သတ်မှတ်ချက် မွမ်းမံပြီးပါပြီ', 'success');
-            }
-            editingStatusIndex = -1;
-            renderStatusSettings();
-        }
-
-        function deleteStatusItem(idx) {
-            statusList.splice(idx, 1);
-            editingStatusIndex = -1;
-            saveSystemState();
-            showToast('လက်ရှိအခြေအနေ သတ်မှတ်ချက် ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            renderStatusSettings();
-        }
-
-        function cancelStatusItem() {
-            editingStatusIndex = -1;
