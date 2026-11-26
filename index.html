@@ -130,12 +130,31 @@
         #profile-photo-modal label {
             font-weight: 700 !important;
         }
+        header #page-header-title {
+            font-size: 12pt !important;
+        }
+        aside#slide-menu,
+        aside#slide-menu * {
+            font-size: 10pt !important;
+        }
         aside #slide-menu-brand-title {
             font-weight: 800 !important;
         }
         aside .nav-btn,
-        aside .nav-btn span {
+        aside .nav-btn span,
+        aside #nav-add-custom-table,
+        aside #nav-add-custom-table span {
+            font-size: 10pt !important;
             font-weight: 600 !important;
+        }
+        .search-row-highlight {
+            background-color: rgba(254, 240, 138, 0.9) !important;
+            box-shadow: inset 0 0 0 2px #f59e0b !important;
+            transition: background-color 0.3s ease;
+        }
+        html.dark .search-row-highlight {
+            background-color: rgba(217, 119, 6, 0.35) !important;
+            box-shadow: inset 0 0 0 2px #fbbf24 !important;
         }
         html.light aside .nav-btn,
         html.light aside .nav-btn span {
@@ -619,14 +638,14 @@
     <div id="slide-menu-backdrop" onclick="toggleSlideMenu(false)" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
 
     <!-- SLIDE NAVIGATION MENU (Drawer) -->
-    <aside id="slide-menu" class="fixed top-0 bottom-0 left-0 w-64 max-w-[85vw] h-full bg-slate-100 dark:bg-slate-800 border-r border-slate-300 dark:border-slate-700 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col overflow-hidden">
+    <aside id="slide-menu" class="fixed top-0 bottom-0 left-0 w-72 max-w-[85vw] h-full bg-slate-100 dark:bg-slate-800 border-r border-slate-300 dark:border-slate-700 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col overflow-hidden">
         <!-- Brand & Close Header -->
         <div class="p-3 bg-slate-200/90 dark:bg-slate-900/80 border-b border-slate-300 dark:border-slate-700 flex items-center justify-between gap-2 flex-shrink-0">
             <div class="flex items-center gap-2.5 min-w-0">
                 <div class="w-8 h-8 rounded-xl bg-blue-600 text-white font-black text-xs flex items-center justify-center shadow flex-shrink-0">DI</div>
                 <div class="truncate">
-                    <div id="slide-menu-brand-title" class="font-extrabold text-sm text-slate-900 dark:text-white leading-tight truncate tracking-wide">Data Information</div>
-                    <div id="slide-menu-brand-subtitle" class="text-[11px] text-slate-700 dark:text-slate-200 font-bold truncate">စာရင်း ၊ ဇယား ၊ မှတ်တမ်းများ</div>
+                    <div id="slide-menu-brand-title" class="font-extrabold text-slate-900 dark:text-white leading-tight truncate tracking-wide">Data Information</div>
+                    <div id="slide-menu-brand-subtitle" class="text-slate-700 dark:text-slate-200 font-bold truncate">Your Data, Your Knowledge.</div>
                 </div>
             </div>
             <button onclick="toggleSlideMenu(false)" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-300/60 dark:hover:bg-slate-700 transition" title="Close menu" aria-label="Close menu">
@@ -677,14 +696,30 @@
             </nav>
         </div>
 
-        <!-- Bottom Settings & User Nav -->
+        <!-- Bottom Admin Menu, Settings & User Profile/Logout -->
         <div class="p-2.5 border-t border-slate-300 dark:border-slate-700 flex flex-col gap-1 flex-shrink-0 bg-slate-200/50 dark:bg-slate-900/50">
-            <button id="nav-users" onclick="switchTab('users')" title="User Management" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
+            <button id="nav-users" onclick="switchTab('users')" title="User Management" class="hidden nav-btn flex items-center justify-start px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
                 <span class="font-bold">User Management</span>
             </button>
-            <button id="nav-settings" onclick="switchTab('settings')" title="Setting" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
+            <button id="nav-settings" onclick="switchTab('settings')" title="Setting" class="nav-btn flex items-center justify-start px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
                 <span class="font-bold">Setting</span>
             </button>
+
+            <!-- User Profile, Name & Logout Box at Bottom of Menu -->
+            <div id="sidebar-user-profile" class="mt-1.5 pt-2 border-t border-slate-300/80 dark:border-slate-700 flex flex-col gap-2 bg-white/80 dark:bg-slate-800/90 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div id="settings-user-avatar" class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center overflow-hidden border border-blue-400/60 flex-shrink-0 text-xs font-bold">G</div>
+                    <div class="min-w-0 flex-1">
+                        <div id="settings-user-name" class="font-bold text-slate-900 dark:text-white truncate text-xs">Guest</div>
+                        <div id="settings-user-email" class="text-[10px] text-slate-500 dark:text-slate-400 truncate"></div>
+                        <div id="settings-user-role" class="text-[10px] text-blue-700 dark:text-blue-300 font-semibold truncate"></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <button type="button" onclick="toggleSlideMenu(false); openProfilePhotoModal()" class="px-2 py-1.5 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold text-[11px] transition text-center">Profile</button>
+                    <button type="button" onclick="toggleSlideMenu(false); handleUserLogout()" class="px-2 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-[11px] transition text-center">Logout</button>
+                </div>
+            </div>
         </div>
     </aside>
 
@@ -717,8 +752,8 @@
                     </button>
                 </div>
 
-                <!-- Google Sheets Live Auto-Sync Status Icon -->
-                <div id="gsheets-sync-indicator" title="Google Sheets Sync (ချိတ်ဆက်ရန်)" class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/15 border border-white/20 shadow-sm transition cursor-pointer" onclick="handleHeaderGoogleSheetsClick()">
+                <!-- Google Sheets Live Auto-Sync Status Icon (Admin Only) -->
+                <div id="gsheets-sync-indicator" title="Google Sheets Sync" class="hidden items-center justify-center w-8 h-8 rounded-full bg-white/15 border border-white/20 shadow-sm transition cursor-pointer" onclick="handleHeaderGoogleSheetsClick()">
                     <svg id="gsheets-sync-icon" class="w-4 h-4 text-slate-300 transition-colors" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                         <line x1="3" y1="9" x2="21" y2="9"/>
@@ -727,8 +762,8 @@
                     </svg>
                 </div>
 
-                <!-- Firestore Cloud Status Icon (Green = Online, Orange = Queued, Red = Offline) -->
-                <div id="firebase-sync-indicator" title="Firestore Online" class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/15 border border-white/20 shadow-sm transition cursor-pointer" onclick="syncToFirebaseFirestore('manual_header_click', true)">
+                <!-- Firestore Cloud Status Icon (Admin Only) -->
+                <div id="firebase-sync-indicator" title="Firestore Online" class="hidden items-center justify-center w-8 h-8 rounded-full bg-white/15 border border-white/20 shadow-sm transition cursor-pointer" onclick="syncToFirebaseFirestore('manual_header_click', true)">
                     <svg id="firebase-sync-icon" class="w-4 h-4 text-emerald-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M20 7v5h-5M4 17v-5h5"/>
                         <path d="M5.6 9a7 7 0 0 1 11.6-2L20 12M4 12l2.8 5a7 7 0 0 0 11.6-2"/>
@@ -2047,165 +2082,28 @@
 
             <!-- SETTINGS TAB -->
             <section id="settings-tab" class="tab-content hidden space-y-6">
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-3">
-                    <div id="settings-user-avatar" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center overflow-hidden border-2 border-blue-400/60 flex-shrink-0">G</div>
-                    <div class="min-w-0 flex-1">
-                        <div id="settings-user-name" class="font-bold text-slate-900 dark:text-white truncate">Guest</div>
-                        <div id="settings-user-email" class="text-slate-500 dark:text-slate-400 truncate"></div>
-                        <div id="settings-user-role" class="text-blue-700 dark:text-blue-300 font-semibold"></div>
-                    </div>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <span class="text-xs font-bold text-slate-800 dark:text-slate-200">System Backup / Restore / Reset</span>
                     <div class="flex flex-nowrap gap-1.5 w-full sm:w-auto">
-                        <button type="button" onclick="openProfilePhotoModal()" class="min-w-0 flex-1 sm:flex-none px-1.5 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold text-[10px] whitespace-nowrap">Profile</button>
-                        <button type="button" onclick="handleUserLogout()" class="min-w-0 flex-1 sm:flex-none px-1.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-[10px] whitespace-nowrap">Logout</button>
-                        <button type="button" onclick="exportFullSystemBackup()" class="min-w-0 flex-1 sm:flex-none px-1.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[10px] transition shadow-sm whitespace-nowrap">Backup</button>
-                        <button type="button" onclick="triggerSystemRestore()" class="min-w-0 flex-1 sm:flex-none px-1.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[10px] transition shadow-sm whitespace-nowrap">Restore</button>
+                        <button type="button" onclick="exportFullSystemBackup()" class="min-w-0 flex-1 sm:flex-none px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">Backup</button>
+                        <button type="button" onclick="triggerSystemRestore()" class="min-w-0 flex-1 sm:flex-none px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">Restore</button>
                         <input type="file" id="system-restore-input" accept=".json" class="hidden" onchange="handleSystemRestore(event)">
-                        <button type="button" onclick="openResetSelectionModal()" class="min-w-0 flex-1 sm:flex-none px-1.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-[10px] transition shadow-sm whitespace-nowrap">Reset</button>
-                    </div>
-                </div>
-                <!-- Firestore Cloud Auto-Sync Configuration Card (Collapsible) -->
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-blue-200 dark:border-slate-700 space-y-3">
-                    <div onclick="toggleFirestoreSyncPanel()" class="flex items-center justify-between gap-2 cursor-pointer select-none">
-                        <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-xs">
-                            <span>☁️ Firestore Auto-Sync</span>
-                            <span id="settings-firestore-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">Connected</span>
-                        </div>
-                        <span id="fs-sync-toggle-arrow" class="text-xs font-extrabold text-slate-500 dark:text-slate-400 transition-transform duration-200">▼</span>
-                    </div>
-
-                    <div id="fs-sync-collapsible-body" class="hidden pt-3 border-t border-slate-200 dark:border-slate-700 space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400">ဒေတာ ထည့်သွင်း/ပြင်ဆင်/ဖျက်တိုင်း Firestore Database တွင် အလိုအလျောက် Update ပြုလုပ်ပေးမည်ဖြစ်ပါသည်။</p>
-                            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
-                                <button type="button" onclick="saveCustomFirestoreConfig()" class="flex-1 sm:flex-none px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm">ချိတ်ဆက်သိမ်းဆည်းမည်</button>
-                                <button type="button" onclick="syncToFirebaseFirestore('manual_sync_now', true)" class="flex-1 sm:flex-none px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm">ယခု Sync လုပ်မည်</button>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs">
-                            <div>
-                                <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Project ID</label>
-                                <input type="text" id="fs-cfg-projectId" placeholder="mydataapp-a3750" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">API Key</label>
-                                <input type="text" id="fs-cfg-apiKey" placeholder="AIzaSy..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Auth Domain</label>
-                                <input type="text" id="fs-cfg-authDomain" placeholder="mydataapp-a3750.firebaseapp.com" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">App ID</label>
-                                <input type="text" id="fs-cfg-appId" placeholder="1:...:web:..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
-                            </div>
-                        </div>
-
-                        <!-- Firebase Admin SDK (serviceAccountKey.json) Integration Section -->
-                        <div class="pt-3 border-t border-slate-200 dark:border-slate-700 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
-                            <div class="space-y-1">
-                                <div class="font-bold text-slate-800 dark:text-slate-200 text-xs flex items-center gap-2">
-                                    <span>🔑 Firebase Admin SDK (Service Account Key) ချိတ်ဆက်မှု</span>
-                                    <span id="admin-sdk-status-badge" class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300 text-[10px] font-bold">mydataapp-a3750</span>
-                                </div>
-                                <p class="text-[11px] text-slate-500 dark:text-slate-400">
-                                    <code>serviceAccountKey.json</code> ဖိုင်မှ Project Credential များကို တိုက်ရိုက်ရယူချိတ်ဆက်နိုင်ပြီး Node.js Admin SDK ကုဒ်ကိုလည်း ကူးယူနိုင်ပါသည်။
-                                </p>
-                            </div>
-                            <div class="flex flex-wrap gap-2 w-full lg:w-auto">
-                                <button type="button" onclick="document.getElementById('service-account-file-input').click()" class="flex-1 lg:flex-none px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs transition shadow-sm">
-                                    📂 serviceAccountKey.json ထည့်သွင်းရန်
-                                </button>
-                                <input type="file" id="service-account-file-input" accept=".json" class="hidden" onchange="handleServiceAccountKeyUpload(event)">
-                                <button type="button" onclick="toggleAdminSdkSnippetBox()" class="flex-1 lg:flex-none px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-xs transition shadow-sm">
-                                    💻 Admin SDK Code ကြည့်ရန်
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Collapsible Node.js Firebase Admin SDK Code Box -->
-                        <div id="admin-sdk-snippet-box" class="hidden bg-slate-900 text-slate-100 p-3.5 rounded-xl border border-slate-700 space-y-2 text-xs">
-                            <div class="flex justify-between items-center border-b border-slate-700 pb-2">
-                                <span class="font-bold text-emerald-400">Node.js Firebase Admin SDK Initialization</span>
-                                <button type="button" onclick="copyAdminSdkSnippet()" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[11px] transition">Copy Code</button>
-                            </div>
-                            <pre id="admin-sdk-code-pre" class="font-mono text-[11px] overflow-x-auto leading-relaxed text-slate-200">var admin = require("firebase-admin");
-
-var serviceAccount = require("path/to/serviceAccountKey.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  projectId: "mydataapp-a3750",
-  storageBucket: "mydataapp-a3750.firebasestorage.app"
-});
-
-var db = admin.firestore();</pre>
-                        </div>
+                        <button type="button" onclick="openResetSelectionModal()" class="min-w-0 flex-1 sm:flex-none px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">Reset</button>
                     </div>
                 </div>
 
-                <!-- Google Sheets Direct Live Auto-Sync Card (Collapsible) -->
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-emerald-200 dark:border-slate-700 space-y-3">
-                    <div onclick="toggleGoogleSheetsSyncPanel()" class="flex items-center justify-between gap-2 cursor-pointer select-none">
-                        <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-xs">
-                            <span>📊 Google Sheets Live Auto-Sync</span>
-                            <span id="settings-gsheets-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300">မချိတ်ဆက်ရသေးပါ</span>
-                        </div>
-                        <span id="gs-sync-toggle-arrow" class="text-xs font-extrabold text-slate-500 dark:text-slate-400 transition-transform duration-200">▼</span>
-                    </div>
-
-                    <div id="gsheets-sync-collapsible-body" class="hidden pt-3 border-t border-slate-200 dark:border-slate-700 space-y-3 text-xs">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                            <div>
-                                <p class="text-[11px] text-slate-600 dark:text-slate-300">ဒေတာ ထည့်သွင်း/ပြင်ဆင်/ဖျက်တိုင်း သတ်မှတ်ထားသော Google Sheet တွင် အလိုအလျောက် Update ပြုလုပ်ပေးမည်ဖြစ်ပါသည်။</p>
-                                <p id="gsheets-last-sync-label" class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">နောက်ဆုံး Sync အချိန် - မရှိသေးပါ</p>
-                            </div>
-                            <div class="flex flex-wrap gap-2">
-                                <label class="inline-flex items-center gap-1.5 cursor-pointer select-none bg-emerald-50 dark:bg-emerald-900/20 px-2.5 py-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800">
-                                    <input type="checkbox" id="gsheets-auto-sync-enabled" checked onchange="toggleGoogleSheetsAutoSyncSetting()" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                                    <span class="font-bold text-emerald-800 dark:text-emerald-300 text-[11px]">Auto-Push ဖွင့်ထားမည်</span>
-                                </label>
-                                <label class="inline-flex items-center gap-1.5 cursor-pointer select-none bg-indigo-50 dark:bg-indigo-900/20 px-2.5 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800">
-                                    <input type="checkbox" id="gsheets-auto-pull-enabled" onchange="toggleGoogleSheetsAutoPullSetting()" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
-                                    <span class="font-bold text-indigo-800 dark:text-indigo-300 text-[11px]">Auto-Pull (30s)</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
-                            <div>
-                                <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Google Apps Script Web App URL <span class="text-rose-500">*</span></label>
-                                <input type="url" id="gsheets-cfg-webapp-url" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-emerald-500">
-                            </div>
-                            <div>
-                                <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Google Sheet Link (အလိုအလျောက် ဖြည့်ပေးမည် / Optional)</label>
-                                <input type="url" id="gsheets-cfg-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-emerald-500">
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-2">
-                            <button type="button" onclick="saveAndTestGoogleSheetsConfig()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm">ချိတ်ဆက်သိမ်းဆည်း &amp; စမ်းသပ်မည်</button>
-                            <button type="button" onclick="syncToGoogleSheets('manual_push', true)" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm">Google Sheet သို့ ယခု Sync (Push)</button>
-                            <button type="button" onclick="pullFromGoogleSheets(true)" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs transition shadow-sm">Google Sheet မှ ပြန်ယူမည် (Pull)</button>
-                            <button type="button" onclick="openConnectedGoogleSheet()" class="px-3 py-1.5 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold text-xs transition shadow-sm">Google Sheet ဖွင့်ကြည့်ရန်</button>
-                            <button type="button" onclick="toggleGoogleSheetsScriptBox()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-xs transition shadow-sm">Apps Script Code (Code.gs) ကြည့်ရန်</button>
-                        </div>
-
-                        <div id="gsheets-script-snippet-box" class="hidden bg-slate-900 text-slate-100 p-3.5 rounded-xl border border-slate-700 space-y-2.5 text-xs">
-                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-700 pb-2">
-                                <span class="font-bold text-emerald-400">Google Apps Script Setup (Code.gs)</span>
-                                <div class="flex gap-1.5">
-                                    <button type="button" onclick="downloadGoogleAppsScriptFile()" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] transition">Download .gs</button>
-                                    <button type="button" onclick="copyGoogleSheetsScriptSnippet()" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[11px] transition">Copy Code</button>
-                                </div>
-                            </div>
-                            <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-300">
-                                <li>မိမိ Google Drive တွင် Google Sheet အသစ် (သို့) ရှိပြီးသား Sheet ကို ဖွင့်ပါ။</li>
-                                <li>Menu မှ <strong>Extensions &rarr; Apps Script</strong> ကို နှိပ်ပြီး အောက်ပါ Code ကို <code>Code.gs</code> ထဲသို့ Paste ချ၍ Save လုပ်ပါ။</li>
-                                <li>ညာဘက်အပေါ်ရှိ <strong>Deploy &rarr; New deployment &rarr; Web app</strong> ကို ရွေးပါ။ (Execute as: <strong>Me</strong>, Who has access: <strong>Anyone</strong> ထားပါ)</li>
-                                <li>ရရှိလာသော <strong>Web app URL</strong> ကို အထက်ပါအကွက်တွင် ထည့်သွင်း၍ <strong>ချိတ်ဆက်သိမ်းဆည်း &amp; စမ်းသပ်မည်</strong> ကို နှိပ်ပါ။</li>
-                            </ol>
-                            <pre id="gsheets-script-code-pre" class="font-mono text-[10px] max-h-60 overflow-auto bg-slate-950/70 p-2.5 rounded-lg border border-slate-800 leading-relaxed text-slate-200"></pre>
-                        </div>
+                <!-- Admin-Only Cloud & Sheet Sync Buttons (inside Setting) -->
+                <div id="settings-sync-actions-card" class="hidden bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Cloud &amp; Google Sheets Sync (Admin Only)</span>
+                    <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                        <button type="button" id="settings-btn-firestore-sync" onclick="switchTab('firestore-sync')" class="flex-1 sm:flex-none px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap inline-flex items-center justify-center gap-1.5">
+                            <span>☁️</span>
+                            <span>Firestore Auto-Sync</span>
+                        </button>
+                        <button type="button" id="settings-btn-gsheets-sync" onclick="switchTab('gsheets-sync')" class="flex-1 sm:flex-none px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap inline-flex items-center justify-center gap-1.5">
+                            <span>📊</span>
+                            <span>Google Sheets Live Auto-Sync</span>
+                        </button>
                     </div>
                 </div>
 
@@ -2359,6 +2257,146 @@ var db = admin.firestore();</pre>
                             <thead id="custom-table-thead" class="bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-600"></thead>
                             <tbody id="custom-table-tbody" class="divide-y divide-slate-200 dark:divide-slate-700 align-middle"></tbody>
                         </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FIRESTORE AUTO-SYNC PAGE TAB (Admin Only) -->
+            <section id="firestore-sync-tab" class="tab-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-800 p-4 sm:p-5 rounded-xl shadow-sm border border-blue-200 dark:border-slate-700 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
+                        <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-xs sm:text-sm">
+                            <button type="button" onclick="switchTab('settings')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-bold text-xs transition">← Setting</button>
+                            <span>☁️ Firestore Auto-Sync</span>
+                            <span id="settings-firestore-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">Connected</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" onclick="saveCustomFirestoreConfig()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm">ချိတ်ဆက်သိမ်းဆည်းမည်</button>
+                            <button type="button" onclick="syncToFirebaseFirestore('manual_sync_now', true)" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm">ယခု Sync လုပ်မည်</button>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">ဒေတာ ထည့်သွင်း/ပြင်ဆင်/ဖျက်တိုင်း Firestore Database တွင် အလိုအလျောက် Update ပြုလုပ်ပေးမည်ဖြစ်ပါသည်။</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs">
+                        <div>
+                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Project ID</label>
+                            <input type="text" id="fs-cfg-projectId" placeholder="mydataapp-a3750" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">API Key</label>
+                            <input type="text" id="fs-cfg-apiKey" placeholder="AIzaSy..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Auth Domain</label>
+                            <input type="text" id="fs-cfg-authDomain" placeholder="mydataapp-a3750.firebaseapp.com" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">App ID</label>
+                            <input type="text" id="fs-cfg-appId" placeholder="1:...:web:..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <!-- Firebase Admin SDK (serviceAccountKey.json) Integration Section -->
+                    <div class="pt-3 border-t border-slate-200 dark:border-slate-700 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
+                        <div class="space-y-1">
+                            <div class="font-bold text-slate-800 dark:text-slate-200 text-xs flex items-center gap-2">
+                                <span>🔑 Firebase Admin SDK (Service Account Key) ချိတ်ဆက်မှု</span>
+                                <span id="admin-sdk-status-badge" class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300 text-[10px] font-bold">mydataapp-a3750</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400">
+                                <code>serviceAccountKey.json</code> ဖိုင်မှ Project Credential များကို တိုက်ရိုက်ရယူချိတ်ဆက်နိုင်ပြီး Node.js Admin SDK ကုဒ်ကိုလည်း ကူးယူနိုင်ပါသည်။
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 w-full lg:w-auto">
+                            <button type="button" onclick="document.getElementById('service-account-file-input').click()" class="flex-1 lg:flex-none px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs transition shadow-sm">
+                                📂 serviceAccountKey.json ထည့်သွင်းရန်
+                            </button>
+                            <input type="file" id="service-account-file-input" accept=".json" class="hidden" onchange="handleServiceAccountKeyUpload(event)">
+                            <button type="button" onclick="toggleAdminSdkSnippetBox()" class="flex-1 lg:flex-none px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-xs transition shadow-sm">
+                                💻 Admin SDK Code ကြည့်ရန်
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="admin-sdk-snippet-box" class="hidden bg-slate-900 text-slate-100 p-3.5 rounded-xl border border-slate-700 space-y-2 text-xs">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                            <span class="font-bold text-emerald-400">Node.js Firebase Admin SDK Initialization</span>
+                            <button type="button" onclick="copyAdminSdkSnippet()" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[11px] transition">Copy Code</button>
+                        </div>
+                        <pre id="admin-sdk-code-pre" class="font-mono text-[11px] overflow-x-auto leading-relaxed text-slate-200">var admin = require("firebase-admin");
+
+var serviceAccount = require("path/to/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  projectId: "mydataapp-a3750",
+  storageBucket: "mydataapp-a3750.firebasestorage.app"
+});
+
+var db = admin.firestore();</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GOOGLE SHEETS LIVE AUTO-SYNC PAGE TAB (Admin Only) -->
+            <section id="gsheets-sync-tab" class="tab-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-800 p-4 sm:p-5 rounded-xl shadow-sm border border-emerald-200 dark:border-slate-700 space-y-4 text-xs">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
+                        <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-xs sm:text-sm">
+                            <button type="button" onclick="switchTab('settings')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-bold text-xs transition">← Setting</button>
+                            <span>📊 Google Sheets Live Auto-Sync</span>
+                            <span id="settings-gsheets-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300">မချိတ်ဆက်ရသေးပါ</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer select-none bg-emerald-50 dark:bg-emerald-900/20 px-2.5 py-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                                <input type="checkbox" id="gsheets-auto-sync-enabled" checked onchange="toggleGoogleSheetsAutoSyncSetting()" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                                <span class="font-bold text-emerald-800 dark:text-emerald-300 text-[11px]">Auto-Push ဖွင့်ထားမည်</span>
+                            </label>
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer select-none bg-indigo-50 dark:bg-indigo-900/20 px-2.5 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800">
+                                <input type="checkbox" id="gsheets-auto-pull-enabled" onchange="toggleGoogleSheetsAutoPullSetting()" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                <span class="font-bold text-indigo-800 dark:text-indigo-300 text-[11px]">Auto-Pull (30s)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-[11px] text-slate-600 dark:text-slate-300">ဒေတာ ထည့်သွင်း/ပြင်ဆင်/ဖျက်တိုင်း သတ်မှတ်ထားသော Google Sheet တွင် အလိုအလျောက် Update ပြုလုပ်ပေးမည်ဖြစ်ပါသည်။</p>
+                        <p id="gsheets-last-sync-label" class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">နောက်ဆုံး Sync အချိန် - မရှိသေးပါ</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Google Apps Script Web App URL <span class="text-rose-500">*</span></label>
+                            <input type="url" id="gsheets-cfg-webapp-url" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Google Sheet Link (အလိုအလျောက် ဖြည့်ပေးမည် / Optional)</label>
+                            <input type="url" id="gsheets-cfg-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="saveAndTestGoogleSheetsConfig()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm">ချိတ်ဆက်သိမ်းဆည်း &amp; စမ်းသပ်မည်</button>
+                        <button type="button" onclick="syncToGoogleSheets('manual_push', true)" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm">Google Sheet သို့ ယခု Sync (Push)</button>
+                        <button type="button" onclick="pullFromGoogleSheets(true)" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs transition shadow-sm">Google Sheet မှ ပြန်ယူမည် (Pull)</button>
+                        <button type="button" onclick="openConnectedGoogleSheet()" class="px-3 py-1.5 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold text-xs transition shadow-sm">Google Sheet ဖွင့်ကြည့်ရန်</button>
+                        <button type="button" onclick="toggleGoogleSheetsScriptBox()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-xs transition shadow-sm">Apps Script Code (Code.gs) ကြည့်ရန်</button>
+                    </div>
+
+                    <div id="gsheets-script-snippet-box" class="hidden bg-slate-900 text-slate-100 p-3.5 rounded-xl border border-slate-700 space-y-2.5 text-xs">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-700 pb-2">
+                            <span class="font-bold text-emerald-400">Google Apps Script Setup (Code.gs)</span>
+                            <div class="flex gap-1.5">
+                                <button type="button" onclick="downloadGoogleAppsScriptFile()" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] transition">Download .gs</button>
+                                <button type="button" onclick="copyGoogleSheetsScriptSnippet()" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[11px] transition">Copy Code</button>
+                            </div>
+                        </div>
+                        <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-300">
+                            <li>မိမိ Google Drive တွင် Google Sheet အသစ် (သို့) ရှိပြီးသား Sheet ကို ဖွင့်ပါ။</li>
+                            <li>Menu မှ <strong>Extensions &rarr; Apps Script</strong> ကို နှိပ်ပြီး အောက်ပါ Code ကို <code>Code.gs</code> ထဲသို့ Paste ချ၍ Save လုပ်ပါ။</li>
+                            <li>ညာဘက်အပေါ်ရှိ <strong>Deploy &rarr; New deployment &rarr; Web app</strong> ကို ရွေးပါ။ (Execute as: <strong>Me</strong>, Who has access: <strong>Anyone</strong> ထားပါ)</li>
+                            <li>ရရှိလာသော <strong>Web app URL</strong> ကို အထက်ပါအကွက်တွင် ထည့်သွင်း၍ <strong>ချိတ်ဆက်သိမ်းဆည်း &amp; စမ်းသပ်မည်</strong> ကို နှိပ်ပါ။</li>
+                        </ol>
+                        <pre id="gsheets-script-code-pre" class="font-mono text-[10px] max-h-60 overflow-auto bg-slate-950/70 p-2.5 rounded-lg border border-slate-800 leading-relaxed text-slate-200"></pre>
                     </div>
                 </div>
             </section>
@@ -3675,15 +3713,85 @@ var db = admin.firestore();</pre>
             }
         }
 
+        let globalHighlightedTarget = null;
+
+        function setGlobalSearchHighlightTarget(type, record, customTableId = '') {
+            if (!record) {
+                globalHighlightedTarget = null;
+                return;
+            }
+            globalHighlightedTarget = {
+                type,
+                customTableId,
+                recordRef: record,
+                id: String(record.id || record.code || record.username || '').trim().toLowerCase(),
+                name: String(record.name || record.title || record.weaponType || record.nomenclature || '').trim().toLowerCase(),
+                serial: String(record.serial || record.weaponSerial || '').trim().toLowerCase(),
+                fy: String(record.financialYears || '').trim().toLowerCase(),
+                rowJson: JSON.stringify(record)
+            };
+        }
+
+        function isSearchHighlightedRecord(type, record, customTableId = '') {
+            if (!globalHighlightedTarget || !record) return false;
+            if (globalHighlightedTarget.type !== type) return false;
+            if (type === 'custom-table' && globalHighlightedTarget.customTableId !== customTableId) return false;
+            if (globalHighlightedTarget.recordRef === record) return true;
+            if (type === 'custom-table') {
+                return JSON.stringify(record) === globalHighlightedTarget.rowJson;
+            }
+            if (type === 'prod') {
+                return String(record.nomenclature || '').trim().toLowerCase() === globalHighlightedTarget.name &&
+                    String(record.financialYears || '').trim().toLowerCase() === globalHighlightedTarget.fy;
+            }
+            const recId = String(record.id || record.code || record.username || '').trim().toLowerCase();
+            if (globalHighlightedTarget.id && recId) {
+                if (type === 'armory' && globalHighlightedTarget.serial) {
+                    return recId === globalHighlightedTarget.id &&
+                        String(record.serial || '').trim().toLowerCase() === globalHighlightedTarget.serial;
+                }
+                return recId === globalHighlightedTarget.id;
+            }
+            const recName = String(record.name || record.title || record.weaponType || '').trim().toLowerCase();
+            return Boolean(globalHighlightedTarget.name && recName === globalHighlightedTarget.name);
+        }
+
+        function scrollToHighlightedSearchTarget() {
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    const els = Array.from(document.querySelectorAll('[data-search-highlighted="true"]'));
+                    const visibleTarget = els.find(el => el.offsetParent !== null) || els[0];
+                    if (visibleTarget) {
+                        visibleTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+                    }
+                }, 60);
+            });
+        }
+
         function getGlobalSearchCollections() {
-            return [
+            const collections = [
                 { label: 'ဝန်ထမ်း', records: personnelData, type: 'personnel' },
                 { label: 'လုံခြုံရေး', records: securityDutyData, type: 'duty' },
                 { label: 'ကြီးကြပ်/ကန့်သတ်', records: armoryData, type: 'armory' },
                 { label: 'Prod; Statement', records: prodStatementData, type: 'prod' },
-                { label: 'Announcement', records: announcementData, type: 'announcement' },
-                { label: 'အသုံးပြုသူ', records: userData, type: 'users' }
+                { label: 'Announcement', records: announcementData, type: 'announcement' }
             ];
+            if (typeof isCurrentUserAdmin === 'function' && isCurrentUserAdmin()) {
+                collections.push({ label: 'အသုံးပြုသူ', records: userData, type: 'users' });
+            }
+            if (Array.isArray(customTablesData)) {
+                customTablesData.forEach(tbl => {
+                    if (tbl && Array.isArray(tbl.rows)) {
+                        collections.push({
+                            label: tbl.title || 'Custom Page',
+                            records: tbl.rows,
+                            type: 'custom-table',
+                            customTableId: tbl.id
+                        });
+                    }
+                });
+            }
+            return collections;
         }
 
         function renderGlobalSearchResults() {
@@ -3721,13 +3829,16 @@ var db = admin.firestore();</pre>
                 resultButton.className = 'w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition';
                 const title = document.createElement('span');
                 title.className = 'block font-semibold text-slate-900 dark:text-white';
-                title.textContent = String(record.title || record.name || record.weaponType || record.nomenclature || record.username || record.id || 'စာရင်း');
+                const firstCustomVal = match.type === 'custom-table'
+                    ? Object.values(record || {}).find(v => v !== null && v !== undefined && String(v).trim() !== '')
+                    : '';
+                title.textContent = String(record.title || record.name || record.weaponType || record.nomenclature || record.username || record.id || firstCustomVal || 'စာရင်း');
                 const subtitle = document.createElement('span');
                 subtitle.className = 'block text-slate-500 dark:text-slate-400';
                 const detail = match.type === 'announcement'
                     ? formatAnnouncementTimestamp(record.createdAt)
-                    : String(record.id || record.code || record.username || record.financialYears || '');
-                subtitle.textContent = `${match.label} · ${detail}`;
+                    : String(record.id || record.code || record.username || record.financialYears || (match.type === 'custom-table' ? 'Custom Table' : ''));
+                subtitle.textContent = detail ? `${match.label} · ${detail}` : match.label;
                 resultButton.append(title, subtitle);
                 resultButton.addEventListener('click', () => openGlobalSearchMatch(match));
                 resultsEl.appendChild(resultButton);
@@ -3745,43 +3856,69 @@ var db = admin.firestore();</pre>
                     'အမြဲတမ်းဝန်ထမ်း': 'staff',
                     'အရပ်သားဝန်ထမ်း': 'civilian'
                 };
-                tabName = personnelTabs[group] || 'personnel';
+                tabName = personnelTabs[group] || 'civilian-master';
+            } else if (match.type === 'custom-table' && match.customTableId) {
+                tabName = `custom-table:${match.customTableId}`;
             }
-            switchTab(tabName);
 
-            const searchInputs = {
-                personnel: ['personnel-search', 'renderPersonnelDirectory', 'personnel'],
-                duty: ['duty-search', 'renderSecurityDuty', 'duty'],
-                armory: ['armory-search', 'renderArmory', 'armory'],
-                prod: ['prod-search', 'renderProdStatement', 'prod'],
-                announcement: ['announcement-search', 'renderAnnouncementView', null],
-                users: ['user-search', 'renderUserManagement', null]
-            };
-            const [inputId, renderName, pageKey] = searchInputs[match.type];
-            const filterIds = {
-                personnel: ['personnel-filter-rank', 'personnel-filter-dept', 'personnel-filter-type', 'personnel-filter-status'],
-                duty: ['duty-filter-dutytype', 'duty-filter-dept', 'duty-filter-type'],
-                armory: ['armory-filter-cat', 'armory-filter-name', 'armory-filter-status'],
-                prod: ['prod-filter-fy', 'prod-filter-desc', 'prod-filter-nom'],
-                announcement: [],
-                users: ['user-filter-role', 'user-filter-status']
-            }[match.type];
-            filterIds.forEach(id => {
-                const filter = document.getElementById(id);
-                if (filter && Array.from(filter.options).some(option => option.value === 'ALL')) filter.value = 'ALL';
-            });
-            const searchTerm = {
-                personnel: record.id || record.name,
-                duty: record.id || record.name,
-                armory: record.weaponType || record.code,
-                prod: record.nomenclature,
-                announcement: record.id || record.title,
-                users: record.username || record.name
-            }[match.type];
-            const searchInput = document.getElementById(inputId);
-            if (searchInput) searchInput.value = String(searchTerm || document.getElementById('global-search-input')?.value || '').trim();
-            if (pageKey) resetTablePage(pageKey);
-            window[renderName]();
+            setGlobalSearchHighlightTarget(match.type, record, match.customTableId || '');
+            switchTab(tabName, { preserveSearchHighlight: true });
+
+            if (match.type === 'personnel') {
+                const records = getCivilianMasterRecords();
+                const idx = records.findIndex(p => isSearchHighlightedRecord('personnel', p));
+                tablePageState.civilianMaster = idx >= 0 ? Math.floor(idx / CIVILIAN_MASTER_ITEMS_PER_PAGE) + 1 : 1;
+                renderCivilianNameListMaster();
+            } else if (match.type === 'duty') {
+                const searchInput = document.getElementById('duty-search');
+                if (searchInput) searchInput.value = '';
+                ['duty-filter-dutytype', 'duty-filter-dept', 'duty-filter-type'].forEach(id => {
+                    const filter = document.getElementById(id);
+                    if (filter && Array.from(filter.options).some(option => option.value === 'ALL')) filter.value = 'ALL';
+                });
+                const sortedDuty = [...securityDutyData].sort(compareByRankSeniority);
+                const idx = sortedDuty.findIndex(d => isSearchHighlightedRecord('duty', d));
+                tablePageState.duty = idx >= 0 ? Math.floor(idx / ITEMS_PER_PAGE) + 1 : 1;
+                renderSecurityDuty();
+            } else if (match.type === 'armory') {
+                const searchInput = document.getElementById('armory-search');
+                if (searchInput) searchInput.value = '';
+                ['armory-filter-cat', 'armory-filter-name', 'armory-filter-status'].forEach(id => {
+                    const filter = document.getElementById(id);
+                    if (filter && Array.from(filter.options).some(option => option.value === 'ALL')) filter.value = 'ALL';
+                });
+                const idx = armoryData.findIndex(w => isSearchHighlightedRecord('armory', w));
+                tablePageState.armory = idx >= 0 ? Math.floor(idx / ITEMS_PER_PAGE) + 1 : 1;
+                renderArmory();
+            } else if (match.type === 'prod') {
+                const searchInput = document.getElementById('prod-search');
+                if (searchInput) searchInput.value = '';
+                ['prod-filter-fy', 'prod-filter-desc', 'prod-filter-nom'].forEach(id => {
+                    const filter = document.getElementById(id);
+                    if (filter && Array.from(filter.options).some(option => option.value === 'ALL')) filter.value = 'ALL';
+                });
+                const idx = prodStatementData.findIndex(item => isSearchHighlightedRecord('prod', item));
+                tablePageState.prod = idx >= 0 ? Math.floor(idx / ITEMS_PER_PAGE) + 1 : 1;
+                renderProdStatement();
+            } else if (match.type === 'announcement') {
+                const searchInput = document.getElementById('announcement-search');
+                if (searchInput) searchInput.value = '';
+                renderAnnouncementView();
+            } else if (match.type === 'users') {
+                const searchInput = document.getElementById('user-search');
+                if (searchInput) searchInput.value = '';
+                ['user-filter-role', 'user-filter-status'].forEach(id => {
+                    const filter = document.getElementById(id);
+                    if (filter && Array.from(filter.options).some(option => option.value === 'ALL')) filter.value = 'ALL';
+                });
+                renderUserManagement();
+            } else if (match.type === 'custom-table') {
+                const searchInput = document.getElementById('custom-table-search');
+                if (searchInput) searchInput.value = '';
+                renderActiveCustomTable();
+            }
+
+            scrollToHighlightedSearchTarget();
             toggleGlobalSearch(false);
         }
 
@@ -3816,7 +3953,14 @@ var db = admin.firestore();</pre>
             }
         }
 
-        function switchTab(tabName) {
+        function switchTab(tabName, options = {}) {
+            if (!options || !options.preserveSearchHighlight) {
+                globalHighlightedTarget = null;
+            }
+            if (['users', 'firestore-sync', 'gsheets-sync'].includes(tabName) && (typeof isCurrentUserAdmin !== 'function' || !isCurrentUserAdmin())) {
+                showToast('Admin ခွင့်ပြုချက်ဖြင့်သာ ဝင်ရောက်ကြည့်ရှုနိုင်ပါသည်', 'error');
+                tabName = 'dashboard';
+            }
             toggleSlideMenu(false);
             const mainWorkspace = document.getElementById('main-workspace');
             if (mainWorkspace) mainWorkspace.scrollTop = 0;
@@ -3862,6 +4006,8 @@ var db = admin.firestore();</pre>
                 prod: { sectionId: 'prod-tab', title: 'ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း', category: 'ALL', positionFilter: '' },
                 announcement: { sectionId: 'announcement-tab', title: 'Announcement', category: 'ALL', positionFilter: '' },
                 users: { sectionId: 'users-tab', title: 'User Management', category: 'ALL', positionFilter: '' },
+                'firestore-sync': { sectionId: 'firestore-sync-tab', title: 'Firestore Auto-Sync', category: 'ALL', positionFilter: '' },
+                'gsheets-sync': { sectionId: 'gsheets-sync-tab', title: 'Google Sheets Live Auto-Sync', category: 'ALL', positionFilter: '' },
                 settings: { sectionId: 'settings-tab', title: 'Setting', category: 'ALL', positionFilter: '' }
             };
 
@@ -3925,7 +4071,8 @@ var db = admin.firestore();</pre>
                 btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
                 btn.classList.add('text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-300', 'dark:hover:bg-slate-700');
             });
-            const activeNavBtn = document.getElementById(`nav-${tabName}`);
+            const navTargetKey = (tabName === 'firestore-sync' || tabName === 'gsheets-sync') ? 'settings' : tabName;
+            const activeNavBtn = document.getElementById(`nav-${navTargetKey}`);
             if (activeNavBtn) {
                 activeNavBtn.classList.remove('text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-300', 'dark:hover:bg-slate-700');
                 activeNavBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
@@ -3974,6 +4121,12 @@ var db = admin.firestore();</pre>
             } else if (tabName === 'users') {
                 initInlineUserControls();
                 renderUserManagement();
+            } else if (tabName === 'firestore-sync') {
+                populateFirestoreSettingsInputs();
+                updateFirebaseSyncUI(firebaseSyncStatus);
+            } else if (tabName === 'gsheets-sync') {
+                populateGoogleSheetsSettingsInputs();
+                updateGoogleSheetsSyncUI(googleSheetsSyncStatus);
             } else if (tabName === 'settings') {
                 renderSettings();
             }
@@ -4309,8 +4462,10 @@ var db = admin.firestore();</pre>
             }
 
             announcements.forEach(item => {
+                const isSearchHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('announcement', item);
                 const card = document.createElement('article');
-                card.className = 'p-3.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/40';
+                card.className = `p-3.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/40${isSearchHl ? ' search-row-highlight' : ''}`;
+                if (isSearchHl) card.setAttribute('data-search-highlighted', 'true');
                 card.dataset.announcementId = item.id || '';
                 const heading = document.createElement('h3');
                 heading.className = 'font-bold text-slate-900 dark:text-white';
@@ -6823,8 +6978,10 @@ function doGet(e) {
                 return;
             }
 
-            tbody.innerHTML = rows.map(({ r, realIndex }, idx) => `
-                <tr onclick="openCustomTableRowModal(${realIndex})" class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer">
+            tbody.innerHTML = rows.map(({ r, realIndex }, idx) => {
+                const isSearchHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('custom-table', r, tbl.id);
+                return `
+                <tr onclick="openCustomTableRowModal(${realIndex})" ${isSearchHl ? 'data-search-highlighted="true"' : ''} class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer${isSearchHl ? ' search-row-highlight' : ''}">
                     ${showRowNum ? `<td class="px-3 py-2 text-center font-bold text-slate-500">${toMyanmarNumerals(idx + 1)}</td>` : ''}
                     ${cols.map(c => `<td class="px-3 py-2">${escapeHtml(r[c.key] === undefined || r[c.key] === '' ? '-' : r[c.key])}</td>`).join('')}
                     <td class="px-3 py-2 text-center space-x-1" onclick="event.stopPropagation()">
@@ -6832,11 +6989,14 @@ function doGet(e) {
                         <button type="button" onclick="confirmDeleteCustomTableRow(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg" title="ဖျက်မည်">🗑️</button>
                     </td>
                 </tr>
-            `).join('');
+            `;
+            }).join('');
 
             if (mobileWrap) {
-                mobileWrap.innerHTML = rows.map(({ r, realIndex }, idx) => `
-                    <div onclick="openCustomTableRowModal(${realIndex})" class="bg-slate-50 dark:bg-slate-700/40 p-3 rounded-xl border border-slate-200 dark:border-slate-600 space-y-1.5 text-xs cursor-pointer">
+                mobileWrap.innerHTML = rows.map(({ r, realIndex }, idx) => {
+                    const isSearchHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('custom-table', r, tbl.id);
+                    return `
+                    <div onclick="openCustomTableRowModal(${realIndex})" ${isSearchHl ? 'data-search-highlighted="true"' : ''} class="bg-slate-50 dark:bg-slate-700/40 p-3 rounded-xl border border-slate-200 dark:border-slate-600 space-y-1.5 text-xs cursor-pointer${isSearchHl ? ' search-row-highlight' : ''}">
                         <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-600 pb-1">
                             <span class="font-bold text-blue-700 dark:text-blue-300">#${toMyanmarNumerals(idx + 1)} · ${escapeHtml(String(r[cols[0]?.key] || '-'))}</span>
                             <div class="flex gap-1" onclick="event.stopPropagation()">
@@ -6848,7 +7008,8 @@ function doGet(e) {
                             ${cols.slice(1).map(c => `<div><span class="text-slate-500 dark:text-slate-400">${escapeHtml(c.label)}:</span> <span class="font-semibold">${escapeHtml(r[c.key] || '-')}</span></div>`).join('')}
                         </div>
                     </div>
-                `).join('');
+                `;
+                }).join('');
             }
         }
 
@@ -7246,6 +7407,9 @@ function doGet(e) {
             );
 
             if (indicator) {
+                const isAdmin = typeof isCurrentUserAdmin === 'function' ? isCurrentUserAdmin() : false;
+                indicator.classList.toggle('hidden', !isAdmin);
+                indicator.classList.toggle('inline-flex', isAdmin);
                 indicator.title = titleText;
             }
             if (iconEl) {
@@ -7355,12 +7519,16 @@ function doGet(e) {
             window.open(targetUrl, '_blank', 'noopener,noreferrer');
         }
 
+        function isCurrentUserAdmin() {
+            return String(currentSessionUser?.role || '').trim().toLowerCase() === 'admin';
+        }
+
         function handleHeaderGoogleSheetsClick() {
+            if (!isCurrentUserAdmin()) return;
             if (GOOGLE_SHEETS_CONFIG && GOOGLE_SHEETS_CONFIG.webAppUrl) {
                 syncToGoogleSheets('manual_header_click', true);
             } else {
-                switchTab('settings');
-                toggleGoogleSheetsSyncPanel(true);
+                switchTab('gsheets-sync');
                 showToast('Google Sheet ချိတ်ဆက်ရန် Apps Script Web App URL ထည့်သွင်းပေးပါ', 'info');
             }
         }
@@ -8013,6 +8181,9 @@ function doGet(e) {
             const roleBadge = document.getElementById('settings-user-role');
             const viewOnlyBanner = document.getElementById('view-only-banner');
             const navUsersBtn = document.getElementById('nav-users');
+            const settingsSyncCard = document.getElementById('settings-sync-actions-card');
+            const firebaseIndicator = document.getElementById('firebase-sync-indicator');
+            const gsheetsIndicator = document.getElementById('gsheets-sync-indicator');
 
             const emailLower = (userObj.username || '').toLowerCase();
             const isPrimaryAdmin = emailLower === 'ppa45929@gmail.com' || userObj.role === 'Admin';
@@ -8042,13 +8213,18 @@ function doGet(e) {
                 if (viewOnlyBanner) viewOnlyBanner.classList.add('hidden');
             }
 
-            // Only Admin can manage user roles & accounts
-            if (navUsersBtn) {
-                if (isAdmin) {
-                    navUsersBtn.classList.remove('hidden');
-                } else {
-                    navUsersBtn.classList.add('hidden');
-                }
+            // Only Admin can manage user roles & accounts and sync settings
+            [navUsersBtn, settingsSyncCard].forEach(el => {
+                if (!el) return;
+                el.classList.toggle('hidden', !isAdmin);
+            });
+            if (firebaseIndicator) {
+                firebaseIndicator.classList.toggle('hidden', !isAdmin);
+                firebaseIndicator.classList.toggle('inline-flex', isAdmin);
+            }
+            if (gsheetsIndicator) {
+                gsheetsIndicator.classList.toggle('hidden', !isAdmin);
+                gsheetsIndicator.classList.toggle('inline-flex', isAdmin);
             }
 
             switchTab('dashboard');
@@ -8470,6 +8646,13 @@ function doGet(e) {
             currentFirebaseUid = '';
             localStorage.removeItem(ACTIVE_AUTH_SESSION_KEY);
             document.body.classList.remove('role-view-only');
+            ['nav-users', 'settings-sync-actions-card', 'firebase-sync-indicator', 'gsheets-sync-indicator'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('inline-flex');
+                }
+            });
             const authScreen = document.getElementById('auth-gateway-screen');
             if (authScreen) authScreen.classList.remove('hidden');
             const emailInput = document.getElementById('login-email');
@@ -8496,8 +8679,10 @@ function doGet(e) {
             );
 
             if (indicator) {
-                indicator.classList.remove('hidden', 'invisible');
-                indicator.classList.add('inline-flex');
+                const isAdmin = typeof isCurrentUserAdmin === 'function' ? isCurrentUserAdmin() : false;
+                indicator.classList.toggle('hidden', !isAdmin);
+                indicator.classList.toggle('inline-flex', isAdmin);
+                indicator.classList.remove('invisible');
                 indicator.title = statusTitle;
             }
 
@@ -9153,8 +9338,9 @@ function doGet(e) {
                         return `<td class="p-3">${escapeHtml(rawVal || '-')}</td>`;
                     }).join('');
 
+                    const isDutyHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('duty', d);
                     rowsHtml += `
-                        <tr onclick="selectDutyForInlineEdit(${realIndex})" class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer">
+                        <tr onclick="selectDutyForInlineEdit(${realIndex})" ${isDutyHl ? 'data-search-highlighted="true"' : ''} class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer${isDutyHl ? ' search-row-highlight' : ''}">
                             <td class="p-3 text-center font-bold text-slate-600 dark:text-slate-300">${toMyanmarNumerals(runningIdx++)}</td>
                             ${builtInCells}
                             ${customCells}
@@ -9182,8 +9368,9 @@ function doGet(e) {
                     const rAbbr = getRankAbbr(d.rankAbbr || matchedP?.rankAbbr || matchedP?.rankFull);
                     const deptAbbr = getDeptAbbr(d.deptAbbr || matchedP?.deptAbbr || matchedP?.deptFull);
                     const reason = d.absentReason || (d.dutyType === 'တပ်ပြင်' || d.dutyType === 'တပ်ပြင်လခရ' ? 'တပ်ပြင်လခရ' : 'တပ်တွင်းလခရ');
+                    const isDutyHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('duty', d);
                     return `
-                        <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+                        <div ${isDutyHl ? 'data-search-highlighted="true"' : ''} class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2${isDutyHl ? ' search-row-highlight' : ''}">
                             <div class="flex justify-between items-start">
                                 <div>
                                     <span class="text-xs font-bold text-blue-600 dark:text-blue-400">${d.id}</span>
@@ -11666,8 +11853,10 @@ function doGet(e) {
                     ...visibleBuiltins.map(col => allBuiltinValues[col.index]),
                     ...customColumns.map(col => (person.customFields && person.customFields[col.key] !== undefined) ? person.customFields[col.key] : '')
                 ];
+                const isPersonHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('personnel', person);
                 const row = document.createElement('tr');
-                row.className = 'text-slate-800 dark:text-slate-200 cursor-pointer hover:bg-blue-50/60 dark:hover:bg-slate-700/50';
+                row.className = `text-slate-800 dark:text-slate-200 cursor-pointer hover:bg-blue-50/60 dark:hover:bg-slate-700/50${isPersonHl ? ' search-row-highlight' : ''}`;
+                if (isPersonHl) row.setAttribute('data-search-highlighted', 'true');
                 row.tabIndex = 0;
                 row.setAttribute('role', 'button');
                 row.setAttribute('aria-haspopup', 'dialog');
@@ -12350,8 +12539,9 @@ function doGet(e) {
                     const rawVal = w.customFields && w.customFields[col.key] !== undefined ? String(w.customFields[col.key]).trim() : '';
                     return `<td class="p-3">${escapeHtml(rawVal || '-')}</td>`;
                 }).join('');
+                const isArmoryHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('armory', w);
                 return `
-                    <tr onclick="openArmoryDetailDrawer(${realIndex})" class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer">
+                    <tr onclick="openArmoryDetailDrawer(${realIndex})" ${isArmoryHl ? 'data-search-highlighted="true"' : ''} class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer${isArmoryHl ? ' search-row-highlight' : ''}">
                         <td class="p-3 text-center font-bold text-slate-600 dark:text-slate-300">${toMyanmarNumerals(aStartIdx + idx + 1)}</td>
                         ${builtinTds}
                         ${customTds}
@@ -12371,8 +12561,9 @@ function doGet(e) {
                     const serialDisplay = formatArmorySerialDisplay(w);
                     const purposeDisplay = w.dept || '-';
                     const q = getArmoryRowQuantities(w);
+                    const isArmoryHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('armory', w);
                     return `
-                        <div onclick="openArmoryDetailDrawer(${realIndex})" class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-2 cursor-pointer">
+                        <div onclick="openArmoryDetailDrawer(${realIndex})" ${isArmoryHl ? 'data-search-highlighted="true"' : ''} class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-2 cursor-pointer${isArmoryHl ? ' search-row-highlight' : ''}">
                             <div class="flex justify-between items-start gap-2">
                                 <div>
                                     <span class="text-xs text-slate-700 dark:text-slate-300">${catName}</span>
@@ -12739,8 +12930,9 @@ function doGet(e) {
                 const toggleColor = u.status === 'Active'
                     ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200'
                     : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300';
+                const isUserHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('users', u);
                 return `
-                    <tr onclick="openUserDetailDrawer(${realIndex})" class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer">
+                    <tr onclick="openUserDetailDrawer(${realIndex})" ${isUserHl ? 'data-search-highlighted="true"' : ''} class="hover:bg-blue-50/60 dark:hover:bg-slate-700/50 transition text-slate-800 dark:text-slate-200 cursor-pointer${isUserHl ? ' search-row-highlight' : ''}">
                         <td class="p-3 text-center font-bold text-slate-600 dark:text-slate-300">${toMyanmarNumerals(idx + 1)}</td>
                         <td class="p-3">
                             <div class="flex items-center gap-2.5">
@@ -12780,9 +12972,10 @@ function doGet(e) {
                     const displayUserName = isPrimaryAdmin && (u.name === 'Admin' || !u.name) ? 'Admin (ppa45929)' : u.name;
                     const roleOptionsHtml = userRoles.map(r => `<option value="${r}" ${r === u.role ? 'selected' : ''}>${r}</option>`).join('');
                     const toggleLabel = u.status === 'Active' ? 'Suspend' : 'Activate';
+                    const isUserHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('users', u);
 
                     return `
-                        <div onclick="openUserDetailDrawer(${realIndex})" class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-2.5 cursor-pointer">
+                        <div onclick="openUserDetailDrawer(${realIndex})" ${isUserHl ? 'data-search-highlighted="true"' : ''} class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-2.5 cursor-pointer${isUserHl ? ' search-row-highlight' : ''}">
                             <div class="flex items-start justify-between gap-2">
                                 <div class="flex items-center gap-2.5 min-w-0">
                                     ${getUserProfileAvatarHtml(u, 'w-9 h-9')}
@@ -12819,6 +13012,8 @@ function doGet(e) {
         const SETTING_DELETE_ICON_SVG = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>`;
 
         function renderSettings() {
+            const syncCard = document.getElementById('settings-sync-actions-card');
+            if (syncCard) syncCard.classList.toggle('hidden', typeof isCurrentUserAdmin !== 'function' || !isCurrentUserAdmin());
             populateFirestoreSettingsInputs();
             populateGoogleSheetsSettingsInputs();
             renderSettingsCustomTables();
@@ -13701,676 +13896,3 @@ function doGet(e) {
             const selMonth = document.getElementById('pr-month-selector')?.value || 'apr';
             const quickInput = document.getElementById('pr-month-quick-val');
             if (quickInput) {
-                const val = currentProdFormMonths[selMonth];
-                quickInput.value = val ? val : '';
-            }
-        }
-
-        function onProdMonthQuickInput() {
-            const selMonth = document.getElementById('pr-month-selector')?.value || 'apr';
-            const rawVal = document.getElementById('pr-month-quick-val')?.value;
-            currentProdFormMonths[selMonth] = parseFloat(rawVal) || 0;
-            recalcProdFormTotals();
-        }
-
-        function recalcProdFormTotals() {
-            const debt = parseFloat(document.getElementById('pr-in-debt')?.value) || 0;
-            const plan = parseFloat(document.getElementById('pr-in-plan')?.value) || 0;
-            const totalPlan = debt + plan;
-            const totalPlanEl = document.getElementById('pr-in-totalplan');
-            if (totalPlanEl) totalPlanEl.value = totalPlan;
-
-            let monthlySum = 0;
-            const activeChips = [];
-            PROD_MONTH_KEYS.forEach(m => {
-                const val = parseFloat(currentProdFormMonths[m]) || 0;
-                monthlySum += val;
-                if (val > 0) {
-                    const label = m.charAt(0).toUpperCase() + m.slice(1);
-                    activeChips.push(`${label}: ${formatProdNum(val)}`);
-                }
-            });
-            const totalEl = document.getElementById('pr-in-total');
-            if (totalEl) totalEl.value = monthlySum;
-
-            const summaryEl = document.getElementById('pr-entered-months-summary');
-            if (summaryEl) {
-                summaryEl.textContent = activeChips.length > 0 ? `(${activeChips.join(', ')})` : '';
-            }
-
-            const balance = totalPlan - monthlySum;
-            const hintEl = document.getElementById('pr-in-balance-hint');
-            if (hintEl) {
-                hintEl.textContent = `လက်ကျန် (Balance): ${formatProdNum(balance)}`;
-            }
-        }
-
-        function initInlineProdControls() {
-            const fyFilterSel = document.getElementById('prod-filter-fy');
-            const descFilterSel = document.getElementById('prod-filter-desc');
-            const nomFilterSel = document.getElementById('prod-filter-nom');
-
-            if (fyFilterSel) {
-                const curFy = fyFilterSel.value || 'ALL';
-                const uniqueFys = [...new Set(['2025-2026', '2026-2027', '2027-2028', ...prodStatementData.map(p => p.financialYears).filter(Boolean)])];
-                fyFilterSel.innerHTML = `<option value="ALL">By Financial_Years</option>` + uniqueFys.map(fy => `<option value="${fy}">${fy}</option>`).join('');
-                fyFilterSel.value = curFy;
-            }
-
-            if (descFilterSel) {
-                const curDesc = descFilterSel.value || 'ALL';
-                const uniqueDescs = [...new Set([...PROD_DESC_PRESETS, ...prodStatementData.map(p => p.description).filter(Boolean)])];
-                descFilterSel.innerHTML = `<option value="ALL">By Description</option>` + uniqueDescs.map(d => `<option value="${d}">${d}</option>`).join('');
-                descFilterSel.value = curDesc;
-            }
-
-            if (nomFilterSel) {
-                const curNom = nomFilterSel.value || 'ALL';
-                const uniqueNoms = [...new Set(prodStatementData.map(p => p.nomenclature).filter(Boolean))];
-                nomFilterSel.innerHTML = `<option value="ALL">By Nomenclature</option>` + uniqueNoms.map(n => `<option value="${n}">${n}</option>`).join('');
-                nomFilterSel.value = curNom;
-            }
-
-            updateProdYearLabels();
-            onProdMonthSelectorChange();
-            recalcProdFormTotals();
-        }
-
-        function updateProdSummaryBoxes(list = prodStatementData) {
-            const totalItems = list.length;
-            const sumDebt = list.reduce((acc, item) => acc + (Number(item.debt2526) || 0), 0);
-            const sumPlan = list.reduce((acc, item) => acc + (Number(item.plan2627) || 0), 0);
-            const sumTotalPlan = list.reduce((acc, item) => acc + (Number(item.totalPlan) || 0), 0);
-            const sumTotal = list.reduce((acc, item) => acc + (Number(item.total) || 0), 0);
-
-            const elItems = document.getElementById('pr-sub-items');
-            const elDebt = document.getElementById('pr-sub-debt');
-            const elPlan = document.getElementById('pr-sub-plan');
-            const elTotPlan = document.getElementById('pr-sub-totalplan');
-            const elAch = document.getElementById('pr-sub-achieved');
-
-            if (elItems) elItems.textContent = String(totalItems);
-            if (elDebt) elDebt.textContent = formatProdNum(sumDebt);
-            if (elPlan) elPlan.textContent = formatProdNum(sumPlan);
-            if (elTotPlan) elTotPlan.textContent = formatProdNum(sumTotalPlan);
-            if (elAch) elAch.textContent = formatProdNum(sumTotal);
-        }
-
-        function readProdFormPayload() {
-            const nomenclature = document.getElementById('pr-in-nomenclature').value.trim();
-            const au = document.getElementById('pr-in-au').value.trim() || 'Nos';
-            const debtYear = document.getElementById('pr-in-debt-year')?.value.trim() || '';
-            const debt2526 = parseFloat(document.getElementById('pr-in-debt').value) || 0;
-            const planYear = document.getElementById('pr-in-plan-year')?.value.trim() || '';
-            const plan2627 = parseFloat(document.getElementById('pr-in-plan').value) || 0;
-            const totalPlan = debt2526 + plan2627;
-
-            const descSelVal = document.getElementById('pr-in-desc').value;
-            const descCustomVal = document.getElementById('pr-in-desc-custom').value.trim();
-            const description = descSelVal === 'Custom' ? (descCustomVal || 'Custom') : descSelVal;
-
-            const financialYears = document.getElementById('pr-in-fy').value.trim() || '2026-2027';
-            const remark = document.getElementById('pr-in-remark').value.trim();
-
-            const monthsObj = {};
-            let total = 0;
-            PROD_MONTH_KEYS.forEach(m => {
-                const val = parseFloat(currentProdFormMonths[m]) || 0;
-                monthsObj[m] = val;
-                total += val;
-            });
-
-            const editIdx = Number.parseInt(document.getElementById('pr-inline-index')?.value, 10);
-            const existingCustom = (editIdx >= 0 && prodStatementData[editIdx]?.customFields) ? prodStatementData[editIdx].customFields : {};
-
-            return {
-                nomenclature,
-                au,
-                debtYear,
-                debt2526,
-                planYear,
-                plan2627,
-                totalPlan,
-                description,
-                ...monthsObj,
-                total,
-                remark,
-                financialYears,
-                customFields: readModuleCustomFormInputs('prod', 'prod-custom-fields-container', existingCustom)
-            };
-        }
-
-        function toggleProdFormPanel(forceOpen) {
-            const body = document.getElementById('pr-collapsible-form-body');
-            if (!body) return;
-            const willOpen = typeof forceOpen === 'boolean' ? forceOpen : body.classList.contains('hidden');
-            body.classList.toggle('hidden', !willOpen);
-        }
-
-        function openProdForm(index = -1) {
-            if (!guardWritePermission()) return;
-            initInlineProdControls();
-            if (index >= 0) {
-                selectProdForInlineEdit(index);
-                return;
-            }
-            inlineClearProd(false);
-            renderModuleCustomFormInputs('prod', 'prod-custom-fields-container', {});
-            document.getElementById('pr-inline-index').value = -1;
-            const title = document.getElementById('pr-form-title');
-            if (title) title.textContent = 'ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း အသစ်ထည့်ရန်';
-            toggleProdFormPanel(true);
-        }
-
-        function closeProdFormModal() {
-            toggleProdFormPanel(false);
-        }
-
-        function saveProdForm() {
-            const index = Number.parseInt(document.getElementById('pr-inline-index').value, 10);
-            const saved = index >= 0 ? inlineSaveProd() : inlineAddProd();
-            if (saved) closeProdFormModal();
-        }
-
-        function selectProdForInlineEdit(index) {
-            const item = prodStatementData[index];
-            if (!item) return;
-            initInlineProdControls();
-            toggleProdFormPanel(true);
-            const title = document.getElementById('pr-form-title');
-            if (title) title.textContent = 'ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း ပြင်ဆင်ရန်';
-            document.getElementById('pr-inline-index').value = index;
-            document.getElementById('pr-in-nomenclature').value = item.nomenclature || '';
-            document.getElementById('pr-in-au').value = item.au || 'Nos';
-            const debtYrEl = document.getElementById('pr-in-debt-year');
-            const planYrEl = document.getElementById('pr-in-plan-year');
-            if (debtYrEl) debtYrEl.value = item.debtYear || '';
-            if (planYrEl) planYrEl.value = item.planYear || '';
-            document.getElementById('pr-in-debt').value = item.debt2526 ?? 0;
-            document.getElementById('pr-in-plan').value = item.plan2627 ?? 0;
-
-            const descSel = document.getElementById('pr-in-desc');
-            const customInput = document.getElementById('pr-in-desc-custom');
-            if (PROD_DESC_PRESETS.includes(item.description)) {
-                descSel.value = item.description;
-                customInput.value = '';
-                customInput.classList.add('hidden');
-            } else {
-                descSel.value = 'Custom';
-                customInput.value = item.description || '';
-                customInput.classList.remove('hidden');
-            }
-
-            document.getElementById('pr-in-fy').value = item.financialYears || '2026-2027';
-            document.getElementById('pr-in-remark').value = item.remark || '';
-            renderModuleCustomFormInputs('prod', 'prod-custom-fields-container', item.customFields || {});
-
-            PROD_MONTH_KEYS.forEach(m => {
-                currentProdFormMonths[m] = Number(item[m]) || 0;
-            });
-
-            updateProdYearLabels();
-            onProdMonthSelectorChange();
-            recalcProdFormTotals();
-            document.getElementById('main-workspace')?.scrollTo({ top: 0, behavior: 'smooth' });
-            showToast(`"${item.nomenclature}" အား ပြင်ဆင်ရန် ရွေးချယ်ပြီးပါပြီ`, 'info');
-        }
-
-        function inlineAddProd() {
-            if (!guardWritePermission()) return false;
-            const payload = readProdFormPayload();
-            if (!payload.nomenclature) {
-                showToast('Nomenclature (ပစ္စည်းအမျိုးအမည်) ဖြည့်သွင်းပေးပါ', 'error');
-                return false;
-            }
-            payload._isLatestAdded = true;
-            prodStatementData.forEach(item => { delete item._isLatestAdded; });
-            prodStatementData.unshift(payload);
-            saveSystemState();
-            inlineClearProd(false);
-            initInlineProdControls();
-            renderProdStatement();
-            showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းသစ် ထည့်သွင်းပြီးပါပြီ', 'success');
-            return true;
-        }
-
-        function inlineSaveProd() {
-            if (!guardWritePermission()) return false;
-            const idx = parseInt(document.getElementById('pr-inline-index').value);
-            if (idx < 0 || !prodStatementData[idx]) {
-                showToast('ပြင်ဆင်လိုသော စာရင်းအား ဇယားကွက်အတွင်းမှ Edit ခလုတ်နှိပ်၍ အရင်ရွေးချယ်ပါ', 'error');
-                return false;
-            }
-            const payload = readProdFormPayload();
-            if (!payload.nomenclature) {
-                showToast('Nomenclature (ပစ္စည်းအမျိုးအမည်) ဖြည့်သွင်းပေးပါ', 'error');
-                return false;
-            }
-            prodStatementData[idx] = payload;
-            saveSystemState();
-            inlineClearProd(false);
-            initInlineProdControls();
-            renderProdStatement();
-            showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းအား သိမ်းဆည်း (Save) ပြီးပါပြီ', 'success');
-            return true;
-        }
-
-        function inlineDeleteProd() {
-            const idx = parseInt(document.getElementById('pr-inline-index').value);
-            if (idx < 0 || !prodStatementData[idx]) {
-                showToast('ဖျက်လိုသော စာရင်းအား စာရင်းမှ အရင်ရွေးချယ်ပါ', 'error');
-                return;
-            }
-            confirmDeleteProd(idx, true);
-        }
-
-        function confirmDeleteProd(index, clearInline = false) {
-            if (!guardWritePermission()) return;
-            const item = prodStatementData[index];
-            if (!item) return;
-            openConfirmModal(`"${item.nomenclature}" (${item.financialYears}) စာရင်းကို ဖျက်မည်။ သေချာပါသလား?`, () => {
-                prodStatementData.splice(index, 1);
-                saveSystemState();
-                if (clearInline) inlineClearProd(false);
-                initInlineProdControls();
-                renderProdStatement();
-                showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းအား ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            });
-        }
-
-        function inlineClearProd(notify = true) {
-            document.getElementById('pr-inline-index').value = -1;
-            document.getElementById('pr-in-nomenclature').value = '';
-            document.getElementById('pr-in-au').value = '';
-            const debtYrEl = document.getElementById('pr-in-debt-year');
-            const planYrEl = document.getElementById('pr-in-plan-year');
-            if (debtYrEl) debtYrEl.value = '';
-            if (planYrEl) planYrEl.value = '';
-            document.getElementById('pr-in-debt').value = '';
-            document.getElementById('pr-in-plan').value = '';
-            document.getElementById('pr-in-totalplan').value = '';
-            document.getElementById('pr-in-desc').value = 'GSD';
-            const customInput = document.getElementById('pr-in-desc-custom');
-            if (customInput) {
-                customInput.value = '';
-                customInput.classList.add('hidden');
-            }
-            document.getElementById('pr-in-fy').value = '';
-            document.getElementById('pr-in-remark').value = '';
-            const quickInput = document.getElementById('pr-month-quick-val');
-            if (quickInput) quickInput.value = '';
-            PROD_MONTH_KEYS.forEach(m => {
-                currentProdFormMonths[m] = 0;
-            });
-            document.getElementById('pr-in-total').value = '';
-            updateProdYearLabels();
-            onProdMonthSelectorChange();
-            recalcProdFormTotals();
-            if (notify) showToast('အကွက်များအား ရှင်းလင်းပြီးပါပြီ', 'info');
-        }
-
-        function exportProdExcel() {
-            if (!ensureExcelLibrary()) return;
-            const query = (document.getElementById('prod-search')?.value || '').trim().toLowerCase();
-            const fyFilter = document.getElementById('prod-filter-fy')?.value || 'ALL';
-            const descFilter = document.getElementById('prod-filter-desc')?.value || 'ALL';
-            const nomFilter = document.getElementById('prod-filter-nom')?.value || 'ALL';
-
-            const filteredProd = prodStatementData.filter(item => {
-                const matchesQuery = !query ||
-                                     (item.nomenclature || '').toLowerCase().includes(query) ||
-                                     (item.description || '').toLowerCase().includes(query) ||
-                                     (item.remark || '').toLowerCase().includes(query) ||
-                                     (item.debtYear || '').toLowerCase().includes(query) ||
-                                     (item.planYear || '').toLowerCase().includes(query) ||
-                                     (item.financialYears || '').toLowerCase().includes(query);
-                const matchesFy = fyFilter === 'ALL' || item.financialYears === fyFilter;
-                const matchesDesc = descFilter === 'ALL' || item.description === descFilter;
-                const matchesNom = nomFilter === 'ALL' || item.nomenclature === nomFilter;
-                return matchesQuery && matchesFy && matchesDesc && matchesNom;
-            });
-
-            const exportRows = filteredProd.map((item, i) => ({
-                'Sr': i + 1,
-                'Nomenclature': item.nomenclature,
-                'A/U': item.au,
-                'Debt Yr': item.debtYear || '',
-                'Debt': item.debt2526,
-                'Plan Yr': item.planYear || '',
-                'Plan': item.plan2627,
-                'Total Plan': item.totalPlan,
-                'Description': item.description,
-                'Apr': item.apr,
-                'May': item.may,
-                'Jun': item.jun,
-                'Jul': item.jul,
-                'Aug': item.aug,
-                'Sep': item.sep,
-                'Oct': item.oct,
-                'Nov': item.nov,
-                'Dec': item.dec,
-                'Jan': item.jan,
-                'Feb': item.feb,
-                'Mar': item.mar,
-                'Total': item.total,
-                'Remark': item.remark || '',
-                'Financial_Years': item.financialYears
-            }));
-            const ws = XLSX.utils.json_to_sheet(exportRows.length ? exportRows : [{ 'Remark': 'No records found' }]);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Prod_Statement');
-            saveWorkbookToLocal(wb, `Prod_Statement_${new Date().toISOString().split('T')[0]}.xlsx`, 'ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း Local Excel ဖိုင် သိမ်းဆည်းပြီးပါပြီ');
-        }
-
-        function renderProdStatement() {
-            const thead = document.getElementById('prod-table-thead');
-            const container = document.getElementById('prod-list-container');
-            const footer = document.getElementById('prod-table-footer');
-            const mobileContainer = document.getElementById('prod-mobile-cards');
-            if (!container) return;
-
-            const prodCols = getEffectiveModuleColumns('prod');
-            const totalProdCols = prodCols.visibleBuiltins.length + prodCols.customColumns.length + 2;
-            if (thead) {
-                const builtinThs = prodCols.visibleBuiltins.map(col => {
-                    const idAttr = col.thId ? `id="${col.thId}" ` : '';
-                    if (col.sticky === 'nom') {
-                        return `<th id="pr-th-nom" class="p-2.5 sticky left-12 bg-slate-100 dark:bg-slate-700 z-20">${escapeHtml(col.displayLabel)}</th>`;
-                    }
-                    const alignCls = col.align === 'right' ? 'text-right' : (col.align === 'center' ? 'text-center' : '');
-                    return `<th ${idAttr}class="p-2.5 ${alignCls}">${escapeHtml(col.displayLabel)}</th>`;
-                }).join('');
-                const customThs = prodCols.customColumns.map(col => `<th class="p-2.5 text-blue-700 dark:text-blue-300">${escapeHtml(col.label)}</th>`).join('');
-                thead.innerHTML = `<tr><th id="pr-th-sr" class="p-2.5 text-center sticky left-0 bg-slate-100 dark:bg-slate-700 z-20">Sr</th>${builtinThs}${customThs}<th class="p-2.5 text-center">Function</th></tr>`;
-            }
-
-            updateProdYearLabels();
-
-            const query = (document.getElementById('prod-search')?.value || '').trim().toLowerCase();
-            const fyFilter = document.getElementById('prod-filter-fy')?.value || 'ALL';
-            const descFilter = document.getElementById('prod-filter-desc')?.value || 'ALL';
-            const nomFilter = document.getElementById('prod-filter-nom')?.value || 'ALL';
-
-            const filtered = prodStatementData.filter(item => {
-                const matchesQuery = (item.nomenclature || '').toLowerCase().includes(query) ||
-                                     (item.description || '').toLowerCase().includes(query) ||
-                                     (item.remark || '').toLowerCase().includes(query) ||
-                                     (item.debtYear || '').toLowerCase().includes(query) ||
-                                     (item.planYear || '').toLowerCase().includes(query) ||
-                                     (item.financialYears || '').toLowerCase().includes(query);
-                const matchesFy = fyFilter === 'ALL' || item.financialYears === fyFilter;
-                const matchesDesc = descFilter === 'ALL' || item.description === descFilter;
-                const matchesNom = nomFilter === 'ALL' || item.nomenclature === nomFilter;
-                return matchesQuery && matchesFy && matchesDesc && matchesNom;
-            });
-
-            updateProdSummaryBoxes(filtered);
-            const prodCountEl = document.getElementById('prod-master-count');
-            if (prodCountEl) prodCountEl.textContent = toMyanmarNumerals(filtered.length);
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<tr><td colspan="${totalProdCols}" class="text-center py-8 text-slate-400">ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း မရှိသေးပါ</td></tr>`;
-                if (footer) footer.innerHTML = '';
-                if (mobileContainer) {
-                    mobileContainer.innerHTML = `<div class="col-span-full bg-white dark:bg-slate-800 rounded-xl p-6 text-center text-slate-400 border border-slate-200 dark:border-slate-700">ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း မရှိသေးပါ</div>`;
-                }
-                renderPaginationControls('prod-pagination-bar', 'prod', 1, 0, 'မျိုး');
-                return;
-            }
-
-            // Grand Totals across all filtered records
-            const totals = {
-                debt2526: 0, plan2627: 0, totalPlan: 0,
-                apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0,
-                oct: 0, nov: 0, dec: 0, jan: 0, feb: 0, mar: 0,
-                total: 0
-            };
-            filtered.forEach(item => {
-                totals.debt2526 += Number(item.debt2526) || 0;
-                totals.plan2627 += Number(item.plan2627) || 0;
-                totals.totalPlan += Number(item.totalPlan) || 0;
-                PROD_MONTH_KEYS.forEach(m => { totals[m] += Number(item[m]) || 0; });
-                totals.total += Number(item.total) || 0;
-            });
-
-            const prTotalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
-            if (tablePageState.prod > prTotalPages) tablePageState.prod = prTotalPages;
-            const prCurrentPage = tablePageState.prod || 1;
-            const prStartIdx = (prCurrentPage - 1) * ITEMS_PER_PAGE;
-            const paginatedProd = filtered.slice(prStartIdx, prStartIdx + ITEMS_PER_PAGE);
-
-            // Desktop Rows
-            container.innerHTML = paginatedProd.map((item, idx) => {
-                const realIndex = prodStatementData.indexOf(item);
-                const pct = item.totalPlan > 0 ? Math.min(100, Math.round((item.total / item.totalPlan) * 100)) : 0;
-                const isLatest = Boolean(item._isLatestAdded);
-                const rowHighlightClass = isLatest
-                    ? 'bg-emerald-50/80 dark:bg-emerald-900/25 ring-1 ring-inset ring-emerald-400/60'
-                    : 'hover:bg-blue-50/70 dark:hover:bg-slate-700/60';
-                const stickyBgClass = isLatest
-                    ? 'bg-emerald-50 dark:bg-slate-800'
-                    : 'bg-white dark:bg-slate-800';
-                const prodCellsMap = {
-                    nomenclature: `<td class="p-2.5 font-bold text-slate-900 dark:text-white sticky left-12 ${stickyBgClass} z-10 pr-nom-cell">${escapeHtml(item.nomenclature)}${isLatest ? ' <span class="ml-1 px-1.5 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">New</span>' : ''}</td>`,
-                    au: `<td class="p-2.5 text-center font-semibold text-slate-600 dark:text-slate-300">${escapeHtml(item.au)}</td>`,
-                    debtYear: `<td class="p-2.5 text-center font-mono text-amber-700 dark:text-amber-300">${escapeHtml(item.debtYear || '-')}</td>`,
-                    debt2526: `<td class="p-2.5 text-right font-semibold text-amber-700 dark:text-amber-300">${formatProdNum(item.debt2526)}</td>`,
-                    planYear: `<td class="p-2.5 text-center font-mono text-blue-700 dark:text-blue-300">${escapeHtml(item.planYear || '-')}</td>`,
-                    plan2627: `<td class="p-2.5 text-right font-semibold text-blue-700 dark:text-blue-300">${formatProdNum(item.plan2627)}</td>`,
-                    totalPlan: `<td class="p-2.5 text-right font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/40 dark:bg-indigo-900/10">${formatProdNum(item.totalPlan)}</td>`,
-                    description: `<td class="p-2.5"><span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 font-semibold text-[11px]">${escapeHtml(item.description)}</span></td>`,
-                    total: `<td class="p-2.5 text-right font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50/40 dark:bg-emerald-900/10" title="ပြီးစီးမှု ${pct}%">${formatProdNum(item.total)}</td>`,
-                    remark: `<td class="p-2.5 text-slate-600 dark:text-slate-400">${escapeHtml(item.remark || '-')}</td>`,
-                    financialYears: `<td class="p-2.5 text-center font-mono font-semibold text-blue-800 dark:text-blue-300">${escapeHtml(item.financialYears)}</td>`
-                };
-                PROD_MONTH_KEYS.forEach(m => {
-                    prodCellsMap[m] = `<td class="p-2.5 text-right">${formatProdNum(item[m])}</td>`;
-                });
-                const builtinTds = prodCols.visibleBuiltins.map(col => prodCellsMap[col.key] || '<td class="p-2.5">-</td>').join('');
-                const customTds = prodCols.customColumns.map(col => {
-                    const rawVal = item.customFields && item.customFields[col.key] !== undefined ? String(item.customFields[col.key]).trim() : '';
-                    return `<td class="p-2.5">${escapeHtml(rawVal || '-')}</td>`;
-                }).join('');
-                return `
-                    <tr onclick="openProdDetailDrawer(${realIndex})" class="${rowHighlightClass} transition text-slate-800 dark:text-slate-200 cursor-pointer">
-                        <td class="p-2.5 text-center font-bold sticky left-0 ${stickyBgClass} z-10">${prStartIdx + idx + 1}</td>
-                        ${builtinTds}
-                        ${customTds}
-                        <td class="p-2.5 text-center space-x-1" onclick="event.stopPropagation()">
-                            <button onclick="selectProdForInlineEdit(${realIndex})" class="role-write-action p-1.5 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold transition" title="ပြင်ဆင်မည်">✏️</button>
-                            <button onclick="confirmDeleteProd(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg transition" title="ဖျက်မည်">🗑️</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-
-            // Adjust sticky left offset of Nomenclature column dynamically after Sr No auto-fits
-            requestAnimationFrame(() => {
-                const srTh = document.getElementById('pr-th-sr');
-                const nomTh = document.getElementById('pr-th-nom');
-                if (srTh && nomTh) {
-                    const srWidth = srTh.offsetWidth;
-                    nomTh.style.left = `${srWidth}px`;
-                    document.querySelectorAll('.pr-nom-cell').forEach(cell => {
-                        cell.style.left = `${srWidth}px`;
-                    });
-                }
-            });
-
-            // Table Footer Summary Row (aligned dynamically with visible columns)
-            if (footer) {
-                let firstLabelPlaced = false;
-                const footerBuiltins = prodCols.visibleBuiltins.map(col => {
-                    if (!firstLabelPlaced && (col.key === 'nomenclature' || col.key === 'au' || col.key === 'debtYear')) {
-                        firstLabelPlaced = true;
-                        return `<td class="p-2.5 text-right sticky left-0 bg-slate-100 dark:bg-slate-700 z-10">စုစုပေါင်း:</td>`;
-                    }
-                    if (col.key === 'debt2526') return `<td class="p-2.5 text-right text-amber-700 dark:text-amber-300">${formatProdNum(totals.debt2526)}</td>`;
-                    if (col.key === 'plan2627') return `<td class="p-2.5 text-right text-blue-700 dark:text-blue-300">${formatProdNum(totals.plan2627)}</td>`;
-                    if (col.key === 'totalPlan') return `<td class="p-2.5 text-right text-indigo-700 dark:text-indigo-300">${formatProdNum(totals.totalPlan)}</td>`;
-                    if (col.key === 'total') return `<td class="p-2.5 text-right text-emerald-700 dark:text-emerald-300">${formatProdNum(totals.total)}</td>`;
-                    if (PROD_MONTH_KEYS.includes(col.key)) return `<td class="p-2.5 text-right">${formatProdNum(totals[col.key])}</td>`;
-                    return `<td class="p-2.5"></td>`;
-                }).join('');
-                const footerCustom = prodCols.customColumns.map(() => `<td class="p-2.5"></td>`).join('');
-                footer.innerHTML = `<tr><td class="p-2.5"></td>${footerBuiltins}${footerCustom}<td class="p-2.5"></td></tr>`;
-            }
-
-            // Mobile Cards
-            if (mobileContainer) {
-                mobileContainer.innerHTML = paginatedProd.map((item, idx) => {
-                    const realIndex = prodStatementData.indexOf(item);
-                    const pct = item.totalPlan > 0 ? Math.min(100, Math.round((item.total / item.totalPlan) * 100)) : 0;
-                    const debtYr = item.debtYear || '';
-                    const planYr = item.planYear || '';
-                    return `
-                        <div onclick="openProdDetailDrawer(${realIndex})" class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-2.5 cursor-pointer">
-                            <div class="flex justify-between items-start gap-2">
-                                <div>
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">${prStartIdx + idx + 1} &bull; ${item.financialYears}</span>
-                                    <div class="font-bold text-slate-900 dark:text-white text-sm mt-1">${item.nomenclature} <span class="text-slate-400 font-normal text-xs">(${item.au})</span></div>
-                                </div>
-                                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 font-bold text-[11px]">${item.description}</span>
-                            </div>
-                            <div class="grid grid-cols-3 gap-1.5 text-[11px] bg-slate-50 dark:bg-slate-700/50 p-2 rounded-lg text-center">
-                                <div>
-                                    <span class="block text-slate-400 text-[10px]">${debtYr ? debtYr + ' Debt' : 'Debt'}</span>
-                                    <strong class="text-amber-700 dark:text-amber-300">${formatProdNum(item.debt2526)}</strong>
-                                </div>
-                                <div>
-                                    <span class="block text-slate-400 text-[10px]">${planYr ? planYr + ' Plan' : 'Plan'}</span>
-                                    <strong class="text-blue-700 dark:text-blue-300">${formatProdNum(item.plan2627)}</strong>
-                                </div>
-                                <div>
-                                    <span class="block text-slate-400 text-[10px]">Total Plan</span>
-                                    <strong class="text-indigo-700 dark:text-indigo-300">${formatProdNum(item.totalPlan)}</strong>
-                                </div>
-                            </div>
-                            <div class="space-y-1">
-                                <div class="flex justify-between text-[11px]">
-                                    <span class="text-slate-500 dark:text-slate-400">Total (Apr-Mar): <strong class="text-emerald-700 dark:text-emerald-300">${formatProdNum(item.total)}</strong></span>
-                                    <span class="font-bold text-emerald-600 dark:text-emerald-400">${pct}%</span>
-                                </div>
-                                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-emerald-600 h-full rounded-full" style="width: ${pct}%"></div>
-                                </div>
-                            </div>
-                            ${item.remark ? `<div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Remark: ${item.remark}</div>` : ''}
-                            <div class="role-write-action flex justify-end gap-1.5 pt-1 border-t dark:border-slate-700" onclick="event.stopPropagation()">
-                                <button onclick="selectProdForInlineEdit(${realIndex})" class="px-2.5 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold text-[11px]">✏️ Edit</button>
-                                <button onclick="confirmDeleteProd(${realIndex})" class="px-2.5 py-1 bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 rounded-lg font-bold text-[11px]">🗑️ ဖျက်မည်</button>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            renderPaginationControls('prod-pagination-bar', 'prod', prCurrentPage, filtered.length, 'မျိုး');
-        }
-
-        // Initialization
-        window.addEventListener('DOMContentLoaded', () => {
-            // Default to Light Mode unless user explicitly chose Dark or System Mode
-            const savedThemeMode = localStorage.getItem('DI_THEME_MODE') || 'light';
-            applyThemeMode(savedThemeMode, false);
-
-            if (window.matchMedia) {
-                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                    if ((localStorage.getItem('DI_THEME_MODE') || 'light') === 'system') {
-                        applyThemeMode('system', false);
-                    }
-                });
-            }
-            loadSystemState();
-            renderSidebarCustomTables();
-            initFirebaseFirestore();
-            initGoogleSheetsSync();
-
-            // Restore active session if user previously logged in, otherwise show Auth Gateway
-            loadRememberedLoginCredentials();
-            const savedSessionRaw = localStorage.getItem(ACTIVE_AUTH_SESSION_KEY);
-            if (savedSessionRaw) {
-                try {
-                    const parsedSession = JSON.parse(savedSessionRaw);
-                    const freshRecord = userData.find(u => u.username.toLowerCase() === (parsedSession.username || '').toLowerCase()) || parsedSession;
-                    if (freshRecord && freshRecord.status !== 'Suspended') {
-                        applyUserSession(freshRecord, false);
-                    }
-                } catch (e) {
-                    localStorage.removeItem(ACTIVE_AUTH_SESSION_KEY);
-                }
-            }
-
-            document.addEventListener('click', event => {
-                if (!event.target.closest('#global-search-popover, #global-search-toggle-btn')) {
-                    toggleGlobalSearch(false);
-                }
-            });
-            document.addEventListener('keydown', event => {
-                if (event.key === 'Escape') {
-                    toggleGlobalSearch(false);
-                    if (document.getElementById('personnel-form-modal')?.classList.contains('hidden')) {
-                        closeCivilianMasterDetailModal();
-                    }
-                }
-            });
-
-            renderDashboardView();
-            updateHeaderBadge();
-            initFloatingScrollButton();
-        });
-
-        // FLOATING UPWARD / SCROLL-TO-TOP BUTTON LOGIC
-        let lastUpwardScrollTop = 0;
-        function updateFloatingScrollButton() {
-            const btn = document.getElementById('floating-scroll-top-btn');
-            if (!btn) return;
-            const workspace = document.getElementById('main-workspace');
-            const currentScroll = (workspace ? workspace.scrollTop : 0) || window.pageYOffset || document.documentElement.scrollTop || 0;
-            
-            if (currentScroll <= 60) {
-                // At the top: completely hidden/dimmed
-                btn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3', 'scale-90');
-                btn.classList.remove('opacity-100', 'opacity-35', 'pointer-events-auto', 'translate-y-0', 'scale-100');
-            } else {
-                // Scrolled down
-                const isScrollingDown = currentScroll > lastUpwardScrollTop;
-                btn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
-                btn.classList.add('pointer-events-auto', 'translate-y-0');
-                
-                if (isScrollingDown) {
-                    // Moving / dragging down: prominently displayed
-                    btn.classList.remove('opacity-35', 'scale-90');
-                    btn.classList.add('opacity-100', 'scale-100');
-                } else {
-                    // Moving / scrolling up towards top: dimmed
-                    btn.classList.remove('opacity-100');
-                    btn.classList.add('opacity-35', 'scale-90');
-                }
-            }
-            lastUpwardScrollTop = currentScroll;
-        }
-
-        function scrollToTop() {
-            const workspace = document.getElementById('main-workspace');
-            if (workspace) {
-                workspace.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
-            document.body.scrollTo({ top: 0, behavior: 'smooth' });
-            setTimeout(updateFloatingScrollButton, 350);
-        }
-
-        function initFloatingScrollButton() {
-            const workspace = document.getElementById('main-workspace');
-            if (workspace) {
-                workspace.addEventListener('scroll', updateFloatingScrollButton, { passive: true });
-            }
-            window.addEventListener('scroll', updateFloatingScrollButton, { passive: true });
-            document.addEventListener('scroll', updateFloatingScrollButton, { passive: true });
-            updateFloatingScrollButton();
-        }
-    </script>
-</body>
-</html>
