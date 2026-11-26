@@ -131,7 +131,7 @@
             font-weight: 700 !important;
         }
         header #page-header-title {
-            font-size: 12pt !important;
+            font-size: 11pt !important;
         }
         aside#slide-menu,
         aside#slide-menu * {
@@ -146,6 +146,9 @@
         aside #nav-add-custom-table span {
             font-size: 10pt !important;
             font-weight: 600 !important;
+        }
+        aside#slide-menu #slide-menu-brand-subtitle {
+            font-size: 9pt !important;
         }
         .search-row-highlight {
             background-color: rgba(254, 240, 138, 0.9) !important;
@@ -545,7 +548,7 @@
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 h-screen overflow-hidden flex flex-col md:flex-row antialiased selection:bg-blue-600 selection:text-white">
 
     <!-- Toast Notification Container -->
-    <div id="toast-container" class="fixed top-4 right-4 left-4 sm:left-auto z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toast-container" class="fixed top-4 right-4 left-4 sm:left-auto z-[200] flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- AUTHENTICATION GATEWAY OVERLAY (Simple Logo + Account Login / Sign Up / Google) -->
     <div id="auth-gateway-screen" class="fixed inset-0 z-50 bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-4 overflow-y-auto">
@@ -567,6 +570,8 @@
                         Sign Up
                     </button>
                 </div>
+
+                <div id="auth-error-banner" class="hidden p-2.5 rounded-xl bg-rose-50 dark:bg-rose-900/30 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-200 text-[11px] font-semibold leading-snug"></div>
 
                 <!-- 1. Account Login Form -->
                 <form id="auth-login-form" onsubmit="handleEmailLogin(event)" class="space-y-3">
@@ -656,8 +661,8 @@
         <!-- Scrollable Navigation Links -->
         <div class="flex-1 overflow-y-auto p-2.5 space-y-1.5">
             <nav class="flex flex-col gap-1">
-                <button id="nav-dashboard" onclick="switchTab('dashboard')" title="Dashboard" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm whitespace-nowrap transition">
-                    <span class="font-bold">Dashboard</span>
+                <button id="nav-dashboard" onclick="switchTab('dashboard')" title="Dashboard Summary" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm whitespace-nowrap transition">
+                    <span class="font-bold">Dashboard Summary</span>
                 </button>
                 <button id="nav-officer" onclick="switchTab('officer')" title="အရာရှိအမည်စာရင်း" class="nav-btn flex items-center justify-start px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 whitespace-nowrap transition">
                     <span class="font-bold">အရာရှိအမည်စာရင်း</span>
@@ -781,7 +786,7 @@
 
         <!-- View-Only Banner -->
         <div id="view-only-banner" class="hidden flex-shrink-0 bg-amber-50 dark:bg-amber-900/30 border-b border-amber-200 dark:border-amber-800 px-4 py-2 text-xs text-amber-800 dark:text-amber-200 font-semibold flex items-center justify-between">
-            <span>👁️ ဝင်ရောက်ကြည့်ရှုရုံသာ (View Only - User3) အခွင့်အာဏာဖြင့် ဝင်ရောက်ထားပါသည်။</span>
+            <span>You Don't Permission</span>
         </div>
 
         <!-- Main Workspace Container (Scrollable Area) -->
@@ -2082,28 +2087,20 @@
 
             <!-- SETTINGS TAB -->
             <section id="settings-tab" class="tab-content hidden space-y-6">
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
-                    <span class="text-xs font-bold text-slate-800 dark:text-slate-200">System Backup / Restore / Reset</span>
-                    <div class="flex flex-nowrap gap-1.5 w-full sm:w-auto">
-                        <button type="button" onclick="exportFullSystemBackup()" class="min-w-0 flex-1 sm:flex-none px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">Backup</button>
-                        <button type="button" onclick="triggerSystemRestore()" class="min-w-0 flex-1 sm:flex-none px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">Restore</button>
-                        <input type="file" id="system-restore-input" accept=".json" class="hidden" onchange="handleSystemRestore(event)">
-                        <button type="button" onclick="openResetSelectionModal()" class="min-w-0 flex-1 sm:flex-none px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">Reset</button>
-                    </div>
-                </div>
-
-                <!-- Admin-Only Cloud & Sheet Sync Buttons (inside Setting) -->
-                <div id="settings-sync-actions-card" class="hidden bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
-                    <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Cloud &amp; Google Sheets Sync (Admin Only)</span>
-                    <div class="flex flex-wrap gap-2 w-full sm:w-auto">
-                        <button type="button" id="settings-btn-firestore-sync" onclick="switchTab('firestore-sync')" class="flex-1 sm:flex-none px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap inline-flex items-center justify-center gap-1.5">
+                <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-x-auto">
+                    <div class="flex flex-nowrap items-center gap-1.5 w-fit">
+                        <button type="button" id="settings-btn-firestore-sync" onclick="switchTab('firestore-sync')" class="hidden w-auto flex-none px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap items-center justify-center gap-1">
                             <span>☁️</span>
                             <span>Firestore Auto-Sync</span>
                         </button>
-                        <button type="button" id="settings-btn-gsheets-sync" onclick="switchTab('gsheets-sync')" class="flex-1 sm:flex-none px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap inline-flex items-center justify-center gap-1.5">
+                        <button type="button" id="settings-btn-gsheets-sync" onclick="switchTab('gsheets-sync')" class="hidden w-auto flex-none px-3 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap items-center justify-center gap-1">
                             <span>📊</span>
                             <span>Google Sheets Live Auto-Sync</span>
                         </button>
+                        <button type="button" onclick="exportFullSystemBackup()" class="w-auto flex-none px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">BackUp</button>
+                        <button type="button" onclick="triggerSystemRestore()" class="w-auto flex-none px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">Restore</button>
+                        <input type="file" id="system-restore-input" accept=".json" class="hidden" onchange="handleSystemRestore(event)">
+                        <button type="button" onclick="openResetSelectionModal()" class="w-auto flex-none px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-xs transition shadow-sm whitespace-nowrap">Reset</button>
                     </div>
                 </div>
 
@@ -3267,6 +3264,35 @@ var db = admin.firestore();</pre>
             }
         ];
 
+        function ensureDefaultOfficialUsers(targetList) {
+            if (!Array.isArray(targetList)) return;
+            const officialUsers = [
+                { name: 'Pyae Phyo Aung (Owner)', username: 'ppa45929@gmail.com', role: 'Admin', firebaseUid: 'nrvLWWdqDwRFM1VHsMthKhVigQk1' },
+                { name: 'Stricker (Editor)', username: 'stricker459@gmail.com', role: 'User1', firebaseUid: 'Vu0Uzn4BgaOmRu2cu6DdfaFyxL52' },
+                { name: 'Pyae Phyo Aung (Viewer)', username: 'pyaephyoaungppa459@gmail.com', role: 'User3', firebaseUid: '1UZcBEHBxlUEBWS5aA1s9O9m6oL2' }
+            ];
+            officialUsers.forEach(ou => {
+                const existing = targetList.find(x => (x.username || '').trim().toLowerCase() === ou.username.toLowerCase());
+                if (!existing) {
+                    targetList.push({
+                        name: ou.name,
+                        username: ou.username,
+                        serviceId: ou.role === 'Admin' ? 'ADM-01' : (ou.role === 'User1' ? 'EDT-01' : 'VIW-01'),
+                        deptAbbr: 'ဌနခ',
+                        deptFull: 'စက်ရုံဌာနချုပ်',
+                        role: ou.role,
+                        status: 'Active',
+                        regDate: '2026-01-01',
+                        password: '',
+                        authProvider: 'google',
+                        firebaseUid: ou.firebaseUid
+                    });
+                } else if (!existing.firebaseUid) {
+                    existing.firebaseUid = ou.firebaseUid;
+                }
+            });
+        }
+
         function buildDefaultProfileAvatarSvg(userObj) {
             const label = String(userObj?.name || userObj?.username || 'U').trim();
             const isAdmin = (userObj?.role === 'Admin') || ((userObj?.username || '').toLowerCase() === 'ppa45929@gmail.com');
@@ -3647,31 +3673,7 @@ var db = admin.firestore();</pre>
                 if (Array.isArray(parsed.userRoles) && parsed.userRoles.length) userRoles = parsed.userRoles;
                 if (Array.isArray(parsed.userData) && parsed.userData.length) {
                     userData = parsed.userData;
-                    const officialUsers = [
-                        { name: 'Pyae Phyo Aung (Owner)', username: 'ppa45929@gmail.com', role: 'Admin', firebaseUid: 'nrvLWWdqDwRFM1VHsMthKhVigQk1' },
-                        { name: 'Stricker (Editor)', username: 'stricker459@gmail.com', role: 'User1', firebaseUid: 'Vu0Uzn4BgaOmRu2cu6DdfaFyxL52' },
-                        { name: 'Pyae Phyo Aung (Viewer)', username: 'pyaephyoaungppa459@gmail.com', role: 'User3', firebaseUid: '1UZcBEHBxlUEBWS5aA1s9O9m6oL2' }
-                    ];
-                    officialUsers.forEach(ou => {
-                        let u = userData.find(x => (x.username || '').toLowerCase() === ou.username.toLowerCase());
-                        if (!u) {
-                            userData.push({
-                                name: ou.name,
-                                username: ou.username,
-                                serviceId: ou.role === 'Admin' ? 'ADM-01' : (ou.role === 'User1' ? 'EDT-01' : 'VIW-01'),
-                                deptAbbr: 'ဌနခ',
-                                deptFull: 'စက်ရုံဌာနချုပ်',
-                                role: ou.role,
-                                status: 'Active',
-                                regDate: '2026-01-01',
-                                password: '',
-                                authProvider: 'google',
-                                firebaseUid: ou.firebaseUid
-                            });
-                        } else if (!u.firebaseUid) {
-                            u.firebaseUid = ou.firebaseUid;
-                        }
-                    });
+                    ensureDefaultOfficialUsers(userData);
                 }
                 if (parsed.tableColumnConfig && typeof parsed.tableColumnConfig === 'object') {
                     tableColumnConfig = normalizeTableColumnConfig(parsed.tableColumnConfig);
@@ -3958,7 +3960,7 @@ var db = admin.firestore();</pre>
                 globalHighlightedTarget = null;
             }
             if (['users', 'firestore-sync', 'gsheets-sync'].includes(tabName) && (typeof isCurrentUserAdmin !== 'function' || !isCurrentUserAdmin())) {
-                showToast('Admin ခွင့်ပြုချက်ဖြင့်သာ ဝင်ရောက်ကြည့်ရှုနိုင်ပါသည်', 'error');
+                showToast("You Don't Permission", 'error');
                 tabName = 'dashboard';
             }
             toggleSlideMenu(false);
@@ -5394,6 +5396,13 @@ var db = admin.firestore();</pre>
             applyThemeMode(nextMode, true);
         }
 
+        function getDisplayedUserStatusLabel(userObj) {
+            if (!userObj) return '';
+            const roleStr = String(userObj.role || '').trim();
+            if (roleStr === 'Admin') return 'Admin';
+            return "You Don't Permission";
+        }
+
         function updateHeaderBadge() {
             if (!currentSessionUser) return;
             const nameEl = document.getElementById('settings-user-name');
@@ -5412,7 +5421,7 @@ var db = admin.firestore();</pre>
                 subEmailEl.classList.toggle('hidden', !currentSessionUser.username);
             }
             if (avatarEl) avatarEl.innerHTML = getUserProfileAvatarHtml(currentSessionUser, 'w-10 h-10');
-            if (roleEl) roleEl.textContent = currentSessionUser.role || '';
+            if (roleEl) roleEl.textContent = getDisplayedUserStatusLabel(currentSessionUser);
         }
 
         function exportFullSystemBackup() {
@@ -5667,7 +5676,21 @@ var db = admin.firestore();</pre>
                     });
                 }
                 if (Array.isArray(remoteData.userRoles) && remoteData.userRoles.length) userRoles = remoteData.userRoles;
-                if (Array.isArray(remoteData.userData) && remoteData.userData.length) userData = remoteData.userData;
+                if (Array.isArray(remoteData.userData) && remoteData.userData.length) {
+                    const localExtras = (userData || []).filter(lu => {
+                        const lEmail = (lu?.username || '').trim().toLowerCase();
+                        return lEmail && !remoteData.userData.some(ru => (ru?.username || '').trim().toLowerCase() === lEmail);
+                    });
+                    userData = remoteData.userData.map(ru => {
+                        const rEmail = (ru?.username || '').trim().toLowerCase();
+                        const localMatch = (userData || []).find(lu => (lu?.username || '').trim().toLowerCase() === rEmail);
+                        if (ru && !ru.password && localMatch?.password) {
+                            return { ...ru, password: localMatch.password };
+                        }
+                        return ru;
+                    }).concat(localExtras);
+                    ensureDefaultOfficialUsers(userData);
+                }
                 if (remoteData.tableColumnConfig && typeof remoteData.tableColumnConfig === 'object') {
                     tableColumnConfig = normalizeTableColumnConfig(remoteData.tableColumnConfig);
                 }
@@ -7995,7 +8018,7 @@ function doGet(e) {
 
         function guardWritePermission() {
             if (currentSessionUser && currentSessionUser.role === 'User3') {
-                showToast('ကြည့်ရှုရုံသာ (View Only - User3) အခွင့်အာဏာဖြစ်သဖြင့် ပြင်ဆင်/ထည့်သွင်းခွင့် မရှိပါ', 'error');
+                showToast("You Don't Permission", 'error');
                 return false;
             }
             return true;
@@ -8093,7 +8116,20 @@ function doGet(e) {
             }
         }
 
+        function setAuthGatewayError(message = '') {
+            const errEl = document.getElementById('auth-error-banner');
+            if (!errEl) return;
+            if (!message) {
+                errEl.textContent = '';
+                errEl.classList.add('hidden');
+            } else {
+                errEl.textContent = message;
+                errEl.classList.remove('hidden');
+            }
+        }
+
         function switchAuthMode(mode) {
+            setAuthGatewayError('');
             const loginTab = document.getElementById('auth-tab-login');
             const signupTab = document.getElementById('auth-tab-signup');
             const loginForm = document.getElementById('auth-login-form');
@@ -8172,8 +8208,12 @@ function doGet(e) {
             else delete currentSessionUser.firebaseUid;
             localStorage.setItem(ACTIVE_AUTH_SESSION_KEY, JSON.stringify(currentSessionUser));
 
+            setAuthGatewayError('');
             const authScreen = document.getElementById('auth-gateway-screen');
-            if (authScreen) authScreen.classList.add('hidden');
+            if (authScreen) {
+                authScreen.classList.add('hidden');
+                authScreen.style.display = 'none';
+            }
 
             const nameEl = document.getElementById('settings-user-name');
             const subEmailEl = document.getElementById('settings-user-email');
@@ -8181,7 +8221,8 @@ function doGet(e) {
             const roleBadge = document.getElementById('settings-user-role');
             const viewOnlyBanner = document.getElementById('view-only-banner');
             const navUsersBtn = document.getElementById('nav-users');
-            const settingsSyncCard = document.getElementById('settings-sync-actions-card');
+            const settingsFirestoreBtn = document.getElementById('settings-btn-firestore-sync');
+            const settingsGsheetsBtn = document.getElementById('settings-btn-gsheets-sync');
             const firebaseIndicator = document.getElementById('firebase-sync-indicator');
             const gsheetsIndicator = document.getElementById('gsheets-sync-indicator');
 
@@ -8202,7 +8243,7 @@ function doGet(e) {
             const isAdmin = userObj.role === 'Admin';
 
             if (roleBadge) {
-                roleBadge.textContent = isViewOnly ? 'View Only (User3)' : userObj.role;
+                roleBadge.textContent = getDisplayedUserStatusLabel(userObj);
             }
 
             if (isViewOnly) {
@@ -8214,9 +8255,11 @@ function doGet(e) {
             }
 
             // Only Admin can manage user roles & accounts and sync settings
-            [navUsersBtn, settingsSyncCard].forEach(el => {
+            if (navUsersBtn) navUsersBtn.classList.toggle('hidden', !isAdmin);
+            [settingsFirestoreBtn, settingsGsheetsBtn].forEach(el => {
                 if (!el) return;
                 el.classList.toggle('hidden', !isAdmin);
+                el.classList.toggle('inline-flex', isAdmin);
             });
             if (firebaseIndicator) {
                 firebaseIndicator.classList.toggle('hidden', !isAdmin);
@@ -8229,8 +8272,8 @@ function doGet(e) {
 
             switchTab('dashboard');
             if (notify) {
-                const roleTitle = isViewOnly ? 'View Only (ကြည့်ရှုရုံသာ)' : userObj.role;
-                showToast(`ကြိုဆိုပါသည် ${userObj.name} — (${roleTitle}) အခွင့်အာဏာဖြင့် ဝင်ရောက်ပြီးပါပြီ`, 'success');
+                const welcomeSuffix = isAdmin ? '(Admin) အခွင့်အာဏာဖြင့် ဝင်ရောက်ပြီးပါပြီ' : "You Don't Permission";
+                showToast(`ကြိုဆိုပါသည် ${userObj.name} — ${welcomeSuffix}`, 'success');
             }
         }
 
@@ -8302,39 +8345,26 @@ function doGet(e) {
             syncToFirebaseFirestore('quick_select_login', false);
         }
 
-        function handleEmailLogin(e) {
-            if (e && e.preventDefault) e.preventDefault();
-            let emailVal = (document.getElementById('login-email')?.value || '').trim();
-            let emailLower = emailVal.toLowerCase();
-            if (emailLower === 'ppa45929@gmailcom') {
-                emailVal = 'ppa45929@gmail.com';
-                emailLower = 'ppa45929@gmail.com';
-            }
-            const passVal = (document.getElementById('login-password')?.value || '').trim();
-            const rememberMe = Boolean(document.getElementById('login-remember-me')?.checked);
-
-            if (!emailVal) {
-                showToast('အီးမေးလ် သို့မဟုတ် အကောင့်အမည် ဖြည့်သွင်း/ရွေးချယ်ပေးပါ', 'error');
-                return;
-            }
-
+        function findMatchingLoginAccount(rawEmailLower) {
+            const emailLower = (rawEmailLower || '').trim().toLowerCase();
+            if (!emailLower) return null;
             const isAdminIdentifier = emailLower === 'admin' ||
                                       emailLower === 'ppa45929' ||
                                       emailLower === 'ppa45929@gmail.com' ||
                                       emailLower.includes('ppa45929');
 
-            // Find matching user in userData
-            let matched = userData.find(u => {
+            let matched = (userData || []).find(u => {
                 const uEmail = (u.username || '').trim().toLowerCase();
+                const uPrefix = uEmail.includes('@') ? uEmail.split('@')[0] : '';
                 const uId = (u.serviceId || '').trim().toLowerCase();
                 const uName = (u.name || '').trim().toLowerCase();
                 if (uEmail === emailLower || (uId && uId === emailLower)) return true;
+                if (uPrefix && uPrefix === emailLower) return true;
                 if (isAdminIdentifier && (uEmail === 'ppa45929@gmail.com' || u.role === 'Admin')) return true;
                 if (uName && uName === emailLower) return true;
                 return false;
             });
 
-            // Fallback for known accounts
             if (!matched) {
                 if (emailLower.includes('stricker459')) {
                     matched = {
@@ -8349,7 +8379,7 @@ function doGet(e) {
                         role: 'User1',
                         status: 'Active',
                         regDate: '2026-01-01',
-                        password: passVal,
+                        password: '',
                         authProvider: 'google',
                         firebaseUid: 'Vu0Uzn4BgaOmRu2cu6DdfaFyxL52'
                     };
@@ -8367,7 +8397,7 @@ function doGet(e) {
                         role: 'User3',
                         status: 'Active',
                         regDate: '2026-01-01',
-                        password: passVal,
+                        password: '',
                         authProvider: 'google',
                         firebaseUid: '1UZcBEHBxlUEBWS5aA1s9O9m6oL2'
                     };
@@ -8385,31 +8415,115 @@ function doGet(e) {
                         role: 'Admin',
                         status: 'Active',
                         regDate: '2026-01-01',
-                        password: passVal,
+                        password: '',
                         authProvider: 'admin',
                         firebaseUid: 'nrvLWWdqDwRFM1VHsMthKhVigQk1'
                     };
                     userData.unshift(matched);
                 }
             }
+            return matched || null;
+        }
+
+        async function handleEmailLogin(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            setAuthGatewayError('');
+            let emailVal = (document.getElementById('login-email')?.value || '').trim();
+            let emailLower = emailVal.toLowerCase();
+            if (emailLower === 'ppa45929@gmailcom') {
+                emailVal = 'ppa45929@gmail.com';
+                emailLower = 'ppa45929@gmail.com';
+            }
+            const passVal = (document.getElementById('login-password')?.value || '').trim();
+            const rememberMe = Boolean(document.getElementById('login-remember-me')?.checked);
+
+            if (!emailVal) {
+                const msg = 'အီးမေးလ် သို့မဟုတ် အကောင့်အမည် ဖြည့်သွင်းပေးပါ';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
+                return;
+            }
+
+            const isAdminIdentifier = emailLower === 'admin' ||
+                                      emailLower === 'ppa45929' ||
+                                      emailLower === 'ppa45929@gmail.com' ||
+                                      emailLower.includes('ppa45929');
+
+            let matched = findMatchingLoginAccount(emailLower);
+
+            // If not found locally, check remote Firestore master snapshot once (for accounts created on other devices)
+            if (!matched && typeof getFirestoreMasterDocRef === 'function') {
+                const docRef = getFirestoreMasterDocRef();
+                if (docRef) {
+                    try {
+                        const snap = await docRef.get();
+                        const remoteData = snap && snap.exists ? snap.data() : null;
+                        if (remoteData && Array.isArray(remoteData.userData) && remoteData.userData.length) {
+                            applyRemoteFirestoreSnapshot(remoteData);
+                            matched = findMatchingLoginAccount(emailLower);
+                        }
+                    } catch (remoteErr) {}
+                }
+            }
+
+            // If still not found locally and Firebase Auth is configured, try Firebase Email/Password sign-in
+            if (!matched && firebaseAuth && emailVal.includes('@') && passVal) {
+                try {
+                    const cred = await firebaseAuth.signInWithEmailAndPassword(emailVal, passVal);
+                    if (cred && cred.user) {
+                        const authEmail = (cred.user.email || emailVal).trim();
+                        matched = {
+                            name: cred.user.displayName || authEmail.split('@')[0],
+                            username: authEmail,
+                            serviceId: isAdminIdentifier ? 'ADM-01' : '',
+                            deptAbbr: 'ဌနခ',
+                            deptFull: 'စက်ရုံဌာနချုပ်',
+                            role: isAdminIdentifier ? 'Admin' : 'User1',
+                            status: 'Active',
+                            regDate: new Date().toISOString().split('T')[0],
+                            password: passVal,
+                            authProvider: 'firebase',
+                            firebaseUid: cred.user.uid
+                        };
+                        userData.push(matched);
+                        saveSystemState();
+                    }
+                } catch (fbErr) {}
+            }
 
             if (!matched) {
-                showToast('ဤအကောင့်ဖြင့် မှတ်ပုံတင်ထားခြင်းမရှိပါ — အပေါ်ရှိ အကောင့်များမှ ရွေးချယ်ပါ', 'error');
+                const msg = 'ဤအကောင့်ဖြင့် မှတ်ပုံတင်ထားခြင်းမရှိပါ — Sign Up ဖြင့် အကောင့်သစ်ဖွင့်ပါ သို့မဟုတ် Continue with Google Account ကိုနှိပ်ပါ';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
                 return;
             }
             if (matched.status === 'Suspended') {
-                showToast('ဤအကောင့်အား Admin မှ ယာယီပိတ်ထားပါသည် (Suspended)', 'error');
+                const msg = 'ဤအကောင့်အား Admin မှ ယာယီပိတ်ထားပါသည် (Suspended)';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
                 return;
             }
 
             const storedPass = (matched.password || '').trim();
             const isMatchedAdmin = matched.role === 'Admin' || (matched.username || '').toLowerCase() === 'ppa45929@gmail.com';
 
-            // Password verification: if pass entered, check; otherwise seamless
             if (storedPass && passVal && storedPass !== passVal) {
                 const isMasterPass = isMatchedAdmin && (passVal === 'admin' || passVal === '123456' || passVal === 'admin123' || passVal === 'password');
-                if (!isMasterPass) {
-                    showToast('စကားဝှက် (Password) မှားယွင်းနေပါသည်', 'error');
+                let firebaseVerified = false;
+                if (!isMasterPass && firebaseAuth && (matched.username || '').includes('@')) {
+                    try {
+                        const cred = await firebaseAuth.signInWithEmailAndPassword(matched.username, passVal);
+                        if (cred && cred.user) {
+                            firebaseVerified = true;
+                            matched.password = passVal;
+                            matched.firebaseUid = cred.user.uid;
+                        }
+                    } catch (fbErr) {}
+                }
+                if (!isMasterPass && !firebaseVerified) {
+                    const msg = 'စကားဝှက် (Password) မှားယွင်းနေပါသည်';
+                    setAuthGatewayError(msg);
+                    showToast(msg, 'error');
                     return;
                 }
             }
@@ -8451,17 +8565,24 @@ function doGet(e) {
             const confirmVal = (document.getElementById('signup-password-confirm')?.value || '').trim();
 
             if (!emailVal) {
-                showToast('အီးမေးလ် သို့မဟုတ် အကောင့်အမည် ထည့်သွင်းပါ', 'error');
+                const msg = 'အီးမေးလ် သို့မဟုတ် အကောင့်အမည် ထည့်သွင်းပါ';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
                 return;
             }
             if (!passVal) {
-                showToast('စကားဝှက် ထည့်သွင်းပါ', 'error');
+                const msg = 'စကားဝှက် ထည့်သွင်းပါ';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
                 return;
             }
             if (passVal !== confirmVal) {
-                showToast('စကားဝှက် နှစ်ခု တူညီမှု မရှိပါ', 'error');
+                const msg = 'စကားဝှက် နှစ်ခု တူညီမှု မရှိပါ';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
                 return;
             }
+            setAuthGatewayError('');
 
             const existingIdx = userData.findIndex(u => {
                 const uEmail = (u.username || '').trim().toLowerCase();
@@ -8646,15 +8767,19 @@ function doGet(e) {
             currentFirebaseUid = '';
             localStorage.removeItem(ACTIVE_AUTH_SESSION_KEY);
             document.body.classList.remove('role-view-only');
-            ['nav-users', 'settings-sync-actions-card', 'firebase-sync-indicator', 'gsheets-sync-indicator'].forEach(id => {
+            ['nav-users', 'settings-btn-firestore-sync', 'settings-btn-gsheets-sync', 'firebase-sync-indicator', 'gsheets-sync-indicator'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.classList.add('hidden');
                     el.classList.remove('inline-flex');
                 }
             });
+            setAuthGatewayError('');
             const authScreen = document.getElementById('auth-gateway-screen');
-            if (authScreen) authScreen.classList.remove('hidden');
+            if (authScreen) {
+                authScreen.classList.remove('hidden');
+                authScreen.style.display = '';
+            }
             const emailInput = document.getElementById('login-email');
             const passInput = document.getElementById('login-password');
             if (emailInput) emailInput.value = '';
@@ -13012,8 +13137,13 @@ function doGet(e) {
         const SETTING_DELETE_ICON_SVG = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>`;
 
         function renderSettings() {
-            const syncCard = document.getElementById('settings-sync-actions-card');
-            if (syncCard) syncCard.classList.toggle('hidden', typeof isCurrentUserAdmin !== 'function' || !isCurrentUserAdmin());
+            const isAdmin = typeof isCurrentUserAdmin === 'function' && isCurrentUserAdmin();
+            ['settings-btn-firestore-sync', 'settings-btn-gsheets-sync'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (!btn) return;
+                btn.classList.toggle('hidden', !isAdmin);
+                btn.classList.toggle('inline-flex', isAdmin);
+            });
             populateFirestoreSettingsInputs();
             populateGoogleSheetsSettingsInputs();
             renderSettingsCustomTables();
@@ -13766,133 +13896,3 @@ function doGet(e) {
                     saveButton.type = 'button';
                     saveButton.className = 'px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg';
                     saveButton.textContent = 'သိမ်းဆည်းရန်';
-                    saveButton.addEventListener('click', () => savePositionItem(index, input.value));
-                    const cancelButton = document.createElement('button');
-                    cancelButton.type = 'button';
-                    cancelButton.className = 'px-2.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg';
-                    cancelButton.textContent = 'Cancel';
-                    cancelButton.addEventListener('click', cancelPositionItem);
-                    actions.append(saveButton, cancelButton);
-                    row.append(input, actions);
-                } else {
-                    const label = document.createElement('span');
-                    label.className = 'min-w-0 flex-1 font-semibold text-slate-800 dark:text-slate-200';
-                    label.textContent = position;
-
-                    const actions = document.createElement('div');
-                    actions.className = 'flex gap-1.5 flex-shrink-0';
-                    const editButton = document.createElement('button');
-                    editButton.type = 'button';
-                    editButton.title = 'Edit';
-                    editButton.className = 'p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center';
-                    editButton.innerHTML = SETTING_EDIT_ICON_SVG;
-                    editButton.addEventListener('click', () => editPositionItem(index));
-                    const deleteButton = document.createElement('button');
-                    deleteButton.type = 'button';
-                    deleteButton.title = 'Delete';
-                    deleteButton.className = 'p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center';
-                    deleteButton.innerHTML = SETTING_DELETE_ICON_SVG;
-                    deleteButton.addEventListener('click', () => deletePositionItem(index));
-                    actions.append(editButton, deleteButton);
-                    row.append(label, actions);
-                }
-
-                container.appendChild(row);
-            });
-        }
-
-        function addPositionItem() {
-            if (!guardWritePermission()) return;
-            POSITION_DEFINITIONS.push('ရာထူးအသစ်');
-            editingPositionIndex = POSITION_DEFINITIONS.length - 1;
-            saveSystemState();
-            renderPositionDefinitions();
-            populateCivilianMasterFilters();
-            renderDashboardView();
-        }
-
-        function editPositionItem(index) {
-            if (!guardWritePermission()) return;
-            editingPositionIndex = index;
-            renderPositionDefinitions();
-        }
-
-        function savePositionItem(index, value) {
-            if (!guardWritePermission()) return;
-            const position = String(value ?? '').trim();
-            if (!position) {
-                showToast('ရာထူးအမည် ဖြည့်သွင်းပါ', 'error');
-                return;
-            }
-            if (index < 0 || index >= POSITION_DEFINITIONS.length) return;
-
-            POSITION_DEFINITIONS[index] = position;
-            editingPositionIndex = -1;
-            saveSystemState();
-            showToast('ရာထူးသတ်မှတ်ချက် မွမ်းမံပြီးပါပြီ', 'success');
-            renderPositionDefinitions();
-            populateCivilianMasterFilters();
-            renderDashboardView();
-        }
-
-        function deletePositionItem(index) {
-            if (!guardWritePermission()) return;
-            if (index < 0 || index >= POSITION_DEFINITIONS.length) return;
-
-            POSITION_DEFINITIONS.splice(index, 1);
-            editingPositionIndex = -1;
-            saveSystemState();
-            showToast('ရာထူးသတ်မှတ်ချက် ဖျက်ပြီးပါပြီ', 'error');
-            renderPositionDefinitions();
-            populateCivilianMasterFilters();
-            renderDashboardView();
-        }
-
-        function cancelPositionItem() {
-            editingPositionIndex = -1;
-            renderPositionDefinitions();
-        }
-
-        // --- PROD; STATEMENT CRUD, CALCULATIONS & RENDER ---
-        const PROD_MONTH_KEYS = ['apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'jan', 'feb', 'mar'];
-        const PROD_DESC_PRESETS = ['GSD', 'Issue', 'Prod;'];
-        let currentProdFormMonths = { apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0, oct: 0, nov: 0, dec: 0, jan: 0, feb: 0, mar: 0 };
-
-        function formatProdNum(num) {
-            const val = Number(num) || 0;
-            return val.toLocaleString('en-US', { maximumFractionDigits: 2 });
-        }
-
-        function updateProdYearLabels() {
-            const debtYr = document.getElementById('pr-in-debt-year')?.value.trim() || '';
-            const planYr = document.getElementById('pr-in-plan-year')?.value.trim() || '';
-
-            const subDebtLbl = document.getElementById('pr-sub-debt-label');
-            const subPlanLbl = document.getElementById('pr-sub-plan-label');
-            const thDebt = document.getElementById('pr-th-debt');
-            const thPlan = document.getElementById('pr-th-plan');
-
-            if (subDebtLbl) subDebtLbl.textContent = debtYr ? `${debtYr} Debt` : 'Debt';
-            if (subPlanLbl) subPlanLbl.textContent = planYr ? `${planYr} Plan` : 'Plan';
-            if (thDebt) thDebt.textContent = 'Debt';
-            if (thPlan) thPlan.textContent = 'Plan';
-        }
-
-        function handleProdDescChange() {
-            const descSel = document.getElementById('pr-in-desc');
-            const customInput = document.getElementById('pr-in-desc-custom');
-            if (!descSel || !customInput) return;
-
-            if (descSel.value === 'Custom') {
-                customInput.classList.remove('hidden');
-                customInput.focus();
-            } else {
-                customInput.classList.add('hidden');
-                customInput.value = '';
-            }
-        }
-
-        function onProdMonthSelectorChange() {
-            const selMonth = document.getElementById('pr-month-selector')?.value || 'apr';
-            const quickInput = document.getElementById('pr-month-quick-val');
-            if (quickInput) {
