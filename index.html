@@ -158,6 +158,25 @@
         .tab-content.hidden {
             display: none !important;
         }
+        /* Compact & Highly Readable Strength / Summary Boxes across All Screens (Matched to Table 10px Font Size) */
+        .compact-stat-card {
+            padding: 0.4rem 0.6rem !important;
+            border-radius: 0.65rem !important;
+            min-width: 0;
+        }
+        .compact-stat-label,
+        .compact-stat-value,
+        .compact-stat-sub {
+            font-size: 10px !important;
+            line-height: 1.35 !important;
+        }
+        .compact-stat-label {
+            font-weight: 600 !important;
+        }
+        .compact-stat-value {
+            font-weight: 700 !important;
+            white-space: nowrap;
+        }
         .search-row-highlight {
             background-color: rgba(254, 240, 138, 0.9) !important;
             box-shadow: inset 0 0 0 2px #f59e0b !important;
@@ -845,55 +864,55 @@
                     <div id="dashboard-announcement-attachments" class="hidden mt-3 flex flex-wrap items-center gap-2"></div>
                 </div>
                 <!-- 5 Top Force Summary Cards (Dynamically Linked to Name List Master) -->
-                <div id="dashboard-force-summary-cards" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-                    <div onclick="navigateFromDashboardToNameListMaster('အရာရှိ')" title="Name List Master ရှိ 'အရာရှိ' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
-                        <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အရာရှိအင်အား</span>
-                            <span id="count-officer" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
+                <div id="dashboard-force-summary-cards" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5">
+                    <div onclick="navigateFromDashboardToNameListMaster('အရာရှိ')" title="Name List Master ရှိ 'အရာရှိ' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="compact-stat-card bg-white dark:bg-slate-800 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-1.5 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-sm transition group select-none">
+                        <div class="flex items-center justify-between gap-1.5">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အရာရှိအင်အား</span>
+                            <span id="count-officer" class="compact-stat-value text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
                         </div>
-                        <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-officer-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-officer-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
-                        </div>
-                    </div>
-                    <div onclick="navigateFromDashboardToNameListMaster('စစ်သည်')" title="Name List Master ရှိ 'စစ်သည်' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
-                        <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စစ်သည်အင်အား</span>
-                            <span id="count-soldier" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
-                        </div>
-                        <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-soldier-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-soldier-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
+                        <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-700">
+                            <span id="dash-officer-present-badge" class="compact-stat-sub text-blue-800 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-officer-absent-badge" class="compact-stat-sub text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
-                    <div onclick="navigateFromDashboardToNameListMaster('အမြဲတမ်းဝန်ထမ်း')" title="Name List Master ရှိ 'အမြဲတမ်းဝန်ထမ်း' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
-                        <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အမြဲတမ်းဝန်ထမ်း</span>
-                            <span id="count-staff" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
+                    <div onclick="navigateFromDashboardToNameListMaster('စစ်သည်')" title="Name List Master ရှိ 'စစ်သည်' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="compact-stat-card bg-white dark:bg-slate-800 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-1.5 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-sm transition group select-none">
+                        <div class="flex items-center justify-between gap-1.5">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စစ်သည်အင်အား</span>
+                            <span id="count-soldier" class="compact-stat-value text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
                         </div>
-                        <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-staff-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-staff-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
-                        </div>
-                    </div>
-                    <div onclick="navigateFromDashboardToNameListMaster('အရပ်သားဝန်ထမ်း')" title="Name List Master ရှိ 'အရပ်သားဝန်ထမ်း' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
-                        <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အရပ်သားဝန်ထမ်း</span>
-                            <span id="count-civilian" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
-                        </div>
-                        <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-civilian-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-civilian-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
+                        <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-700">
+                            <span id="dash-soldier-present-badge" class="compact-stat-sub text-blue-800 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-soldier-absent-badge" class="compact-stat-sub text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
-                    <div onclick="navigateFromDashboardToNameListMaster('')" title="Name List Master စာရင်း အားလုံးသို့ သွားရန် နှိပ်ပါ" class="col-span-2 sm:col-span-1 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
-                        <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စုစုပေါင်းအင်အား</span>
-                            <span id="count-total" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
+                    <div onclick="navigateFromDashboardToNameListMaster('အမြဲတမ်းဝန်ထမ်း')" title="Name List Master ရှိ 'အမြဲတမ်းဝန်ထမ်း' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="compact-stat-card bg-white dark:bg-slate-800 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-1.5 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-sm transition group select-none">
+                        <div class="flex items-center justify-between gap-1.5">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အမြဲတမ်းဝန်ထမ်း</span>
+                            <span id="count-staff" class="compact-stat-value text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
                         </div>
-                        <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="dash-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ၀</span>
-                            <span id="dash-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
+                        <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-700">
+                            <span id="dash-staff-present-badge" class="compact-stat-sub text-blue-800 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-staff-absent-badge" class="compact-stat-sub text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
+                        </div>
+                    </div>
+                    <div onclick="navigateFromDashboardToNameListMaster('အရပ်သားဝန်ထမ်း')" title="Name List Master ရှိ 'အရပ်သားဝန်ထမ်း' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="compact-stat-card bg-white dark:bg-slate-800 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-1.5 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-sm transition group select-none">
+                        <div class="flex items-center justify-between gap-1.5">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">အရပ်သားဝန်ထမ်း</span>
+                            <span id="count-civilian" class="compact-stat-value text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-700">
+                            <span id="dash-civilian-present-badge" class="compact-stat-sub text-blue-800 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-civilian-absent-badge" class="compact-stat-sub text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
+                        </div>
+                    </div>
+                    <div onclick="navigateFromDashboardToNameListMaster('')" title="Name List Master စာရင်း အားလုံးသို့ သွားရန် နှိပ်ပါ" class="compact-stat-card col-span-2 sm:col-span-1 bg-white dark:bg-slate-800 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-1.5 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-sm transition group select-none">
+                        <div class="flex items-center justify-between gap-1.5">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စုစုပေါင်းအင်အား</span>
+                            <span id="count-total" class="compact-stat-value text-slate-900 dark:text-white group-hover:scale-105 transition-transform">၀</span>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-700">
+                            <span id="dash-present-badge" class="compact-stat-sub text-blue-800 dark:text-blue-300">တန်းစီ - ၀</span>
+                            <span id="dash-absent-badge" class="compact-stat-sub text-rose-700 dark:text-rose-400">ပျက်ကွက် - ၀</span>
                         </div>
                     </div>
                 </div>
@@ -1159,76 +1178,76 @@
             <section id="civilian-master-tab" class="tab-content hidden space-y-3">
                 <!-- Compact Force Category Summary Cards (Name List Master: အရာရှိ၊ စစ်သည်၊ အမြဲတမ်းဝန်ထမ်း၊ အရပ်သားဝန်ထမ်း) -->
                 <div id="master-role-summary-cards" class="hidden grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <div class="bg-blue-50 dark:bg-slate-700/60 px-3 py-1.5 rounded-lg border border-blue-200 dark:border-slate-600 flex items-center justify-between gap-1.5 shadow-xs">
-                        <span class="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">အရာရှိ -</span>
-                        <span id="master-role-count-officer" class="font-bold text-xs text-blue-700 dark:text-blue-300 whitespace-nowrap">၀ ဦး</span>
+                    <div class="compact-stat-card bg-blue-50 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">အရာရှိ -</span>
+                        <span id="master-role-count-officer" class="compact-stat-value text-blue-700 dark:text-blue-300">၀ ဦး</span>
                     </div>
-                    <div class="bg-indigo-50 dark:bg-slate-700/60 px-3 py-1.5 rounded-lg border border-indigo-200 dark:border-slate-600 flex items-center justify-between gap-1.5 shadow-xs">
-                        <span class="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">စစ်သည် -</span>
-                        <span id="master-role-count-soldier" class="font-bold text-xs text-indigo-700 dark:text-indigo-300 whitespace-nowrap">၀ ဦး</span>
+                    <div class="compact-stat-card bg-indigo-50 dark:bg-slate-700/60 border border-indigo-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">စစ်သည် -</span>
+                        <span id="master-role-count-soldier" class="compact-stat-value text-indigo-700 dark:text-indigo-300">၀ ဦး</span>
                     </div>
-                    <div class="bg-emerald-50 dark:bg-slate-700/60 px-3 py-1.5 rounded-lg border border-emerald-200 dark:border-slate-600 flex items-center justify-between gap-1.5 shadow-xs">
-                        <span class="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">အမြဲတမ်းဝန်ထမ်း -</span>
-                        <span id="master-role-count-staff" class="font-bold text-xs text-emerald-700 dark:text-emerald-300 whitespace-nowrap">၀ ဦး</span>
+                    <div class="compact-stat-card bg-emerald-50 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">အမြဲတမ်းဝန်ထမ်း -</span>
+                        <span id="master-role-count-staff" class="compact-stat-value text-emerald-700 dark:text-emerald-300">၀ ဦး</span>
                     </div>
-                    <div class="bg-amber-50 dark:bg-slate-700/60 px-3 py-1.5 rounded-lg border border-amber-200 dark:border-slate-600 flex items-center justify-between gap-1.5 shadow-xs">
-                        <span class="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">အရပ်သားဝန်ထမ်း -</span>
-                        <span id="master-role-count-civilian" class="font-bold text-xs text-amber-700 dark:text-amber-300 whitespace-nowrap">၀ ဦး</span>
+                    <div class="compact-stat-card bg-amber-50 dark:bg-slate-700/60 border border-amber-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">အရပ်သားဝန်ထမ်း -</span>
+                        <span id="master-role-count-civilian" class="compact-stat-value text-amber-700 dark:text-amber-300">၀ ဦး</span>
                     </div>
                 </div>
 
                 <!-- 3 Category Status Cards (ရှိရင်း၊ တန်းစီ၊ ပျက်ကွက် + ရာခိုင်နှုန်း) -->
-                <div id="category-status-cards" class="hidden grid grid-cols-3 gap-2 sm:gap-3">
-                    <div class="bg-blue-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-blue-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
-                        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ရှိရင်း</span>
-                        <span id="category-count-total" class="font-bold text-xs sm:text-sm text-blue-700 dark:text-blue-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                <div id="category-status-cards" class="hidden grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div class="compact-stat-card bg-blue-50 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex items-center justify-between gap-2 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">ရှိရင်း</span>
+                        <span id="category-count-total" class="compact-stat-value text-blue-700 dark:text-blue-300">၀ ဦး (၀%)</span>
                     </div>
-                    <div class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-emerald-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
-                        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">တန်းစီ</span>
-                        <span id="category-count-present" class="font-bold text-xs sm:text-sm text-emerald-700 dark:text-emerald-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                    <div class="compact-stat-card bg-emerald-50 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex items-center justify-between gap-2 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">တန်းစီ</span>
+                        <span id="category-count-present" class="compact-stat-value text-emerald-700 dark:text-emerald-300">၀ ဦး (၀%)</span>
                     </div>
-                    <div class="bg-rose-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-rose-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
-                        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ပျက်ကွက်</span>
-                        <span id="category-count-absent" class="font-bold text-xs sm:text-sm text-rose-700 dark:text-rose-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                    <div class="compact-stat-card bg-rose-50 dark:bg-slate-700/60 border border-rose-200 dark:border-slate-600 flex items-center justify-between gap-2 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">ပျက်ကွက်</span>
+                        <span id="category-count-absent" class="compact-stat-value text-rose-700 dark:text-rose-300">၀ ဦး (၀%)</span>
                     </div>
                 </div>
 
                 <!-- 5 Filter Summary Cards for Name List Master (စစ်ထုတ်ပြသသည့် ခလုတ် ၅ ခုအတိုင်း ဖော်ပြချက်အကွက် ၅ ခု) -->
-                <div id="master-filter-summary-cards" class="hidden grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
-                    <div id="master-card-position" class="bg-blue-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-blue-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm">
-                        <div class="flex items-center justify-between gap-1">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ရာထူး</span>
-                            <span id="master-sum-position-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                <div id="master-filter-summary-cards" class="hidden grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+                    <div id="master-card-position" class="compact-stat-card bg-blue-50 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-xs">
+                        <div class="flex flex-wrap items-center justify-between gap-1">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200">ရာထူး</span>
+                            <span id="master-sum-position-tag" class="compact-stat-sub px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200">အားလုံး</span>
                         </div>
-                        <span id="master-sum-position-val" class="font-bold text-xs sm:text-sm text-blue-700 dark:text-blue-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                        <span id="master-sum-position-val" class="compact-stat-value text-blue-700 dark:text-blue-300">၀ ဦး (၀%)</span>
                     </div>
-                    <div id="master-card-rank" class="bg-indigo-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-indigo-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm">
-                        <div class="flex items-center justify-between gap-1">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">အဆင့်</span>
-                            <span id="master-sum-rank-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                    <div id="master-card-rank" class="compact-stat-card bg-indigo-50 dark:bg-slate-700/60 border border-indigo-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-xs">
+                        <div class="flex flex-wrap items-center justify-between gap-1">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200">အဆင့်</span>
+                            <span id="master-sum-rank-tag" class="compact-stat-sub px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200">အားလုံး</span>
                         </div>
-                        <span id="master-sum-rank-val" class="font-bold text-xs sm:text-sm text-indigo-700 dark:text-indigo-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                        <span id="master-sum-rank-val" class="compact-stat-value text-indigo-700 dark:text-indigo-300">၀ ဦး (၀%)</span>
                     </div>
-                    <div id="master-card-dept" class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-emerald-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm">
-                        <div class="flex items-center justify-between gap-1">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ဌာန</span>
-                            <span id="master-sum-dept-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                    <div id="master-card-dept" class="compact-stat-card bg-emerald-50 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-xs">
+                        <div class="flex flex-wrap items-center justify-between gap-1">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200">ဌာန</span>
+                            <span id="master-sum-dept-tag" class="compact-stat-sub px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200">အားလုံး</span>
                         </div>
-                        <span id="master-sum-dept-val" class="font-bold text-xs sm:text-sm text-emerald-700 dark:text-emerald-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                        <span id="master-sum-dept-val" class="compact-stat-value text-emerald-700 dark:text-emerald-300">၀ ဦး (၀%)</span>
                     </div>
-                    <div id="master-card-status" class="bg-amber-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-amber-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm">
-                        <div class="flex items-center justify-between gap-1">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">လက်ရှိအခြေအနေ</span>
-                            <span id="master-sum-status-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                    <div id="master-card-status" class="compact-stat-card bg-amber-50 dark:bg-slate-700/60 border border-amber-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-xs">
+                        <div class="flex flex-wrap items-center justify-between gap-1">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200">လက်ရှိအခြေအနေ</span>
+                            <span id="master-sum-status-tag" class="compact-stat-sub px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200">အားလုံး</span>
                         </div>
-                        <span id="master-sum-status-val" class="font-bold text-xs sm:text-sm text-amber-700 dark:text-amber-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                        <span id="master-sum-status-val" class="compact-stat-value text-amber-700 dark:text-amber-300">၀ ဦး (၀%)</span>
                     </div>
-                    <div id="master-card-address" class="bg-rose-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-rose-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm col-span-2 sm:col-span-1">
-                        <div class="flex items-center justify-between gap-1">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">နေရပ်လိပ်စာ</span>
-                            <span id="master-sum-address-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                    <div id="master-card-address" class="compact-stat-card bg-rose-50 dark:bg-slate-700/60 border border-rose-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-xs col-span-2 sm:col-span-1">
+                        <div class="flex flex-wrap items-center justify-between gap-1">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200">နေရပ်လိပ်စာ</span>
+                            <span id="master-sum-address-tag" class="compact-stat-sub px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200">အားလုံး</span>
                         </div>
-                        <span id="master-sum-address-val" class="font-bold text-xs sm:text-sm text-rose-700 dark:text-rose-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                        <span id="master-sum-address-val" class="compact-stat-value text-rose-700 dark:text-rose-300">၀ ဦး (၀%)</span>
                     </div>
                 </div>
 
@@ -1370,21 +1389,21 @@
                     </div>
                 </div>
 
-                <!-- Table 1: ဌာနအလိုက် တန်းစီ / ပျက်ကွက် အင်အားဇယား (Compact Style) -->
+                <!-- Table 1: ဌာနအလိုက် ရှိရင်း / တန်းစီ / ပျက်ကွက် အင်အားစာရင်းချုပ် (Normal Style) -->
                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-x-auto">
-                    <div class="px-3.5 py-2 bg-slate-100 dark:bg-slate-700/70 border-b border-slate-200 dark:border-slate-600 font-bold text-xs text-slate-900 dark:text-white">
+                    <div class="px-4 py-2.5 bg-slate-100 dark:bg-slate-700/70 border-b border-slate-200 dark:border-slate-600 font-bold text-xs text-slate-900 dark:text-white">
                         📊 ဌာနအလိုက် ရှိရင်း / တန်းစီ / ပျက်ကွက် အင်အားစာရင်းချုပ်
                     </div>
                     <table class="w-full text-xs whitespace-nowrap">
                         <thead class="bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-600">
                             <tr>
-                                <th class="px-3 py-1.5 text-left">အကြောင်းအရာ</th>
-                                <th class="px-2.5 py-1.5 text-center">ဌနခ</th>
-                                <th class="px-2.5 py-1.5 text-center">စမရ</th>
-                                <th class="px-2.5 py-1.5 text-center">ထလရ-၁</th>
-                                <th class="px-2.5 py-1.5 text-center">ထလရ-၂</th>
-                                <th class="px-2.5 py-1.5 text-center">စဆရ</th>
-                                <th class="px-2.5 py-1.5 text-center">စုစုပေါင်း</th>
+                                <th class="p-3 text-left">အကြောင်းအရာ</th>
+                                <th class="p-3 text-center">ဌနခ</th>
+                                <th class="p-3 text-center">စမရ</th>
+                                <th class="p-3 text-center">ထလရ-၁</th>
+                                <th class="p-3 text-center">ထလရ-၂</th>
+                                <th class="p-3 text-center">စဆရ</th>
+                                <th class="p-3 text-center">စုစုပေါင်း</th>
                             </tr>
                         </thead>
                         <tbody id="absent-strength-tbody" class="divide-y divide-slate-200 dark:divide-slate-700"></tbody>
@@ -1468,26 +1487,21 @@
 
 
             <!-- SECURITY DUTY TAB (လုံခြုံရေးတာဝန်အမည်စာရင်း) -->
-            <section id="duty-tab" class="tab-content hidden space-y-4">
-                <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
-                    <!-- 3 Summary Cards -->
-                    <div class="grid grid-cols-3 gap-2 text-xs">
-                        <div class="bg-blue-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-blue-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">တပ်တွင်းလုံခြုံရေး</span>
-                            <span id="d-sub-inside" class="font-bold text-blue-700 dark:text-blue-300">၀</span>
-                        </div>
-                        <div class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-emerald-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">တပ်ပြင်လုံခြုံရေး</span>
-                            <span id="d-sub-outside" class="font-bold text-emerald-700 dark:text-emerald-300">၀</span>
-                        </div>
-                        <div class="bg-indigo-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-indigo-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">စုစုပေါင်းအင်အား</span>
-                            <span id="d-sub-total" class="font-bold text-indigo-700 dark:text-indigo-300">၀</span>
-                        </div>
+            <section id="duty-tab" class="tab-content hidden space-y-3">
+                <!-- 3 Compact Summary Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div class="compact-stat-card bg-blue-50 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex items-center justify-between gap-2 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">တပ်တွင်းလုံခြုံရေး</span>
+                        <span id="d-sub-inside" class="compact-stat-value text-blue-700 dark:text-blue-300">၀</span>
                     </div>
-
-                    
-
+                    <div class="compact-stat-card bg-emerald-50 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex items-center justify-between gap-2 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">တပ်ပြင်လုံခြုံရေး</span>
+                        <span id="d-sub-outside" class="compact-stat-value text-emerald-700 dark:text-emerald-300">၀</span>
+                    </div>
+                    <div class="compact-stat-card bg-indigo-50 dark:bg-slate-700/60 border border-indigo-200 dark:border-slate-600 flex items-center justify-between gap-2 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">စုစုပေါင်းအင်အား</span>
+                        <span id="d-sub-total" class="compact-stat-value text-indigo-700 dark:text-indigo-300">၀</span>
+                    </div>
                 </div>
 
                 <!-- Dedicated Standalone Filter Card (စစ်ထုတ်ပြသသည့် ခလုတ်များ ကတ်ပြား) -->
@@ -1552,30 +1566,25 @@
                 <div id="duty-pagination-bar"></div>
             </section>
 
-<section id="armory-tab" class="tab-content hidden space-y-4">
-                <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
-                    <!-- 4 Summary Cards -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                        <div class="bg-blue-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-blue-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">လယ်ဂျာရှိ စုစုပေါင်း</span>
-                            <span id="a-sub-total" class="font-bold text-blue-700 dark:text-blue-300">၀</span>
-                        </div>
-                        <div class="bg-amber-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-amber-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">ထုတ်ပေး / ဖြန့်ခွဲ</span>
-                            <span id="a-sub-issued" class="font-bold text-amber-700 dark:text-amber-300">၀</span>
-                        </div>
-                        <div class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-emerald-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">စတိုကျန်</span>
-                            <span id="a-sub-store" class="font-bold text-emerald-700 dark:text-emerald-300">၀</span>
-                        </div>
-                        <div class="bg-rose-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-rose-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">ပြင်ဆင်ဆဲ</span>
-                            <span id="a-sub-repair" class="font-bold text-rose-700 dark:text-rose-300">၀</span>
-                        </div>
+<section id="armory-tab" class="tab-content hidden space-y-3">
+                <!-- 4 Compact Summary Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <div class="compact-stat-card bg-blue-50 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">လယ်ဂျာရှိ စုစုပေါင်း</span>
+                        <span id="a-sub-total" class="compact-stat-value text-blue-700 dark:text-blue-300">၀</span>
                     </div>
-
-                    
-
+                    <div class="compact-stat-card bg-amber-50 dark:bg-slate-700/60 border border-amber-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">ထုတ်ပေး / ဖြန့်ခွဲ</span>
+                        <span id="a-sub-issued" class="compact-stat-value text-amber-700 dark:text-amber-300">၀</span>
+                    </div>
+                    <div class="compact-stat-card bg-emerald-50 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">စတိုကျန်</span>
+                        <span id="a-sub-store" class="compact-stat-value text-emerald-700 dark:text-emerald-300">၀</span>
+                    </div>
+                    <div class="compact-stat-card bg-rose-50 dark:bg-slate-700/60 border border-rose-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">ပြင်ဆင်ဆဲ</span>
+                        <span id="a-sub-repair" class="compact-stat-value text-rose-700 dark:text-rose-300">၀</span>
+                    </div>
                 </div>
 
                 <!-- Dedicated Filter Card (စစ်ထုတ်ပြသသည့် ခလုတ်များ ကတ်ပြား) -->
@@ -1628,34 +1637,31 @@
             </section>
 
             <!-- PROD; STATEMENT TAB -->
-            <section id="prod-tab" class="tab-content hidden space-y-4">
-                <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
-                    <!-- 5 Summary Cards -->
-                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
-                        <div class="bg-slate-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-slate-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">Items</span>
-                            <span id="pr-sub-items" class="font-bold text-slate-900 dark:text-white">၀</span>
-                        </div>
-                        <div class="bg-amber-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-amber-200 dark:border-slate-600 flex justify-between items-center">
-                            <span id="pr-sub-debt-label" class="text-slate-600 dark:text-slate-300 font-semibold">Debt</span>
-                            <span id="pr-sub-debt" class="font-bold text-amber-700 dark:text-amber-300">0</span>
-                        </div>
-                        <div class="bg-blue-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-blue-200 dark:border-slate-600 flex justify-between items-center">
-                            <span id="pr-sub-plan-label" class="text-slate-600 dark:text-slate-300 font-semibold">Plan</span>
-                            <span id="pr-sub-plan" class="font-bold text-blue-700 dark:text-blue-300">0</span>
-                        </div>
-                        <div class="bg-indigo-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-indigo-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">Total Plan</span>
-                            <span id="pr-sub-totalplan" class="font-bold text-indigo-700 dark:text-indigo-300">0</span>
-                        </div>
-                        <div class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-emerald-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">Total (Apr-Mar)</span>
-                            <span id="pr-sub-achieved" class="font-bold text-emerald-700 dark:text-emerald-300">0</span>
-                        </div>
+            <section id="prod-tab" class="tab-content hidden space-y-3">
+                <!-- 5 Compact Summary Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+                    <div class="compact-stat-card bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">Items</span>
+                        <span id="pr-sub-items" class="compact-stat-value text-slate-900 dark:text-white">၀</span>
                     </div>
-
-                    
-
+                    <div class="compact-stat-card bg-amber-50 dark:bg-slate-700/60 border border-amber-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span id="pr-sub-debt-label" class="compact-stat-label text-slate-700 dark:text-slate-200">Debt</span>
+                        <span id="pr-sub-debt" class="compact-stat-value text-amber-700 dark:text-amber-300">0</span>
+                    </div>
+                    <div class="compact-stat-card bg-blue-50 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span id="pr-sub-plan-label" class="compact-stat-label text-slate-700 dark:text-slate-200">Plan</span>
+                        <span id="pr-sub-plan" class="compact-stat-value text-blue-700 dark:text-blue-300">0</span>
+                    </div>
+                    <div class="compact-stat-card bg-indigo-50 dark:bg-slate-700/60 border border-indigo-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">Total Plan</span>
+                        <span id="pr-sub-totalplan" class="compact-stat-value text-indigo-700 dark:text-indigo-300">0</span>
+                    </div>
+                    <div class="compact-stat-card col-span-2 sm:col-span-1 bg-emerald-50 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">Total (Apr-Mar)</span>
+                        <span id="pr-sub-achieved" class="compact-stat-value text-emerald-700 dark:text-emerald-300">0</span>
+                    </div>
+                </div>
+                <div>
                     <!-- Prod; Statement entry modal -->
                     <div id="pr-collapsible-form-body" onclick="if(event.target === this) closeProdFormModal()" class="fixed inset-0 z-[60] hidden flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-3 sm:p-4">
                         <div class="bg-white dark:bg-slate-800 rounded-xl max-w-4xl w-full shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden max-h-[92vh] flex flex-col modal-animate">
@@ -1861,30 +1867,25 @@
             </section>
 
             <!-- USER MANAGEMENT TAB -->
-            <section id="users-tab" class="tab-content hidden space-y-4">
-                <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
-                    <!-- 4 Summary Cards -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                        <div class="bg-blue-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-blue-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">စုစုပေါင်းအကောင့်</span>
-                            <span id="u-sub-total" class="font-bold text-blue-700 dark:text-blue-300">၀</span>
-                        </div>
-                        <div class="bg-purple-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-purple-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">Admin</span>
-                            <span id="u-sub-admin" class="font-bold text-purple-700 dark:text-purple-300">၀</span>
-                        </div>
-                        <div class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-emerald-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">Active</span>
-                            <span id="u-sub-active" class="font-bold text-emerald-700 dark:text-emerald-300">၀</span>
-                        </div>
-                        <div class="bg-amber-50 dark:bg-slate-700/60 p-2.5 rounded-lg border border-amber-200 dark:border-slate-600 flex justify-between items-center">
-                            <span class="text-slate-600 dark:text-slate-300 font-semibold">Pending</span>
-                            <span id="u-sub-pending" class="font-bold text-amber-700 dark:text-amber-300">၀</span>
-                        </div>
+            <section id="users-tab" class="tab-content hidden space-y-3">
+                <!-- 4 Compact Summary Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <div class="compact-stat-card bg-blue-50 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">စုစုပေါင်းအကောင့်</span>
+                        <span id="u-sub-total" class="compact-stat-value text-blue-700 dark:text-blue-300">၀</span>
                     </div>
-
-                    
-
+                    <div class="compact-stat-card bg-purple-50 dark:bg-slate-700/60 border border-purple-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">Admin</span>
+                        <span id="u-sub-admin" class="compact-stat-value text-purple-700 dark:text-purple-300">၀</span>
+                    </div>
+                    <div class="compact-stat-card bg-emerald-50 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">Active</span>
+                        <span id="u-sub-active" class="compact-stat-value text-emerald-700 dark:text-emerald-300">၀</span>
+                    </div>
+                    <div class="compact-stat-card bg-amber-50 dark:bg-slate-700/60 border border-amber-200 dark:border-slate-600 flex flex-wrap items-center justify-between gap-1 shadow-xs">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">Pending</span>
+                        <span id="u-sub-pending" class="compact-stat-value text-amber-700 dark:text-amber-300">၀</span>
+                    </div>
                 </div>
 
                 <!-- Dedicated Filter Card (စစ်ထုတ်ပြသသည့် အကွက်များ) -->
@@ -10361,9 +10362,9 @@ function doGet(e) {
                 const rowSum = sumDepts(row.data);
                 return `
                 <tr class="${row.cls}">
-                    <td class="px-3 py-1.5">${row.label}</td>
-                    ${depts.map(d => `<td class="px-2.5 py-1.5 text-center">${fmtValPct(row.data[d], totalCounts[d])}</td>`).join('')}
-                    <td class="px-2.5 py-1.5 text-center font-black">${fmtValPct(rowSum, grandTotalStrength)}</td>
+                    <td class="p-3">${row.label}</td>
+                    ${depts.map(d => `<td class="p-3 text-center">${fmtValPct(row.data[d], totalCounts[d])}</td>`).join('')}
+                    <td class="p-3 text-center font-black">${fmtValPct(rowSum, grandTotalStrength)}</td>
                 </tr>
             `;
             }).join('');
@@ -10580,7 +10581,7 @@ function doGet(e) {
             if (totalCardsCount > 5) {
                 gridColsClass = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6';
             }
-            container.className = `grid ${gridColsClass} gap-3 sm:gap-4`;
+            container.className = `grid ${gridColsClass} gap-2 sm:gap-2.5`;
 
             let html = '';
             allCards.forEach(item => {
@@ -10590,14 +10591,14 @@ function doGet(e) {
                 const pres = Math.max(0, count - abs);
 
                 html += `
-                    <div onclick="navigateFromDashboardToNameListMaster('${escapeHtml(item.pos)}')" title="Name List Master ရှိ '${escapeHtml(item.pos)}' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
-                        <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                            <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${escapeHtml(item.label)}</span>
-                            <span id="${item.countId}" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">${toMyanmarNumerals(count)}</span>
+                    <div onclick="navigateFromDashboardToNameListMaster('${escapeHtml(item.pos)}')" title="Name List Master ရှိ '${escapeHtml(item.pos)}' စာရင်းသို့ သွားရန် နှိပ်ပါ" class="compact-stat-card bg-white dark:bg-slate-800 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-1.5 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-sm transition group select-none">
+                        <div class="flex items-center justify-between gap-1.5">
+                            <span class="compact-stat-label text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${escapeHtml(item.label)}</span>
+                            <span id="${item.countId}" class="compact-stat-value text-slate-900 dark:text-white group-hover:scale-105 transition-transform">${toMyanmarNumerals(count)}</span>
                         </div>
-                        <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                            <span id="${item.presId}" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ${toMyanmarNumerals(pres)}</span>
-                            <span id="${item.absId}" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ${toMyanmarNumerals(abs)}</span>
+                        <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-700">
+                            <span id="${item.presId}" class="compact-stat-sub text-blue-800 dark:text-blue-300">တန်းစီ - ${toMyanmarNumerals(pres)}</span>
+                            <span id="${item.absId}" class="compact-stat-sub text-rose-700 dark:text-rose-400">ပျက်ကွက် - ${toMyanmarNumerals(abs)}</span>
                         </div>
                     </div>
                 `;
@@ -10609,14 +10610,14 @@ function doGet(e) {
             const totalPresent = Math.max(0, totalCount - totalAbsent);
 
             html += `
-                <div onclick="navigateFromDashboardToNameListMaster('')" title="Name List Master စာရင်း အားလုံးသို့ သွားရန် နှိပ်ပါ" class="col-span-2 sm:col-span-1 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition group select-none">
-                    <div class="flex items-center justify-between gap-1 whitespace-nowrap">
-                        <span class="section-heading-bold text-slate-600 dark:text-slate-300 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စုစုပေါင်းအင်အား</span>
-                        <span id="count-total" class="section-heading-bold text-2xl text-slate-900 dark:text-white group-hover:scale-105 transition-transform">${toMyanmarNumerals(totalCount)}</span>
+                <div onclick="navigateFromDashboardToNameListMaster('')" title="Name List Master စာရင်း အားလုံးသို့ သွားရန် နှိပ်ပါ" class="compact-stat-card col-span-2 sm:col-span-1 bg-white dark:bg-slate-800 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-1.5 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-sm transition group select-none">
+                    <div class="flex items-center justify-between gap-1.5">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">စုစုပေါင်းအင်အား</span>
+                        <span id="count-total" class="compact-stat-value text-slate-900 dark:text-white group-hover:scale-105 transition-transform">${toMyanmarNumerals(totalCount)}</span>
                     </div>
-                    <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs whitespace-nowrap">
-                        <span id="dash-present-badge" class="font-normal text-blue-900 dark:text-blue-300">တန်းစီ - ${toMyanmarNumerals(totalPresent)}</span>
-                        <span id="dash-absent-badge" class="font-normal text-rose-700 dark:text-rose-400">ပျက်ကွက် - ${toMyanmarNumerals(totalAbsent)}</span>
+                    <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-700">
+                        <span id="dash-present-badge" class="compact-stat-sub text-blue-800 dark:text-blue-300">တန်းစီ - ${toMyanmarNumerals(totalPresent)}</span>
+                        <span id="dash-absent-badge" class="compact-stat-sub text-rose-700 dark:text-rose-400">ပျက်ကွက် - ${toMyanmarNumerals(totalAbsent)}</span>
                     </div>
                 </div>
             `;
@@ -10913,21 +10914,21 @@ function doGet(e) {
 
             if (overviewBanner) {
                 overviewBanner.innerHTML = `
-                    <div class="bg-blue-50/90 dark:bg-slate-700/60 p-2.5 rounded-lg border border-blue-200 dark:border-slate-600 flex justify-between items-center">
-                        <span class="text-slate-600 dark:text-slate-300 font-semibold">ရှိရင်း စုစုပေါင်း</span>
-                        <span class="font-bold text-blue-700 dark:text-blue-300 text-xs sm:text-sm">${toMyanmarNumerals(sumLedger)} လက်</span>
+                    <div class="compact-stat-card bg-blue-50/90 dark:bg-slate-700/60 border border-blue-200 dark:border-slate-600 flex flex-wrap justify-between items-center gap-1">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">ရှိရင်း စုစုပေါင်း</span>
+                        <span class="compact-stat-value text-blue-700 dark:text-blue-300">${toMyanmarNumerals(sumLedger)} လက်</span>
                     </div>
-                    <div class="bg-amber-50/90 dark:bg-slate-700/60 p-2.5 rounded-lg border border-amber-200 dark:border-slate-600 flex justify-between items-center">
-                        <span class="text-slate-600 dark:text-slate-300 font-semibold">ထုတ်ပေးထားရှိ</span>
-                        <span class="font-bold text-amber-700 dark:text-amber-300 text-xs sm:text-sm">${toMyanmarNumerals(sumIssued)} လက်</span>
+                    <div class="compact-stat-card bg-amber-50/90 dark:bg-slate-700/60 border border-amber-200 dark:border-slate-600 flex flex-wrap justify-between items-center gap-1">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">ထုတ်ပေးထားရှိ</span>
+                        <span class="compact-stat-value text-amber-700 dark:text-amber-300">${toMyanmarNumerals(sumIssued)} လက်</span>
                     </div>
-                    <div class="bg-emerald-50/90 dark:bg-slate-700/60 p-2.5 rounded-lg border border-emerald-200 dark:border-slate-600 flex justify-between items-center">
-                        <span class="text-slate-600 dark:text-slate-300 font-semibold">စတိုကျန်ရှိ</span>
-                        <span class="font-bold text-emerald-700 dark:text-emerald-300 text-xs sm:text-sm">${toMyanmarNumerals(sumStore)} လက်</span>
+                    <div class="compact-stat-card bg-emerald-50/90 dark:bg-slate-700/60 border border-emerald-200 dark:border-slate-600 flex flex-wrap justify-between items-center gap-1">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">စတိုကျန်ရှိ</span>
+                        <span class="compact-stat-value text-emerald-700 dark:text-emerald-300">${toMyanmarNumerals(sumStore)} လက်</span>
                     </div>
-                    <div class="bg-rose-50/90 dark:bg-slate-700/60 p-2.5 rounded-lg border border-rose-200 dark:border-slate-600 flex justify-between items-center">
-                        <span class="text-slate-600 dark:text-slate-300 font-semibold">ပြင်ဆင်ဆဲ</span>
-                        <span class="font-bold text-rose-700 dark:text-rose-300 text-xs sm:text-sm">${toMyanmarNumerals(sumRepair)} လက်</span>
+                    <div class="compact-stat-card bg-rose-50/90 dark:bg-slate-700/60 border border-rose-200 dark:border-slate-600 flex flex-wrap justify-between items-center gap-1">
+                        <span class="compact-stat-label text-slate-700 dark:text-slate-200">ပြင်ဆင်ဆဲ</span>
+                        <span class="compact-stat-value text-rose-700 dark:text-rose-300">${toMyanmarNumerals(sumRepair)} လက်</span>
                     </div>
                 `;
             }
@@ -14926,4 +14927,3 @@ function doGet(e) {
         }
     </script>
 </body>
-</html>
