@@ -531,9 +531,9 @@
     <!-- AUTHENTICATION GATEWAY OVERLAY (Simple Logo + Account Login / Sign Up / Google) -->
     <div id="auth-gateway-screen" class="fixed inset-0 z-50 bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden my-auto modal-animate">
-            <!-- Logo Only Header (No Blue Background / No Extra Text) -->
+            <!-- Logo Only Header -->
             <div class="pt-6 pb-3 flex items-center justify-center">
-                <div class="w-14 h-14 rounded-2xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-black text-xl tracking-wider flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-600">
+                <div class="w-14 h-14 rounded-2xl bg-blue-600 text-white font-black text-xl tracking-wider flex items-center justify-center shadow-md border border-blue-500">
                     DI
                 </div>
             </div>
@@ -887,7 +887,7 @@
                                 <path d="M2 15l5-4h13l3-2h14l2 2h19v2h-16l-2 2h-8l-2 6h-4l2-6h-6l-4 5H3l-1-5zm26-2h5v-1h-5v1zm11-2h13v1H39v-1z"/>
                                 <path d="M31 15l1.5 6h3l-1.5-6h-3z"/>
                             </svg>
-                            <span>လက်နက်အမျိုးအစားအလိုက် စာရင်းကတ်ပြားများ</span>
+                            <span>လက်နက်အမျိုးအစားအလိုက် စာရင်း</span>
                         </h3>
                         <span id="dashboard-weapon-total-badge" class="section-heading-bold text-slate-800 dark:text-slate-200 text-xs font-bold">စုစုပေါင်း - ၀ လက်</span>
                     </div>
@@ -1081,19 +1081,58 @@
             </section>
 
             <section id="civilian-master-tab" class="tab-content hidden space-y-3">
-                <!-- 3 Category Status Cards (ရှိရင်း၊ တန်းစီ၊ ပျက်ကွက်) -->
+                <!-- 3 Category Status Cards (ရှိရင်း၊ တန်းစီ၊ ပျက်ကွက် + ရာခိုင်နှုန်း) -->
                 <div id="category-status-cards" class="hidden grid grid-cols-3 gap-2 sm:gap-3">
                     <div class="bg-blue-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-blue-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
                         <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ရှိရင်း</span>
-                        <span id="category-count-total" class="font-bold text-sm sm:text-base text-blue-700 dark:text-blue-300">၀</span>
+                        <span id="category-count-total" class="font-bold text-xs sm:text-sm text-blue-700 dark:text-blue-300 whitespace-nowrap">၀ ဦး (၀%)</span>
                     </div>
                     <div class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-emerald-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
                         <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">တန်းစီ</span>
-                        <span id="category-count-present" class="font-bold text-sm sm:text-base text-emerald-700 dark:text-emerald-300">၀</span>
+                        <span id="category-count-present" class="font-bold text-xs sm:text-sm text-emerald-700 dark:text-emerald-300 whitespace-nowrap">၀ ဦး (၀%)</span>
                     </div>
                     <div class="bg-rose-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-rose-200 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-1 shadow-sm">
                         <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ပျက်ကွက်</span>
-                        <span id="category-count-absent" class="font-bold text-sm sm:text-base text-rose-700 dark:text-rose-300">၀</span>
+                        <span id="category-count-absent" class="font-bold text-xs sm:text-sm text-rose-700 dark:text-rose-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                    </div>
+                </div>
+
+                <!-- 5 Filter Summary Cards for Name List Master (စစ်ထုတ်ပြသသည့် ခလုတ် ၅ ခုအတိုင်း ဖော်ပြချက်အကွက် ၅ ခု) -->
+                <div id="master-filter-summary-cards" class="hidden grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+                    <div id="master-card-position" class="bg-blue-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-blue-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ရာထူး</span>
+                            <span id="master-sum-position-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                        </div>
+                        <span id="master-sum-position-val" class="font-bold text-xs sm:text-sm text-blue-700 dark:text-blue-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                    </div>
+                    <div id="master-card-rank" class="bg-indigo-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-indigo-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">အဆင့်</span>
+                            <span id="master-sum-rank-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                        </div>
+                        <span id="master-sum-rank-val" class="font-bold text-xs sm:text-sm text-indigo-700 dark:text-indigo-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                    </div>
+                    <div id="master-card-dept" class="bg-emerald-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-emerald-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">ဌာန</span>
+                            <span id="master-sum-dept-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                        </div>
+                        <span id="master-sum-dept-val" class="font-bold text-xs sm:text-sm text-emerald-700 dark:text-emerald-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                    </div>
+                    <div id="master-card-status" class="bg-amber-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-amber-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">လက်ရှိအခြေအနေ</span>
+                            <span id="master-sum-status-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                        </div>
+                        <span id="master-sum-status-val" class="font-bold text-xs sm:text-sm text-amber-700 dark:text-amber-300 whitespace-nowrap">၀ ဦး (၀%)</span>
+                    </div>
+                    <div id="master-card-address" class="bg-rose-50 dark:bg-slate-700/60 p-2.5 sm:p-3 rounded-xl border border-rose-200 dark:border-slate-600 flex flex-col justify-between gap-1 shadow-sm col-span-2 sm:col-span-1">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">နေရပ်လိပ်စာ</span>
+                            <span id="master-sum-address-tag" class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 truncate max-w-[90px]">အားလုံး</span>
+                        </div>
+                        <span id="master-sum-address-val" class="font-bold text-xs sm:text-sm text-rose-700 dark:text-rose-300 whitespace-nowrap">၀ ဦး (၀%)</span>
                     </div>
                 </div>
 
@@ -1107,31 +1146,31 @@
                     </div>
                     <div class="flex flex-wrap items-center gap-3">
                         <div id="civilian-filter-position-wrapper" class="flex items-center gap-1.5">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ရာထူးအလိုက် -</span>
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ရာထူး -</span>
                             <select id="civilian-filter-position" onchange="resetTablePage('civilianMaster'); onCivilianFilterPositionChange()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">အဆင့်အလိုက် -</span>
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">အဆင့် -</span>
                             <select id="civilian-filter-rank" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာနအလိုက် -</span>
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာန -</span>
                             <select id="civilian-filter-dept" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">လက်ရှိအခြေအနေအလိုက် -</span>
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">လက်ရှိအခြေအနေ -</span>
                             <select id="civilian-filter-status" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">နေရပ်လိပ်စာအလိုက် -</span>
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">နေရပ်လိပ်စာ -</span>
                             <select id="civilian-filter-address" onchange="resetTablePage('civilianMaster'); renderCivilianNameListMaster()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
@@ -1215,19 +1254,19 @@
                     </div>
                     <div class="flex flex-wrap items-center gap-3">
                         <div class="flex items-center gap-1.5">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ရာထူးအလိုက် -</span>
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ရာထူး -</span>
                             <select id="absent-filter-position" onchange="resetTablePage('absent'); onAbsentFilterPositionChange()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">အဆင့်အလိုက် -</span>
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">အဆင့် -</span>
                             <select id="absent-filter-rank" onchange="resetTablePage('absent'); renderAbsentSummary()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာနအလိုက် -</span>
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာန -</span>
                             <select id="absent-filter-dept" onchange="resetTablePage('absent'); renderAbsentSummary()" class="bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none">
                                 <option value="">အားလုံးပြရန်</option>
                             </select>
@@ -1355,15 +1394,21 @@
 
                 </div>
 
-                <!-- Dedicated Filter Card (စစ်ထုတ်ပြသသည့် အကွက်များ) -->
-                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
-                    <div class="flex items-center gap-1.5">
-                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">စစ်ထုတ်ရန် -</span>
-                    </div>
-                    <div class="flex-1 flex flex-wrap items-center justify-end gap-2">
-                        <select id="duty-filter-dutytype" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500"></select>
-                        <select id="duty-filter-dept" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500"></select>
-                        <select id="duty-filter-type" onchange="resetTablePage('duty'); renderSecurityDuty()" class="compact-toolbar-control bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-blue-500"></select>
+                <!-- Dedicated Standalone Filter Card (စစ်ထုတ်ပြသသည့် ခလုတ်များ ကတ်ပြား) -->
+                <div class="bg-white dark:bg-slate-800 p-3 sm:px-4 sm:py-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">လုံခြုံရေးအမျိုးအစား</span>
+                            <select id="duty-filter-dutytype" onchange="resetTablePage('duty'); renderSecurityDuty()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဌာန</span>
+                            <select id="duty-filter-dept" onchange="resetTablePage('duty'); renderSecurityDuty()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-700/60 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between gap-2">
+                            <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">ဝန်ထမ်းအမျိုးအစား</span>
+                            <select id="duty-filter-type" onchange="resetTablePage('duty'); renderSecurityDuty()" class="flex-1 min-w-0 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg px-2 py-1 text-xs font-semibold outline-none focus:border-blue-500"></select>
+                        </div>
                     </div>
                 </div>
 
@@ -2911,6 +2956,7 @@ var db = admin.firestore();</pre>
         let firebaseAuth = null;
         let firebaseAuthStateUnsubscribe = null;
         let firestoreUnsubscribe = null;
+        let legacyFirestoreUnsubscribe = null;
         let firestoreNetworkListenersRegistered = false;
         let hasPendingCloudSync = localStorage.getItem(FIREBASE_PENDING_SYNC_KEY) === '1';
         let hasPendingGoogleSheetsSync = localStorage.getItem(GSHEETS_PENDING_SYNC_KEY) === '1';
@@ -3828,7 +3874,9 @@ var db = admin.firestore();</pre>
             }
 
             // Toggle Category Status Cards for (အရာရှိအမည်စာရင်း၊ စစ်သည်အမည်စာရင်း၊ အမြဲတမ်းဝန်ထမ်းစာရင်း၊ အရပ်သားဝန်ထမ်းစာရင်း)
+            // and 5 Filter Summary Cards for (Name List Master)
             const catStatusCards = document.getElementById('category-status-cards');
+            const masterSummaryCards = document.getElementById('master-filter-summary-cards');
             if (catStatusCards) {
                 if (['officer', 'soldier', 'staff', 'civilian'].includes(tabName)) {
                     catStatusCards.classList.remove('hidden');
@@ -3836,8 +3884,15 @@ var db = admin.firestore();</pre>
                     catStatusCards.classList.add('hidden');
                 }
             }
+            if (masterSummaryCards) {
+                if (['civilian-master'].includes(tabName)) {
+                    masterSummaryCards.classList.remove('hidden');
+                } else {
+                    masterSummaryCards.classList.add('hidden');
+                }
+            }
 
-            // Hide "ရာထူးအလိုက်" filter on (အရာရှိအမည်စာရင်း၊ စစ်သည်အမည်စာရင်း၊ အမြဲတမ်းဝန်ထမ်းစာရင်း၊ အရပ်သားဝန်ထမ်းစာရင်း)
+            // Hide "ရာထူး" filter on (အရာရှိအမည်စာရင်း၊ စစ်သည်အမည်စာရင်း၊ အမြဲတမ်းဝန်ထမ်းစာရင်း၊ အရပ်သားဝန်ထမ်းစာရင်း)
             const cmPosWrapper = document.getElementById('civilian-filter-position-wrapper');
             if (cmPosWrapper) {
                 if (['officer', 'soldier', 'staff', 'civilian'].includes(tabName)) {
@@ -5406,11 +5461,38 @@ var db = admin.firestore();</pre>
                 if (remoteData.POSITION_DEFINITIONS && typeof remoteData.POSITION_DEFINITIONS === 'object') {
                     POSITION_DEFINITIONS = normalizePositionDefinitions(remoteData.POSITION_DEFINITIONS);
                 }
-                if (Array.isArray(remoteData.personnelData)) personnelData = remoteData.personnelData;
+                if (Array.isArray(remoteData.personnelData)) {
+                    const prevPhotoById = new Map();
+                    (personnelData || []).forEach(p => { if (p?.id && p?.photo && !String(p.photo).startsWith('attRef:')) prevPhotoById.set(String(p.id).trim().toLowerCase(), p.photo); });
+                    personnelData = remoteData.personnelData.map(p => {
+                        if (p && typeof p.photo === 'string' && p.photo.startsWith('attRef:')) {
+                            const cached = p.id ? prevPhotoById.get(String(p.id).trim().toLowerCase()) : '';
+                            return cached ? { ...p, photo: cached, _attRefPhoto: p.photo } : p;
+                        }
+                        return p;
+                    });
+                }
                 if (Array.isArray(remoteData.securityDutyData)) securityDutyData = remoteData.securityDutyData;
                 if (Array.isArray(remoteData.armoryData)) armoryData = remoteData.armoryData;
                 if (Array.isArray(remoteData.prodStatementData)) prodStatementData = remoteData.prodStatementData;
-                if (Array.isArray(remoteData.announcementData)) announcementData = remoteData.announcementData;
+                if (Array.isArray(remoteData.announcementData)) {
+                    const prevAnnById = new Map();
+                    (announcementData || []).forEach(a => { if (a?.id) prevAnnById.set(a.id, a); });
+                    announcementData = remoteData.announcementData.map(a => {
+                        if (!a) return a;
+                        const prev = a.id ? prevAnnById.get(a.id) : null;
+                        const out = { ...a };
+                        if (typeof out.photoData === 'string' && out.photoData.startsWith('attRef:') && prev?.photoData && !String(prev.photoData).startsWith('attRef:')) {
+                            out._attRefPhoto = out.photoData;
+                            out.photoData = prev.photoData;
+                        }
+                        if (typeof out.pdfData === 'string' && out.pdfData.startsWith('attRef:') && prev?.pdfData && !String(prev.pdfData).startsWith('attRef:')) {
+                            out._attRefPdf = out.pdfData;
+                            out.pdfData = prev.pdfData;
+                        }
+                        return out;
+                    });
+                }
                 if (Array.isArray(remoteData.userRoles) && remoteData.userRoles.length) userRoles = remoteData.userRoles;
                 if (Array.isArray(remoteData.userData) && remoteData.userData.length) userData = remoteData.userData;
                 if (remoteData.tableColumnConfig && typeof remoteData.tableColumnConfig === 'object') {
@@ -5443,8 +5525,153 @@ var db = admin.firestore();</pre>
                 renderAnnouncementView();
                 renderUserManagement();
                 if (activeCustomTableId) renderActiveCustomTable();
+                hydrateFirestoreAttachments();
             } finally {
                 isApplyingRemoteSnapshot = false;
+            }
+        }
+
+        function sanitizeFirestoreValue(val, inArray = false) {
+            if (val === undefined || typeof val === 'function' || typeof val === 'symbol') {
+                return inArray ? null : undefined;
+            }
+            if (val === null || typeof val === 'boolean' || typeof val === 'string') {
+                return val;
+            }
+            if (typeof val === 'number') {
+                return Number.isFinite(val) ? val : null;
+            }
+            if (val instanceof Date) {
+                return Number.isNaN(val.getTime()) ? null : val.toISOString();
+            }
+            if (Array.isArray(val)) {
+                return val.map(item => {
+                    const cleaned = sanitizeFirestoreValue(item, true);
+                    // Firestore does not support direct nested arrays
+                    return Array.isArray(cleaned) ? { _items: cleaned } : cleaned;
+                });
+            }
+            if (typeof val === 'object') {
+                const out = {};
+                Object.keys(val).forEach(k => {
+                    const keyStr = String(k || '').trim();
+                    if (!keyStr || (keyStr.startsWith('__') && keyStr.endsWith('__'))) return;
+                    const cleaned = sanitizeFirestoreValue(val[k], false);
+                    if (cleaned !== undefined) {
+                        out[keyStr] = cleaned;
+                    }
+                });
+                return out;
+            }
+            return String(val);
+        }
+
+        function getUtf8ByteLength(obj) {
+            const json = JSON.stringify(obj);
+            if (typeof TextEncoder !== 'undefined') {
+                return new TextEncoder().encode(json).length;
+            }
+            return json.length * 2;
+        }
+
+        function hashStringShort(str) {
+            let h = 2166136261;
+            const s = String(str || '');
+            const step = Math.max(1, Math.floor(s.length / 256));
+            for (let i = 0; i < s.length; i += step) {
+                h ^= s.charCodeAt(i);
+                h = Math.imul(h, 16777619);
+            }
+            return `${(h >>> 0).toString(36)}_${s.length}`;
+        }
+
+        async function offloadLargeAttachmentsForFirestore(cleanPayload) {
+            if (!firestoreDb || typeof getUtf8ByteLength !== 'function') return cleanPayload;
+            if (getUtf8ByteLength(cleanPayload) <= 850000) return cleanPayload;
+
+            const attCollection = firestoreDb.collection('di_system_attachments');
+            const uploadJobs = [];
+
+            const queueOffload = (rawStr, prefix) => {
+                if (typeof rawStr !== 'string' || rawStr.length < 15000 || rawStr.startsWith('attRef:')) return rawStr;
+                if (rawStr.length > 950000) {
+                    console.warn('Single attachment exceeds 950KB Firestore doc limit, omitted from master doc:', prefix);
+                    return '';
+                }
+                const attId = `${prefix}_${hashStringShort(rawStr)}`;
+                uploadJobs.push(
+                    attCollection.doc(attId).set({ data: rawStr, updatedAt: cleanPayload.updatedAt || new Date().toISOString() }, { merge: true })
+                        .catch(err => console.warn('Attachment offload note:', err?.message))
+                );
+                return `attRef:${attId}`;
+            };
+
+            if (Array.isArray(cleanPayload.announcementData)) {
+                cleanPayload.announcementData = cleanPayload.announcementData.map((a, idx) => {
+                    if (!a || typeof a !== 'object') return a;
+                    const copy = { ...a };
+                    if (copy.photoData) copy.photoData = queueOffload(copy.photoData, `ann_p_${idx}`);
+                    if (copy.pdfData) copy.pdfData = queueOffload(copy.pdfData, `ann_pdf_${idx}`);
+                    return copy;
+                });
+            }
+
+            if (Array.isArray(cleanPayload.personnelData) && getUtf8ByteLength(cleanPayload) > 850000) {
+                cleanPayload.personnelData = cleanPayload.personnelData.map((p, idx) => {
+                    if (!p || typeof p !== 'object') return p;
+                    if (typeof p.photo === 'string' && p.photo.length > 15000) {
+                        return { ...p, photo: queueOffload(p.photo, `per_${idx}`) };
+                    }
+                    return p;
+                });
+            }
+
+            if (uploadJobs.length) {
+                await Promise.all(uploadJobs);
+            }
+            return cleanPayload;
+        }
+
+        async function hydrateFirestoreAttachments() {
+            if (!firestoreDb) return;
+            const attCollection = firestoreDb.collection('di_system_attachments');
+            let changed = false;
+
+            const fetchAtt = async (refStr) => {
+                if (typeof refStr !== 'string' || !refStr.startsWith('attRef:')) return '';
+                const attId = refStr.slice(7);
+                try {
+                    const snap = await attCollection.doc(attId).get();
+                    if (snap && snap.exists) return snap.data()?.data || '';
+                } catch (e) {}
+                return '';
+            };
+
+            for (const a of (announcementData || [])) {
+                if (!a) continue;
+                if (typeof a.photoData === 'string' && a.photoData.startsWith('attRef:')) {
+                    const resolved = await fetchAtt(a.photoData);
+                    if (resolved) { a.photoData = resolved; changed = true; }
+                }
+                if (typeof a.pdfData === 'string' && a.pdfData.startsWith('attRef:')) {
+                    const resolved = await fetchAtt(a.pdfData);
+                    if (resolved) { a.pdfData = resolved; changed = true; }
+                }
+            }
+
+            for (const p of (personnelData || [])) {
+                if (!p) continue;
+                if (typeof p.photo === 'string' && p.photo.startsWith('attRef:')) {
+                    const resolved = await fetchAtt(p.photo);
+                    if (resolved) { p.photo = resolved; changed = true; }
+                }
+            }
+
+            if (changed) {
+                saveSystemState(true);
+                renderAnnouncementView();
+                renderDashboardAnnouncement();
+                renderPersonnelDirectory();
             }
         }
 
@@ -5461,7 +5688,7 @@ var db = admin.firestore();</pre>
             try {
                 updateFirebaseSyncUI('syncing');
                 const nowIso = new Date().toISOString();
-                const payload = {
+                const rawPayload = {
                     updatedAt: nowIso,
                     lastModifiedBy: currentSessionUser?.username || 'unknown',
                     syncReason: reason,
@@ -5493,9 +5720,11 @@ var db = admin.firestore();</pre>
                     googleSheetsConfig: GOOGLE_SHEETS_CONFIG
                 };
 
+                const cleanPayload = await offloadLargeAttachmentsForFirestore(sanitizeFirestoreValue(rawPayload));
+
                 const writeOps = [];
-                if (docRef) writeOps.push(docRef.set(payload, { merge: true }));
-                if (legacyRef) writeOps.push(legacyRef.set(payload, { merge: true }).catch(err => console.warn('Legacy sync write note:', err?.message)));
+                if (docRef) writeOps.push(docRef.set(cleanPayload, { merge: true }));
+                if (legacyRef) writeOps.push(legacyRef.set(cleanPayload, { merge: true }).catch(err => console.warn('Legacy sync write note:', err?.message)));
 
                 await Promise.all(writeOps);
                 localStorage.removeItem(FIREBASE_PENDING_SYNC_KEY);
@@ -5504,7 +5733,7 @@ var db = admin.firestore();</pre>
                 updateFirebaseSyncUI('synced');
                 if (notify) showToast('Firestore Cloud သို့ ဒေတာများ Sync လုပ်ပြီးပါပြီ', 'success');
             } catch (err) {
-                const errorCode = String(err?.code || err?.message || 'unknown error').slice(0, 80);
+                const errorCode = String(err?.code || err?.message || 'unknown error').slice(0, 100);
                 console.warn('Firestore sync failed:', err);
                 localStorage.setItem(FIREBASE_PENDING_SYNC_KEY, '1');
                 hasPendingCloudSync = true;
@@ -5543,6 +5772,9 @@ var db = admin.firestore();</pre>
                 }
                 if (firebase.firestore) {
                     firestoreDb = firebase.firestore();
+                    try {
+                        firestoreDb.settings({ ignoreUndefinedProperties: true });
+                    } catch (settingsErr) {}
                     updateFirebaseSyncUI('connected');
 
                     if (!firestoreNetworkListenersRegistered) {
@@ -5556,7 +5788,7 @@ var db = admin.firestore();</pre>
                     const docRef = getFirestoreMasterDocRef();
                     if (docRef) {
                         if (typeof firestoreUnsubscribe === 'function') firestoreUnsubscribe();
-                        firestoreUnsubscribe = docRef.onSnapshot((snap) => {
+                        firestoreUnsubscribe = docRef.onSnapshot({ includeMetadataChanges: true }, (snap) => {
                             if (snap && snap.exists) {
                                 const data = snap.data();
                                 if (data) {
@@ -5568,13 +5800,14 @@ var db = admin.firestore();</pre>
                             const errorCode = String(err?.code || err?.message || 'unknown error').slice(0, 80);
                             console.warn('Firestore primary listener note:', err);
                             updateFirebaseSyncUI('offline', `Firestore: ${errorCode}`);
-                        }, { includeMetadataChanges: true });
+                        });
                     }
 
                     // 2. Cross-listen to legacy artifact document
                     const legacyRef = getFirestoreLegacyArtifactDocRef();
                     if (legacyRef) {
-                        legacyRef.onSnapshot((snap) => {
+                        if (typeof legacyFirestoreUnsubscribe === 'function') legacyFirestoreUnsubscribe();
+                        legacyFirestoreUnsubscribe = legacyRef.onSnapshot((snap) => {
                             if (snap && snap.exists) {
                                 const data = snap.data();
                                 if (data) {
@@ -10137,7 +10370,7 @@ function doGet(e) {
                 sumTotal += g.totalCount;
 
                 return `
-                    <div class="bg-slate-50 dark:bg-slate-700/50 p-3.5 rounded-xl border border-slate-200 dark:border-slate-600 shadow-xs flex flex-col justify-between gap-2.5 hover:shadow-md hover:border-blue-400 dark:hover:border-blue-500 transition-all">
+                    <div class="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-xl border border-slate-200 dark:border-slate-600 shadow-xs hover:shadow-md hover:border-blue-400 dark:hover:border-blue-500 transition-all">
                         <div class="flex items-center justify-between gap-2">
                             <div class="min-w-0 flex-1 flex items-center gap-1.5 overflow-hidden">
                                 <span class="w-2 h-2 rounded-full bg-blue-600 flex-shrink-0"></span>
@@ -10148,11 +10381,6 @@ function doGet(e) {
                                     ${toMyanmarNumerals(g.totalCount)} လက်
                                 </span>
                             </div>
-                        </div>
-
-                        <div class="pt-2 border-t border-slate-200/80 dark:border-slate-600 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-                            <span>ရှိရင်း/လယ်ဂျာ</span>
-                            <span class="font-bold text-slate-800 dark:text-slate-200">${toMyanmarNumerals(g.ledgerQty)} လက်</span>
                         </div>
                     </div>
                 `;
@@ -10579,14 +10807,18 @@ function doGet(e) {
             const insideCount = list.filter(d => d.dutyType === 'တပ်တွင်း' || d.dutyType === 'တပ်တွင်းလခရ').length;
             const outsideCount = list.filter(d => d.dutyType === 'တပ်ပြင်' || d.dutyType === 'တပ်ပြင်လခရ').length;
             const totalCount = list.length;
+            const allDutyCount = (securityDutyData || []).length || totalCount;
+
+            const pct = (part, whole) => whole > 0 ? Math.round((part / whole) * 100) : 0;
+            const formatWithPct = (count, whole) => `${toMyanmarNumerals(count)} ဦး (${toMyanmarNumerals(pct(count, whole))}%)`;
 
             const elInside = document.getElementById('d-sub-inside');
             const elOutside = document.getElementById('d-sub-outside');
             const elTotal = document.getElementById('d-sub-total');
 
-            if (elInside) elInside.textContent = toMyanmarNumerals(insideCount);
-            if (elOutside) elOutside.textContent = toMyanmarNumerals(outsideCount);
-            if (elTotal) elTotal.textContent = toMyanmarNumerals(totalCount);
+            if (elInside) elInside.textContent = formatWithPct(insideCount, totalCount);
+            if (elOutside) elOutside.textContent = formatWithPct(outsideCount, totalCount);
+            if (elTotal) elTotal.textContent = formatWithPct(totalCount, allDutyCount);
         }
 
         function initInlineDutyControls() {
@@ -11275,9 +11507,60 @@ function doGet(e) {
                 return s === 'တန်းစီ' || (s !== 'ပျက်ကွက်');
             }).length;
 
-            catTotalEl.textContent = toMyanmarNumerals(total);
-            catPresEl.textContent = toMyanmarNumerals(present);
-            catAbsEl.textContent = toMyanmarNumerals(absent);
+            const pct = (part, whole) => whole > 0 ? Math.round((part / whole) * 100) : 0;
+            const fmtCountPct = (count, whole) => `${toMyanmarNumerals(count)} ဦး (${toMyanmarNumerals(pct(count, whole))}%)`;
+
+            catTotalEl.textContent = fmtCountPct(total, total);
+            catPresEl.textContent = fmtCountPct(present, total);
+            catAbsEl.textContent = fmtCountPct(absent, total);
+        }
+
+        function updateMasterFilterSummaryCards(filteredRecords) {
+            const baseTotal = (personnelData || []).length;
+            const recs = filteredRecords || [];
+            const pct = (part, whole) => whole > 0 ? Math.round((part / whole) * 100) : 0;
+            const fmtCountPct = (count, whole) => `${toMyanmarNumerals(count)} ဦး (${toMyanmarNumerals(pct(count, whole))}%)`;
+
+            const posVal = (document.getElementById('civilian-filter-position')?.value || '').trim();
+            const rankVal = (document.getElementById('civilian-filter-rank')?.value || '').trim();
+            const deptVal = (document.getElementById('civilian-filter-dept')?.value || '').trim();
+            const statusVal = (document.getElementById('civilian-filter-status')?.value || '').trim();
+            const addrVal = (document.getElementById('civilian-filter-address')?.value || '').trim();
+
+            const items = [
+                {
+                    key: 'position',
+                    val: posVal,
+                    count: recs.filter(p => posVal ? true : Boolean(getPersonnelPosition(p))).length
+                },
+                {
+                    key: 'rank',
+                    val: rankVal,
+                    count: recs.filter(p => rankVal ? true : Boolean((p.rankAbbr || p.rankFull || '').trim())).length
+                },
+                {
+                    key: 'dept',
+                    val: deptVal,
+                    count: recs.filter(p => deptVal ? true : Boolean((p.deptAbbr || p.deptFull || '').trim())).length
+                },
+                {
+                    key: 'status',
+                    val: statusVal,
+                    count: recs.filter(p => statusVal ? true : Boolean((p.status || '').trim())).length
+                },
+                {
+                    key: 'address',
+                    val: addrVal,
+                    count: recs.filter(p => addrVal ? true : Boolean((p.address || '').trim())).length
+                }
+            ];
+
+            items.forEach(item => {
+                const tagEl = document.getElementById(`master-sum-${item.key}-tag`);
+                const valEl = document.getElementById(`master-sum-${item.key}-val`);
+                if (tagEl) tagEl.textContent = item.val || 'အားလုံး';
+                if (valEl) valEl.textContent = fmtCountPct(item.count, baseTotal);
+            });
         }
 
         function renderCivilianNameListMaster() {
@@ -11328,6 +11611,7 @@ function doGet(e) {
                 ? (personnelData || []).filter(p => getPersonnelPosition(p) === targetCategory)
                 : personnelRecords;
             updateCategoryStatusCards(allCategoryRecords);
+            updateMasterFilterSummaryCards(personnelRecords);
 
             const totalPages = Math.max(1, Math.ceil(personnelRecords.length / CIVILIAN_MASTER_ITEMS_PER_PAGE));
             if (tablePageState.civilianMaster > totalPages) tablePageState.civilianMaster = totalPages;
@@ -13612,287 +13896,3 @@ function doGet(e) {
             recalcProdFormTotals();
             document.getElementById('main-workspace')?.scrollTo({ top: 0, behavior: 'smooth' });
             showToast(`"${item.nomenclature}" အား ပြင်ဆင်ရန် ရွေးချယ်ပြီးပါပြီ`, 'info');
-        }
-
-        function inlineAddProd() {
-            if (!guardWritePermission()) return false;
-            const payload = readProdFormPayload();
-            if (!payload.nomenclature) {
-                showToast('Nomenclature (ပစ္စည်းအမျိုးအမည်) ဖြည့်သွင်းပေးပါ', 'error');
-                return false;
-            }
-            payload._isLatestAdded = true;
-            prodStatementData.forEach(item => { delete item._isLatestAdded; });
-            prodStatementData.unshift(payload);
-            saveSystemState();
-            inlineClearProd(false);
-            initInlineProdControls();
-            renderProdStatement();
-            showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းသစ် ထည့်သွင်းပြီးပါပြီ', 'success');
-            return true;
-        }
-
-        function inlineSaveProd() {
-            if (!guardWritePermission()) return false;
-            const idx = parseInt(document.getElementById('pr-inline-index').value);
-            if (idx < 0 || !prodStatementData[idx]) {
-                showToast('ပြင်ဆင်လိုသော စာရင်းအား ဇယားကွက်အတွင်းမှ Edit ခလုတ်နှိပ်၍ အရင်ရွေးချယ်ပါ', 'error');
-                return false;
-            }
-            const payload = readProdFormPayload();
-            if (!payload.nomenclature) {
-                showToast('Nomenclature (ပစ္စည်းအမျိုးအမည်) ဖြည့်သွင်းပေးပါ', 'error');
-                return false;
-            }
-            prodStatementData[idx] = payload;
-            saveSystemState();
-            inlineClearProd(false);
-            initInlineProdControls();
-            renderProdStatement();
-            showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းအား သိမ်းဆည်း (Save) ပြီးပါပြီ', 'success');
-            return true;
-        }
-
-        function inlineDeleteProd() {
-            const idx = parseInt(document.getElementById('pr-inline-index').value);
-            if (idx < 0 || !prodStatementData[idx]) {
-                showToast('ဖျက်လိုသော စာရင်းအား စာရင်းမှ အရင်ရွေးချယ်ပါ', 'error');
-                return;
-            }
-            confirmDeleteProd(idx, true);
-        }
-
-        function confirmDeleteProd(index, clearInline = false) {
-            if (!guardWritePermission()) return;
-            const item = prodStatementData[index];
-            if (!item) return;
-            openConfirmModal(`"${item.nomenclature}" (${item.financialYears}) စာရင်းကို ဖျက်မည်။ သေချာပါသလား?`, () => {
-                prodStatementData.splice(index, 1);
-                saveSystemState();
-                if (clearInline) inlineClearProd(false);
-                initInlineProdControls();
-                renderProdStatement();
-                showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းအား ဖျက်ကွက်ပြီးပါပြီ', 'error');
-            });
-        }
-
-        function inlineClearProd(notify = true) {
-            document.getElementById('pr-inline-index').value = -1;
-            document.getElementById('pr-in-nomenclature').value = '';
-            document.getElementById('pr-in-au').value = '';
-            const debtYrEl = document.getElementById('pr-in-debt-year');
-            const planYrEl = document.getElementById('pr-in-plan-year');
-            if (debtYrEl) debtYrEl.value = '';
-            if (planYrEl) planYrEl.value = '';
-            document.getElementById('pr-in-debt').value = '';
-            document.getElementById('pr-in-plan').value = '';
-            document.getElementById('pr-in-totalplan').value = '';
-            document.getElementById('pr-in-desc').value = 'GSD';
-            const customInput = document.getElementById('pr-in-desc-custom');
-            if (customInput) {
-                customInput.value = '';
-                customInput.classList.add('hidden');
-            }
-            document.getElementById('pr-in-fy').value = '';
-            document.getElementById('pr-in-remark').value = '';
-            const quickInput = document.getElementById('pr-month-quick-val');
-            if (quickInput) quickInput.value = '';
-            PROD_MONTH_KEYS.forEach(m => {
-                currentProdFormMonths[m] = 0;
-            });
-            document.getElementById('pr-in-total').value = '';
-            updateProdYearLabels();
-            onProdMonthSelectorChange();
-            recalcProdFormTotals();
-            if (notify) showToast('အကွက်များအား ရှင်းလင်းပြီးပါပြီ', 'info');
-        }
-
-        function exportProdExcel() {
-            if (!ensureExcelLibrary()) return;
-            const query = (document.getElementById('prod-search')?.value || '').trim().toLowerCase();
-            const fyFilter = document.getElementById('prod-filter-fy')?.value || 'ALL';
-            const descFilter = document.getElementById('prod-filter-desc')?.value || 'ALL';
-            const nomFilter = document.getElementById('prod-filter-nom')?.value || 'ALL';
-
-            const filteredProd = prodStatementData.filter(item => {
-                const matchesQuery = !query ||
-                                     (item.nomenclature || '').toLowerCase().includes(query) ||
-                                     (item.description || '').toLowerCase().includes(query) ||
-                                     (item.remark || '').toLowerCase().includes(query) ||
-                                     (item.debtYear || '').toLowerCase().includes(query) ||
-                                     (item.planYear || '').toLowerCase().includes(query) ||
-                                     (item.financialYears || '').toLowerCase().includes(query);
-                const matchesFy = fyFilter === 'ALL' || item.financialYears === fyFilter;
-                const matchesDesc = descFilter === 'ALL' || item.description === descFilter;
-                const matchesNom = nomFilter === 'ALL' || item.nomenclature === nomFilter;
-                return matchesQuery && matchesFy && matchesDesc && matchesNom;
-            });
-
-            const exportRows = filteredProd.map((item, i) => ({
-                'Sr': i + 1,
-                'Nomenclature': item.nomenclature,
-                'A/U': item.au,
-                'Debt Yr': item.debtYear || '',
-                'Debt': item.debt2526,
-                'Plan Yr': item.planYear || '',
-                'Plan': item.plan2627,
-                'Total Plan': item.totalPlan,
-                'Description': item.description,
-                'Apr': item.apr,
-                'May': item.may,
-                'Jun': item.jun,
-                'Jul': item.jul,
-                'Aug': item.aug,
-                'Sep': item.sep,
-                'Oct': item.oct,
-                'Nov': item.nov,
-                'Dec': item.dec,
-                'Jan': item.jan,
-                'Feb': item.feb,
-                'Mar': item.mar,
-                'Total': item.total,
-                'Remark': item.remark || '',
-                'Financial_Years': item.financialYears
-            }));
-            const ws = XLSX.utils.json_to_sheet(exportRows.length ? exportRows : [{ 'Remark': 'No records found' }]);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Prod_Statement');
-            saveWorkbookToLocal(wb, `Prod_Statement_${new Date().toISOString().split('T')[0]}.xlsx`, 'ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း Local Excel ဖိုင် သိမ်းဆည်းပြီးပါပြီ');
-        }
-
-        function renderProdStatement() {
-            const thead = document.getElementById('prod-table-thead');
-            const container = document.getElementById('prod-list-container');
-            const footer = document.getElementById('prod-table-footer');
-            const mobileContainer = document.getElementById('prod-mobile-cards');
-            if (!container) return;
-
-            const prodCols = getEffectiveModuleColumns('prod');
-            const totalProdCols = prodCols.visibleBuiltins.length + prodCols.customColumns.length + 2;
-            if (thead) {
-                const builtinThs = prodCols.visibleBuiltins.map(col => {
-                    const idAttr = col.thId ? `id="${col.thId}" ` : '';
-                    if (col.sticky === 'nom') {
-                        return `<th id="pr-th-nom" class="p-2.5 sticky left-12 bg-slate-100 dark:bg-slate-700 z-20">${escapeHtml(col.displayLabel)}</th>`;
-                    }
-                    const alignCls = col.align === 'right' ? 'text-right' : (col.align === 'center' ? 'text-center' : '');
-                    return `<th ${idAttr}class="p-2.5 ${alignCls}">${escapeHtml(col.displayLabel)}</th>`;
-                }).join('');
-                const customThs = prodCols.customColumns.map(col => `<th class="p-2.5 text-blue-700 dark:text-blue-300">${escapeHtml(col.label)}</th>`).join('');
-                thead.innerHTML = `<tr><th id="pr-th-sr" class="p-2.5 text-center sticky left-0 bg-slate-100 dark:bg-slate-700 z-20">Sr</th>${builtinThs}${customThs}<th class="p-2.5 text-center">Function</th></tr>`;
-            }
-
-            updateProdYearLabels();
-
-            const query = (document.getElementById('prod-search')?.value || '').trim().toLowerCase();
-            const fyFilter = document.getElementById('prod-filter-fy')?.value || 'ALL';
-            const descFilter = document.getElementById('prod-filter-desc')?.value || 'ALL';
-            const nomFilter = document.getElementById('prod-filter-nom')?.value || 'ALL';
-
-            const filtered = prodStatementData.filter(item => {
-                const matchesQuery = (item.nomenclature || '').toLowerCase().includes(query) ||
-                                     (item.description || '').toLowerCase().includes(query) ||
-                                     (item.remark || '').toLowerCase().includes(query) ||
-                                     (item.debtYear || '').toLowerCase().includes(query) ||
-                                     (item.planYear || '').toLowerCase().includes(query) ||
-                                     (item.financialYears || '').toLowerCase().includes(query);
-                const matchesFy = fyFilter === 'ALL' || item.financialYears === fyFilter;
-                const matchesDesc = descFilter === 'ALL' || item.description === descFilter;
-                const matchesNom = nomFilter === 'ALL' || item.nomenclature === nomFilter;
-                return matchesQuery && matchesFy && matchesDesc && matchesNom;
-            });
-
-            updateProdSummaryBoxes(filtered);
-            const prodCountEl = document.getElementById('prod-master-count');
-            if (prodCountEl) prodCountEl.textContent = toMyanmarNumerals(filtered.length);
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<tr><td colspan="${totalProdCols}" class="text-center py-8 text-slate-400">ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း မရှိသေးပါ</td></tr>`;
-                if (footer) footer.innerHTML = '';
-                if (mobileContainer) {
-                    mobileContainer.innerHTML = `<div class="col-span-full bg-white dark:bg-slate-800 rounded-xl p-6 text-center text-slate-400 border border-slate-200 dark:border-slate-700">ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း မရှိသေးပါ</div>`;
-                }
-                renderPaginationControls('prod-pagination-bar', 'prod', 1, 0, 'မျိုး');
-                return;
-            }
-
-            // Grand Totals across all filtered records
-            const totals = {
-                debt2526: 0, plan2627: 0, totalPlan: 0,
-                apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0,
-                oct: 0, nov: 0, dec: 0, jan: 0, feb: 0, mar: 0,
-                total: 0
-            };
-            filtered.forEach(item => {
-                totals.debt2526 += Number(item.debt2526) || 0;
-                totals.plan2627 += Number(item.plan2627) || 0;
-                totals.totalPlan += Number(item.totalPlan) || 0;
-                PROD_MONTH_KEYS.forEach(m => { totals[m] += Number(item[m]) || 0; });
-                totals.total += Number(item.total) || 0;
-            });
-
-            const prTotalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
-            if (tablePageState.prod > prTotalPages) tablePageState.prod = prTotalPages;
-            const prCurrentPage = tablePageState.prod || 1;
-            const prStartIdx = (prCurrentPage - 1) * ITEMS_PER_PAGE;
-            const paginatedProd = filtered.slice(prStartIdx, prStartIdx + ITEMS_PER_PAGE);
-
-            // Desktop Rows
-            container.innerHTML = paginatedProd.map((item, idx) => {
-                const realIndex = prodStatementData.indexOf(item);
-                const pct = item.totalPlan > 0 ? Math.min(100, Math.round((item.total / item.totalPlan) * 100)) : 0;
-                const isLatest = Boolean(item._isLatestAdded);
-                const rowHighlightClass = isLatest
-                    ? 'bg-emerald-50/80 dark:bg-emerald-900/25 ring-1 ring-inset ring-emerald-400/60'
-                    : 'hover:bg-blue-50/70 dark:hover:bg-slate-700/60';
-                const stickyBgClass = isLatest
-                    ? 'bg-emerald-50 dark:bg-slate-800'
-                    : 'bg-white dark:bg-slate-800';
-                const prodCellsMap = {
-                    nomenclature: `<td class="p-2.5 font-bold text-slate-900 dark:text-white sticky left-12 ${stickyBgClass} z-10 pr-nom-cell">${escapeHtml(item.nomenclature)}${isLatest ? ' <span class="ml-1 px-1.5 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">New</span>' : ''}</td>`,
-                    au: `<td class="p-2.5 text-center font-semibold text-slate-600 dark:text-slate-300">${escapeHtml(item.au)}</td>`,
-                    debtYear: `<td class="p-2.5 text-center font-mono text-amber-700 dark:text-amber-300">${escapeHtml(item.debtYear || '-')}</td>`,
-                    debt2526: `<td class="p-2.5 text-right font-semibold text-amber-700 dark:text-amber-300">${formatProdNum(item.debt2526)}</td>`,
-                    planYear: `<td class="p-2.5 text-center font-mono text-blue-700 dark:text-blue-300">${escapeHtml(item.planYear || '-')}</td>`,
-                    plan2627: `<td class="p-2.5 text-right font-semibold text-blue-700 dark:text-blue-300">${formatProdNum(item.plan2627)}</td>`,
-                    totalPlan: `<td class="p-2.5 text-right font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/40 dark:bg-indigo-900/10">${formatProdNum(item.totalPlan)}</td>`,
-                    description: `<td class="p-2.5"><span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 font-semibold text-[11px]">${escapeHtml(item.description)}</span></td>`,
-                    total: `<td class="p-2.5 text-right font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50/40 dark:bg-emerald-900/10" title="ပြီးစီးမှု ${pct}%">${formatProdNum(item.total)}</td>`,
-                    remark: `<td class="p-2.5 text-slate-600 dark:text-slate-400">${escapeHtml(item.remark || '-')}</td>`,
-                    financialYears: `<td class="p-2.5 text-center font-mono font-semibold text-blue-800 dark:text-blue-300">${escapeHtml(item.financialYears)}</td>`
-                };
-                PROD_MONTH_KEYS.forEach(m => {
-                    prodCellsMap[m] = `<td class="p-2.5 text-right">${formatProdNum(item[m])}</td>`;
-                });
-                const builtinTds = prodCols.visibleBuiltins.map(col => prodCellsMap[col.key] || '<td class="p-2.5">-</td>').join('');
-                const customTds = prodCols.customColumns.map(col => {
-                    const rawVal = item.customFields && item.customFields[col.key] !== undefined ? String(item.customFields[col.key]).trim() : '';
-                    return `<td class="p-2.5">${escapeHtml(rawVal || '-')}</td>`;
-                }).join('');
-                return `
-                    <tr onclick="openProdDetailDrawer(${realIndex})" class="${rowHighlightClass} transition text-slate-800 dark:text-slate-200 cursor-pointer">
-                        <td class="p-2.5 text-center font-bold sticky left-0 ${stickyBgClass} z-10">${prStartIdx + idx + 1}</td>
-                        ${builtinTds}
-                        ${customTds}
-                        <td class="p-2.5 text-center space-x-1" onclick="event.stopPropagation()">
-                            <button onclick="selectProdForInlineEdit(${realIndex})" class="role-write-action p-1.5 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold transition" title="ပြင်ဆင်မည်">✏️</button>
-                            <button onclick="confirmDeleteProd(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg transition" title="ဖျက်မည်">🗑️</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-
-            // Adjust sticky left offset of Nomenclature column dynamically after Sr No auto-fits
-            requestAnimationFrame(() => {
-                const srTh = document.getElementById('pr-th-sr');
-                const nomTh = document.getElementById('pr-th-nom');
-                if (srTh && nomTh) {
-                    const srWidth = srTh.offsetWidth;
-                    nomTh.style.left = `${srWidth}px`;
-                    document.querySelectorAll('.pr-nom-cell').forEach(cell => {
-                        cell.style.left = `${srWidth}px`;
-                    });
-                }
-            });
-
-            // Table Footer Summary Row (aligned dynamically with visible columns)
