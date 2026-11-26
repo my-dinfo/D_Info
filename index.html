@@ -150,6 +150,14 @@
         aside#slide-menu #slide-menu-brand-subtitle {
             font-size: 9pt !important;
         }
+        #auth-gateway-screen.hidden,
+        #auth-login-form.hidden,
+        #auth-signup-form.hidden,
+        #auth-error-banner.hidden,
+        #google-chooser-box.hidden,
+        .tab-content.hidden {
+            display: none !important;
+        }
         .search-row-highlight {
             background-color: rgba(254, 240, 138, 0.9) !important;
             box-shadow: inset 0 0 0 2px #f59e0b !important;
@@ -551,7 +559,7 @@
     <div id="toast-container" class="fixed top-4 right-4 left-4 sm:left-auto z-[200] flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- AUTHENTICATION GATEWAY OVERLAY (Simple Logo + Account Login / Sign Up / Google) -->
-    <div id="auth-gateway-screen" class="fixed inset-0 z-50 bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-4 overflow-y-auto">
+    <div id="auth-gateway-screen" class="fixed inset-0 z-50 bg-slate-100 dark:bg-slate-900 flex items-start sm:items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden my-auto modal-animate">
             <!-- Logo Only Header -->
             <div class="pt-6 pb-3 flex items-center justify-center">
@@ -563,10 +571,10 @@
             <div class="px-5 pb-6 pt-2 space-y-4 text-xs">
                 <!-- Account Login / Sign Up Switcher -->
                 <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100 dark:bg-slate-700/60 rounded-xl font-bold">
-                    <button type="button" id="auth-tab-login" onclick="switchAuthMode('login')" class="py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm transition">
+                    <button type="button" id="auth-tab-login" onclick="switchAuthMode('login')" class="py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm transition cursor-pointer">
                         Account Login
                     </button>
-                    <button type="button" id="auth-tab-signup" onclick="switchAuthMode('signup')" class="py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition">
+                    <button type="button" id="auth-tab-signup" onclick="switchAuthMode('signup')" class="py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
                         Sign Up
                     </button>
                 </div>
@@ -574,15 +582,15 @@
                 <div id="auth-error-banner" class="hidden p-2.5 rounded-xl bg-rose-50 dark:bg-rose-900/30 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-200 text-[11px] font-semibold leading-snug"></div>
 
                 <!-- 1. Account Login Form -->
-                <form id="auth-login-form" onsubmit="handleEmailLogin(event)" class="space-y-3">
+                <form id="auth-login-form" novalidate onsubmit="handleEmailLogin(event)" class="space-y-3">
                     <div>
                         <label for="login-email" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Email / Account</label>
-                        <input type="text" id="login-email" required placeholder="Email or Username" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
+                        <input type="text" id="login-email" autocomplete="username" placeholder="Email or Username" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
                     </div>
                     <div>
                         <label for="login-password" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Password</label>
                         <div class="relative">
-                            <input type="password" id="login-password" placeholder="Password" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl pl-3 pr-10 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
+                            <input type="password" id="login-password" autocomplete="current-password" placeholder="Password" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl pl-3 pr-10 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
                             <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute inset-y-0 right-0 px-3 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition" aria-label="Toggle password">
                                 <svg class="w-4 h-4 eye-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                 <svg class="w-4 h-4 eye-closed hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
@@ -595,30 +603,42 @@
                             <span>Remember me</span>
                         </label>
                     </div>
-                    <button type="submit" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 font-bold rounded-xl shadow-sm transition text-xs active:scale-[0.99]">
+                    <button type="submit" id="auth-login-submit-btn" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 font-bold rounded-xl shadow-sm transition text-xs active:scale-[0.99] cursor-pointer">
                         Account Login
                     </button>
                 </form>
 
                 <!-- 2. Sign Up Form -->
-                <form id="auth-signup-form" onsubmit="handleAccountSignUp(event)" class="space-y-3 hidden">
+                <form id="auth-signup-form" novalidate onsubmit="handleAccountSignUp(event)" class="space-y-3 hidden">
                     <div>
                         <label for="signup-name" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Name</label>
-                        <input type="text" id="signup-name" required placeholder="Full Name" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
+                        <input type="text" id="signup-name" autocomplete="name" placeholder="Full Name" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
                     </div>
                     <div>
                         <label for="signup-email" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Email / Account</label>
-                        <input type="text" id="signup-email" required placeholder="Email or Username" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
+                        <input type="text" id="signup-email" autocomplete="username" placeholder="Email or Username" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
                     </div>
                     <div>
                         <label for="signup-password" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Password</label>
-                        <input type="password" id="signup-password" required placeholder="Password" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
+                        <div class="relative">
+                            <input type="password" id="signup-password" autocomplete="new-password" placeholder="Password" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl pl-3 pr-10 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
+                            <button type="button" onclick="togglePasswordVisibility('signup-password', this)" class="absolute inset-y-0 right-0 px-3 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition" aria-label="Toggle password">
+                                <svg class="w-4 h-4 eye-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                <svg class="w-4 h-4 eye-closed hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+                            </button>
+                        </div>
                     </div>
                     <div>
                         <label for="signup-password-confirm" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Confirm Password</label>
-                        <input type="password" id="signup-password-confirm" required placeholder="Confirm Password" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl px-3 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
+                        <div class="relative">
+                            <input type="password" id="signup-password-confirm" autocomplete="new-password" placeholder="Confirm Password" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl pl-3 pr-10 py-2 outline-none focus:border-slate-900 dark:focus:border-slate-400 text-xs">
+                            <button type="button" onclick="togglePasswordVisibility('signup-password-confirm', this)" class="absolute inset-y-0 right-0 px-3 flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition" aria-label="Toggle confirm password">
+                                <svg class="w-4 h-4 eye-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                <svg class="w-4 h-4 eye-closed hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+                            </button>
+                        </div>
                     </div>
-                    <button type="submit" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 font-bold rounded-xl shadow-sm transition text-xs active:scale-[0.99]">
+                    <button type="submit" id="auth-signup-submit-btn" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 font-bold rounded-xl shadow-sm transition text-xs active:scale-[0.99] cursor-pointer">
                         Sign Up
                     </button>
                 </form>
@@ -627,7 +647,7 @@
                 <div class="relative flex items-center justify-center my-1">
                     <div class="border-t border-slate-200 dark:border-slate-700 w-full"></div>
                 </div>
-                <button type="button" onclick="handleGoogleSignIn()" class="w-full py-2.5 px-3 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold rounded-xl border border-slate-300 dark:border-slate-600 shadow-xs flex items-center justify-center gap-2 transition text-xs active:scale-[0.99]">
+                <button type="button" id="auth-google-signin-btn" onclick="handleGoogleSignIn()" class="w-full py-2.5 px-3 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold rounded-xl border border-slate-300 dark:border-slate-600 shadow-xs flex items-center justify-center gap-2 transition text-xs active:scale-[0.99] cursor-pointer">
                     <svg class="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
                         <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24z"/>
@@ -636,6 +656,19 @@
                     </svg>
                     <span>Continue with Google Account</span>
                 </button>
+
+                <!-- Inline Google Account Chooser (shown when clicking Continue with Google Account on APK / offline / popup fallback) -->
+                <div id="google-chooser-box" class="hidden p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 space-y-2.5">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="font-bold text-slate-800 dark:text-slate-100 text-[11px]">Google Account ရွေးချယ်ဝင်ရောက်ရန်</span>
+                        <button type="button" onclick="document.getElementById('google-chooser-box')?.classList.add('hidden')" class="px-1.5 py-0.5 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded text-xs font-bold">✕</button>
+                    </div>
+                    <div id="saved-google-accounts-list" class="space-y-1.5 max-h-40 overflow-y-auto"></div>
+                    <div class="flex gap-1.5 pt-1 border-t border-slate-200 dark:border-slate-600">
+                        <input type="email" id="google-custom-email" onkeydown="if(event.key==='Enter'){event.preventDefault();submitCustomGoogleEmail();}" placeholder="Google Email ထည့်သွင်းရန်..." class="flex-1 min-w-0 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500 text-xs">
+                        <button type="button" onclick="submitCustomGoogleEmail()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition flex-shrink-0">ဝင်မည်</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -8134,13 +8167,21 @@ function doGet(e) {
             const signupTab = document.getElementById('auth-tab-signup');
             const loginForm = document.getElementById('auth-login-form');
             const signupForm = document.getElementById('auth-signup-form');
+            const googleBox = document.getElementById('google-chooser-box');
+            if (googleBox) googleBox.classList.add('hidden');
             if (!loginTab || !signupTab) return;
 
             if (mode === 'signup') {
-                signupTab.className = 'py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm transition';
-                loginTab.className = 'py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition';
-                loginForm?.classList.add('hidden');
-                signupForm?.classList.remove('hidden');
+                signupTab.className = 'py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm transition cursor-pointer';
+                loginTab.className = 'py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition cursor-pointer';
+                if (loginForm) {
+                    loginForm.classList.add('hidden');
+                    loginForm.style.display = 'none';
+                }
+                if (signupForm) {
+                    signupForm.classList.remove('hidden');
+                    signupForm.style.display = '';
+                }
                 
                 const staffTypeSel = document.getElementById('signup-staff-type');
                 if (staffTypeSel && !staffTypeSel.value) staffTypeSel.value = 'အရာရှိ';
@@ -8153,11 +8194,18 @@ function doGet(e) {
                 }
                 const signupRoleSel = document.getElementById('signup-role');
                 if (signupRoleSel && !signupRoleSel.value) signupRoleSel.value = 'User1';
+                setTimeout(() => document.getElementById('signup-name')?.focus(), 40);
             } else {
-                loginTab.className = 'py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm transition';
-                signupTab.className = 'py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition';
-                signupForm?.classList.add('hidden');
-                loginForm?.classList.remove('hidden');
+                loginTab.className = 'py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm transition cursor-pointer';
+                signupTab.className = 'py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition cursor-pointer';
+                if (signupForm) {
+                    signupForm.classList.add('hidden');
+                    signupForm.style.display = 'none';
+                }
+                if (loginForm) {
+                    loginForm.classList.remove('hidden');
+                    loginForm.style.display = '';
+                }
                 loadRememberedLoginCredentials();
             }
         }
@@ -8534,8 +8582,9 @@ function doGet(e) {
         }
 
         function handleAccountSignUp(e) {
-            e.preventDefault();
-            const nameVal = document.getElementById('signup-name').value.trim();
+            if (e && e.preventDefault) e.preventDefault();
+            setAuthGatewayError('');
+            const nameVal = (document.getElementById('signup-name')?.value || '').trim();
             const serviceIdVal = (document.getElementById('signup-service-id')?.value || '').trim();
             const rawStaffType = document.getElementById('signup-staff-type')?.value || 'အရာရှိ';
             const customStaffTypeVal = (document.getElementById('signup-staff-type-custom')?.value || '').trim();
@@ -8552,7 +8601,7 @@ function doGet(e) {
             const rawDeptSel = document.getElementById('signup-dept')?.value || 'ဌနခ';
             const customDeptVal = (document.getElementById('signup-dept-custom')?.value || '').trim();
             const deptAbbrVal = rawDeptSel === 'CUSTOM' ? (customDeptVal || 'Custom') : (rawDeptSel || 'ဌနခ');
-            let emailVal = document.getElementById('signup-email').value.trim();
+            let emailVal = (document.getElementById('signup-email')?.value || '').trim();
             let emailLower = emailVal.toLowerCase();
             if (emailLower === 'ppa45929@gmailcom') {
                 emailVal = 'ppa45929@gmail.com';
@@ -8564,22 +8613,32 @@ function doGet(e) {
             const passVal = (document.getElementById('signup-password')?.value || '').trim();
             const confirmVal = (document.getElementById('signup-password-confirm')?.value || '').trim();
 
+            if (!nameVal) {
+                const msg = 'အမည် (Name) ထည့်သွင်းပါ';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
+                document.getElementById('signup-name')?.focus();
+                return;
+            }
             if (!emailVal) {
                 const msg = 'အီးမေးလ် သို့မဟုတ် အကောင့်အမည် ထည့်သွင်းပါ';
                 setAuthGatewayError(msg);
                 showToast(msg, 'error');
+                document.getElementById('signup-email')?.focus();
                 return;
             }
             if (!passVal) {
                 const msg = 'စကားဝှက် ထည့်သွင်းပါ';
                 setAuthGatewayError(msg);
                 showToast(msg, 'error');
+                document.getElementById('signup-password')?.focus();
                 return;
             }
             if (passVal !== confirmVal) {
                 const msg = 'စကားဝှက် နှစ်ခု တူညီမှု မရှိပါ';
                 setAuthGatewayError(msg);
                 showToast(msg, 'error');
+                document.getElementById('signup-password-confirm')?.focus();
                 return;
             }
             setAuthGatewayError('');
@@ -8621,13 +8680,15 @@ function doGet(e) {
                 userData.push(newUserRecord);
                 showToast('အကောင့်အသစ် အောင်မြင်စွာ ဖွင့်ပြီးပါပြီ', 'success');
             }
+            saveRememberedLoginCredentials(emailVal, passVal, true);
             saveSystemState();
             syncToFirebaseFirestore(`user_signup:${emailLower}`);
             applyUserSession(newUserRecord, true);
         }
 
         async function handleGoogleSignIn() {
-            const isCapacitor = window.Capacitor !== undefined || window.location.protocol === 'file:' || window.location.hostname === 'localhost';
+            setAuthGatewayError('');
+            const isCapacitor = window.Capacitor !== undefined || window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
             if (!isCapacitor && firebaseAuth && FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey && typeof firebase !== 'undefined' && firebase.auth.GoogleAuthProvider) {
                 try {
                     const provider = new firebase.auth.GoogleAuthProvider();
@@ -8643,63 +8704,77 @@ function doGet(e) {
                     console.info('Google popup sign-in note:', err?.code || err?.message);
                 }
             }
-            // Seamless instant selection of Owner account on Android / fallback
-            selectQuickUser('ppa45929@gmail.com');
+            // On Android APK / local / popup blocked fallback, show Google Account Chooser cleanly
+            openGoogleChooserBox();
         }
 
         function openGoogleChooserBox() {
             const chooser = document.getElementById('google-chooser-box');
             const savedListEl = document.getElementById('saved-google-accounts-list');
             const inputEl = document.getElementById('google-custom-email');
-            if (!chooser) return;
+            if (!chooser) {
+                completeGoogleSession('ppa45929@gmail.com', 'Pyae Phyo Aung (Admin)');
+                return;
+            }
 
             if (savedListEl) {
-                // Ensure Admin account is listed at the top as 1-click option
-                let accounts = [];
-                // Admin option
-                accounts.push({
+                savedListEl.replaceChildren();
+                const accounts = [{
                     name: 'Pyae Phyo Aung (Admin)',
                     email: 'ppa45929@gmail.com',
                     role: 'Admin',
                     isAdmin: true
-                });
+                }];
 
-                // Other registered users or google users
-                userData.forEach(u => {
+                (userData || []).forEach(u => {
                     const uEmail = (u.username || '').trim();
                     if (uEmail && uEmail.toLowerCase() !== 'ppa45929@gmail.com' && !accounts.some(a => a.email.toLowerCase() === uEmail.toLowerCase())) {
                         accounts.push({
                             name: u.name || uEmail,
                             email: uEmail,
-                            role: u.role || 'User',
+                            role: u.role || 'User1',
                             isAdmin: u.role === 'Admin'
                         });
                     }
                 });
 
-                savedListEl.innerHTML = accounts.map(acc => `
-                    <button type="button" onclick="completeGoogleSession('${acc.email.replace(/'/g, "\'")}', '${acc.name.replace(/'/g, "\'")}')" class="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-blue-100/70 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 text-left transition shadow-xs group">
-                        <div class="flex items-center gap-2.5 min-w-0">
-                            <div class="w-8 h-8 rounded-full ${acc.isAdmin ? 'bg-amber-500 text-white' : 'bg-blue-600 text-white'} flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-xs">
-                                ${acc.isAdmin ? '★' : acc.name.charAt(0).toUpperCase()}
-                            </div>
-                            <div class="min-w-0">
-                                <div class="font-bold text-slate-900 dark:text-white truncate flex items-center gap-1.5">
-                                    <span>${acc.name}</span>
-                                    ${acc.isAdmin ? '<span class="text-[10px] px-1.5 py-0.2 bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 font-extrabold rounded-full">Admin</span>' : ''}
-                                </div>
-                                <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">${acc.email}</div>
-                            </div>
-                        </div>
-                        <span class="text-xs font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-0.5 transition-transform flex-shrink-0">ဝင်မည် &rsaquo;</span>
-                    </button>
-                `).join('');
+                accounts.forEach(acc => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 text-left transition shadow-xs cursor-pointer';
+                    btn.addEventListener('click', () => completeGoogleSession(acc.email, acc.name));
+
+                    const leftWrap = document.createElement('div');
+                    leftWrap.className = 'flex items-center gap-2 min-w-0';
+
+                    const badge = document.createElement('div');
+                    badge.className = `w-7 h-7 rounded-full ${acc.isAdmin ? 'bg-amber-500 text-white' : 'bg-blue-600 text-white'} flex items-center justify-center font-bold text-xs flex-shrink-0`;
+                    badge.textContent = acc.isAdmin ? '★' : String(acc.name || 'U').charAt(0).toUpperCase();
+
+                    const textWrap = document.createElement('div');
+                    textWrap.className = 'min-w-0';
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'font-bold text-slate-900 dark:text-white truncate text-xs';
+                    nameDiv.textContent = acc.name;
+                    const emailDiv = document.createElement('div');
+                    emailDiv.className = 'text-[10px] text-slate-500 dark:text-slate-400 truncate';
+                    emailDiv.textContent = acc.email;
+                    textWrap.append(nameDiv, emailDiv);
+                    leftWrap.append(badge, textWrap);
+
+                    const actionSpan = document.createElement('span');
+                    actionSpan.className = 'text-[11px] font-bold text-blue-600 dark:text-blue-400 flex-shrink-0';
+                    actionSpan.textContent = 'ဝင်မည် ›';
+
+                    btn.append(leftWrap, actionSpan);
+                    savedListEl.appendChild(btn);
+                });
             }
 
             chooser.classList.remove('hidden');
+            chooser.style.display = '';
             if (inputEl) {
                 inputEl.value = '';
-                setTimeout(() => inputEl.focus(), 50);
             }
         }
 
@@ -8707,7 +8782,9 @@ function doGet(e) {
             const input = document.getElementById('google-custom-email');
             let emailVal = (input?.value || '').trim();
             if (!emailVal) {
-                showToast('Google Email လိပ်စာ ထည့်သွင်းပေးပါ', 'error');
+                const msg = 'Google Email လိပ်စာ ထည့်သွင်းပေးပါ';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
                 input?.focus();
                 return;
             }
@@ -8720,6 +8797,7 @@ function doGet(e) {
         }
 
         function completeGoogleSession(email, displayName, firebaseUid = '') {
+            setAuthGatewayError('');
             let normalizedEmail = (email || '').trim().toLowerCase();
             if (normalizedEmail === 'ppa45929@gmailcom') normalizedEmail = 'ppa45929@gmail.com';
             if (!normalizedEmail) return;
@@ -8752,10 +8830,14 @@ function doGet(e) {
                 saveSystemState();
             }
             if (existing.status === 'Suspended') {
-                showToast('ဤ Google အကောင့်အား Admin မှ ပိတ်ထားပါသည်', 'error');
+                const msg = 'ဤ Google အကောင့်အား Admin မှ ပိတ်ထားပါသည်';
+                setAuthGatewayError(msg);
+                showToast(msg, 'error');
                 return;
             }
-            document.getElementById('google-chooser-box')?.classList.add('hidden');
+            const googleBox = document.getElementById('google-chooser-box');
+            if (googleBox) googleBox.classList.add('hidden');
+            saveRememberedLoginCredentials(normalizedEmail, '', true);
             applyUserSession(existing, true, firebaseUid);
         }
 
@@ -10707,7 +10789,7 @@ function doGet(e) {
                                 <h4 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate whitespace-nowrap" title="${escapeHtml(g.name)} (${escapeHtml(modelText)})">${escapeHtml(g.name)} <span class="text-[11px] text-slate-500 dark:text-slate-400">(${escapeHtml(modelText)})</span></h4>
                             </div>
                             <div class="flex-shrink-0">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-black bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200 border border-blue-200 dark:border-blue-700 shadow-xs whitespace-nowrap">
+                                <span class="inline-flex items-center text-xs font-black text-blue-800 dark:text-blue-200 whitespace-nowrap">
                                     ${toMyanmarNumerals(g.totalCount)} လက်
                                 </span>
                             </div>
@@ -13896,3 +13978,812 @@ function doGet(e) {
                     saveButton.type = 'button';
                     saveButton.className = 'px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg';
                     saveButton.textContent = 'သိမ်းဆည်းရန်';
+                    saveButton.addEventListener('click', () => savePositionItem(index, input.value));
+                    const cancelButton = document.createElement('button');
+                    cancelButton.type = 'button';
+                    cancelButton.className = 'px-2.5 py-1.5 bg-slate-500 hover:bg-slate-600 text-white rounded-lg';
+                    cancelButton.textContent = 'Cancel';
+                    cancelButton.addEventListener('click', cancelPositionItem);
+                    actions.append(saveButton, cancelButton);
+                    row.append(input, actions);
+                } else {
+                    const label = document.createElement('span');
+                    label.className = 'min-w-0 flex-1 font-semibold text-slate-800 dark:text-slate-200';
+                    label.textContent = position;
+
+                    const actions = document.createElement('div');
+                    actions.className = 'flex gap-1.5 flex-shrink-0';
+                    const editButton = document.createElement('button');
+                    editButton.type = 'button';
+                    editButton.title = 'Edit';
+                    editButton.className = 'p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center';
+                    editButton.innerHTML = SETTING_EDIT_ICON_SVG;
+                    editButton.addEventListener('click', () => editPositionItem(index));
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type = 'button';
+                    deleteButton.title = 'Delete';
+                    deleteButton.className = 'p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg transition inline-flex items-center justify-center';
+                    deleteButton.innerHTML = SETTING_DELETE_ICON_SVG;
+                    deleteButton.addEventListener('click', () => deletePositionItem(index));
+                    actions.append(editButton, deleteButton);
+                    row.append(label, actions);
+                }
+
+                container.appendChild(row);
+            });
+        }
+
+        function addPositionItem() {
+            if (!guardWritePermission()) return;
+            POSITION_DEFINITIONS.push('ရာထူးအသစ်');
+            editingPositionIndex = POSITION_DEFINITIONS.length - 1;
+            saveSystemState();
+            renderPositionDefinitions();
+            populateCivilianMasterFilters();
+            renderDashboardView();
+        }
+
+        function editPositionItem(index) {
+            if (!guardWritePermission()) return;
+            editingPositionIndex = index;
+            renderPositionDefinitions();
+        }
+
+        function savePositionItem(index, value) {
+            if (!guardWritePermission()) return;
+            const position = String(value ?? '').trim();
+            if (!position) {
+                showToast('ရာထူးအမည် ဖြည့်သွင်းပါ', 'error');
+                return;
+            }
+            if (index < 0 || index >= POSITION_DEFINITIONS.length) return;
+
+            POSITION_DEFINITIONS[index] = position;
+            editingPositionIndex = -1;
+            saveSystemState();
+            showToast('ရာထူးသတ်မှတ်ချက် မွမ်းမံပြီးပါပြီ', 'success');
+            renderPositionDefinitions();
+            populateCivilianMasterFilters();
+            renderDashboardView();
+        }
+
+        function deletePositionItem(index) {
+            if (!guardWritePermission()) return;
+            if (index < 0 || index >= POSITION_DEFINITIONS.length) return;
+
+            POSITION_DEFINITIONS.splice(index, 1);
+            editingPositionIndex = -1;
+            saveSystemState();
+            showToast('ရာထူးသတ်မှတ်ချက် ဖျက်ပြီးပါပြီ', 'error');
+            renderPositionDefinitions();
+            populateCivilianMasterFilters();
+            renderDashboardView();
+        }
+
+        function cancelPositionItem() {
+            editingPositionIndex = -1;
+            renderPositionDefinitions();
+        }
+
+        // --- PROD; STATEMENT CRUD, CALCULATIONS & RENDER ---
+        const PROD_MONTH_KEYS = ['apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'jan', 'feb', 'mar'];
+        const PROD_DESC_PRESETS = ['GSD', 'Issue', 'Prod;'];
+        let currentProdFormMonths = { apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0, oct: 0, nov: 0, dec: 0, jan: 0, feb: 0, mar: 0 };
+
+        function formatProdNum(num) {
+            const val = Number(num) || 0;
+            return val.toLocaleString('en-US', { maximumFractionDigits: 2 });
+        }
+
+        function updateProdYearLabels() {
+            const debtYr = document.getElementById('pr-in-debt-year')?.value.trim() || '';
+            const planYr = document.getElementById('pr-in-plan-year')?.value.trim() || '';
+
+            const subDebtLbl = document.getElementById('pr-sub-debt-label');
+            const subPlanLbl = document.getElementById('pr-sub-plan-label');
+            const thDebt = document.getElementById('pr-th-debt');
+            const thPlan = document.getElementById('pr-th-plan');
+
+            if (subDebtLbl) subDebtLbl.textContent = debtYr ? `${debtYr} Debt` : 'Debt';
+            if (subPlanLbl) subPlanLbl.textContent = planYr ? `${planYr} Plan` : 'Plan';
+            if (thDebt) thDebt.textContent = 'Debt';
+            if (thPlan) thPlan.textContent = 'Plan';
+        }
+
+        function handleProdDescChange() {
+            const descSel = document.getElementById('pr-in-desc');
+            const customInput = document.getElementById('pr-in-desc-custom');
+            if (!descSel || !customInput) return;
+
+            if (descSel.value === 'Custom') {
+                customInput.classList.remove('hidden');
+                customInput.focus();
+            } else {
+                customInput.classList.add('hidden');
+                customInput.value = '';
+            }
+        }
+
+        function onProdMonthSelectorChange() {
+            const selMonth = document.getElementById('pr-month-selector')?.value || 'apr';
+            const quickInput = document.getElementById('pr-month-quick-val');
+            if (quickInput) {
+                const val = currentProdFormMonths[selMonth];
+                quickInput.value = val ? val : '';
+            }
+        }
+
+        function onProdMonthQuickInput() {
+            const selMonth = document.getElementById('pr-month-selector')?.value || 'apr';
+            const rawVal = document.getElementById('pr-month-quick-val')?.value;
+            currentProdFormMonths[selMonth] = parseFloat(rawVal) || 0;
+            recalcProdFormTotals();
+        }
+
+        function recalcProdFormTotals() {
+            const debt = parseFloat(document.getElementById('pr-in-debt')?.value) || 0;
+            const plan = parseFloat(document.getElementById('pr-in-plan')?.value) || 0;
+            const totalPlan = debt + plan;
+            const totalPlanEl = document.getElementById('pr-in-totalplan');
+            if (totalPlanEl) totalPlanEl.value = totalPlan;
+
+            let monthlySum = 0;
+            const activeChips = [];
+            PROD_MONTH_KEYS.forEach(m => {
+                const val = parseFloat(currentProdFormMonths[m]) || 0;
+                monthlySum += val;
+                if (val > 0) {
+                    const label = m.charAt(0).toUpperCase() + m.slice(1);
+                    activeChips.push(`${label}: ${formatProdNum(val)}`);
+                }
+            });
+            const totalEl = document.getElementById('pr-in-total');
+            if (totalEl) totalEl.value = monthlySum;
+
+            const summaryEl = document.getElementById('pr-entered-months-summary');
+            if (summaryEl) {
+                summaryEl.textContent = activeChips.length > 0 ? `(${activeChips.join(', ')})` : '';
+            }
+
+            const balance = totalPlan - monthlySum;
+            const hintEl = document.getElementById('pr-in-balance-hint');
+            if (hintEl) {
+                hintEl.textContent = `လက်ကျန် (Balance): ${formatProdNum(balance)}`;
+            }
+        }
+
+        function initInlineProdControls() {
+            const fyFilterSel = document.getElementById('prod-filter-fy');
+            const descFilterSel = document.getElementById('prod-filter-desc');
+            const nomFilterSel = document.getElementById('prod-filter-nom');
+
+            if (fyFilterSel) {
+                const curFy = fyFilterSel.value || 'ALL';
+                const uniqueFys = [...new Set(['2025-2026', '2026-2027', '2027-2028', ...prodStatementData.map(p => p.financialYears).filter(Boolean)])];
+                fyFilterSel.innerHTML = `<option value="ALL">By Financial_Years</option>` + uniqueFys.map(fy => `<option value="${fy}">${fy}</option>`).join('');
+                fyFilterSel.value = curFy;
+            }
+
+            if (descFilterSel) {
+                const curDesc = descFilterSel.value || 'ALL';
+                const uniqueDescs = [...new Set([...PROD_DESC_PRESETS, ...prodStatementData.map(p => p.description).filter(Boolean)])];
+                descFilterSel.innerHTML = `<option value="ALL">By Description</option>` + uniqueDescs.map(d => `<option value="${d}">${d}</option>`).join('');
+                descFilterSel.value = curDesc;
+            }
+
+            if (nomFilterSel) {
+                const curNom = nomFilterSel.value || 'ALL';
+                const uniqueNoms = [...new Set(prodStatementData.map(p => p.nomenclature).filter(Boolean))];
+                nomFilterSel.innerHTML = `<option value="ALL">By Nomenclature</option>` + uniqueNoms.map(n => `<option value="${n}">${n}</option>`).join('');
+                nomFilterSel.value = curNom;
+            }
+
+            updateProdYearLabels();
+            onProdMonthSelectorChange();
+            recalcProdFormTotals();
+        }
+
+        function updateProdSummaryBoxes(list = prodStatementData) {
+            const totalItems = list.length;
+            const sumDebt = list.reduce((acc, item) => acc + (Number(item.debt2526) || 0), 0);
+            const sumPlan = list.reduce((acc, item) => acc + (Number(item.plan2627) || 0), 0);
+            const sumTotalPlan = list.reduce((acc, item) => acc + (Number(item.totalPlan) || 0), 0);
+            const sumTotal = list.reduce((acc, item) => acc + (Number(item.total) || 0), 0);
+
+            const elItems = document.getElementById('pr-sub-items');
+            const elDebt = document.getElementById('pr-sub-debt');
+            const elPlan = document.getElementById('pr-sub-plan');
+            const elTotPlan = document.getElementById('pr-sub-totalplan');
+            const elAch = document.getElementById('pr-sub-achieved');
+
+            if (elItems) elItems.textContent = String(totalItems);
+            if (elDebt) elDebt.textContent = formatProdNum(sumDebt);
+            if (elPlan) elPlan.textContent = formatProdNum(sumPlan);
+            if (elTotPlan) elTotPlan.textContent = formatProdNum(sumTotalPlan);
+            if (elAch) elAch.textContent = formatProdNum(sumTotal);
+        }
+
+        function readProdFormPayload() {
+            const nomenclature = document.getElementById('pr-in-nomenclature').value.trim();
+            const au = document.getElementById('pr-in-au').value.trim() || 'Nos';
+            const debtYear = document.getElementById('pr-in-debt-year')?.value.trim() || '';
+            const debt2526 = parseFloat(document.getElementById('pr-in-debt').value) || 0;
+            const planYear = document.getElementById('pr-in-plan-year')?.value.trim() || '';
+            const plan2627 = parseFloat(document.getElementById('pr-in-plan').value) || 0;
+            const totalPlan = debt2526 + plan2627;
+
+            const descSelVal = document.getElementById('pr-in-desc').value;
+            const descCustomVal = document.getElementById('pr-in-desc-custom').value.trim();
+            const description = descSelVal === 'Custom' ? (descCustomVal || 'Custom') : descSelVal;
+
+            const financialYears = document.getElementById('pr-in-fy').value.trim() || '2026-2027';
+            const remark = document.getElementById('pr-in-remark').value.trim();
+
+            const monthsObj = {};
+            let total = 0;
+            PROD_MONTH_KEYS.forEach(m => {
+                const val = parseFloat(currentProdFormMonths[m]) || 0;
+                monthsObj[m] = val;
+                total += val;
+            });
+
+            const editIdx = Number.parseInt(document.getElementById('pr-inline-index')?.value, 10);
+            const existingCustom = (editIdx >= 0 && prodStatementData[editIdx]?.customFields) ? prodStatementData[editIdx].customFields : {};
+
+            return {
+                nomenclature,
+                au,
+                debtYear,
+                debt2526,
+                planYear,
+                plan2627,
+                totalPlan,
+                description,
+                ...monthsObj,
+                total,
+                remark,
+                financialYears,
+                customFields: readModuleCustomFormInputs('prod', 'prod-custom-fields-container', existingCustom)
+            };
+        }
+
+        function toggleProdFormPanel(forceOpen) {
+            const body = document.getElementById('pr-collapsible-form-body');
+            if (!body) return;
+            const willOpen = typeof forceOpen === 'boolean' ? forceOpen : body.classList.contains('hidden');
+            body.classList.toggle('hidden', !willOpen);
+        }
+
+        function openProdForm(index = -1) {
+            if (!guardWritePermission()) return;
+            initInlineProdControls();
+            if (index >= 0) {
+                selectProdForInlineEdit(index);
+                return;
+            }
+            inlineClearProd(false);
+            renderModuleCustomFormInputs('prod', 'prod-custom-fields-container', {});
+            document.getElementById('pr-inline-index').value = -1;
+            const title = document.getElementById('pr-form-title');
+            if (title) title.textContent = 'ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း အသစ်ထည့်ရန်';
+            toggleProdFormPanel(true);
+        }
+
+        function closeProdFormModal() {
+            toggleProdFormPanel(false);
+        }
+
+        function saveProdForm() {
+            const index = Number.parseInt(document.getElementById('pr-inline-index').value, 10);
+            const saved = index >= 0 ? inlineSaveProd() : inlineAddProd();
+            if (saved) closeProdFormModal();
+        }
+
+        function selectProdForInlineEdit(index) {
+            const item = prodStatementData[index];
+            if (!item) return;
+            initInlineProdControls();
+            toggleProdFormPanel(true);
+            const title = document.getElementById('pr-form-title');
+            if (title) title.textContent = 'ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း ပြင်ဆင်ရန်';
+            document.getElementById('pr-inline-index').value = index;
+            document.getElementById('pr-in-nomenclature').value = item.nomenclature || '';
+            document.getElementById('pr-in-au').value = item.au || 'Nos';
+            const debtYrEl = document.getElementById('pr-in-debt-year');
+            const planYrEl = document.getElementById('pr-in-plan-year');
+            if (debtYrEl) debtYrEl.value = item.debtYear || '';
+            if (planYrEl) planYrEl.value = item.planYear || '';
+            document.getElementById('pr-in-debt').value = item.debt2526 ?? 0;
+            document.getElementById('pr-in-plan').value = item.plan2627 ?? 0;
+
+            const descSel = document.getElementById('pr-in-desc');
+            const customInput = document.getElementById('pr-in-desc-custom');
+            if (PROD_DESC_PRESETS.includes(item.description)) {
+                descSel.value = item.description;
+                customInput.value = '';
+                customInput.classList.add('hidden');
+            } else {
+                descSel.value = 'Custom';
+                customInput.value = item.description || '';
+                customInput.classList.remove('hidden');
+            }
+
+            document.getElementById('pr-in-fy').value = item.financialYears || '2026-2027';
+            document.getElementById('pr-in-remark').value = item.remark || '';
+            renderModuleCustomFormInputs('prod', 'prod-custom-fields-container', item.customFields || {});
+
+            PROD_MONTH_KEYS.forEach(m => {
+                currentProdFormMonths[m] = Number(item[m]) || 0;
+            });
+
+            updateProdYearLabels();
+            onProdMonthSelectorChange();
+            recalcProdFormTotals();
+            document.getElementById('main-workspace')?.scrollTo({ top: 0, behavior: 'smooth' });
+            showToast(`"${item.nomenclature}" အား ပြင်ဆင်ရန် ရွေးချယ်ပြီးပါပြီ`, 'info');
+        }
+
+        function inlineAddProd() {
+            if (!guardWritePermission()) return false;
+            const payload = readProdFormPayload();
+            if (!payload.nomenclature) {
+                showToast('Nomenclature (ပစ္စည်းအမျိုးအမည်) ဖြည့်သွင်းပေးပါ', 'error');
+                return false;
+            }
+            payload._isLatestAdded = true;
+            prodStatementData.forEach(item => { delete item._isLatestAdded; });
+            prodStatementData.unshift(payload);
+            saveSystemState();
+            inlineClearProd(false);
+            initInlineProdControls();
+            renderProdStatement();
+            showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းသစ် ထည့်သွင်းပြီးပါပြီ', 'success');
+            return true;
+        }
+
+        function inlineSaveProd() {
+            if (!guardWritePermission()) return false;
+            const idx = parseInt(document.getElementById('pr-inline-index').value);
+            if (idx < 0 || !prodStatementData[idx]) {
+                showToast('ပြင်ဆင်လိုသော စာရင်းအား ဇယားကွက်အတွင်းမှ Edit ခလုတ်နှိပ်၍ အရင်ရွေးချယ်ပါ', 'error');
+                return false;
+            }
+            const payload = readProdFormPayload();
+            if (!payload.nomenclature) {
+                showToast('Nomenclature (ပစ္စည်းအမျိုးအမည်) ဖြည့်သွင်းပေးပါ', 'error');
+                return false;
+            }
+            prodStatementData[idx] = payload;
+            saveSystemState();
+            inlineClearProd(false);
+            initInlineProdControls();
+            renderProdStatement();
+            showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းအား သိမ်းဆည်း (Save) ပြီးပါပြီ', 'success');
+            return true;
+        }
+
+        function inlineDeleteProd() {
+            const idx = parseInt(document.getElementById('pr-inline-index').value);
+            if (idx < 0 || !prodStatementData[idx]) {
+                showToast('ဖျက်လိုသော စာရင်းအား စာရင်းမှ အရင်ရွေးချယ်ပါ', 'error');
+                return;
+            }
+            confirmDeleteProd(idx, true);
+        }
+
+        function confirmDeleteProd(index, clearInline = false) {
+            if (!guardWritePermission()) return;
+            const item = prodStatementData[index];
+            if (!item) return;
+            openConfirmModal(`"${item.nomenclature}" (${item.financialYears}) စာရင်းကို ဖျက်မည်။ သေချာပါသလား?`, () => {
+                prodStatementData.splice(index, 1);
+                saveSystemState();
+                if (clearInline) inlineClearProd(false);
+                initInlineProdControls();
+                renderProdStatement();
+                showToast('ထုတ်လုပ်မှုစာရင်းရှင်းတမ်းအား ဖျက်ကွက်ပြီးပါပြီ', 'error');
+            });
+        }
+
+        function inlineClearProd(notify = true) {
+            document.getElementById('pr-inline-index').value = -1;
+            document.getElementById('pr-in-nomenclature').value = '';
+            document.getElementById('pr-in-au').value = '';
+            const debtYrEl = document.getElementById('pr-in-debt-year');
+            const planYrEl = document.getElementById('pr-in-plan-year');
+            if (debtYrEl) debtYrEl.value = '';
+            if (planYrEl) planYrEl.value = '';
+            document.getElementById('pr-in-debt').value = '';
+            document.getElementById('pr-in-plan').value = '';
+            document.getElementById('pr-in-totalplan').value = '';
+            document.getElementById('pr-in-desc').value = 'GSD';
+            const customInput = document.getElementById('pr-in-desc-custom');
+            if (customInput) {
+                customInput.value = '';
+                customInput.classList.add('hidden');
+            }
+            document.getElementById('pr-in-fy').value = '';
+            document.getElementById('pr-in-remark').value = '';
+            const quickInput = document.getElementById('pr-month-quick-val');
+            if (quickInput) quickInput.value = '';
+            PROD_MONTH_KEYS.forEach(m => {
+                currentProdFormMonths[m] = 0;
+            });
+            document.getElementById('pr-in-total').value = '';
+            updateProdYearLabels();
+            onProdMonthSelectorChange();
+            recalcProdFormTotals();
+            if (notify) showToast('အကွက်များအား ရှင်းလင်းပြီးပါပြီ', 'info');
+        }
+
+        function exportProdExcel() {
+            if (!ensureExcelLibrary()) return;
+            const query = (document.getElementById('prod-search')?.value || '').trim().toLowerCase();
+            const fyFilter = document.getElementById('prod-filter-fy')?.value || 'ALL';
+            const descFilter = document.getElementById('prod-filter-desc')?.value || 'ALL';
+            const nomFilter = document.getElementById('prod-filter-nom')?.value || 'ALL';
+
+            const filteredProd = prodStatementData.filter(item => {
+                const matchesQuery = !query ||
+                                     (item.nomenclature || '').toLowerCase().includes(query) ||
+                                     (item.description || '').toLowerCase().includes(query) ||
+                                     (item.remark || '').toLowerCase().includes(query) ||
+                                     (item.debtYear || '').toLowerCase().includes(query) ||
+                                     (item.planYear || '').toLowerCase().includes(query) ||
+                                     (item.financialYears || '').toLowerCase().includes(query);
+                const matchesFy = fyFilter === 'ALL' || item.financialYears === fyFilter;
+                const matchesDesc = descFilter === 'ALL' || item.description === descFilter;
+                const matchesNom = nomFilter === 'ALL' || item.nomenclature === nomFilter;
+                return matchesQuery && matchesFy && matchesDesc && matchesNom;
+            });
+
+            const exportRows = filteredProd.map((item, i) => ({
+                'Sr': i + 1,
+                'Nomenclature': item.nomenclature,
+                'A/U': item.au,
+                'Debt Yr': item.debtYear || '',
+                'Debt': item.debt2526,
+                'Plan Yr': item.planYear || '',
+                'Plan': item.plan2627,
+                'Total Plan': item.totalPlan,
+                'Description': item.description,
+                'Apr': item.apr,
+                'May': item.may,
+                'Jun': item.jun,
+                'Jul': item.jul,
+                'Aug': item.aug,
+                'Sep': item.sep,
+                'Oct': item.oct,
+                'Nov': item.nov,
+                'Dec': item.dec,
+                'Jan': item.jan,
+                'Feb': item.feb,
+                'Mar': item.mar,
+                'Total': item.total,
+                'Remark': item.remark || '',
+                'Financial_Years': item.financialYears
+            }));
+            const ws = XLSX.utils.json_to_sheet(exportRows.length ? exportRows : [{ 'Remark': 'No records found' }]);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Prod_Statement');
+            saveWorkbookToLocal(wb, `Prod_Statement_${new Date().toISOString().split('T')[0]}.xlsx`, 'ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း Local Excel ဖိုင် သိမ်းဆည်းပြီးပါပြီ');
+        }
+
+        function renderProdStatement() {
+            const thead = document.getElementById('prod-table-thead');
+            const container = document.getElementById('prod-list-container');
+            const footer = document.getElementById('prod-table-footer');
+            const mobileContainer = document.getElementById('prod-mobile-cards');
+            if (!container) return;
+
+            const prodCols = getEffectiveModuleColumns('prod');
+            const totalProdCols = prodCols.visibleBuiltins.length + prodCols.customColumns.length + 2;
+            if (thead) {
+                const builtinThs = prodCols.visibleBuiltins.map(col => {
+                    const idAttr = col.thId ? `id="${col.thId}" ` : '';
+                    if (col.sticky === 'nom') {
+                        return `<th id="pr-th-nom" class="p-2.5 sticky left-12 bg-slate-100 dark:bg-slate-700 z-20">${escapeHtml(col.displayLabel)}</th>`;
+                    }
+                    const alignCls = col.align === 'right' ? 'text-right' : (col.align === 'center' ? 'text-center' : '');
+                    return `<th ${idAttr}class="p-2.5 ${alignCls}">${escapeHtml(col.displayLabel)}</th>`;
+                }).join('');
+                const customThs = prodCols.customColumns.map(col => `<th class="p-2.5 text-blue-700 dark:text-blue-300">${escapeHtml(col.label)}</th>`).join('');
+                thead.innerHTML = `<tr><th id="pr-th-sr" class="p-2.5 text-center sticky left-0 bg-slate-100 dark:bg-slate-700 z-20">Sr</th>${builtinThs}${customThs}<th class="p-2.5 text-center">Function</th></tr>`;
+            }
+
+            updateProdYearLabels();
+
+            const query = (document.getElementById('prod-search')?.value || '').trim().toLowerCase();
+            const fyFilter = document.getElementById('prod-filter-fy')?.value || 'ALL';
+            const descFilter = document.getElementById('prod-filter-desc')?.value || 'ALL';
+            const nomFilter = document.getElementById('prod-filter-nom')?.value || 'ALL';
+
+            const filtered = prodStatementData.filter(item => {
+                const matchesQuery = (item.nomenclature || '').toLowerCase().includes(query) ||
+                                     (item.description || '').toLowerCase().includes(query) ||
+                                     (item.remark || '').toLowerCase().includes(query) ||
+                                     (item.debtYear || '').toLowerCase().includes(query) ||
+                                     (item.planYear || '').toLowerCase().includes(query) ||
+                                     (item.financialYears || '').toLowerCase().includes(query);
+                const matchesFy = fyFilter === 'ALL' || item.financialYears === fyFilter;
+                const matchesDesc = descFilter === 'ALL' || item.description === descFilter;
+                const matchesNom = nomFilter === 'ALL' || item.nomenclature === nomFilter;
+                return matchesQuery && matchesFy && matchesDesc && matchesNom;
+            });
+
+            updateProdSummaryBoxes(filtered);
+            const prodCountEl = document.getElementById('prod-master-count');
+            if (prodCountEl) prodCountEl.textContent = toMyanmarNumerals(filtered.length);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<tr><td colspan="${totalProdCols}" class="text-center py-8 text-slate-400">ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း မရှိသေးပါ</td></tr>`;
+                if (footer) footer.innerHTML = '';
+                if (mobileContainer) {
+                    mobileContainer.innerHTML = `<div class="col-span-full bg-white dark:bg-slate-800 rounded-xl p-6 text-center text-slate-400 border border-slate-200 dark:border-slate-700">ထုတ်လုပ်မှုစာရင်းရှင်းတမ်း မရှိသေးပါ</div>`;
+                }
+                renderPaginationControls('prod-pagination-bar', 'prod', 1, 0, 'မျိုး');
+                return;
+            }
+
+            // Grand Totals across all filtered records
+            const totals = {
+                debt2526: 0, plan2627: 0, totalPlan: 0,
+                apr: 0, may: 0, jun: 0, jul: 0, aug: 0, sep: 0,
+                oct: 0, nov: 0, dec: 0, jan: 0, feb: 0, mar: 0,
+                total: 0
+            };
+            filtered.forEach(item => {
+                totals.debt2526 += Number(item.debt2526) || 0;
+                totals.plan2627 += Number(item.plan2627) || 0;
+                totals.totalPlan += Number(item.totalPlan) || 0;
+                PROD_MONTH_KEYS.forEach(m => { totals[m] += Number(item[m]) || 0; });
+                totals.total += Number(item.total) || 0;
+            });
+
+            const prTotalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+            if (tablePageState.prod > prTotalPages) tablePageState.prod = prTotalPages;
+            const prCurrentPage = tablePageState.prod || 1;
+            const prStartIdx = (prCurrentPage - 1) * ITEMS_PER_PAGE;
+            const paginatedProd = filtered.slice(prStartIdx, prStartIdx + ITEMS_PER_PAGE);
+
+            // Desktop Rows
+            container.innerHTML = paginatedProd.map((item, idx) => {
+                const realIndex = prodStatementData.indexOf(item);
+                const pct = item.totalPlan > 0 ? Math.min(100, Math.round((item.total / item.totalPlan) * 100)) : 0;
+                const isLatest = Boolean(item._isLatestAdded);
+                const isProdHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('prod', item);
+                const rowHighlightClass = isProdHl
+                    ? 'search-row-highlight'
+                    : (isLatest
+                        ? 'bg-emerald-50/80 dark:bg-emerald-900/25 ring-1 ring-inset ring-emerald-400/60'
+                        : 'hover:bg-blue-50/70 dark:hover:bg-slate-700/60');
+                const stickyBgClass = isProdHl
+                    ? 'bg-amber-100 dark:bg-amber-900/40'
+                    : (isLatest
+                        ? 'bg-emerald-50 dark:bg-slate-800'
+                        : 'bg-white dark:bg-slate-800');
+                const prodCellsMap = {
+                    nomenclature: `<td class="p-2.5 font-bold text-slate-900 dark:text-white sticky left-12 ${stickyBgClass} z-10 pr-nom-cell">${escapeHtml(item.nomenclature)}${isLatest ? ' <span class="ml-1 px-1.5 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">New</span>' : ''}</td>`,
+                    au: `<td class="p-2.5 text-center font-semibold text-slate-600 dark:text-slate-300">${escapeHtml(item.au)}</td>`,
+                    debtYear: `<td class="p-2.5 text-center font-mono text-amber-700 dark:text-amber-300">${escapeHtml(item.debtYear || '-')}</td>`,
+                    debt2526: `<td class="p-2.5 text-right font-semibold text-amber-700 dark:text-amber-300">${formatProdNum(item.debt2526)}</td>`,
+                    planYear: `<td class="p-2.5 text-center font-mono text-blue-700 dark:text-blue-300">${escapeHtml(item.planYear || '-')}</td>`,
+                    plan2627: `<td class="p-2.5 text-right font-semibold text-blue-700 dark:text-blue-300">${formatProdNum(item.plan2627)}</td>`,
+                    totalPlan: `<td class="p-2.5 text-right font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/40 dark:bg-indigo-900/10">${formatProdNum(item.totalPlan)}</td>`,
+                    description: `<td class="p-2.5"><span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 font-semibold text-[11px]">${escapeHtml(item.description)}</span></td>`,
+                    total: `<td class="p-2.5 text-right font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50/40 dark:bg-emerald-900/10" title="ပြီးစီးမှု ${pct}%">${formatProdNum(item.total)}</td>`,
+                    remark: `<td class="p-2.5 text-slate-600 dark:text-slate-400">${escapeHtml(item.remark || '-')}</td>`,
+                    financialYears: `<td class="p-2.5 text-center font-mono font-semibold text-blue-800 dark:text-blue-300">${escapeHtml(item.financialYears)}</td>`
+                };
+                PROD_MONTH_KEYS.forEach(m => {
+                    prodCellsMap[m] = `<td class="p-2.5 text-right">${formatProdNum(item[m])}</td>`;
+                });
+                const builtinTds = prodCols.visibleBuiltins.map(col => prodCellsMap[col.key] || '<td class="p-2.5">-</td>').join('');
+                const customTds = prodCols.customColumns.map(col => {
+                    const rawVal = item.customFields && item.customFields[col.key] !== undefined ? String(item.customFields[col.key]).trim() : '';
+                    return `<td class="p-2.5">${escapeHtml(rawVal || '-')}</td>`;
+                }).join('');
+                return `
+                    <tr onclick="openProdDetailDrawer(${realIndex})" ${isProdHl ? 'data-search-highlighted="true"' : ''} class="${rowHighlightClass} transition text-slate-800 dark:text-slate-200 cursor-pointer">
+                        <td class="p-2.5 text-center font-bold sticky left-0 ${stickyBgClass} z-10">${prStartIdx + idx + 1}</td>
+                        ${builtinTds}
+                        ${customTds}
+                        <td class="p-2.5 text-center space-x-1" onclick="event.stopPropagation()">
+                            <button onclick="selectProdForInlineEdit(${realIndex})" class="role-write-action p-1.5 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold transition" title="ပြင်ဆင်မည်">✏️</button>
+                            <button onclick="confirmDeleteProd(${realIndex})" class="role-write-action p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-700 rounded-lg transition" title="ဖျက်မည်">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Adjust sticky left offset of Nomenclature column dynamically after Sr No auto-fits
+            requestAnimationFrame(() => {
+                const srTh = document.getElementById('pr-th-sr');
+                const nomTh = document.getElementById('pr-th-nom');
+                if (srTh && nomTh) {
+                    const srWidth = srTh.offsetWidth;
+                    nomTh.style.left = `${srWidth}px`;
+                    document.querySelectorAll('.pr-nom-cell').forEach(cell => {
+                        cell.style.left = `${srWidth}px`;
+                    });
+                }
+            });
+
+            // Table Footer Summary Row (aligned dynamically with visible columns)
+            if (footer) {
+                let firstLabelPlaced = false;
+                const footerBuiltins = prodCols.visibleBuiltins.map(col => {
+                    if (!firstLabelPlaced && (col.key === 'nomenclature' || col.key === 'au' || col.key === 'debtYear')) {
+                        firstLabelPlaced = true;
+                        return `<td class="p-2.5 text-right sticky left-0 bg-slate-100 dark:bg-slate-700 z-10">စုစုပေါင်း:</td>`;
+                    }
+                    if (col.key === 'debt2526') return `<td class="p-2.5 text-right text-amber-700 dark:text-amber-300">${formatProdNum(totals.debt2526)}</td>`;
+                    if (col.key === 'plan2627') return `<td class="p-2.5 text-right text-blue-700 dark:text-blue-300">${formatProdNum(totals.plan2627)}</td>`;
+                    if (col.key === 'totalPlan') return `<td class="p-2.5 text-right text-indigo-700 dark:text-indigo-300">${formatProdNum(totals.totalPlan)}</td>`;
+                    if (col.key === 'total') return `<td class="p-2.5 text-right text-emerald-700 dark:text-emerald-300">${formatProdNum(totals.total)}</td>`;
+                    if (PROD_MONTH_KEYS.includes(col.key)) return `<td class="p-2.5 text-right">${formatProdNum(totals[col.key])}</td>`;
+                    return `<td class="p-2.5"></td>`;
+                }).join('');
+                const footerCustom = prodCols.customColumns.map(() => `<td class="p-2.5"></td>`).join('');
+                footer.innerHTML = `<tr><td class="p-2.5"></td>${footerBuiltins}${footerCustom}<td class="p-2.5"></td></tr>`;
+            }
+
+            // Mobile Cards
+            if (mobileContainer) {
+                mobileContainer.innerHTML = paginatedProd.map((item, idx) => {
+                    const realIndex = prodStatementData.indexOf(item);
+                    const pct = item.totalPlan > 0 ? Math.min(100, Math.round((item.total / item.totalPlan) * 100)) : 0;
+                    const debtYr = item.debtYear || '';
+                    const planYr = item.planYear || '';
+                    const isProdHl = typeof isSearchHighlightedRecord === 'function' && isSearchHighlightedRecord('prod', item);
+                    return `
+                        <div onclick="openProdDetailDrawer(${realIndex})" ${isProdHl ? 'data-search-highlighted="true"' : ''} class="bg-white dark:bg-slate-800 p-3.5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-2.5 cursor-pointer${isProdHl ? ' search-row-highlight' : ''}">
+                            <div class="flex justify-between items-start gap-2">
+                                <div>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">${prStartIdx + idx + 1} &bull; ${item.financialYears}</span>
+                                    <div class="font-bold text-slate-900 dark:text-white text-sm mt-1">${item.nomenclature} <span class="text-slate-400 font-normal text-xs">(${item.au})</span></div>
+                                </div>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 font-bold text-[11px]">${item.description}</span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-1.5 text-[11px] bg-slate-50 dark:bg-slate-700/50 p-2 rounded-lg text-center">
+                                <div>
+                                    <span class="block text-slate-400 text-[10px]">${debtYr ? debtYr + ' Debt' : 'Debt'}</span>
+                                    <strong class="text-amber-700 dark:text-amber-300">${formatProdNum(item.debt2526)}</strong>
+                                </div>
+                                <div>
+                                    <span class="block text-slate-400 text-[10px]">${planYr ? planYr + ' Plan' : 'Plan'}</span>
+                                    <strong class="text-blue-700 dark:text-blue-300">${formatProdNum(item.plan2627)}</strong>
+                                </div>
+                                <div>
+                                    <span class="block text-slate-400 text-[10px]">Total Plan</span>
+                                    <strong class="text-indigo-700 dark:text-indigo-300">${formatProdNum(item.totalPlan)}</strong>
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[11px]">
+                                    <span class="text-slate-500 dark:text-slate-400">Total (Apr-Mar): <strong class="text-emerald-700 dark:text-emerald-300">${formatProdNum(item.total)}</strong></span>
+                                    <span class="font-bold text-emerald-600 dark:text-emerald-400">${pct}%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-600 h-full rounded-full" style="width: ${pct}%"></div>
+                                </div>
+                            </div>
+                            ${item.remark ? `<div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Remark: ${item.remark}</div>` : ''}
+                            <div class="role-write-action flex justify-end gap-1.5 pt-1 border-t dark:border-slate-700" onclick="event.stopPropagation()">
+                                <button onclick="selectProdForInlineEdit(${realIndex})" class="px-2.5 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg font-bold text-[11px]">✏️ Edit</button>
+                                <button onclick="confirmDeleteProd(${realIndex})" class="px-2.5 py-1 bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 rounded-lg font-bold text-[11px]">🗑️ ဖျက်မည်</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            renderPaginationControls('prod-pagination-bar', 'prod', prCurrentPage, filtered.length, 'မျိုး');
+        }
+
+        // Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            // Default to Light Mode unless user explicitly chose Dark or System Mode
+            const savedThemeMode = localStorage.getItem('DI_THEME_MODE') || 'light';
+            applyThemeMode(savedThemeMode, false);
+
+            if (window.matchMedia) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                    if ((localStorage.getItem('DI_THEME_MODE') || 'light') === 'system') {
+                        applyThemeMode('system', false);
+                    }
+                });
+            }
+            loadSystemState();
+            renderSidebarCustomTables();
+            initFirebaseFirestore();
+            initGoogleSheetsSync();
+
+            // Restore active session if user previously logged in, otherwise show Auth Gateway
+            loadRememberedLoginCredentials();
+            const savedSessionRaw = localStorage.getItem(ACTIVE_AUTH_SESSION_KEY);
+            if (savedSessionRaw) {
+                try {
+                    const parsedSession = JSON.parse(savedSessionRaw);
+                    const freshRecord = userData.find(u => u.username.toLowerCase() === (parsedSession.username || '').toLowerCase()) || parsedSession;
+                    if (freshRecord && freshRecord.status !== 'Suspended') {
+                        applyUserSession(freshRecord, false);
+                    }
+                } catch (e) {
+                    localStorage.removeItem(ACTIVE_AUTH_SESSION_KEY);
+                }
+            }
+
+            document.addEventListener('click', event => {
+                if (!event.target.closest('#global-search-popover, #global-search-toggle-btn')) {
+                    toggleGlobalSearch(false);
+                }
+            });
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    toggleGlobalSearch(false);
+                    if (document.getElementById('personnel-form-modal')?.classList.contains('hidden')) {
+                        closeCivilianMasterDetailModal();
+                    }
+                }
+            });
+
+            renderDashboardView();
+            updateHeaderBadge();
+            initFloatingScrollButton();
+        });
+
+        // FLOATING UPWARD / SCROLL-TO-TOP BUTTON LOGIC
+        let lastUpwardScrollTop = 0;
+        function updateFloatingScrollButton() {
+            const btn = document.getElementById('floating-scroll-top-btn');
+            if (!btn) return;
+            const workspace = document.getElementById('main-workspace');
+            const currentScroll = (workspace ? workspace.scrollTop : 0) || window.pageYOffset || document.documentElement.scrollTop || 0;
+            
+            if (currentScroll <= 60) {
+                // At the top: completely hidden/dimmed
+                btn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3', 'scale-90');
+                btn.classList.remove('opacity-100', 'opacity-35', 'pointer-events-auto', 'translate-y-0', 'scale-100');
+            } else {
+                // Scrolled down
+                const isScrollingDown = currentScroll > lastUpwardScrollTop;
+                btn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+                btn.classList.add('pointer-events-auto', 'translate-y-0');
+                
+                if (isScrollingDown) {
+                    // Moving / dragging down: prominently displayed
+                    btn.classList.remove('opacity-35', 'scale-90');
+                    btn.classList.add('opacity-100', 'scale-100');
+                } else {
+                    // Moving / scrolling up towards top: dimmed
+                    btn.classList.remove('opacity-100');
+                    btn.classList.add('opacity-35', 'scale-90');
+                }
+            }
+            lastUpwardScrollTop = currentScroll;
+        }
+
+        function scrollToTop() {
+            const workspace = document.getElementById('main-workspace');
+            if (workspace) {
+                workspace.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+            document.body.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(updateFloatingScrollButton, 350);
+        }
+
+        function initFloatingScrollButton() {
+            const workspace = document.getElementById('main-workspace');
+            if (workspace) {
+                workspace.addEventListener('scroll', updateFloatingScrollButton, { passive: true });
+            }
+            window.addEventListener('scroll', updateFloatingScrollButton, { passive: true });
+            document.addEventListener('scroll', updateFloatingScrollButton, { passive: true });
+            updateFloatingScrollButton();
+        }
+    </script>
+</body>
+</html>
